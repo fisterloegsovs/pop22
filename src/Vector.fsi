@@ -9,3 +9,4 @@ module Vector =
     val ( ~-. ) : Vector -> Vector // Vector negation
     val ( *. ) : float -> Vector -> Vector // scalar-Vector multiplication
     val ( &. ) : Vector -> Vector -> float // Vector dot product
+
