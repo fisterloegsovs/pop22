@@ -1,4 +1,4 @@
-namespace MyLibrary
+namespace LinAlg
 module Vector =
   type Vector
     val norm  : Vector -> float // Length of vector
