@@ -1,0 +1,8 @@
+\documentclass{article}
+\usepackage{bashful}
+
+\begin{document}
+\bash[stdout]
+printf "let a = 1+2;;\nlet b = a=2;;\nlet c = fun x -> x**2.0;;\nc 3.0;;" | fsharpi | tail +8 | head -1
+\END
+\end{document}
