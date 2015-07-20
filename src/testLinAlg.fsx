@@ -1,5 +1,4 @@
-/// This is a comment by Jon! 2
-open LinAlg.LinAlg;;
+open LinAlg
 
 let generateTestMatrix (M: int) (N: int) (x:float) (y:float) =
   let matrix = new Matrix(M,N)
@@ -68,3 +67,11 @@ let B = A.Inverse();
 print "B" B
 let AB = A.Mul(B)
 print "AB" AB
+
+let V = make(3.0,4.0)
+printfn "%f" (norm V)
+
+let W = V+make(5.0,6.0)
+let (w1,w2) = coord W
+printfn "%f, %f" w1 w2
+
