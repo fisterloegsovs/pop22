@@ -91,11 +91,9 @@ type Matrix with
           M(mul (xss,yss))
   static member ( ~- ) (M(xss)) = (-1.0)*M(xss)
   static member ( - ) (M1,M2) = M1 + (- M2)
-(*
-let MatrixGetSlice (V(xss), rowStart, rowFinish, colStart, colFinish) =
+let MatrixGetSlice (M(xss), rowStart, rowFinish, colStart, colFinish) =
   let xss' = xss |> listSkip rowStart |> listTake (rowFinish-rowStart+1)
-  List.map (fun xs -> xs |> listSkip colStart |> listTake (colFinish-colStart+1)) xss'
-*)
+  M(List.map (fun xs -> xs |> listSkip colStart |> listTake (colFinish-colStart+1)) xss')
 let MatrixToListList (M(xss)) = xss
 let MatrixToString = function
   | (M(xs::xss)) -> "[ " + (VectorToString (V(xs))) + (List.fold (fun e xs -> e+", "+(VectorToString (V(xs)))) "" xss) + " ]"
@@ -153,3 +151,13 @@ printfn "transpose m0 = m5 in R^(%dx%d) =\n%s" (rows m5) (cols m5) (MatrixToStri
 let m6 = m0*m5
 printfn "m0*m5 = m6 in R^(%dx%d) =\n%s" (rows m6) (cols m6) (MatrixToString m6)
 
+let r = rows m0
+let c = cols m0
+let m7 = MatrixGetSlice (m0, 0, r-1, 0, c-1)
+printfn "MatrxGetSlice (m0, 0, r-1, 0, c-1) = m7 = %s" (MatrixToString m7)
+
+let m8 = MatrixGetSlice (m0, 0, 0, 0, 0)
+printfn "MatrixGetSlice (m0, 0, 0, 0, 0) = m8 = %s" (MatrixToString m8)
+
+let m9 = MatrixGetSlice (m0, 1, 1, 0, 1)
+printfn "MatrixGetSlice (m0, 1, 1, 0, 1) = m9 = %s" (MatrixToString m9)
