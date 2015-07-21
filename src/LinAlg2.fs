@@ -41,6 +41,12 @@ let rec listTake n xs =
   | _, [] -> []
   | n, x::xs -> x::listTake (n-1) xs
 
+let rec listRemove n xs = 
+  match (n, xs) with
+  | _, [] -> []
+  | 0, x::xs -> listRemove (n-1) xs
+  | n, x::xs -> x::(listRemove (n-1) xs)
+
 type Vector = V of float list
 let length (V(xs)) = List.length xs
 type Vector with
@@ -94,6 +100,42 @@ type Matrix with
 let MatrixGetSlice (M(xss), rowStart, rowFinish, colStart, colFinish) =
   let xss' = xss |> listSkip rowStart |> listTake (rowFinish-rowStart+1)
   M(List.map (fun xs -> xs |> listSkip colStart |> listTake (colFinish-colStart+1)) xss')
+let RowConcat (M(xss), M(yss)) =
+  match (xss,yss) with
+    | ([],[]) ->  M([])
+    | (_,[]) -> M(xss)
+    | ([],_) -> M(yss)
+    | _ ->
+      if rows (M(xss)) <> rows (M(yss)) then
+        failwith "The matrices do not have the same number of rows"
+      else
+        let rec conc = function
+          | ((xs::xss),(ys::yss)) -> (xs@ys)::conc(xss,yss)
+          | _ -> []
+        M(conc (xss,yss))
+let ColConcat (M(xss), M(yss)) =
+  match (xss,yss) with
+    | ([],[]) ->  M([])
+    | (_,[]) -> M(xss)
+    | ([],_) -> M(yss)
+    | _ ->
+      if cols (M(xss)) <> cols (M(yss)) then
+        failwith "The matrices do not have the same number of cols"
+      else
+        M(xss@yss)
+let Minor (M(xss),i,j) =
+  M(listRemove i (List.map (fun xs -> listRemove j xs) xss))
+let rec Det = function
+  | M([]) -> 1.0
+  | M(xs::_ as xss) ->
+    let rec _det = function
+      | (j,x::xs,xss) ->
+        if j > cols (M(xss)) then
+          0.0
+        else
+          x*(Det (Minor (M(xss), 0, j))) - _det (j+1,xs,xss)
+      | _ -> 0.0
+    _det(0,xs,xss)
 let MatrixToListList (M(xss)) = xss
 let MatrixToString = function
   | (M(xs::xss)) -> "[ " + (VectorToString (V(xs))) + (List.fold (fun e xs -> e+", "+(VectorToString (V(xs)))) "" xss) + " ]"
@@ -153,11 +195,28 @@ printfn "m0*m5 = m6 in R^(%dx%d) =\n%s" (rows m6) (cols m6) (MatrixToString m6)
 
 let r = rows m0
 let c = cols m0
-let m7 = MatrixGetSlice (m0, 0, r-1, 0, c-1)
-printfn "MatrxGetSlice (m0, 0, r-1, 0, c-1) = m7 = %s" (MatrixToString m7)
+printfn "MatrxGetSlice (m0, 0, r-1, 0, c-1) = %s" (MatrixToString (MatrixGetSlice (m0, 0, r-1, 0, c-1)))
 
-let m8 = MatrixGetSlice (m0, 0, 0, 0, 0)
-printfn "MatrixGetSlice (m0, 0, 0, 0, 0) = m8 = %s" (MatrixToString m8)
+printfn "MatrixGetSlice (m0, 0, 0, 0, 0)  = %s" (MatrixToString (MatrixGetSlice (m0, 0, 0, 0, 0)))
 
-let m9 = MatrixGetSlice (m0, 1, 1, 0, 1)
-printfn "MatrixGetSlice (m0, 1, 1, 0, 1) = m9 = %s" (MatrixToString m9)
+printfn "MatrixGetSlice (m0, 1, 1, 0, 1)  = %s" (MatrixToString (MatrixGetSlice (m0, 1, 1, 0, 1)))
+
+printfn "RowConcat (m0, m1) = %s" (MatrixToString (RowConcat (m0, m1)))
+
+printfn "ColConcat (m0, m1) = %s" (MatrixToString (ColConcat (m0, m1)))
+
+printfn "Minor (m0, 0, 0) = %s" (MatrixToString (Minor (m0, 0, 0)))
+
+printfn "Minor (m0, 1, 0) = %s" (MatrixToString (Minor (m0, 1, 0)))
+
+printfn "Minor (m0, -1, 0) = %s" (MatrixToString (Minor (m0, -1, 0)))
+
+printfn "Minor (m0, 0, 1) = %s" (MatrixToString (Minor (m0, 0, 1)))
+
+printfn "Minor (m0, 0, -1) = %s" (MatrixToString (Minor (m0, 0, -1)))
+
+printfn "Det m0 = %f" (Det m0)
+
+let m7 = ColConcat (RowConcat (m0, m1), RowConcat (m2, m3))
+printfn "m7 = ColConcat (RowConcat (m0, m1), RowConcat (m2, m3)) = %s" (MatrixToString m7)
+printfn "Det m7 = %f" (Det m7)
