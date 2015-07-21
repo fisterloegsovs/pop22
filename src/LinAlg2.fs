@@ -29,6 +29,18 @@ let rec dot = function
 
 let mul (xss,yss) = List.fold (fun ex xs -> (List.fold (fun ey ys -> (dot (ys,xs))::ey) [] (tr yss))::ex) [] xss
 
+let rec listSkip n xs = 
+  match (n, xs) with
+  | 0, _ -> xs
+  | _, [] -> []
+  | n, _::xs -> listSkip (n-1) xs
+
+let rec listTake n xs = 
+  match (n, xs) with
+  | 0, _ -> []
+  | _, [] -> []
+  | n, x::xs -> x::listTake (n-1) xs
+
 type Vector = V of float list
 let length (V(xs)) = List.length xs
 type Vector with
@@ -45,11 +57,13 @@ type Vector with
       dot (xs,ys)
   static member ( ~- ) (V(xs)) = (-1.0)*V(xs)
   static member ( - ) (V(xs),V(ys)) = V(xs) + (- V(ys))
+let VectorGetSlice (V(xs), rowStart, rowFinish) = V(xs |> listSkip rowStart |> listTake (rowFinish-rowStart+1))
 let VectorNorm (V(xs)) = sqrt(V(xs) * V(xs))
+let VectorToList (V(xs)) = xs
 let VectorToString = function
   | (V(x::xs)) -> "[ " + (string x) + (List.fold (fun e x -> e+", "+(string x)) "" xs) + " ]"
   | V([]) -> "[]"
-
+  
 type Matrix = M of float list list
 let rows (M(xss)) = List.length xss
 let cols = function
@@ -77,6 +91,12 @@ type Matrix with
           M(mul (xss,yss))
   static member ( ~- ) (M(xss)) = (-1.0)*M(xss)
   static member ( - ) (M1,M2) = M1 + (- M2)
+(*
+let MatrixGetSlice (V(xss), rowStart, rowFinish, colStart, colFinish) =
+  let xss' = xss |> listSkip rowStart |> listTake (rowFinish-rowStart+1)
+  List.map (fun xs -> xs |> listSkip colStart |> listTake (colFinish-colStart+1)) xss'
+*)
+let MatrixToListList (M(xss)) = xss
 let MatrixToString = function
   | (M(xs::xss)) -> "[ " + (VectorToString (V(xs))) + (List.fold (fun e xs -> e+", "+(VectorToString (V(xs)))) "" xss) + " ]"
   | (M([])) -> "[[]]"
@@ -101,6 +121,16 @@ printfn "v3*v4 = v5 = %f" v5
 
 let v6 = VectorNorm v3
 printfn "VectorNorm v3 = v6 = %f" v6
+
+let n = length v0
+let v7 = VectorGetSlice (v0, 0, n-1)
+printfn "VectorGetSlice (v0, 0, (length v0) -1) = v7 = %s" (VectorToString v7)
+
+let v8 = VectorGetSlice (v0, 0, 0)
+printfn "VectorGetSlice (v0, 0, 0) = v8 = %s" (VectorToString v8)
+
+let v9 = VectorGetSlice (v0, 1, 2)
+printfn "VectorGetSlice (v0, 1, 2) = v9 = %s" (VectorToString v9)
 
 let m0 = M([[1.0; 2.0];[3.0;4.0]])
 printfn "m0 in R^(%dx%d) =\n%s" (rows m0) (cols m0) (MatrixToString m0)
