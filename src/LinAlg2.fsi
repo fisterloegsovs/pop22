@@ -1,40 +1,48 @@
 module LinAlg
 [<Sealed>]
 type Vector =
-  static member ( ~- ) : Vector -> Vector
-  static member ( + )  : Vector * Vector -> Vector
-  static member ( - )  : Vector * Vector -> Vector
-  static member ( * )  : float  * Vector -> Vector
-  static member ( * )  : Vector * Vector -> float
-val make : float list -> Vector
-val coord: Vector -> float list
-val norm : Vector -> float
+  | V of float list
+  with
+    static member ( + ) : Vector * Vector -> Vector
+    static member ( * ) : a:float * Vector -> Vector
+    static member ( * ) : Vector * Vector -> float
+    static member ( - ) : Vector * Vector -> Vector
+    static member ( ~- ) : Vector -> Vector
+  end
+val length : Vector -> int
+val VectorGetSlice : Vector * rowStart:int * rowFinish:int -> Vector
+val VectorNorm : Vector -> float
+val VectorToList : Vector -> float list
+val VectorToString : Vector -> string
+val VectorOne : int -> Vector
+val VectorRandom : int -> Vector
     
-type Matrix = class
-  new : a2DArray:float [,] -> Matrix
-  new : rows:int * cols:int -> Matrix
-  val private _array: float [,]
-  member Item : a:int * b:int -> float with get
-  member Item : a:int * b:int -> float with set
-  member private Copy : a:float [,] * ?row:int * ?col:int -> Matrix
-  member private CopyCol : a:float [] * ?row:int * ?col:int -> Matrix
-  member private CopyRow : a:float [] * ?row:int * ?col:int -> Matrix
-  member cols : int
-  member rows : int
-  member ToArray : float [,]
-  member ColConcat : other:Matrix -> Matrix
-  member RowConcat : other:Matrix -> Matrix
-  member Add : other:Matrix -> Matrix
-  member Mul : a:float -> Matrix
-  member Mul : other:Matrix -> Matrix
-  member Cramer : b:Matrix -> Matrix
-  member GetSlice : row:int * colStart:int option * colFinish:int option -> Matrix
-  member GetSlice : rowStart:int option * rowFinish:int option * col:int -> Matrix
-  member GetSlice : rowStart:int option * rowFinish:int option * colStart:int option * colFinish:int option -> Matrix
-  member Inverse : unit -> Matrix
-  member Minor : i:int * j:int -> Matrix
-  member Det : float
-  member Transpose : Matrix
-  static member Id : rows:int -> Matrix
-  static member Random : rows:int -> cols:int -> Matrix
-end
+type Matrix =
+  | M of float list list
+  with
+    static member ( + ) : Matrix * Matrix -> Matrix
+    static member ( * ) : a:float * Matrix -> Matrix
+    static member ( * ) : Matrix * Matrix -> Matrix
+    static member ( * ) : Matrix * Vector -> Matrix
+    static member ( * ) : Vector * Matrix -> Matrix
+    static member ( - ) : M1:int * M2:int -> int
+    static member ( ~- ) : Matrix -> Matrix
+  end
+val rows : Matrix -> int
+val cols : Matrix -> int
+val transpose : Matrix -> Matrix
+val VectorToMatrix : Vector -> Matrix
+val MatrixToVector : Matrix -> Vector
+val MatrixGetSlice : Matrix * rowStart:int * rowFinish:int * colStart:int * colFinish:int -> Matrix
+val RowConcat : Matrix * Matrix -> Matrix
+val ColConcat : Matrix * Matrix -> Matrix
+val Minor : Matrix * int * int -> Matrix
+val Det : Matrix -> float
+val Cramer : Matrix * Vector -> Vector
+val Inverse : Matrix -> Matrix
+val Kronecker : Matrix * Matrix -> Matrix
+val MatrixToListList : Matrix -> float list list
+val MatrixToString : Matrix -> string
+val trace : Matrix -> float
+val id : int -> Matrix
+val MatrixRandom : int * int -> Matrix
