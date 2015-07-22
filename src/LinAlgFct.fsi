@@ -1,4 +1,4 @@
-module LinAlg
+module LinAlgFct
 [<Sealed>]
 type Vector =
   | V of float list

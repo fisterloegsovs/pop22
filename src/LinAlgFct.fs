@@ -1,4 +1,4 @@
-module LinAlg
+module LinAlgFct
 (*
 let rec zip = function
   | ([],_)
