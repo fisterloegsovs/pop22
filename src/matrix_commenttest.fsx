@@ -1,12 +1,14 @@
 // To compile and generate documentation file use: fsharpc --doc:test.xml matrix_commenttest.fsx
+
+/// <summary>
+/// A matrix class for basic linear algebra operations.
+/// <param name="M">The number of rows.</param>
+/// <param name="N">The number of cols.</param>
+/// </summary>
 type Matrix(M: int, N: int) =
-  /// <summary>
-  /// A matrix class for basic linear algebra operations.
-  /// <param name="M">The number of rows.</param>
-  /// <param name="N">The number of cols.</param>
-  /// </summary>
   let _array = Array2D.zeroCreate M N
 
+  ///
   member this.Item
     with get(a: int, b: int) = _array.[a, b]
     and set(a: int, b: int) (value:float) = _array.[a, b] <- value
