@@ -1,1 +1,0 @@
-#load "../packages/MathNet.Numerics.FSharp.3.6.0/MathNet.Numerics.fsx"\nopen MathNet.Numerics\nlet v = SpecialFunctions.Gamma(0.5)\nprintfn "%g" v\nopen MathNet.Numerics.LinearAlgebra\nlet m : Matrix<float> = DenseMatrix.randomStandard 50 50\nprintfn "%s" (m.ToString "G5")\nlet d = (m * m.Transpose()).Determinant()\nprintfn "%g" d
