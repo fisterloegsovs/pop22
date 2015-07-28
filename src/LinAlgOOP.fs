@@ -113,16 +113,22 @@ type Matrix = class
     slice.CopyCol(this._array.[rowStart..rowFinish, col])
 
   member this.ColConcat(other: Matrix) =
-    let result = Matrix(this.rows,this.cols+other.cols)
-    result.Copy(this.ToArray) |> ignore
-    result.Copy(other.ToArray, 0, this.cols) |> ignore
-    result
+    if this.rows <> other.rows then
+      invalidArg "other" "The matrix row sizes do not match"
+    else
+      let result = Matrix(this.rows,this.cols+other.cols)
+      result.Copy(this.ToArray) |> ignore
+      result.Copy(other.ToArray, 0, this.cols) |> ignore
+      result
         
   member this.RowConcat(other: Matrix) =
-    let result = Matrix(this.rows+other.rows,this.cols)
-    result.Copy(this.ToArray) |> ignore
-    result.Copy(other.ToArray, this.rows, 0) |> ignore
-    result
+    if this.cols <> other.cols then
+      invalidArg "other" "The matrix column sizes do not match"
+    else
+      let result = Matrix(this.rows+other.rows,this.cols)
+      result.Copy(this.ToArray) |> ignore
+      result.Copy(other.ToArray, this.rows, 0) |> ignore
+      result
 
   member this.Minor(i:int, j:int) =
     let result = Matrix(this.rows-1,this.cols-1)
@@ -175,13 +181,16 @@ type Matrix = class
     result
 
   member this.Mul(other: Matrix) =
-    let result = Matrix(this.rows,other.cols)
-    for i in 0..this.rows-1 do
-      for j in 0..other.cols-1 do
-        result.[i,j] <- 0.0;
-        for k in 0..this.cols-1 do
-          result.[i,j] <- result.[i,j] + this._array.[i,k]*other.[k,j]
-    result
+    if this.cols <> other.rows && this.cols <> other.cols then
+      invalidArg "other" "The matrix number of rows does not match this' number of columns"
+    else
+      let result = Matrix(this.rows,other.cols)
+      for i in 0..this.rows-1 do
+        for j in 0..other.cols-1 do
+          result.[i,j] <- 0.0;
+          for k in 0..this.cols-1 do
+            result.[i,j] <- result.[i,j] + this._array.[i,k]*other.[k,j]
+      result
 
   member this.Cramer(b: Matrix) =
     let x = new Matrix(this.rows, 1)
