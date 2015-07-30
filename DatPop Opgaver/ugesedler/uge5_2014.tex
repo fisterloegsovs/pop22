@@ -1,0 +1,833 @@
+\documentclass[a4paper,12pt]{article}
+
+\title{Introduktion til programmering, ugeseddel 5}
+\author{Version 1.1}% Torben Mogensen
+\date{27.\ september 2014}
+
+\usepackage[top=2cm,left=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{cmap}
+%\usepackage{microtype}
+\hyphenpenalty=750
+
+\usepackage{amsmath}
+%\usepackage{lmodern}
+%\usepackage{mathptmx}
+%\usepackage{libertine}
+%\usepackage[scaled=0.90]{inconsolata}
+%\usepackage[scaled=0.83]{beramono}
+
+\usepackage{enumerate}
+\usepackage{graphics,graphpap}
+\usepackage{listing}
+\usepackage{fancyvrb}
+\usepackage{graphics,tikz}
+\usepackage{listings}
+\usepackage{framed}
+\usepackage{upquote}
+
+\lstset{
+    language=ML,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    basicstyle=\footnotesize\ttfamily,
+    %numberstyle=\footnotesize,
+    %numbers=left,
+    %stepnumber=1,
+    numbersep=10pt,
+    tabsize=2,
+    breaklines=false,
+    aboveskip={0.7\baselineskip},
+    columns=fixed,
+    escapechar=@
+%    extendedchars=true
+% frame=single,
+% backgroundcolor=\color{lbcolor},
+}
+
+\usepackage{todonotes}
+\usepackage{hyperref}
+\hypersetup{pdftitle={Introduktion til programmering, ugeseddel 5},
+            pdfsubject={},
+            pdfauthor={},
+            pdfkeywords={rekursive datatyper, gensidig rekursion},
+            pdfborder={0 0 0}}
+
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0pt}
+\setlength{\parfillskip}{30pt plus 1 fil}
+
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
+\begin{document}
+\maketitle{} Den femte undervisningsuge handler om \textit{rekursive
+  datatyper}, \textit{parameteriserede datatyper} og \textit{gensidig
+  rekursion}.
+
+
+\subsubsection*{Omrokering:}
+Lige som i sidste uge bytter vi rundt på fredagsforelæsningen og
+mandagens repetitionstime.  Mandag morgen vil dække nyt stof og
+fredagen vil blive brugt til repetition.
+
+Ligeledes har vi igen fordelt tirsdagsøvelserne mellem tirsdag og
+fredag, så den første time begge dage bruges på at gennemgå øvelser
+fra ugesedlen og den anden time bruges på at arbejde på
+afleveringsopgaverne.
+
+\section{Plan for ugen}
+\label{sec:pensum-og-plan}
+
+\subsubsection*{Mandag}
+Rekursive datatyper, gennemløb af træer.
+
+\textit{Pensum:} HR: 8.1-8.3.
+
+\subsubsection*{Tirsdag}
+Gensidig rekursion og parametriserede datatyper.
+
+\textit{Pensum:} HR: 8.4-8.6
+
+\subsubsection*{Fredag}
+Repetition af ugens pensum. Se ovenfor.
+
+\newpage
+\section{Mandagsopgaver}
+\label{sec:mandagsopgaver}
+
+\textit{Emner:} Rekursive datatyper, tilfældige tal.
+
+Vi kan definere en datatype, der repræsenterer en udvælgelsesproces,
+der foretager tilfældige valg med en given sandsynlighed og til sidst
+ender med et specifikt tal:
+
+\begin{lstlisting}
+datatype selection = Pick of int
+                   | Choose of real * selection * selection
+\end{lstlisting}
+
+Udvælgelsesprocessen \lstinline{Pick}\,$n$ siger, at man altid
+(altså med sandsynlighed 1.0) vælger tallet $n$.
+
+Udvælgelsesprocessen \lstinline{Choose}\,$(p,\,s,\,t)$ vælger mellem
+(med sandsynlighed $p$, hvor $0.0 < p < 1.0$), at fortsætte med
+udvælgelsesprocessen $s$ eller (med sandsynlighed $1.0-p$) at
+fortsætte med udvælgelsesprocessen $t$.
+
+Man kan betragte en udvælgelsesproces som et binært træ med
+sandsynligheder i forgreningerne og heltal i bladene.  For eksempel
+kan udvælgelsesprocessen
+
+\begin{lstlisting}
+val s1234 = Choose (0.3,
+                    Choose (0.4, Pick 1, Pick 2),
+                    Choose (0.2, Pick 3, Pick 4))
+\end{lstlisting}
+
+tegnes som træet
+
+\setlength{\unitlength}{1mm}
+\begin{picture}(100,50)(-20,0)
+\put(50,47){\makebox(0,0){0.3}}
+\put(30,25){\makebox(0,0){0.4}}
+\put(70,25){\makebox(0,0){0.2}}
+\put(20,5){\makebox(0,0){1}}
+\put(40,5){\makebox(0,0){2}}
+\put(60,5){\makebox(0,0){3}}
+\put(80,5){\makebox(0,0){4}}
+\put(33,29){\line(1,1){15}}
+\put(67,29){\line(-1,1){15}}
+\put(22,9){\line(1,2){6}}
+\put(38,9){\line(-1,2){6}}
+\put(62,9){\line(1,2){6}}
+\put(78,9){\line(-1,2){6}}
+\end{picture}
+
+En udvælgelse med udvælgelsesprocessen \lstinline{s1234} sker på
+følgende måde:
+
+\begin{enumerate}[1.]
+
+\item Man starter i roden (toppen) af træet.
+\item Med sandsynlighed $0.3$ vælger man venstre undertræ og med
+  sandsynlighed $1.0-0.3=0.7$ højre undertræ.
+\item Hvis man derefter står i den knude, der er markeret 0.4, vælger
+  man denne knudes venstre undertræ (tallet 1) med sandsynlighed $0.4$
+  og knudens højre undertræ (tallet 2) med sandsynlighed
+  $1.0-0.4=0.6$.
+\item Hvis man efter trin 2 i stedet står i knuden markeret med 0.2,
+  vælger man denne knudes venstre undertræ (tallet 3) med
+  sandsynlighed $0.2$ og knudens højre undertræ (tallet 4) med
+  sandsynlighed $1.0-0.2=0.8$.
+\end{enumerate}
+
+For at komme til tallet 1 skal man altså først træffe et valg med
+sandsynlighed $0.3$ og derefter et valg med sandsynlighed $0.4$, så
+sandsynligheden for at komme fra roden af træet ned til tallet 1 er
+$0.3\cdot0.4 = 0.12$.  Tilsvarende er sandsynligheden for at ende med
+tallet 2 lig med $0.3\cdot0.6 = 0.18$, sandsynligheden for at ende med
+tallet 3 er $0.7\cdot0.2=0.14$ og sandsynligheden for at ende med 4 er
+$0.7\cdot0.8=0.56$.  Bemærk, at $0.12+0.18+0.14+0.56 = 1.0$, som
+forventet.
+
+Det samme tal kan stå i flere \lstinline{Pick}-knuder i samme
+udvælgelsesproces.  Udvælgelsesprocessen
+\lstinline{Choose (0.3, Pick 7, Pick 7)}
+er således en proces, der altid vælger tallet \lstinline{7}.
+
+En udvælgelsesproces siges at være \emph{valid}, hvis alle de
+sandsynligheder $p$, der forekommer i knuder af formen
+\lstinline{Choose}\,$(p,\,s,\,t)$, ligger skarpt mellem $0.0$ og
+$1.0$.
+
+\begin{enumerate}[{5}M1]
+
+\item En terning med $n$ sider nummereret fra 1 til og med $n$ siges
+  at være \emph{retfærdig}, hvis alle sider kommer op med lige stor
+  sandsynlighed (som dermed er $\frac{1}{n}$).
+
+  Skriv en funktion \lstinline{fairDie : int -> selection}, der givet
+  et tal $n$, hvor $1 <= n$, returnerer en udvælgelsesproces, der
+  svarer til en retfærdig terning med siderne 1 til og med $n$.
+
+  Kaldet \lstinline{fairDie 2} kan for eksempel returnere
+  udvælgelsesprocessen\newline
+  \lstinline{Choose (0.5, Pick 2, Pick 1)} og kaldet
+  \lstinline{fairDie 3} kan returnere\newline
+  \lstinline{Choose (0.333333333333, Pick 3, Choose (0.5, Pick 2, Pick 1))}
+
+  \textbf{Vink:} Kig på strukturen i eksemplerne herover og brug din
+  forståelse af denne til at udfylde skitsen
+
+\begin{lstlisting}
+fun fairDie 1 = ...
+  | fairDie n = Choose (..., ..., fairDie (n-1))
+\end{lstlisting}
+
+\item Skriv en funktion \lstinline{isValid : selection -> bool}, der
+  afgør om en udvælgelsesproces er valid.
+
+I alle de følgende opgaver kan det antages, at udvælgelsesprocesser er
+valide.
+
+\vspace{2ex}
+\hrule
+\vspace{2ex}
+
+Vi bruger i den følgende opgave modulet \lstinline{Random},
+der omhandler generering af tilfældige tal\footnote{Eller mere præcist
+  \emph{pseudotilfældige} tal, da de er konstrueret gennem en
+  deterministisk proces.}.  Du får brug for funktionerne
+
+\begin{lstlisting}
+Random.newgen : unit -> Random.generator
+Random.random : Random.generator -> real
+\end{lstlisting}
+
+Kaldet \lstinline{Random.newgen ()} returnerer en
+tilfældighedsgenerator $g$.\newline Kaldet
+\lstinline{Random.random}\,$g$, hvor $g$ er en generator, returnerer
+et tilfældigt tal mellem 0.0 og 1.0.  Et eksempel på brug af
+funktionerne til at lave et par af to tilfældige tal mellem 0.0 og 1.1
+er vist herunder.
+
+\begin{lstlisting}
+- load "Random";
+> val it = () : unit
+- val g = Random.newgen ();
+> val g = <generator> : generator
+- (Random.random g, Random.random g);
+> val it = (0.427284102155, 0.363904911729) : real * real
+-
+\end{lstlisting}
+
+
+\item Skriv en funktion
+  \lstinline{randomPick : selection -> Random.generator -> int},
+  der returnerer et tal, der er udvalgt fra udvælgelsesprocessen med
+  de sandsynlighder, denne foreskriver.
+
+  Kaldet 
+  \lstinline{randomPick g (Choose (0.3, Pick 7, Pick 9))},
+  hvor \lstinline{g} er en tilfældighedsgenerator, skal altså
+  returnere \lstinline{7} i 30\% af kaldene og \lstinline{9} i 70\%
+  af kaldene.  Tilsvarende skal kaldet
+  \lstinline{randomPick g (fairDie 5)} returnere værdier fra 1 til 5
+  med hver 20\% sandsynlighed.
+
+\item Skriv en funktion
+  \lstinline{probabilityOf : selection -> int -> real}, der beregner
+  sandsynligheden for at en valid udvælgelsesproces vil vælge et givet
+  tal.
+
+  Kaldet
+  \lstinline{probabilityOf s1234 1}
+  skal altså returnere \lstinline{0.12}, kaldet
+  \lstinline{probabilityOf s1234 2}
+  skal returnere \lstinline{0.18}, kaldet
+  \lstinline{probabilityOf s1234 3}
+  skal returnere \lstinline{0.14},\newline kaldet
+  \lstinline{probabilityOf s1234 4}
+  skal returnere \lstinline{0.56}, og kaldet
+  \lstinline{probabilityOf s1234}~$n$
+  skal returnere  \lstinline{0.0} for alle andre heltal $n$.
+
+\item Skriv en funktion \lstinline{average : selection -> real}, der
+  beregner den gennemsnitlige værdi af de valg, en valid udvælgelsesproces
+  kan træffe.
+
+Kaldet \lstinline{average s1234} skal altså returnere \lstinline{3.14},
+da $0.12\cdot 1 + 0.18\cdot 2 + 0.14\cdot 3 + 0.56\cdot 4 = 3.14$.
+
+\end{enumerate}
+
+Hvis der er tid til overs, kan I begynde på tirsdagsopgaverne.
+
+%\newpage
+\section{Tirsdagsopgaver}
+\label{sec:tirsdagsopgaver}
+\textit{Emner:} Rekursive datatyper, gennemløb at træer.
+
+\vspace{1ex}
+
+Det forventes, at du inden øvelserne tirsdag har forberedt dig på
+opgaverne ved at løse så mange som muligt på egen hånd.
+
+\vspace{1ex}
+
+\noindent
+Datatypen
+
+\begin{lstlisting}
+datatype leafTree = Leaf of int
+                  | Branch of leafTree * leafTree
+\end{lstlisting}
+
+\noindent
+definerer typen af træer med heltal i bladene og uden data i
+forgreningerne.  Der er altid mindst et blad i træet.  Herunder er
+vist et par eksempler på træer af typen \lstinline{leafTree} både vist
+som SML-udtryk og i grafisk repræsentation.
+
+\setlength{\unitlength}{1mm}
+\begin{picture}(110,55)(-10,-2)
+\put(10,45){\makebox(0,0){\small \lstinline{Leaf 42}}}
+\put(10,23){\makebox(0,0){\lstinline{42}}}
+
+\put(20,50){\line(0,-1){50}}
+
+\put(45,45){\makebox(0,0){\small \lstinline{Branch (Leaf 2, Leaf 7)}}}
+\put(39,16){\makebox(0,0){\lstinline{2}}}
+\put(51,16){\makebox(0,0){\lstinline{7}}}
+\put(45,29){\line(-1,-2){5}}
+\put(45,29){\line(1,-2){5}}
+
+\put(70,50){\line(0,-1){50}}
+
+
+\put(80,45){\makebox(0,0){\small \lstinline{Branch}}}
+\put(101,41){\makebox(0,0){\small \lstinline{(Branch (Leaf 3, Leaf 1),}}}
+\put(86,37){\makebox(0,0){\small \lstinline{Leaf 2)}}}
+\put(79,6){\makebox(0,0){\lstinline{3}}}
+\put(91,6){\makebox(0,0){\lstinline{1}}}
+\put(95,16){\makebox(0,0){\lstinline{2}}}
+\put(85,19){\line(-1,-2){5}}
+\put(85,19){\line(1,-2){5}}
+\put(90,29){\line(-1,-2){5}}
+\put(90,29){\line(1,-2){5}}
+
+\end{picture}
+
+Alle tirsdagsopgaverne omhandler denne slags træer.
+
+\begin{enumerate}[{5}T1]
+\item Skriv en funktion \lstinline{treeSum : leafTree -> int}, der
+  givet et træ returnerer summen af alle træets blade.  For
+  eksempel skal kaldet
+
+  \lstinline{treeSum (Branch (Branch (Leaf 3, Leaf 1), Leaf 2))}
+
+  returnere heltallet \lstinline{6}.
+
+\item Skriv en funktion \lstinline{treeMax : leafTree -> int}, der
+  givet et træ returnerer det største af tallene i alle træets blade.
+  For eksempel skal kaldet
+
+  \lstinline{treeMax (Branch (Branch (Leaf 3, Leaf 1), Leaf 2))}
+
+  returnere heltallet \lstinline{3}.
+
+\item Skriv en funktion \lstinline{tree2List : leafTree -> int list},
+  der givet et træ returnerer en liste af tallene i alle træets blade
+  i den rækkefølge, de forekommer i træet (dvs.\ at bladene i venstre
+  gren af et træ kommer før bladene i højre gren af træet).  For
+  eksempel skal kaldet
+
+  \lstinline{tree2List (Branch (Branch (Leaf 3, Leaf 1), Leaf 2))}
+
+  returnere listen \lstinline{[3, 1, 2]}.
+
+\item Tegn grafisk alle fem træer $t$\,:\,\lstinline{leafTree}, hvor
+  \lstinline{tree2List}\,$t$ returnerer listen \lstinline{[1, 2, 3, 4]}.
+
+\item Er det gennemløb, som \lstinline{tree2List} definerer, et
+  \emph{præordens gennemløb}, et \emph{inordens gennemløb} eller et
+  \emph{postordens gennemløb}?  Giver distinktionen i det hele taget
+  mening for typen \lstinline{leafTree}?  Se HR afsnit 8.3.2 -- 8.3.3
+  for definitoner.
+
+\item Skriv en funktion \lstinline{mirrorTree : leafTree -> leafTree},
+  der givet et træ returnerer en spejling af træet: Alle grene byttes
+  parvis om.  For eksempel skal kaldet
+
+  \lstinline{tree2List (Branch (Branch (Leaf 3, Leaf 1), Leaf 2))}
+
+  returnere træet \lstinline{Branch (Leaf 2, Branch (Leaf 1, Leaf 3))}.
+
+
+\end{enumerate}
+
+\newpage
+\section{Fredagsopgaver}
+\label{sec:fredagsopgaver}
+\textit{Emner:} Parametriserede datatyper og gensidig rekursion.
+
+Det forventes, at du inden øvelserne fredag har forberedt dig på
+opgaverne ved at løse så mange som muligt på egen hånd.
+
+\vspace{1ex}
+
+Fredagsøvelserne vil bruge følgende datatype, der beskriver træer med
+værdier i knuderne og et vilkårligt antal børn til hver knude.  Et
+blad er dermed en knude uden børn:
+
+\begin{lstlisting}
+datatype 'a generalTree = Node of 'a * 'a generalTree list
+\end{lstlisting}
+
+Herunder er vist et par eksempler på træer af typen
+\lstinline{generalTree} både vist som SML-udtryk og i grafisk
+repræsentation.
+
+\setlength{\unitlength}{1mm}
+\begin{picture}(110,55)(-10,-2)
+\put(10,45){\makebox(0,0){\small \lstinline{Node (42, [])}}}
+\put(10,23){\makebox(0,0){\lstinline{42}}}
+
+\put(25,50){\line(0,-1){50}}
+
+\put(35.5,45){\makebox(0,0){\small \lstinline{Node}(true,}}
+\put(52,41){\makebox(0,0){\small \lstinline{[Node(false, [])])}}}
+\put(45,26){\makebox(0,0){\lstinline{true}}}
+\put(45,15){\makebox(0,0){\lstinline{false}}}
+\put(45,23){\line(0,-1){5}}
+
+\put(72,50){\line(0,-1){50}}
+
+
+\put(85,45){\makebox(0,0){\small \lstinline{Node (1.4,}}}
+\put(101.2,41){\makebox(0,0){\small \lstinline{[Node (3.3, []),}}}
+\put(102,37){\makebox(0,0){\small \lstinline{Node (4.7, []),}}}
+\put(103,33){\makebox(0,0){\small \lstinline{Node (0.1, [])])}}}
+\put(95,25){\makebox(0,0){\lstinline{1.4}}}
+\put(82,5){\makebox(0,0){\lstinline{3.3}}}
+\put(95,5){\makebox(0,0){\lstinline{4.7}}}
+\put(108,5){\makebox(0,0){\lstinline{0.1}}}
+\put(94,22){\line(-3,-4){11}}
+\put(95,22){\line(0,-1){14}}
+\put(96,22){\line(3,-4){11}}
+
+\end{picture}
+
+\begin{enumerate}[{5}F1]
+\item Skriv en funktion \lstinline{nodes : 'a generalTree -> int}, der
+  returnerer antallet af knuder i træet.  Anvendt på de tre herover
+  viste træer skal \lstinline{nodes} returnere henholdsvis 1, 2 og 4.
+
+  Brug to gensidigt rekursive funktioner
+  \lstinline{nodes : 'a generalTree -> int} og\newline
+  \lstinline{nodesList : 'a generalTree list -> int}
+
+\item Skriv en version af \lstinline{nodes}, der ikke bruger gensidig
+  rekursion, men bruger \lstinline{List.foldr} eller
+  \lstinline{List.foldl} til at finde antallet af knuder i en liste af
+  træer.
+
+\item Skriv en funktion \lstinline{preOrder : 'a generalTree -> 'a list}, der
+  returnerer en liste af knuderne i træet i et \emph{præordens
+    gennemløb}.  Se HR afsnit 8.3.2 for en definition.
+
+  Skriv \lstinline{preOrder} både ved brug af to gensidigt rekursive
+  funktioner og ved at bruge \lstinline{List.map} og
+  \lstinline{List.concat} til at behandle listen af børn af en knude.
+
+\end{enumerate}
+
+\newpage
+\section{Opgavetema: Geometriske figurer}\label{tema}
+
+Vi bruger i ugeopgaven en datatype \lstinline{figure} (der er en
+generalisering af datatypen, \lstinline{figur}, der blev introduceret
+til mandagsforelæsningen) til at definere geometriske figurer i det
+reelle plan:
+
+\begin{lstlisting}
+type point = real * real   (* et punkt i planen *)
+
+datatype 'col figure
+ = Circle of 'col * point * real  (* farve, center og radius *)
+ | Rectangle of 'col * point * point
+            (* farve, nederste venstre og oeverste hoejre hjoerne *)
+ | Over of 'col figure * 'col figure
+                                 (* foerste figur over anden figur *)
+\end{lstlisting}
+
+\lstinline{Circle }$(c,\,p,\,r)$ definerer en cirkel med farve $c$,
+centrum i $p$ og radius $r$.
+
+\lstinline{Rectangle }$(c,\,bl,\,tr)$ definerer en akseret rektangel
+(dvs.\ med lodrette og vandrette sider) med farve $c$, nederste
+venstre hjørne $bl$ og øverste højre hjørne $tr$.
+
+\lstinline{Over }$(f_1,\,f_2)$ definerer en figur af to underfigurer.
+Hvor de to underfigurer lapper over hinanden, ligger den første
+underfigur øverst.
+
+Bemærk, at koordinatsystemet er som i matematik: Større værdier på
+første koordinat ligger længere mod højre, og større værdier på anden
+koordinat ligger længere oppe.
+
+Bemærk endvidere, at typen \lstinline{figure} er parametriseret over
+farven \lstinline{'col}, så man kan f.eks.\ bruge typen
+\lstinline{InstragraML.colour figure}, hvor farven altså er defineret
+som et RGB-tripel (\lstinline{int * int * int}), eller bruge
+datatypen \lstinline{primaryColours}:
+
+\begin{lstlisting}
+datatype primaryColours = Black | Red | Green | Blue
+                   | White | Cyan | Magenta | Yellow
+\end{lstlisting}
+
+til at lave figurer af typen \lstinline{primaryColours figure}.
+
+Et eksempel på en figur af typen \lstinline{primaryColours figure} er
+
+\begin{lstlisting}
+val redCircleOverBlueSquare =
+      Over (Circle (Red, (0.0, 0.0), 1.8),
+            Rectangle (Blue, (~1.5, ~1.5), (1.5, 1.5)))
+\end{lstlisting}
+
+der definerer en rød cirkel med radius 1.8 og centrum i $(0,0)$ ovenover
+et kvadrat med hjørner i $(-1.5,\,-1.5)$ og $(1.5,\,1.5)$, som vist
+herunder:
+
+\begin{center}
+\setlength{\unitlength}{1cm}
+\begin{picture}(4,4)(-2,-2)
+\put(-1.5,0){\resizebox{3cm}{1.5cm}{\colorbox{blue}{~}}}
+\put(0,0){\textcolor{red}{\scalebox{7.2}{\circle*{0.5}}}}
+%\textcolor{gray}{\graphpaper[1](-2,-2)(4,4)}
+\end{picture}
+\end{center}
+
+En anden figur, der kan bruges til afprøvning i ugeopgaverne, er
+
+\begin{lstlisting}
+val twoAndTwo =
+      Over (Over (Circle (Red, (0.0, 0.0), 1.2),
+                  Circle (Cyan, (2.0, 0.0), 1.3)),
+            Over (Rectangle (Yellow, (1.0, 1.2), (2.5, 2.2)),
+                  Rectangle (Blue, (0.0, 1.0), (1.5, 2.5))))
+\end{lstlisting}
+
+Denne figur viser to overlappende cirkler, rød over cyan, der delvist
+dækker to overlappende rektangler, gul over blå:
+
+\begin{center}
+\definecolor{cyan}{rgb}{0,1,1}
+\setlength{\unitlength}{1cm}
+\begin{picture}(5,4)(-1.5,-1.5)
+\put(0,1.75){\resizebox{1.5cm}{0.75cm}{\colorbox{blue}{~}}}
+\put(1,1.75){\resizebox{1.5cm}{0.5cm}{\colorbox{yellow}{~}}}
+\put(2,0){\textcolor{cyan}{\scalebox{5.2}{\circle*{0.5}}}}
+\put(0,0){\textcolor{red}{\scalebox{4.8}{\circle*{0.5}}}}
+%\textcolor{gray}{\graphpaper[1](-1,-1)(5,4)}
+\end{picture}
+\end{center}
+
+
+\newpage
+\section{Gruppeaflevering}
+\label{sec:gruppeaflevering}
+Gruppeafleveringen obligatorisk.  Alle delspørgsmål skal besvares.
+Opgaven afleveres i Absalon.  Der afleveres en fil pr.\ gruppe, men
+den skal angive alle deltageres fulde navne i kommentarlinjer øverst i
+filen. Filens navn skal være af formen
+\texttt{5G-\textit{initialer}.sml}, hvor initialer er erstattet af
+gruppemedlemmernes initialer. Hvis f.eks.\ Bill~Gates, Linus~Torvalds,
+Steve~Jobs og Gabe~Logan~Newell afleverer en opgave sammen, skal filen
+hedde \texttt{5G-BG-LT-SJ-GLN.sml}. Brug gruppeafleveringsfunktionen i
+Absalon.
+
+Gruppeopgaven giver op til 2 point, som tæller til de 20 point, der
+kræves for eksamensdeltagelse.  Genaflevering kan hæve pointtallet fra
+første aflevering med højest 1 point, så sørg for at gøre jeres bedste
+allerede i første aflevering.
+
+\begin{enumerate}[{5G}1]
+
+\item Skriv en funktion
+  \lstinline{toRGB : primaryColours -> int * int * int},
+  der oversætter en farve af typen \lstinline{primaryColours} til et
+  RGB tripel (sådan som InstragraML repræsenterer farver).  For
+  eksempel skal \lstinline{toRGB Red} returnere
+  \lstinline{(255, 0, 0)} og \lstinline{toRGB Yellow} skal returnere
+  \lstinline{(255, 255, 0)}, da gul dannes ved blanding af rød og grøn.
+
+  Brug RGB-definitionerne fra \lstinline{InstagraML.sml}, hvis du er i
+  tvivl.  For eksempel har \lstinline{RGB.red} værdien
+  \lstinline{(255, 0, 0)}.
+
+\item Skriv en funktion
+  \lstinline{reColour : 'a figure -> ('a -> 'b) -> 'b figure}, der
+  omfarver et billede ved at anvende en farvetransformation på alle
+  elementer i billedet.  Bemærk, at den returnerede figur kan bruge en
+  anden farvetype end den oprindelige. Kaldet
+  \lstinline{reColour redCircleOverBlueSquare toRGB}
+  skal altså returnere værdien
+
+\begin{lstlisting}
+      Over (Circle ((255,0,0), (0.0, 0.0), 1.8),
+            Rectangle ((0,0,255), (~1.5, ~1.5), (1.5, 1.5)))
+\end{lstlisting}
+
+\item Skriv en funktion \lstinline{colourOf : 'a figure -> point -> 'a option},
+  der finder farven af et punkt i en figur.
+
+  Hvis figuren er en cirkel med farve $c$, gives \lstinline{SOME}~$c$,
+  hvis punktet ligger i cirklen og \lstinline{NONE}, hvis punktet
+  ligger udenfor.
+
+  Hvis figuren er en rektangel med farve $c$, gives \lstinline{SOME}~$c$,
+  hvis punktet ligger i rektanglen og \lstinline{NONE}, hvis punktet
+  ligger udenfor.
+
+  Hvis figuren er sammensat af to underfigurer (med konstruktoren
+  \lstinline{Over}) og punktet ligger i første underfigur (altså hvis
+  farven af punktet i denne underfigur er forskellig fra
+  \lstinline{NONE}), returneres punktets farve i denne underfigur.
+  Ellers returneres farven i den anden underfigur (hvilket kan være
+  \lstinline{NONE}).
+
+  For eksempel skal kaldet
+  \lstinline{colourOf redCircleOverBlueSquare (0.0, 0.0)}
+  returnere \lstinline{SOME Red} og kaldet
+  \lstinline{colourOf redCircleOverBlueSquare (3.0, 0.0)}
+  skal returnere \lstinline{NONE}.
+
+  Bemærk, at \lstinline{colourOf} er en generalisering af funktionen
+  \lstinline{erI}, der blev introduceret ved mandagsforelæsningen.
+
+\item Brug \lstinline{colourOf} til at definere en funktion
+  \lstinline{hasAColour : 'a figure -> point -> bool}, der returnerer
+  \lstinline{true}, hvis punktet har en farve forskellig fra
+  \lstinline{NONE} i figuren.
+
+  For eksempel skal kaldet
+  \lstinline{hasAColour redCircleOverBlueSquare (0.0, 0.0)}
+  returnere \lstinline{true} og kaldet
+  \lstinline{hasAColour redCircleOverBlueSquare (3.0, 0.0)}
+  skal returnere \lstinline{false}.
+
+\item Omskriv \lstinline{colourOf}, så den ved behandling af
+  \lstinline{Over} kalder \lstinline{hasAColour} for at se, om et punkt
+  har en farve i første underfigur.  Dermed bliver
+  \lstinline{colourOf} og \lstinline{hasAColour} gensidigt rekursive,
+  så brug nøgleordet \lstinline{and} til at sikre dette.
+
+\item Skriv en funktion
+
+\begin{lstlisting}
+toInstagraML : InstagraML.colour figure * point * int * int * real
+            -> InstagraML.image
+\end{lstlisting}
+
+der tager en figur $f$ (parameteriseret med \lstinline{InstagraML}s
+farvetype \lstinline{(int * int * int)}), et punkt $p$ , en bredde
+$b$, en højde $h$ og en skaleringsfaktor $s$ og returnerer et
+\lstinline{InstagraML} billede.  Baggrundsfarven (der, hvor figuren
+ikke dækker) skal være hvid.
+
+Det genererede billede skal have bredde og højde $(b,\,h)$ i pixels og
+punktet $p$ skal svare til nederste venstre hjørne i billedet (med
+pixelkoordinaterne $(0,0)$).  Skaleringsfaktoren $s$ er størrelsen af
+en pixel målt i den skala, som figuren bruger.
+
+Brug de i afsnit~\ref{tema} viste eksempler til at afprøve din funktion.
+
+\textbf{Vink:} Til denne opgave kan du med fordel bruge funktionen
+
+{\small
+\begin{lstlisting}
+InstagraML.fromFunction
+        : int * int * (int * int -> int * int * int) -> image
+\end{lstlisting}
+}
+
+der konstruerer et billede ud fra en funktion.
+
+I kaldet
+\lstinline{InstagraML.fromFunction}\,$(w,\,h\,f)$ er $w$ bredden af
+det ønskede billede, $h$ er højden af billedet og $f$ er en funktion
+fra koordinater i billedet til farver.  For eksempel vil
+kaldet
+\lstinline{InstagraML.fromFunction (256, 256, fn (x,y) => (x,y,0))}
+lave et billede, der er en glidende overgang mellem hjørner, der er
+sorte, røde, grønne og gule, som vist på billedet herunder.
+
+\vspace{3ex}
+
+\begin{center}
+\scalebox{0.5}{\includegraphics{square.png}}
+\end{center}
+
+\end{enumerate}
+
+
+\newpage
+\section{Individuel aflevering}
+\label{sec:indiv-aflev}
+Den individuelle opgave er obligatorisk.  Alle delspørgsmål skal
+besvares.  Opgaven afleveres i Absalon som en fil med navnet
+\texttt{5I-\textit{navn}.sml}, hvor \texttt{\textit{navn}} er
+erstatttet med dit navn. Hvis du fx hedder Anders~A.~And, skal
+filnavnet være \texttt{5I-Anders-A-And.sml}. Skriv også dit fulde navn
+som en kommentar i starten af filen.
+
+Den individielle opgave giver op til 3 point, som tæller til de 20
+point, der kræves for eksamensdeltagelse.  Genaflevering kan hæve
+pointtallet fra første aflevering med højest 1 point, så sørg for at
+gøre dit bedste allerede i første aflevering.
+
+\vspace{1ex}
+
+\begin{enumerate}[{5I}1]
+
+\item Skriv en funktion \lstinline{reorder : 'a figure -> 'a figure},
+  der bytter om på rækkefølgen af elementerne i figuren, så de
+  element, der i argumentet er øverst, i resultatet er nederst og så
+  videre.
+
+  Kaldet \lstinline{reorder redCircleOverBlueSquare} skal altså
+  returnere figuren\newline
+  \lstinline{Over (Rectangle (Blue, (~1.5, ~1.5), (1.5, 1.5)), Circle (Red, (0.0, 0.0), 1.8))}.
+
+\item Skriv en funktion \lstinline{scale : 'a figure -> real -> 'a figure},
+  der skalerer en figur.  Kaldet \lstinline{scale}\,$f\,s$ skalerer
+  alle koordinater og radier i figuren $f$ ved at gange med $s$ og
+  returnerer den skalerede figur.
+
+  For eksempel skal kaldet \lstinline{scale redCircleOverBlueSquare 2.0}
+  returnere\newline
+  \lstinline{Over (Circle (Red, (0.0, 0.0), 3.6), Rectangle (Blue, (~3.0, ~3.0), (3.0, 3.0)))}.
+
+\item Skriv en funktion \lstinline{move : 'a figure -> real * real -> 'a figure},
+  der flytter en figur.  Kaldet \lstinline{move}\,$f\,(x,y)$ lægger
+  $(x,y)$ til alle koordinater i figuren $f$ og returnerer den
+  flyttede figur.
+
+  For eksempel skal kaldet \lstinline{move redCircleOverBlueSquare (1.0, 2.0)}
+  returnere\newline
+  \lstinline{Over (Circle (Red, (1.0, 2.0), 1.8), Rectangle (Blue, (~0.5, 0.5), (2.5, 3.5)))}.
+
+\item Skriv en funktion \lstinline{toList : 'a figure -> 'a figure list},
+  der givet en figur returnerer en liste af de cirkler og rektangler,
+  der er i figuren, i rækkefølge fra øverst til nederst.
+
+  Kaldet \lstinline{toList redCircleOverBlueSquare}
+  skal altså returnere listen\newline
+  \lstinline{[Circle (Red, (0.0, 0.0), 1.8), Rectangle (Blue, (~1.5, ~1.5), (1.5, 1.5))]}.
+
+\item Skriv en funktion \lstinline{fromList : 'a figure list -> 'a figure},
+  der ud fra en liste af figurer konstruerer en figur, hvor figurerne
+  fra listen er ordnet, så den første figur ligger over den anden osv.
+  Hvis listen er tom, skal undtagelsen \lstinline{Empty} rejses.
+
+  Kaldet\newline
+  \lstinline{fromList [Circle (Red, (0.0, 0.0), 1.8), Rectangle (Blue, (~1.5, ~1.5), (1.5, 1.5))]}
+  skal altså returnere en figur, der er identisk med
+  \lstinline{redCircleOverBlueSquare}.
+
+\item Skriv funktionen \lstinline{fromList} uden eksplicit rekursion
+  ved at bruge \lstinline{List.foldl} eller \lstinline{List.foldr}.
+
+\end{enumerate}
+
+
+%\newpage
+\section{Ugens nød}
+\label{sec:ugens-nod}
+
+Denne uges nød bygger videre på mandagsopgaverne og handler derfor om
+udvælgelsesprocesser af typen \lstinline{selection}.  Vi starter med
+at generalisere typen ved at parameterisere med typen af de værdier,
+der kan udvælges:
+
+
+\begin{lstlisting}
+datatype 'a selection = Pick of 'a
+                      | Choose of real * selection * selection
+\end{lstlisting}
+
+
+\begin{enumerate}[{5N}1]
+\item Skriv en funktion
+\lstinline{product : 'a selection * 'b selection -> ('a * 'b) selection},
+der givet en udvælgelsesproces $f$ for typen \lstinline{'a} og en
+udvælgelsesproces $g$ for typen \lstinline{'b} returnerer en
+udvælgelsesproces $f\times g$ for typen \lstinline{'a * 'b}, sådan at
+$f\times g$ udvælger et par $(a,b)$ med sandsynlighed $pq$ netop hvis
+$f$ udvælger $a$ med sandsynlighed $p$ og $g$ udvælger $b$ med
+sandsynlighed $q$.
+
+For eksempel skal kaldet \lstinline{product (fairDie 2, fairDie 2)}
+returnere en udvælgelsesproces, der returnerer parrene (1,1), (1,2),
+(2,1) og (2,1) hver med sandsynlighed 0.25.
+
+\item Skriv en funktion
+\lstinline{probabilityThat : 'a selection -> ('a -> bool) -> real},
+der givet en udvælgelsesproces $f$ og et prædikat $P$ returnerer
+sandsynligheden for, at $P$ er opfyldt for et valg foretaget af $f$.
+
+For eksempel skal kaldet
+\lstinline{probabilityThat (fairDie 10) (fn n => n mod 3 <> 0)} returnere
+0.7, da 7 ud af de 10 lige sandsynlige udfald ikke er delelige med 3.
+
+\item Skriv en funktion
+\lstinline{conditional : 'a selection -> ('a -> bool) -> 'a selection},
+der givet en udvælgelsesproces $f$ og et prædikat $P$ returnerer
+en udvælgelsesproces, der kun kan returnere elementer $a$ fra
+\lstinline{'a}, hvor $P(a)$ er sand, og hvor sandsynligheden for at
+vælge $a$ er lig med $\frac{p}{q}$, hvor $p$ er sandsynligheden for at
+$f$ udvælger $a$ og $q$ er sandsynligheden for at $f$ udvælger et
+element $b$, hvor $P(b)$ er sand.  Med andre ord er $q$ lig
+med \lstinline{probabilityThat}\,$f$\,$P$.
+
+For eksempel skal kaldet
+\lstinline{conditional (fairDie 10) (fn n => n mod 3 <> 0)} returnere en
+udvælgelsesproces $f$, som returnerer tallene 1, 2, 4, 5, 7, 8 og 10
+med hver sandsynlighed $\frac{0.1}{0.7} = \frac{1}{7}$.
+
+\end{enumerate}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

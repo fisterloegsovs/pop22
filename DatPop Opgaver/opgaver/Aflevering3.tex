@@ -1,0 +1,67 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bbold}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{titling}
+\usepackage{xcolor}
+
+\newsavebox{\selvestebox}
+\newenvironment{colbox}[1]
+  {\newcommand\colboxcolor{#1}%
+   \begin{lrbox}{\selvestebox}%
+   \begin{minipage}{\dimexpr\columnwidth-2\fboxsep\relax}}
+  {\end{minipage}\end{lrbox}%
+   \begin{center}
+   \colorbox[HTML]{\colboxcolor}{\usebox{\selvestebox}}
+   \end{center}}
+
+\author{Hans Jacob Teglbjærg Stephensen}
+
+\begin{document}
+
+\title{POP Afleveringopgave 3}
+
+\maketitle
+
+\section{Opgave 1}
+Dette er en opgave i at forstå hvordan et stykke kode bliver eksekveret(dvs. udført eller brugt) af en computer. Betragt følgende Java kode.
+
+\begin{Verbatim}[numbers=left,numbersep=5pt]
+public class Confusion
+{
+    public static void main(String[] args) {
+        int a = 2;
+        int b = -1;
+        int c = 3;
+        int result;
+
+        result = c*a;
+        result *= b*a*b+b;
+        if (result > 0) {
+            result = -result;
+        } else if (result < 0) {
+            result *= b;    
+        } else {
+            a = b;
+        }
+        System.out.println(result);
+    }
+}
+\end{Verbatim}
+
+
+\section{Opgave 2}
+
+\section{Opgave 3}
+
+\end{document}

@@ -1,0 +1,100 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bbold}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{titling}
+\usepackage{xcolor}
+
+\newsavebox{\selvestebox}
+\newenvironment{colbox}[1]
+  {\newcommand\colboxcolor{#1}%
+   \begin{lrbox}{\selvestebox}%
+   \begin{minipage}{\dimexpr\columnwidth-2\fboxsep\relax}}
+  {\end{minipage}\end{lrbox}%
+   \begin{center}
+   \colorbox[HTML]{\colboxcolor}{\usebox{\selvestebox}}
+   \end{center}}
+
+\author{Hans Jacob Teglbjærg Stephensen}
+
+\begin{document}
+
+\title{POP Afleveringopgave 1}
+
+\maketitle
+
+\section{Opgave 1}
+Denne opgave handler om at forstå skreven kode, at blive bekendt med objekter (klasser), og at få træning i at bruge forskellige resourcer til at finde information om kode. Betragt følgende Java kode.
+
+\begin{Verbatim}[numbers=left,numbersep=5pt]
+public class diceGame
+{
+    public static void main(String[] args)
+    {
+        int player1_value;
+        int player2_value;
+        Dice playDice = new Dice();
+        
+        playDice.roll();
+        player1_value = playDice.getValue();
+        
+        playDice.roll();
+        player2_value = playDice.getValue();
+        
+        System.out.println("Player 1 one got:");        
+        System.out.println(player1_value);
+        System.out.println("Player 2 one got:");        
+        System.out.println(player2_value);
+    }
+}
+
+public class Dice
+{
+    private int value;
+    private Random rand = new Random();  
+    
+    public Terning()
+    {
+        value = this.roll()
+    }
+    public roll()
+    {
+        value = rand.nextInt(6)+1;
+    }
+    public getValue()
+    {
+        return value;
+    }
+}
+\end{Verbatim}
+
+\begin{enumerate}
+\item \textbf{Delopgave 1:} I koden er defineret to objekter. Beskriv hvad de to objekter repræsenterer (Hvad er deres formål)?
+\item \textbf{Delopgave 2:} I koden er på linje 25 deklareret en variabel \textit{rand} af typen Random med en constructor Random(). Hvad bruges Random til? (Hint: Google kan være til hjælp)
+\item \textbf{Delopgave 3:} På linje 29 er brugt referencen \textit{this}. Hvad refererer \textit{this} til? (Hint: Lærebogen kan være til hjælp. Slå evt. op bag i)
+\item \textbf{Delopgave 4(evt.):} Unit Testing er beskrevet i \textit{Horstmann 2.8}. Hvordan kunne man udføre Unit Testing på dette program?
+\end{enumerate}
+
+\section{Opgave 2}
+
+Denne opgave handler om at skrive sin egen kode. Vi ønsker at skrive et objektet som kan repræsentere en studerende. Du opfordres desuden til selv at bygge på objektet efter egen smag.\\
+
+\noindent
+Objektet skal som minimum indeholde:
+\begin{enumerate}
+\item Variabler til at indeholde den studerenes navn og alder.
+\item En constructor som tager navn og alder som parameter, og sætter objektets variabler det passer (Hint: Se evt. BankAccount eksemplet i \textit{Horstmann}).
+\item En medlems-funktion som printer navn og alder til skærmen.
+\end{enumerate}
+
+\end{document}
