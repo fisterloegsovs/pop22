@@ -8,7 +8,7 @@ efter funktionsprogrammeringsparadigmet således:
 Først laves en dll af modulet (interface og implemenation) samt en xml
 af documentationen:
 
-  fsharpc —doc:LinAlgFct.xml -a LinAlgFct.{fsi,fs}
+  fsharpc --doc:LinAlgFct.xml -a LinAlgFct.{fsi,fs}
 
 Så laves en exe af test-programmet og dll’en:
 
