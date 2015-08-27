@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+\hypersetup{pdftitle={Introduktion til programmering, ugeseddel 1},
+            pdfsubject={},
+            pdfauthor={},
+            pdfkeywords={fsx, rekursion, funktioner},
+            pdfborder={0 0 0}}
+\newcommand{\fs}{\texttt{F\#} }
+\newcommand{\fsi}{\texttt{F\# Interactive} }
+\newcommand{\fsc}{\texttt{F\# Compiler} }
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavsn Universitet\\Opgaveseddel 1 - gruppeopgave}
+\author{Jon Sporring}
+\date{31.\ august - 8.\ september}
+
+\begin{document}
+\maketitle
+
+Velkommen til kurset ``Programmering og Problemløsning''.
+
+Dette er den første af i alt~12 \emph{opgavesedler}. Opgavesedlerne indeholder information om opgaver \dots samt diverse praktisk information og perspektivering af ugens pensum.
+
+Den første undervisningsuge har til formål at gøre dig fortrolig med
+redigering og afvikling af programmer med Emacs og \fsi fsi (fsharpi på linux).
+
+Der er ingen obligatoriske opgaver i uge 1, men der er stillet en
+gruppeopgave og en individuel opgave som træning til de efterfølgende obligatoriske opgaver. Det anbefales stærkt, at aflevere begge opgaver. Der gives feedback til jeres afleveringer, som kan være nyttig til de senere opgaver.  Denne uges opgaver kan I aflevere så mange gange I lyster og få ny feedback, så I kan øve jer i at lave en perfekt aflevering.  Giv jeres instruktor besked (email) ved nye afleveringer.
+
+Vi bruger følgende lærebøger:
+
+\begin{itemize}
+\item Hansen \& Rischel: \textit{Functional Programming Using F\#},
+  Cambridge University Press 2013. Vi forkorter denne som ``HR''.
+\end{itemize}
+
+Vi antager at du allerede har anskaffet dig bøgerne ved kursusstart. De kan begge købes i Polyteknisk Boghandel i Biocenteret.
+
+
+
+
+
+\SetDate[01/09/2015] % Første tirsdag i blok 1, 2015
+\begin{enumerate}
+\item \AdvanceDate[7] \gruppe{\today}{
+    \begin{enumerate}
+  \item What can you make with 10
+    blocks? a) Use pen and paper, and write a program. b) Simulate the
+    computer and describe, what is shown/computed. c) Implement it in
+    Scratch and compare. 
+  \item Design a game with 2-5 moveable sprites,
+    clickable content, hide-show, approximately 1 minutes
+    game-time. 
+  \item Write report on game in LaTeX: max 3 pages, must
+    include the following sections: Introduction (Introduktion),
+    Design and program description (Design- og programbeskrivelse),
+    Test (afprøvning), Conclusion (Konklusion). Hand-in: game in
+    class' group and report as latex and pdf.
+  \end{enumerate}
+}{Goal: Get started,
+    introduction to Scratch and imperative programming (statements,
+    variables, loops, boolean expressions, and conditions. minor
+    emphasism on: threads, events, and messages), make a program of
+    moderate complexity, introduction to the design process,
+    introduction to peer review/feedback, make a report in
+    latex. Monday: Get startet, upload a program to class
+    project, start on 10 block program. Tuesday: Design a game (no
+    computer), Friday-Monday: Implement game-test-improve. Tuesday:
+    Write report}
+\item \AdvanceDate[7] \individuel{\today}{
+    \begin{enumerate}
+    \item HR: 1.1, 2, 4, 5, 8, 
+    \item HR: 2.1, 8, 9, 10, 13. 
+    \item Write a report in LaTeX where each exercise is an individual
+      subsection, including the program, the result when run, and a
+      max 3 line description of the solution. Hand-in: One zip file
+      including a single source file for each exercise, that is
+      compilable with fsharpc. Naming convention must be,
+      \begin{quote}
+        \lstinline|<instructor's-initial>_<your-name>_<exericse-number>.fsk|
+      \end{quote}
+    \end{enumerate}
+    }{Goal: Get started with
+  fsharp/mono and particularly fsharpc. Introduction to functional programming, Use the automatic code
+  correction system. Programming concepts: values/bindings, types, functions,
+  recursions, 2-tuples, environment, numbers, booleans, \texttt{unit},
+  precedence and associations, characters and strings, operators. }
+\item \AdvanceDate[7] \individuel{\today}{HR: 3.1, 2, 4, 5, 6, 7.
+    Extra: Skriv en funktion
+    \begin{quote}
+      \lstinline|solve2 : float * float * float -> float * float|,
+    \end{quote}
+    sådan at
+    \lstinline|solve2 a b c| 
+    giver de to løsninger for $x$ i ligningen $a x^2+b x+ c=0$,
+    såfremt $b^2-4ac \geq 0$. Du behøver ikke at tage stilling til
+    tilfældet $b^2-4 a c < 0.$. Vink: Kvadratrodsfunktionen hedder
+     \lstinline|sqrt|
+    . }{Goal: lean group work, programming concepts: tuples, records,
+    local bindings, invariants, enumeration types, exceptions}
+\item \AdvanceDate[7] \gruppe{\today}{HR: 4.1, 4, 9, 13, 17, 22,
+    23}{Lists, recursion over lists, polymorphisms, value restriction}
+\item \AdvanceDate[7] \individuel{\today}{HR: 5.1, 3, 7, 11}{Programming concepts: Lists, sets, and maps.} % 2 ugers opgave
+\item \AdvanceDate[14] \gruppe{\today}{HR: 6.1, 2, 6}{Finite trees,
+    tree traversal}
+\item \AdvanceDate[7] \gruppe{\today}{På vej}{Unit test}
+\item \AdvanceDate[28] \individuel{\today}{HR: 7.1, 4, 5, 7,
+    9}{Modules, signature and implementation files, brief introduction
+    to classes and objects in fsharp}  % mellemuge 
+\item \AdvanceDate[7] \gruppe{\today}{HR: 8.1, 2, 3, 5 }{Imperative
+    programming in Fsharp, mutable variables, arrays.}
+\item \AdvanceDate[14] \gruppe{\today}{På vej}{Klasser, objekter, design}
+\item \AdvanceDate[28] \gruppe{\today}{På vej}{Nedarvning og brugergrænseflader}  %
+\item \AdvanceDate[7] \individuel{\today}{På vej}{Opsamlingsprojekt}  %
+\end{enumerate}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
