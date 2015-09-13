@@ -9,10 +9,11 @@
 \graphicspath{{figures/}}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{1em}
+\usepackage{hyperref}
 
 \title{Programmering og Problemløsning\\Datalogisk Institut,
   Københavns Universitet\\Uge(r)seddel 3 - individuel opgave}
-\author{Jon Sporring}
+\author{Jon Sporring og Torben Mogensen}
 \date{Deadline  22.\ september}
 
 \begin{document}
@@ -21,8 +22,8 @@
 I denne periode skal I arbejde individuelt. Formålet er at arbejde med:
 \begin{itemize}
 \item tupler og records
-\item mærkater (tags) og enumerede typer
 \item selvdefinerede operatorer
+\item mærkater (tags) og enumererede typer
 \item fejlhåndtering og undtagelser
 \end{itemize}
 
@@ -30,21 +31,35 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver.
 
 Øve-opgaverne er:
 \begin{description}
-\item[3.0] HR: 3.1, 3.2, 3.5, 3.6, 3.7 
+\item[3.0] HR: 3.1, 3.2, 3.5, 3.6, 3.7
+\item[3.1] Udvid typen Shape fra afsnit 3.8 med en konstruktør
+  Rectangle, der tager en længde og en bredde som argumenter.  Udvid
+  derefter funktionerne area og isShape til at håndtere denne
+  konstruktør. Bemærk i øvrigt, at der er en trykfejl i area på side
+  61 ("raise" skal slettes).
+\item[3.2] Lav en funktion \lstinline|scale : float * Shape -> Shape|, sådan, at \lstinline|scale (s,f)| skalerer figuren \lstinline|f|, så den bliver \lstinline|s| gange større. Hvis \lstinline|s <= 0|, skal \lstinline|failwith| kaldes med en passende besked.  Argumenter for, at hvis \lstinline|s>0|, så er \lstinline|isShape (scale (s,f)) = isShape f|. 
 \end{description}
+Trykfejlen og andre rettelser til bogen kan man læse mere om på \url{http://www.imm.dtu.dk/~mire/FSharpBook/Corrections.html}.
 
 Afleveringsopgaven er:
 \begin{description}
-\item[3.1] HR  3.4
-\item[3.2] Skriv en funktion, der tager 2 \lstinline|StraightLine| og
-  returnerer skæringspunktet mellem dem, hvis det eksisterer og i
-  modsat fald skal fejlsituationen håndteres passende.
+\item[3.3] HR  3.4
+\item[3.4] Skriv en funktion, der tager 2 \lstinline|StraightLine| og
+  returnerer skæringspunktet mellem dem som en tuple
+  \lstinline|(x,y)|. Hvis det ikke eksisterer en løsning skal der
+  kastes en undtagelse (exception).
+\item[3.5] Modificer din løsning i opgave 3.4 til istedet for at kaste
+  en untagelse benytter option-typen, altså
+  \lstinline|None|, hvis der ingen løsning er og
+  \lstinline|Some (x,y)|, hvis \lstinline|(x,y)| er en løsning.
+\item[3.6] Løs HR 3.4, men definer en record-type \lstinline|Line| med felterne \lstinline|a| og \lstinline|b| til at repræsentere en linje.  F.eks. er linjen $y=3x+4$ repræsenteret med recorden \lstinline|{a=3.0; b=4.0}|.
 \end{description}
 Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF, samt en fsx tekstfil med løsningen for hver delopgave, som kan oversættes med fsharpc og hvis resultat kan køres med mono. Det hele skal samles i en zip fil efter sædvanlig navnekonvention:
 \begin{quote}
-  \lstinline|<instructor's-initial>_<firstname.lastname>_<exercise-number>.fsx|
+  \lstinline|<instructor's-initial>_<firstname.lastname>_<exercise-number>.zip|
 \end{quote}
-I zip filen skal en delopgave navngives ved opgavenummer således at filen for opgave 1.5 hedder \lstinline|opg1_5.fsx|.
+I zip filen skal en delopgave navngives ved opgavenummer, således at
+filen for opgave 3.1 hedder \lstinline|opg3_1.fsx|, osv..
 
 \flushright God fornøjelse.
 \end{document}
