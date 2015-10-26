@@ -16,10 +16,11 @@ let rec writeFile (stream : System.IO.StreamWriter) = function
   | (l : string) :: ls -> stream.WriteLine l; writeFile stream ls
   | _ -> ()
 
+let reverseString (s : string) = System.String(Array.rev (s.ToCharArray()))
+
 let rec sillyWriteFile (stream : System.IO.StreamWriter) = function
   | (l : string) :: ls ->
-    let reversed = System.String(Array.rev (l.ToCharArray()))
-    stream.WriteLine reversed
+    stream.WriteLine (reverseString l)
     sillyWriteFile stream ls
   | _ -> ()
 
