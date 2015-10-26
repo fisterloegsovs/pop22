@@ -13,8 +13,15 @@ let rec readFile (stream : System.IO.StreamReader) =
     []
 
 let rec writeFile (stream : System.IO.StreamWriter) = function
-  | l : string :: _ -> stream.WriteLine l 
-  | [] -> ()
+  | (l : string) :: ls -> stream.WriteLine l; writeFile stream ls
+  | _ -> ()
+
+let rec sillyWriteFile (stream : System.IO.StreamWriter) = function
+  | (l : string) :: ls ->
+    let reversed = System.String(Array.rev (l.ToCharArray()))
+    stream.WriteLine reversed
+    sillyWriteFile stream ls
+  | _ -> ()
 
 let x = System.IO.Directory.GetFiles(".")
 printfn "Directory contains: %A" x
@@ -23,7 +30,9 @@ let inputFilename = documentFileName "Type input filename:"
 System.Console.Write "Type output filename:"
 let outputFilename = System.Console.ReadLine ()
   
-use inputStream = System.IO.File.OpenText inputFilename
+let inputStream = System.IO.File.OpenText inputFilename
 let linesInFile = readFile inputStream
 
-use outputStream = System.IO.File.CreateText outputFilename
+let outputStream = System.IO.File.CreateText outputFilename
+sillyWriteFile outputStream (List.rev linesInFile)
+outputStream.Close ()
