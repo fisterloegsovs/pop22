@@ -1,7 +1,6 @@
 module Vector
-type Vector<'t> =
-  | V of 't * 't
-  static member inline( +. ) : Vector< ^a> * Vector< ^b> -> Vector< ^c>
-    when ( ^a or  ^b) : (static member ( + ) :  ^a *  ^b ->  ^c)
-val make : x:'t * y:'t -> Vector<'t>
+type Vector<'t>
+val add : Vector< 't> -> Vector< 't> -> Vector< 't>
+    when ( 't or  't) : (static member ( + ) :  't *  't ->  't)
+val make : 't * 't -> Vector<'t>
 val coord : Vector<'t> -> 't * 't
