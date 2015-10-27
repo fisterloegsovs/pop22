@@ -1,3 +1,15 @@
+/// A demonstration of a module with a parameterised type and ToString overload from H & R, Functional Programming Using F#.
+///
+/// How to compile:
+/// <code>
+/// fsharpc --doc:QueueParam.xml -a QueueParam.fsi QueueParamToString.fs
+/// fsharpc --doc:testQueueParamToString.xml -r QueueParamToString.dll testQueueParamToString.fsx
+/// </code>
+///
+/// Author: Jon Sporring.
+/// Date: 2015/10/27
+
+/// The implementation of the Queue type. See interface file for detailed comments on its use.
 module Queue
 exception EmptyQueue
 type Queue<'a> =
