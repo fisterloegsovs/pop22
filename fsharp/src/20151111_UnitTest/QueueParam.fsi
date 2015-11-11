@@ -4,7 +4,6 @@ module Queue
 /// How to compile:
 /// <code>
 /// fsharpc --doc:QueueParam.xml -a QueueParam.fsi QueueParam.fs
-/// fsharpc --doc:testQueueParam.xml -r QueueParam.dll testQueueParam.fsx
 /// </code>
 ///
 /// Author: Jon Sporring.
