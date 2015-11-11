@@ -1,0 +1,90 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+\usepackage{hyperref}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Uge(r)seddel 9 - individuel opgave}
+\author{Jon Sporring og Torben Mogensen}
+\date{Deadline  8.\ december}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde individuelt. Formålet er at arbejde med:
+\begin{itemize}
+\item muterbare variable
+\item sekventiel eksekvering
+\item while løkker
+\item arrays
+\end{itemize}
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+Øve-opgaverne er:
+\begin{description}
+\item[9.0] HR: 8.1, 8.2, 8.5, 8.6
+\end{description}
+Trykfejlen og andre rettelser til bogen kan man læse mere om på \url{http://www.imm.dtu.dk/~mire/FSharpBook/Corrections.html}.
+
+Afleveringsopgaven er:
+\begin{description}
+\item[9.1] Lav en oversættelse af \lstinline|fsharpc|'s dokumentationsfiler fra \lstinline|xml| til \LaTeX. Med oversættelsesargumentet \lstinline|-doc:| produceres en \lstinline|xml| fil, hvilket desværre hverken er særlig køn eller læsevenlig. Den følger derimod en fast struktur, f.eks.:
+\begin{lstlisting}
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Vector</name></assembly>
+<members>
+<member name="T:Vector.Vector">
+<summary>
+ A demonstration of defining a module from H &amp; R, Functional Programming Using F#. Note: Bad style, better use augmented types.
+
+ How to compile:
+ &lt;code&gt;
+ fsharpc --doc:Vector.xml -a Vector.fsi Vector.fs
+ fsharpc --doc:testVector.xml -r Vector.dll testVector.fsx
+ &lt;/code&gt;
+
+ Author: Jon Sporring.
+ Date: 2015/10/27
+ A 2 dimensional vector type, whose elements are floats.
+</summary>
+</member>
+<member name="M:Vector.coord(Vector.Vector)">
+<summary>
+ Get coordinates
+</summary>
+</member>
+<member name="M:Vector.make(System.Double,System.Double)">
+<summary>
+ Make vector
+</summary>
+</members>
+</doc>
+\end{lstlisting}
+I biblioteket \lstinline|Fsharp.Data| findes en \lstinline|xml|-parser, som, hvis kan parse filer af ovennævnte type, pånær at først linje skal fjernes.
+
+I skal skrive et program, som tager dokumentationsfiler, og producerer \LaTeX filer, hvor \lstinline|<members>| \lstinline|</members>| oversættes til \lstinline|\begin{description}| \lstinline|\end{description}| og \lstinline|<member>| \lstinline|</member>| skal oversættest til de tilhørende \lstinline|\item[name]~\\summary|, hvor \lstinline|name| og \lstinline|summary| erstattest med indholdet af tilsvarende felter i \lstinline|xml|.filen.
+\end{description}
+Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF, samt en fsx tekstfil med løsningen for hver delopgave, som kan oversættes med fsharpc og hvis resultat kan køres med mono. Det hele skal samles i en zip fil efter sædvanlig navnekonvention:
+\begin{quote}
+  \lstinline|<instructor's-initial>_<firstname.lastname>_<exercise-number>.zip|
+\end{quote}
+I zip filen skal en delopgave navngives ved opgavenummer, således at
+filen for opgave 9.1 hedder \lstinline|opg9_1.fsx|, osv..
+
+\flushright God fornøjelse.
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
