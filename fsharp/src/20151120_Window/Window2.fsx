@@ -1,5 +1,5 @@
 ﻿/// Open a window using winforms in Mono. The program opens a window
-/// and draws a black triangle inside it.
+/// and draws a black triangle inside it. Wrap the display part in a function.
 ///
 /// How to compile:
 /// <code>
