@@ -14,7 +14,8 @@ let duration f =
     let timer = new System.Diagnostics.Stopwatch ()
     timer.Start ()
     let returnValue = f ()
-    let dur = ((float timer.ElapsedTicks) / (float System.Diagnostics.Stopwatch.Frequency))
+    let ticks = timer.ElapsedTicks
+    let dur = ((float ticks) / (float System.Diagnostics.Stopwatch.Frequency))
     (returnValue, dur)
 
 let mutable n = Unchecked.defaultof<int>;
