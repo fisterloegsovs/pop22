@@ -18,7 +18,7 @@ let duration f =
     let dur = ((float ticks) / (float System.Diagnostics.Stopwatch.Frequency))
     (returnValue, dur)
 
-let (factN, durFactN) = duration (fun () -> fact 10)
-let (impFactN, durImpFactN) = duration (fun () -> impFact 10)
-printfn "fact 10 = %d (%g sec)" factN durFactN
-printfn "impFact 10 = %d (%g sec, %g speedup)" impFactN durImpFactN (durFactN / durImpFactN)
+let (factN, durFactN) = duration (fun () -> fact 2)
+let (impFactN, durImpFactN) = duration (fun () -> impFact 2)
+printfn "fact 2 = %d (%g sec)" factN durFactN
+printfn "impFact 2 = %d (%g sec, %g speedup)" impFactN durImpFactN (durFactN / durImpFactN)
