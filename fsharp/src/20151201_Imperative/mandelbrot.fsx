@@ -52,19 +52,19 @@ let display(aTitle: string, topLeft : float*float, bottomRight : float*float, wi
 let width = 512;
 let height = 512;
 
-//let CxMin = -1.9
-//let CxMax = 0.6
-//let CyMin = -1.25;
-//let CyMax = 1.25;
+let CxMin = -1.9
+let CxMax = 0.6
+let CyMin = -1.25;
+let CyMax = 1.25;
 
 //let CxMin = -1.5
 //let CxMax = -1.3
 //let CyMin = -0.1
 //let CyMax = 0.1
 
-let CxMin = -1.485
-let CxMax = -1.472
-let CyMin = -0.005
-let CyMax = 0.005
+//let CxMin = -1.485
+//let CxMax = -1.472
+//let CyMin = -0.005
+//let CyMax = 0.005
 
 display("A bitmap", (CxMin,CyMin), (CxMax,CyMax), width, height)
