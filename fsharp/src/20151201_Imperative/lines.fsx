@@ -46,12 +46,8 @@ let normalize ((x,y) : float*float, newLen : float) =
 let updatePoints (aWidth : int, aHeight : int, (x,y) : float*float, dir : float*float, newLength : float) =
   let mutable (dx,dy) = dir
   let rnd = System.Random ()
-  while (x + dx < 0.0) || (x + dx > (float aWidth) - 1.0) do
+  while (x + dx < 0.0) || (x + dx > (float aWidth) - 1.0) || (y + dy < 0.0) || (y + dy > (float aHeight) - 1.0) do
     dx <- 2.0 * (rnd.NextDouble ()) - 1.0
-    let (t1, t2) = normalize ((dx, dy), newLength)
-    dx <- t1
-    dy <- t2
-  while (y + dy < 0.0) || (y + dy > (float aHeight) - 1.0) do
     dy <- 2.0 * (rnd.NextDouble ()) - 1.0
     let (t1, t2) = normalize ((dx, dy), newLength)
     dx <- t1
