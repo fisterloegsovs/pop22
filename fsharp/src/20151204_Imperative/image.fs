@@ -19,30 +19,30 @@ let grayArray2D2Bitmap (I : float [,]) =
 
 let array2dMax (I : float [,]) =
   let mutable currentMax = System.Double.MinValue
-  for i = 1 to (Collections.Array2D.length1 I) - 1 do
-    for j = 1 to (Collections.Array2D.length2 I) - 1 do
+  for i = 0 to (Collections.Array2D.length1 I) - 1 do
+    for j = 0 to (Collections.Array2D.length2 I) - 1 do
       currentMax <- max currentMax I.[i,j]
   currentMax
 
 let array2dMin (I : float [,]) =
   let mutable currentMin = System.Double.MaxValue
-  for i = 1 to (Collections.Array2D.length1 I) - 1 do
-    for j = 1 to (Collections.Array2D.length2 I) - 1 do
+  for i = 0 to (Collections.Array2D.length1 I) - 1 do
+    for j = 0 to (Collections.Array2D.length2 I) - 1 do
       currentMin <- min currentMin I.[i,j]
   currentMin
 
 let array2dSum (I : float [,]) =
   let mutable s = 0.0
-  for i = 1 to (Collections.Array2D.length1 I) - 1 do
-    for j = 1 to (Collections.Array2D.length2 I) - 1 do
+  for i = 0 to (Collections.Array2D.length1 I) - 1 do
+    for j = 0 to (Collections.Array2D.length2 I) - 1 do
       s <- s + I.[i,j]
   s
 
 let normalize (I : float [,], newMin : float, newMax : float) =
   let minI = array2dMin I
   let maxI = array2dMax I
-  for i = 1 to (Collections.Array2D.length1 I) - 1 do
-    for j = 1 to (Collections.Array2D.length2 I) - 1 do
+  for i = 0 to (Collections.Array2D.length1 I) - 1 do
+    for j = 0 to (Collections.Array2D.length2 I) - 1 do
       I.[i,j] <- ( I.[i,j] - minI ) * (newMax - newMin) / ( maxI - minI) + newMin
   I
 
@@ -69,8 +69,8 @@ let grad (Ix : float [,], Iy : float [,]) =
 let convolve (I : float [,], K : float [,]) =
   let conv (I : float [,]) (K : float [,]) (i : int) (j : int) =
     let mutable sum = 0.0
-    for m = 1 to (Collections.Array2D.length1 K) - 1 do
-      for n = 1 to (Collections.Array2D.length2 K) - 1 do
+    for m = 0 to (Collections.Array2D.length1 K) - 1 do
+      for n = 0 to (Collections.Array2D.length2 K) - 1 do
         if (i - m >= 0) && (i - m < Collections.Array2D.length1 I) && (j - n >= 0) && (j - n < Collections.Array2D.length2 I) then
           sum <- sum + I.[i - m, j - n] * K.[m, n]
     sum
