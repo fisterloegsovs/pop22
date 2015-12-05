@@ -13,7 +13,7 @@ let display (aTitle: string, I : System.Drawing.Bitmap, J : System.Drawing.Bitma
   win.Controls.Add(pb2)
 
   System.Windows.Forms.Application.Run win
-
+  
 let C = new System.Drawing.Bitmap ("Barbara.jpg")
 let I = Image.bitmap2GrayArray2D C
 printfn "I : %g %g" (Image.array2dMin I) (Image.array2dMax I)

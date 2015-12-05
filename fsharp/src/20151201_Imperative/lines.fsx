@@ -13,11 +13,10 @@ type element =
   | Empty
   | Line of (float*float)*(float*float)
 
+let modulo n m = ((n % m) + m) % m
+
 let getIndex (lines : element [], head : int, i : int) =
-  if i < 0 then
-    lines.Length + i - lines.Length * ((1+i) / lines.Length)
-  else
-    (head + i) % lines.Length
+  modulo (head + i) lines.Length
 
 let getFirstPoint = function
   | Line (p1, p2) -> p1
