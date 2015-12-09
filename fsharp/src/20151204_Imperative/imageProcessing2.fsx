@@ -16,7 +16,7 @@ display ("The gray version", Image.grayArray2D2Bitmap I) |> ignore
 let dI = Image.grad (Image.d I)
 printfn "dI : %g %g" (Image.array2dMin dI) (Image.array2dMax dI)
 display ("The gradient of the gray image", Image.grayArray2D2Bitmap dI) |> ignore
-display ("The normalized gradient", Image.grayArray2D2Bitmap (Image.normalize (I, 0.0, 255.0))) |> ignore
+display ("The normalized gradient", Image.grayArray2D2Bitmap (Image.normalize (dI, 0.0, 255.0))) |> ignore
 
 for sigma in [ 1.0; 5.0 ] do
   printfn "sigma = %f" sigma
