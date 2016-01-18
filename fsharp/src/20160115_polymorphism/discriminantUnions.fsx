@@ -1,6 +1,6 @@
 /// Discriminant unions are an example of polymorphism
 
-/// Example Symes et al., Expert F# 4.0, pp. 92: Transport is one of
+/// Example Syme et al., Expert F# 4.0, pp. 92: Transport is one of
 /// either Car, Bicyle, or Bus
 type Route = int
 type Make = string

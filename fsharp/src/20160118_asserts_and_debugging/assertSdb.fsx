@@ -13,7 +13,7 @@
 
 System.Diagnostics.Debugger.Break ()
 
-/// A reworked example form Symes et al., Expert F# 4.0, p. 529
+/// A reworked example form Syme et al., Expert F# 4.0, p. 529
 let isPalindrome (str : string) =
   let rec check(s : int, e : int) =
     if s = e || s = e + 1 then

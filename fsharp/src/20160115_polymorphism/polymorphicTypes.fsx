@@ -1,6 +1,6 @@
 /// Type inference is an example of polymorphism
 
-/// Example Symes et al., Expert F# 4.0 p. 97
+/// Example Syme et al., Expert F# 4.0 p. 97
 ///
 /// Keyword "%A" in printf is an example of polymorphism, and a
 /// function can be automatically inferred to be generic

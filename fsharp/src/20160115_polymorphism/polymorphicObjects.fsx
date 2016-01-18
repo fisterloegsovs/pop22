@@ -1,7 +1,7 @@
 /// Generic interfaces are examples of polymorphism
 /// Note, the following example does not work in interactive mode in Mono 4.2!
 
-/// Example Symes et al., Expert F# 4.0 pp. 105
+/// Example Syme et al., Expert F# 4.0 pp. 105
 /// We define a generic interface
 type INumeric<'T> =
     abstract Zero : 'T

@@ -1,6 +1,6 @@
 /// Interfaces is an example of object-oriented-style polymorphism
 
-/// Example Symes et al., Expert F# 4.0 pp. 136: Define an abstract shape interface
+/// Example Syme et al., Expert F# 4.0 pp. 136: Define an abstract shape interface
 
 /// We define an interface (abstract type) and 2 implementations
 open System.Drawing
