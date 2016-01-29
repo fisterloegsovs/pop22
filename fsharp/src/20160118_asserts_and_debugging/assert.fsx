@@ -7,6 +7,7 @@
 #if DEBUG
 /// We first redirect trace and debug information to the console
 let consoleTracer = new System.Diagnostics.ConsoleTraceListener ()
+//consoleTracer.TraceOutputOptions <- System.Diagnostics.TraceOptions.Callstack
 System.Diagnostics.Trace.Listeners.Add(consoleTracer);
 #endif
 
