@@ -21,12 +21,12 @@ værktøjerne Emacs og \LaTeX.
 
 Emacs er et tekstredigeringsværktøj, der er egnet til at redigere
 programmer og lignende.  Et andet dokument introducerer Emacs. Ulig f.eks.\ Microsoft Word og Libre Office
-Writer redigerer man med Emacs ``ren'' tekst: Der er ikke formattering
+Writer redigerer man med Emacs ``ren'' tekst: Der er ikke formatering
 såsom fed skrift, kursiv, osv.  Til dette bruger vi \LaTeX.
 
-\LaTeX\ (som udtales ``lahtek'') er et dokumentformatteringsværktøj.
-Det fungerer ligesom HTML ved, at man skriver formatteringskoder ind i
-en ren tekstfil, som derefter konverteres til et formatteret dokument.
+\LaTeX\ (som udtales ``lahtek'') er et dokumentformateringsværktøj.
+Det fungerer ligesom HTML ved, at man skriver formateringskoder ind i
+en ren tekstfil, som derefter konverteres til et formateret dokument.
 Hvor HTML konverteres i en browser til en webside, så konverteres
 \LaTeX-dokumenter til PDF ved brug af værktøjet \texttt{pdflatex}.
 \end{abstract}
@@ -36,7 +36,7 @@ Hvor HTML konverteres i en browser til en webside, så konverteres
 
 \chapter{\LaTeX}
 
-\LaTeX\ er et tekstformatteringsværktøj designet til at skrive
+\LaTeX\ er et tekstformateringsværktøj designet til at skrive
 strukturerede dokumenter såsom videnskabelige artikler, rapporter,
 lærebøger, breve, Powerpoint-lignende præsentationer osv., men
 \LaTeX\ kan også bruges til mange andre dokumentformer, for der er
@@ -45,21 +45,21 @@ layout.
 
 \LaTeX\ udtales ``lahtek' og ikke ``lateks'', da de tre bogstaver i
 \TeX\ faktisk er de græske bogstaver tau, epsilon og ksi, så denne del
-af ordet udtales ``tech''. \LaTeX\ er en videreudvikling af Donald
-Knuths \TeX\ lavet af Leslie Lamport, som satte bogstaverne LA foran
-navnet.  Det har altså intet med syntetisk gummi at gøre.  Og vi
-\emph{har} allerede hørt alle vittighederne.
+af ordet udtales ``tech'' eller ``tek''. \LaTeX\ er en videreudvikling
+af Donald Knuths \TeX\ lavet af Leslie Lamport, som satte bogstaverne
+\textsf{La} foran navnet.  Det har altså intet med syntetisk gummi at
+gøre, og vi \emph{har} allerede hørt alle vittighederne.
 
 Den væsentligste forskel på \LaTeX\ og f.eks.~Microsoft Word er, at man
 forbereder sine \LaTeX-dokumenter i et tekstredigeringsværktøj som
 f.eks.~Emacs og derefter konverterer dem til PDF ved at køre et
 program.  Det er i princippet ikke anderledes end den måde, et
-HTML-dokumemt konverteres til tekst og billeder i et vindue i en
+HTML-dokument konverteres til tekst og billeder i et vindue i en
 browser.  Et \LaTeX-dokument indeholder ud over den tekst, der skal
 indgå i det færdige PDF-dokument, et antal koder og kommandoer, der
-specificerer formattering, krydsreferencer, billedindsættelse,
+specificerer formatering, krydsreferencer, billedindsættelse,
 formler, tabeller, figurer osv.  Det er \LaTeX-programmets opgave at
-fortolke disse koder og bruge dem til at formattere dokumentets tekst.
+fortolke disse koder og bruge dem til at formatere dokumentets tekst.
 Endvidere opdeler \LaTeX\ teksten i sider, som er egnede til
 udskrivning, visning på en projektor, eller lignende, og indsætter
 selv sidenumre osv.
@@ -240,14 +240,14 @@ fejlbehæftede linje der, hvor den har fundet fejlen.  Igen kan man
 trykke \textsf{x} og \textsf{Enter} for at komme ud.
 
 Der er flere mulige fejlmeddelelser, som nogen gange kan være
-kryptiske. En beskrivelse af de hyppigst forekomne fejlmeddelelser, og
+kryptiske. En beskrivelse af de hyppigst forekommende fejlmeddelelser, og
 deres mest sandsynlige årsag, kan findes på
 \url{http://en.wikibooks.org/wiki/LaTeX/Errors_and_Warnings}.  En mere
 komplet liste kan findes på
 \url{http://www.eng.fsu.edu/~dommelen/l2h/errors.html}.
 
 
-\subsection{Syntaks}
+\subsection{Syntaks}\label{syntaks}
 
 Vi kan af ovenstående se, at ikke alle tekstfiler kan konverteres til
 PDF af \texttt{pdflatex}: De skal opfylde nogle regler for tekstens
@@ -277,7 +277,7 @@ Vores ``Hello World'' eksempel er altså stort set et minimalt
 Da \LaTeX\ er designet i USA, er standardindstillingerne, at PDF-filen
 bruger det amerikanske letter-papirformat.  Dette format er en smule
 bredere end A4, men ikke helt så højt.  For at få \LaTeX\ til at
-producere PDF formatteret til A4-papir, ændrer vi første linje til
+producere PDF formateret til A4-papir, ændrer vi første linje til
 
 {\small
 \begin{verbatim}
@@ -403,13 +403,13 @@ lave det dokument, du netop er i gang med at læse.
 
 En rapport har en forside med en titel, en forfatter og en dato.
 Forsiden laves ved at angive de relevante informationer med
-kommandoer, og derefte lave forsiden med kommandoen
+kommandoer, og derefter lave forsiden med kommandoen
 \verb|\maketitle|.  Titelsiden på indeværende
 dokument er lavet med kommandoerne
 
 {\small
 \begin{verbatim}
-\title{En superkort introduktion til Emacs og \LaTeX}
+\title{En superkort introduktion til \LaTeX}
 \author{Torben Mogensen}
 \date{\today}
 \maketitle
@@ -424,13 +424,16 @@ indsætter dags dato i dokumentet.  Det er en god måde at sikre sig, at
 datoen på forsiden faktisk svarer til den seneste udgave af
 dokumentet.
 
-En rapport består af kapitler, der er opdelt i nummererede afsnit og
-underafsnit.  \LaTeX\ finder selv ud af nummereringen, man skal blot
-angive titlerne på kapitler og afsnit.  I rapporter starter kapitler
-på nye sider, så \LaTeX-dokumentet vist i figur~\ref{simple} vil
-generere to korte kapitler startende på hver sin side.  Prøv selv at
-kopiere teksten ind i Emacs, gem den under navnet \texttt{simple.tex},
-og kør kommandoen \texttt{pdflatex~simple.tex}.
+En rapport består af kapitler (indledt med
+\verb|\chapter{overskrift}|), der er opdelt i nummererede afsnit
+(indledt med \verb|\section{overskrift}|), og underafsnit (indledt med
+\verb|\subsection{overskrift}|).  \LaTeX\ finder selv ud af
+nummereringen, man skal blot angive titlerne på kapitler og afsnit.  I
+rapporter starter kapitler på nye sider, så \LaTeX-dokumentet vist i
+figur~\ref{simple} vil generere to korte kapitler startende på hver
+sin side.  Prøv selv at kopiere teksten ind i Emacs, gem den under
+navnet \texttt{simple.tex}, og kør kommandoen
+\texttt{pdflatex~simple.tex}.
 
 
 \begin{figure}
@@ -501,7 +504,7 @@ de eksempler på input og output til \LaTeX, der står i
 Til kortere dokumenter kan man bruge dokumentklassen \texttt{article}.
 Her kan man ikke bruge kapitler (kommandoen \verb|\chapter|) er
 udefineret, så man bruger \verb|\section| som hovedstruktur.  Der laves
-ikke en separat titelside, titel osv.\ placeres blot øverst på første
+ikke en separat titelside, så titel osv.\ placeres blot øverst på første
 side.  Emacs-introduktionen er lavet med dokumentklassen \texttt{article}.
 
 \section{Fed tekst, kursiv, m.m.}
@@ -519,14 +522,14 @@ kommandoen \verb|\texttt| (hvor \texttt{tt} står for
 \texttt{teletype}, som er betegnelsen for en skrivemaskine, der styres
 af en computer).  Du kan nok gætte, hvordan denne kommando bruges.
 
-Når man vil vise programtekster, er det irriterende, at \LaTeX
-ignorerer linje\-skift og gentagne blanktegn.  Derfor bruger man
-\texttt{verbatim} omgivelserne.  Omgivelser er en særlig slags
-kommandoer, der typisk bruges til ting, der står på linjer for sig
-selv i stedet for midt i en tekst.  I stedet for at skrive en enkelt
-kommando med et argument i krølleparenteser, bruger man kommandoen
-\verb|\begin| til at starte omgivelsen og \verb|\end| til at afslutte
-den.  Vi har allerede set \verb|\begin{document}| og
+Når man vil vise programtekster, er det irriterende, at
+\LaTeX\ ignorerer linje\-skift og gentagne blanktegn.  Derfor bruger
+man f.eks.\ \texttt{verbatim} omgivelserne.  Omgivelser er en særlig
+slags kommandoer, der typisk bruges til ting, der står på linjer for
+sig selv i stedet for midt i en tekst.  I stedet for at skrive en
+enkelt kommando med et argument i krølleparenteser, bruger man
+kommandoen \verb|\begin| til at starte omgivelsen og \verb|\end| til
+at afslutte den.  Vi har allerede set \verb|\begin{document}| og
 \verb|\end{document}|, der er en en omgivelse for hele dokumentets
 indhold.  Til programtekst kan vi skrive for eksempel
 
@@ -562,7 +565,7 @@ Alle kommandoer mellem \verb|\begin{verbatim}| og
 grund er \texttt{verbatim} omgivelserne brugt til at vise input og
 output fra \LaTeX\ i dette dokument.
 
-Der findes pakker til \LaTeX, der kan lave mere avanceret formattering
+Der findes pakker til \LaTeX, der kan lave mere avanceret formatering
 af programtekst, men dem gemmer vi til senere.
 
 \section{Krydsreferencer og figurer}
@@ -591,13 +594,14 @@ afsnit~\ref{supplerendeLatex} med kommandoerne
 \end{verbatim}
 
 \noindent
-Dette gør, at jeg ved at skrive \verb|afsnit~\ref{supplerendeLatex}| får
-krydsreferencen ``afsnit~\ref{supplerendeLatex}''.  Hvis den genererede PDF
-fil læses på en skærm i stedet for papir, vil krydsreferencen
-endvidere være et link, man kan følge med et museklik.  Hvis man
-bruger \verb|\ref| med et navn, der ikke er defineret med en
-\verb|\label|-kommando, skriver \LaTeX\ \textbf{??} i stedet for
-krydsreferencen, og \texttt{pdflatex} skriver
+Dette gør, at jeg ved at skrive \verb|afsnit~\ref{supplerendeLatex}|
+får krydsreferencen ``afsnit~\ref{supplerendeLatex}''.  Hvis den
+genererede PDF fil læses på en skærm i stedet for papir, vil
+krydsreferencen endvidere vises i en rød kasse, som er et link, man
+kan følge med et museklik.  Hvis man bruger \verb|\ref| med et navn,
+der ikke er defineret med en \verb|\label|-kommando, skriver
+\LaTeX\ \textbf{??} i stedet for krydsreferencen, og \texttt{pdflatex}
+skriver
 
 \begin{verbatim}
 LaTeX Warning: There were undefined references.
@@ -669,7 +673,7 @@ linjer.  Se f.eks.\ forskellen på $ax^2+bx+c=0$ og
 \[ax^2+bx+c=0\]
 
 \noindent
-Formler inde i tekstafnit omgives af dollartegn, så den viste formel
+Formler inde i tekstafsnit omgives af dollartegn, så den viste formel
 skrives som \verb|$ax^2+bx+c=0$|.  For at få formlen på en linje for
 sig, omgives den af \verb|\[| og \verb|\]|, altså
 \verb|\[ax^2+bx+c=0\]|.
@@ -732,6 +736,56 @@ som vil give dette resultat:
 \includegraphics[width=5cm]{emacs-welcome.png}
 \end{center}
 
+\section{Udvidelsespakker}
+
+Vi viste i afsnit~\ref{syntaks} en dokumentindledning med en række
+\verb|\usepackage| kommandoer.  Denne kommando bruges til at tilføje
+udvidelsespakker til den grundlæggende \LaTeX.  De viste pakker gør
+følgende:
+
+\begin{description}
+\item[\texttt{$\backslash$usepackage[utf8x]\{inputenc\}}] tillader
+  danske bogstaver og andre symboler i input.
+\item[\texttt{$\backslash$usepackage\{latexsym\}}] udvider udvalget af
+  matematiske symboler.
+\item[\texttt{$\backslash$usepackage[danish]\{babel\}}] betyder, at
+  visse autogenererede tekster (f.eks. ``Resumé'', ``Indhold'' og
+  ``Kapitel'') skrives på dansk, sørger for at ord deles efter
+  (tilnærmede) danske regler, skriver datoer (\verb|\today|) på dansk,
+  og lignende sprogspecifikke ting.  Findes til de fleste sprog.
+\item[\texttt{$\backslash$usepackage\{graphicx\}}] tillader indsætning
+  af billeder med \verb|\includegraphics| kommandoen.
+\item[\texttt{$\backslash$usepackage\{hyperref\}} og 
+\texttt{$\backslash$usepackage[all]\{hypcap\}}] gør krydsreferencer
+  til links.
+\end{description}
+
+\noindent
+Der findes tusindvis af pakker til \LaTeX.  \textsf{TeX Live} sørger
+for at hente de mest brugte pakker ved installering og henter flere
+automatisk efter behov.  Nogle brugbare pakker er
+
+\begin{description}
+\item[listings] bruges (som alternativ til \texttt{verbatim}) til at
+  vise programtekster.
+\item[makeidx] bruges til at lave stikordslister.
+\item[color] bruges til at lave farvet tekst.
+\item[geometry] bruges til at ændre størrelsen af margener, papir,
+  osv.
+\item[fontenc] bruges til at indkode skriftsnit.  
+  \verb|\usepackage[T1]{fontenc}| tillader PostScript type-1
+  skriftsnit.
+\item[cmap] Gør teksten i producerede PDF-filer søgbar og kopierbar.
+  Bør komme før \texttt{fontenc} og \texttt{babel} i indledningen.
+\end{description}
+
+\noindent
+Websiden \url{https://www.ctan.org/} er et arkiv over pakker til
+\LaTeX, og man kan finde beskrivelser og vejledninger til over 5000
+pakker på denne side.  Man kan søge efter navn eller emne.  Hvis man
+f.eks.\ går ind i emnelisten under ``music'', finder man 35 pakker til
+formatering af noder, guitarakkorder, sanghæfter, osv.
+
 \section{\LaTeX\ og Emacs}
 
 Emacs har en \LaTeX-mode, der blandt andet viser kommandonavne i
@@ -762,13 +816,13 @@ Der er et par småting, men skal være opmærksom på, når man bruger
 \begin{itemize}
 \item Blanktegn lige efter en kommando, der ikke har parametre i
   krølleklammer, ignoreres.  For eksempel vil teksten
-  \verb|\LaTeX styrer!| give resultatet {\LaTeX styrer!}.  For at få
-  et blanktegn ind alligevel give kommandoen en tom parameter, altså
-  \verb|\LaTeX{} styrer!|, som giver resultatet {\LaTeX\ styrer!}.  Det
-  er ikke nødvendigt, hvis kommandoen følges af andet end blanktegn
-  eller linjeskift, som f.eks.\ punktum eller komma.  Alternativt kan
-  man skrive \verb|\LaTeX\ styrer!|, altså sætte et backslash før
-  blanktegnet, så det ikke bliver undertrykt.
+  \verb|\LaTeX styrer!| give resultatet {\LaTeX styrer!}  For at få et
+  blanktegn ind alligevel give kommandoen en tom parameter, altså
+  \verb|\LaTeX{} styrer!|, som giver resultatet {\LaTeX\ styrer!}.
+  Det er ikke nødvendigt, hvis kommandoen følges af andet end
+  blanktegn eller linjeskift, som f.eks.\ punktum eller komma.
+  Alternativt kan man skrive \verb|\LaTeX\ styrer!|, altså sætte et
+  backslash før blanktegnet, så det ikke bliver undertrykt.
 \item Som det ses herover, kan \LaTeX\ nogen gange lade tekst strække
   sig ud over højre kant af tekst med lige højremargen.  Hvis dette
   sker, vil \texttt{pdflatex} give beskeden \verb|Overfull \hbox|, men
@@ -817,7 +871,7 @@ Der er et par småting, men skal være opmærksom på, når man bruger
 \item \LaTeX\ laver lidt større mellemrum efter et punktum, der
   afslutter en sætning, end efter f.eks.\ et komma.  Den måde,
   \LaTeX\ ser, om et punktum afslutter en sætning, er lidt primitiv:
-  Hvis kommaet står lige efter et stort bogstav, tror \LaTeX, at der
+  Hvis punktummet står lige efter et stort bogstav, tror \LaTeX, at der
   er tale om et forkortet navn, f.eks.\ H. C. Andersen, men hvis det
   kommer efter et lille bogstav, tror \LaTeX, at det er slutningen af
   en sætning.  For det meste fungerer dette fint, men efter
@@ -842,7 +896,7 @@ uoverkommelig ved første øjekast, men den er god som oplagsværk.
 Lidt mere tilgængelig er den \LaTeX\ tutorial, der ligger på
 \url{http://www.latex-tutorial.com/tutorials/}.
 
-Der findes en meget omfattende bog om \LaTeX\ på dansk, skevet af Leif
+Der findes en meget omfattende bog om \LaTeX\ på dansk, skrevet af Leif
 Madsen fra Aarhus Universitet.  Den kan hentes på\newline
 \url{http://math.au.dk/videnudveksling/latex/bog/}.
 
@@ -851,7 +905,7 @@ Madsen fra Aarhus Universitet.  Den kan hentes på\newline
 \LaTeX\ kan i starten virke uoverskueligt, men man vænner sig hurtigt
 til at bruge det, og efter nogen tid, vil man sætte pris på dets
 muligheder.  Ældre studerende kan i reglen hjælpe dig, hvis du har
-spørgsmål om \LaTeX, og hvis alt andet fejler er Google din ven.
+spørgsmål om \LaTeX, og hvis alt andet fejler, er Google din ven.
 
 %Hvis man læser lærebøger og videnskabelige artikler indenfor datalogi
 %og matematik, er de næsten altid lavet med \LaTeX, dels fordi det
