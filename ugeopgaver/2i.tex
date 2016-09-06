@@ -1,44 +1,46 @@
 \documentclass[a4paper,12pt]{article}
 
-\usepackage[margin=2.5cm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[danish]{babel}
-\usepackage{listings}
-\usepackage{graphicx}
-\graphicspath{{figures/}}
-\setlength{\parindent}{0cm}
-\setlength{\parskip}{1em}
+\input{setup}
 
 \title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Uge(r)seddel 2 - individuel opgave\\Note:
-  denne opgave var for lille, tilføj flere opgaver.}
+  Københavns Universitet\\Uge(r)seddel 2 - individuel opgave.}
 \author{Jon Sporring}
-\date{7.\ - 15.\ september}
+\date{13.\ - 16.\ september.\\Afleveringsfrist: onsdag d. 21. september kl. 22:00}
 
 \begin{document}
 \maketitle
 
 I denne periode skal I arbejde individuelt. Formålet er at:
 \begin{itemize}
-\item lære forskellen mellem et oversat og et fortolket program
-\item I laver jeres første fsharp program
-\item I stifter bekendtskab med bindinger, simple typer, funktioner,
-  rekursion, 2-tupler (par), operatorer, strenge, virkefelt (scope) og closures.
+\item I laver jeres første F\# program
+\item I kommer til at forstå Extended Backus-Naur Form grammatikker
+\item I kommer til at kende forskellen mellem decimal, binær, heximal, og octal repræsentation af heltal, samt at kunne konvertere imellem dem.
+\item I kommer til at kunne beskrive simple typer i F\#: \lstinline{int}, \lstinline{float}, \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt konvertering imellem dem.
+\item I kommer til at kunne bruge F\# som en lommeregner.
 \end{itemize}
 
-Opgaverne for denne uge er delt i øve- og afleveringsopgaver. For de individuelle afleveringsopgaver skal I være særlig opmærksomme på, at jeres løsning ikke må udarbejdes i samarbejde med andre. Den præcise formulering for kravene desangående finder I under punktet "`Opgaver$\rightarrow$Generel information"'.
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. For de individuelle afleveringsopgaver skal I være særlig opmærksomme på, at jeres løsning ikke må udarbejdes i samarbejde med andre. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
 
 Øve-opgaverne er:
-\begin{description}
-\item[2.0] HR: 1.1, 1.2, 1.4, 1.6, 2.1, 2.2, 2.12
-\end{description}
+\begin{enumerate}[label=2.\arabic*,start=0]
+\item Start en interaktiv F\# session og indtast følgende (efterfulgt af nylinie):
+\begin{lstlisting}
+3.14+2.78;;
+\end{lstlisting}
+Beskriv (for digselv), hvad F\# gjorde, og hvis der opstod en fejl, find fejlen og gentag.
+\item Gentag øvelsen ovenfor, men denne gang indtast udtrykket i Emacs og gem det i en fil. Kør filen med \lstinline[language=console]{fsharpi} og \lstinline[language=console]{fsharpc}+\lstinline[language=console]{mono}. Overvej om resultatet er som forventet, og hvis ikke, forklar hvorfor.
+\item Betrakt EBNF'en,
+\begin{lstlisting}[language=ebnf]
+aString = 'b', {'a'};
+\end{lstlisting}
+for hvert af følgende tekst strenge, angiv hvorvidt de opfylder EBNF'en eller ej: "a", "b", "aa", "ab", "ba", "bb", "aaa", "aab", "aba", "abb", "baa", "bab", "bba", "bbb", "b,aa", "baa;", "b,aa;"
+\end{enumerate}
 
 Afleveringsopgaven er:
-\begin{description}
-\item[2.1] HR: 1.5, 1.8
-\item[2.2] HR 2.8, 2.9, 2.10
-\end{description}
+\begin{enumerate}[resume*]
+\item HR: 1.5, 1.8
+\item HR 2.8, 2.9, 2.10
+\end{enumerate}
 Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF, samt en fsx tekstfil med løsningen for hver delopgave, som kan oversættes med fsharpc og hvis resultat kan køres med mono. Det hele skal samles i en zip fil efter sædvanlig navnekonvention:
 \begin{quote}
   \lstinline|<instructor's-initial>_<firstname.lastname>_<exercise-number>.fsx|

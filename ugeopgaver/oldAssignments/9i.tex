@@ -1,0 +1,147 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+\usepackage{hyperref}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Uge(r)seddel 9 - individuel opgave}
+\author{Jon Sporring og Torben Mogensen}
+\date{Deadline  8.\ december}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde individuelt. Formålet er at arbejde med:
+\begin{itemize}
+\item mut\'{e}rbare variable
+\item sekventiel eksekvering
+\item while løkker
+\item arrays
+\end{itemize}
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+Til øvelserne på alm.\ skema forventer vi at I arbejder efter nedenstående plan.
+\begin{description}
+\item[Mandag-Tirsdag 23-24/11:]~\\[0cm]
+  Der arbejdes med 8g, og følgende opgaver:
+  \begin{description}
+  \item[9.0] Lav en rekursiv funktion med argmentet $n$, som adderer
+    tallene 1 til $n$. Lav derefter en imperativ version af det samme
+    program uden brug af rekursion men med 1 eller flere mut\'{e}rbar
+    variable og \lstinline|while| nøgleordet.
+  \item[9.1] HR: 8.1, 8.2
+  \item[9.2] Lav en rekursiv funktion som udregner værdien af et
+    $n$'te ordens polynomium. Funktionen skal tage 2 argumenter: en
+    liste af koefficienter $[a_0, a_1, \dots, a_{n-1}]$
+    samt evaluaeringspunktet $x$, og polynomiets orden angives ved
+    listens længde. Hint: et $n$'te ordens polynomium kan skrives
+    rekursivt som:
+    \begin{equation}
+      f(x) = a_0+ a_1 x + a_2x^2+\dots a_{n-1}x^{n-1} = a_0 +
+      x\left(a_1 + x\left(a_2 + x\left(\dots\right)\right)\right)
+    \end{equation}
+    Lav derefter en ikke-rekursiv funktion, som udregner værdien af
+    den samme polynomium. Benyt de tidligere udviklede unit-test som
+    demonstration for at de 2 funktioner regner rigtigt.
+  \end{description}
+\item[Fredag 27/11:]~\\[-5mm]
+  \begin{description}
+  \item[9.3] HR: 8.5, 8.6
+  \end{description}
+\item[Mandag-tirsdag 30/11-1/12:]~\\[-5mm]
+   \begin{description}
+  \item[9.4] Programmer spillet Game of life
+    (\url{https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life}),
+    uden rekursive funktioner og ved hjælp af en eller flere
+    \lstinline|array| variable. Reglerne er angivet på hjemmesiden
+    under 'Rules', og eksempler på udviklingsmønstre ser I under
+    'Examples of patterns'. Bemærk at for at opnå de viste mønstre er
+    det essentielt at ændringerne skal ske simultant på hele brættet
+    på \'{e}n gang. Output skal vises som tekst i terminalen.
+  \end{description}
+\item[Fredag 4/12:]~\\[-5mm]
+  \begin{description}
+  \item[9.5] Udvid jeres program Game of Life, så outputet vises i et
+    vindue ved brug af Windows forms.
+  \end{description}
+\end{description}
+
+Afleveringsopgaven er:
+\begin{description}
+\item[9.6] Lav en oversættelse af \lstinline|fsharpc|'s dokumentationsfiler fra \lstinline|xml| til \LaTeX. Med oversættelsesargumentet \lstinline|-doc:| produceres en \lstinline|xml| fil, hvilket desværre hverken er særlig køn eller læsevenlig. Den følger derimod en fast struktur, f.eks.:
+\begin{lstlisting}
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Vector</name></assembly>
+<members>
+<member name="T:Vector.Vector">
+<summary>
+
+ A demonstration of defining a module from H &amp; R, Functional
+ Programming Using F#. Note: Bad style, better use augmented types.
+
+ How to compile:
+ &lt;code&gt;
+ fsharpc --doc:Vector.xml -a Vector.fsi Vector.fs
+ fsharpc --doc:testVector.xml -r Vector.dll testVector.fsx
+ &lt;/code&gt;
+
+ Author: Jon Sporring.
+ Date: 2015/10/27
+ A 2 dimensional vector type, whose elements are floats.
+</summary>
+</member>
+<member name="M:Vector.coord(Vector.Vector)">
+<summary>
+ Get coordinates
+</summary>
+</member>
+<member name="M:Vector.make(System.Double,System.Double)">
+<summary>
+ Make vector
+</summary>
+</members>
+</doc>
+\end{lstlisting}
+I biblioteket \lstinline|Fsharp.Data|, som kan hentes her:
+\begin{quote}
+  \url{https://github.com/fsharp/FSharp.Data/zipball/release}
+\end{quote}
+findes en \lstinline|xml|-parser, som kan parse filer af ovennævnte type, pånær at først linje skal fjernes.
+
+I skal skrive et program, som tager dokumentationsfiler, og som
+minimum producerer \LaTeX filer, hvor "`\lstinline|<members>|"' og
+"`\lstinline|</members>|"' oversættes til
+"`\lstinline|\begin{description}|"' og
+  "`\lstinline|\end{description}|"', og "`\lstinline|<member>|"'
+"`\lstinline|</member>|"' skal oversættest til de tilhørende
+"`\lstinline|\item[name]~\\ summary|"', hvor "`\lstinline|name|"' og
+"`\lstinline|summary|"' erstattest med indholdet af tilsvarende felter
+i "`\lstinline|xml|"' filen.
+\end{description}
+Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF,
+samt en fsx tekstfil med løsningen, som kan oversættes med fsharpc, og
+hvis resultat kan køres med mono. Det hele skal samles i en zip fil
+efter sædvanlig navnekonvention:
+\begin{quote}
+  \lstinline|<instructor's-initial>_<firstname.lastname>_<exercise-number>.zip|
+\end{quote}
+I zip filen skal en delopgave navngives ved opgavenummer, således at
+filen for opgave 9.6 hedder \lstinline|opg9_6.fsx|, osv..
+
+\flushright God fornøjelse.
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,68 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+\usepackage{hyperref}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Opgave 11 - øvelser og  gruppeopgave}
+\author{Christina Lioma og Jon Sporring}
+\date{Deadline  12.\ januar}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde i grupper. Formålet er at arbejde med:
+\begin{itemize}
+\item Klasser, objekter og nedarvning
+\end{itemize}
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+\section*{Øvelsesopgaver}
+Til øvelserne på alm.\ skema forventer vi at I arbejder med
+afleveringsopgave 10 og øvelsesopgaverne, som denne gang udgives separat.
+
+\section*{Afleveringsopgave}
+Følgende opgave er formuleret på engelsk og omhandler simulering af rov- og byttedyr i et lukket miljø.
+\begin{description}
+\item[\textbf{11.3}] We consider a simulation of a natural habitat as two groups of animals interact. One group is the prey, a population of animals that are the food source for the other population of animals, the predators. Both groups have a fixed birthrate. The prey usually procreate faster than the predators, allowing for a growing prey population. But as the population of prey increases, the habitat can support a higher number of predators. This leads to an increasing predator population, and, after some time, a decreasing prey population. Around that time, the predator population grows so large as to reach a critical point, where the number of prey can no longer support the present predator population, and the predator population begins to wane. As the predator population declines, the prey population recovers, and the two populations continue this interaction of growth and decay.
+
+  An actual example of studying predator-prey relationships is the one between wolves and moose on Isle Royale in Lake Superior (http://www.isleroyalewolf.org/). Its population of wolves and moose are isolated on the island. We can simulate this, with the following rules:
+  \begin{enumerate}
+  \item The habitat updates itself in units of time called clock ticks. During one clock tick, every animal in the island gets an opportunity to do something. 
+  \item All animals are given an opportunity to move into an adjacent space, if an empty adjacent space is found. One move per clock tick is allowed.
+  \item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal – its offspring. The animal’s breed time is then reset to zero. An animal can breed at most once in a clock tick.
+  \item The predators must eat. They have a fixed starve time. If they cannot find a prey to eat before starve time ticks of the clock, they die.
+  \item When a predator eats, it moves into an adjacent space that is occupied by prey (its meal). The prey is removed and the predator’s starve time is reset to zero. Eating counts as the predator’s move during that clock tick.
+  \item At the end of every clock tick, each animal’s local event clock is updated. All animals’ breed times are decremented and all predators’ starve times are decremented.
+  \end{enumerate}
+\end{description}
+
+\subsection*{Krav til opgavebesvarelsen}
+I skal lave et program, som kan simulere rov- og byttedyrene som beskrevet ovenfor og skrive en lille rapport. Afleveringen skal bestå af en pdf indeholdende rapporten, et katalog med et eller flere fsharp programmer som kan oversættes med Monos fsharpc kommando og derefter køres i mono, og en tekstfil der angiver sekvensen af oversættelseskommandoer nødvendigt for at oversætte jeres program(mer). Kataloget skal zippes og uploades som en enkelt fil. Kravene til programmeringsdelen er:
+\begin{enumerate}
+\item Man skal kunne angive antal af tiks (clock ticks), som simuleringen skal køre, formeringstid (breeding time) for begge racer og udsultningstid for rovdyrene ved programstart.
+\item Antallet af dyr per tik skal gemmes i en fil.
+\item Programmet skal benytte klasser og objekter
+\item Der skal være mindst en (fornuftig) nedarvning
+\item Programmets klasser skal bla. beskrives ved brug af et UML diagram
+\item Programmet skal kommenteres ved brug af fsharp kommentarstandarden
+\item Programmet skal unit-testes
+\end{enumerate}
+Kravene til rapporten er:
+\begin{enumerate}[resume]
+\item Rapporten skal skrives i \LaTeX.
+\item I skal bruge \texttt{rapport.tex} skabelonen
+\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, og Diskussion og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
+\item Rapporten må maximalt være på 10 sider alt inklusivt.
+\end{enumerate}
+\end{document}
