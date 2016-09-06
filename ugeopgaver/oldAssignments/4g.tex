@@ -1,0 +1,220 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Uge(r)seddel 4 -- gruppeopgave}
+
+\author{Torben Mogensen}
+\date{Deadline 29. september}
+
+\maketitle
+
+\noindent
+I denne periode skal I arbejde i grupper.  Formålet er at arbejde med lister.
+
+Opgaverne i denne uge er delt i øve- og afleveringsopgaver.
+
+\subsubsection*{Øveopgaverne er:}
+
+\begin{description}
+\item[4.1.] HR: 4.1, 4.7, 4.8, 4.14, 4.16.
+
+\item[4.2.] En tabel kan repræsenteres som en liste af lister, hvor alle
+  listerne er lige lange.
+
+Listen \texttt{[[1; 2; 3]; [4; 5; 6]]} repræsenterer for eksempel tabellen
+
+\[\left [\begin{array}{rrr}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{array}
+\right ]\]
+
+\begin{enumerate}[i]
+\item Lav en funktion \texttt{isTable : 'a list list -> bool}, der
+  givet en liste af lister afgør, om det er en lovlig ikke-tom tabel,
+  altså om alle listerne har ens længde, og at der er mindst en liste
+  med mindst et element.
+
+\item Lav en funktion \texttt{transpose : 'a list list -> 'a list
+  list}, der \emph{transponerer} en tabel.  Transponering er spejling over
+  diagonalen, så den transponerede tabel til den herover viste tabel er
+
+\[\left [\begin{array}{rr}
+1 & 4 \\
+2 & 5 \\
+3 & 6
+\end{array}
+\right ]\]
+
+\noindent
+Kaldet \texttt{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \texttt{[[1; 4]; [2; 5]; [3; 6]]}.
+
+Bemærk, at \texttt{transpose (transpose t) = t}, hvis \texttt{t} er en
+tabel.  Hvis argumentet til \texttt{transpose} ikke er en lovlig
+tabel, skal en passende fejl rapporteres.
+
+\end{enumerate}
+
+\end{description}
+
+\subsubsection*{Afleveringsopgaven er:}
+
+
+\begin{description}
+\item[4.3.] HR: 4.4, 4.12 og 4.15.
+
+\item[4.4.] Lav en funktion \texttt{removeDuplicates : 'a list -> 'a list
+  when 'a : equality}, som fjerner duplikater i en liste.  For
+  eksempel skal kaldet \texttt{removeDuplicates [1; 2; 1; 3: 2]}
+  give resultatet \texttt{[1; 2; 3]}.  Bemærk, at den første
+  forekomst af et givet elememt bevares, mens de øvrige forekomster
+  fjernes.  De bevarede elementer bevarer deres indbyrdes position.
+
+\textbf{Vink:} I kan bruge \texttt{isMember} funktionen fra side 79 i HR.
+
+\end{description}
+
+\noindent
+Afleveringsopgaven skal aflevres som både \LaTeX, den genererede PDF,
+samt en fsx tekstfil med løsningen for hver delopgave, som kan
+oversættes med fsharpc, og hvis resultat kan køres med mono.  Det hele
+samles i en zip-fil med navnekonventionen
+
+\[
+{<}\textrm{instructor's initials}{>}\underline{~}{<}\textrm{firstname.lastname}_1{>}\underline{~}\ldots\underline{~}{<}\textrm{firstname.lastname}_n{>}\underline{~}{<}\textrm{exercise-number}{>}.\textrm{zip}
+\]
+
+\noindent
+I zip-filen skal en delopgave navngives med opgavenummer, således at filen for opgave 4.3 hedder opg4\underline{~}3.fsx osv.
+
+Aflever kun en gang per gruppe, og brug Absalon's
+gruppeafleveringsfunktion.
+
+\vspace{1ex}
+
+\hfill God fornøjelse
+
+\section*{Ugens nød 1}
+
+Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
+som interesserede kan løse.  Det er helt frivilligt at lave disse
+opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
+mindre præmie til den bedste løsning, der afleveres i Absalon.
+
+Ugens nød i denne uge omhandler en variant af spillet "`Minestryger"'
+(\url{http://da.wikipedia.org/wiki/Minestryger_%28spil%29}).
+
+I vores variant er det for alle felter på forhånd kendt, hvor mange
+bomber, der i alt er i de otte nabofelter samt feltet selv.  Det
+gælder både felter med og felter uden bomber.
+
+Et eksempel på et sådant spil er
+
+\begin{verbatim}
+        221
+        232
+        232
+\end{verbatim}
+  
+svarende til bombeplaceringen
+
+\begin{verbatim}
+        000
+        110
+        001
+\end{verbatim}
+
+\noindent
+hvor tomme felter er angivet med \texttt{0} og bomber med \texttt{1}.
+
+Der er ikke altid en entydig løsning.  For eksempel vil spillet
+
+\begin{verbatim}
+        11
+        11
+\end{verbatim}
+ 
+have fire løsninger, blandt andet:
+
+\vspace{1ex}
+
+\noindent
+\begin{tabular}{@{\texttt{~~~~~~~~}}lcl}
+\texttt{01} & og & \texttt{10} \\
+\texttt{00} &  & \texttt{00}
+\end{tabular}
+\vspace{1ex}
+
+Der er heller ikke altid løsninger, idet for eksempel
+
+\begin{verbatim}
+        10
+        00
+\end{verbatim}
+ 
+ikke har en løsning.
+
+Vi repræsenterer et spil som en tabel af heltal, som alle ligger
+mellem 0 og 9.  Løsninger repræsenteres som tabeller af heltal, der
+alle har værdi 0 eller 1.
+
+\begin{enumerate}[Nød {1}.1]
+
+\item funktion \texttt{minelaegger : int list list -> int list list},
+  som givet en \emph{løsning} returnerer et spil.  Det kan antages, at
+  input er en liste af lister af tal, der alle er enten 0 eller 1.
+
+For eksempel skal kaldet
+\texttt{minelaegger [[0; 0; 0]; [1; 1; 0]; [0; 0; 1]]}
+returnere spillet \texttt{[[2; 2; 1]; [2; 3; 2]; [2; 3; 2]]}.
+
+
+\item Lav en funktion \texttt{minestryger : int list list -> int list list
+  option}, som givet et spil finder en løsning, hvis en sådan findes,
+og returnerer \texttt{None}, hvis der ingen løsninger er.  Det kan antages, at input er en liste af lister af tal mellem 0 og 9.
+
+For eksempel skal kaldet
+\texttt{minestryger [[2; 2; 1]; [2; 3; 2]; [2; 3; 2]]}
+returnere løsningen
+\texttt{Some [[0; 0; 0]; [1; 1; 0]; [0; 0; 1]]},
+mens 
+\texttt{minestryger [[1; 0]; [0; 0]]}
+returnerer \texttt{None}, og
+\texttt{minestryger [[1; 1]; [1; 1]]}
+returnerer en af de fire mulige løsninger, f.eks.
+\texttt{Some [[0; 0]; [1; 0]]}
+
+
+Det er ikke vigtigt, om løsningen findes hurtigt, men hvis flere
+korrekte løsninger indleveres, gives præmien til den hurtigste.
+
+\end{enumerate}
+
+\noindent
+Der skal uploades både en \LaTeX-fil, der beskriver fremgangsmåden,
+samt en fsx fil, der indeholder definitionerne af de to funktioner.
+Navngivningen af filerne er ikke vigtig.
+
+Endnu et par eksempelspil til afprøvning er angivet herunder.
+
+\begin{verbatim}
+        22222      33333      44444      23232      23321
+        22222      33333      44444      24453      34421
+        22222      33333      44444      45543      45532
+        22222      33333      44444      34443      23321
+        22222      33333      44444      33222      12221
+\end{verbatim}
+
+\end{document}
+
