@@ -5,7 +5,7 @@
 \title{Programmering og Problemløsning\\Datalogisk Institut,
   Københavns Universitet\\Uge(r)seddel 2 - individuel opgave.}
 \author{Jon Sporring}
-\date{13.\ - 16.\ september.\\Afleveringsfrist: onsdag d. 21. september kl. 22:00}
+\date{13.\ - 18.\ september.\\Afleveringsfrist: onsdag d. 21. september kl. 22:00}
 
 \begin{document}
 \maketitle
@@ -28,7 +28,7 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver. For de individuel
 3.14+2.78;;
 \end{lstlisting}
 Beskriv (for dig selv), hvad F\# gjorde, og hvis der opstod en fejl, find fejlen og gentag.
-\item Gentag øvelsen ovenfor, men denne gang indtast udtrykket i Emacs og gem det i en fil. Kør filen med \lstinline[language=console]{fsharpi} og \lstinline[language=console]{fsharpc}+\lstinline[language=console]{mono}. Overvej om resultatet er som forventet, og hvis ikke, forklar hvorfor.
+\item Gentag øvelsen ovenfor, men denne gang indtast udtrykket i Emacs og gem det i en fil med suffix \verb|.fsx|. Kør filen med \lstinline[language=console]{fsharpi} og \lstinline[language=console]{fsharpc}+\lstinline[language=console]{mono}. Overvej om resultatet er som forventet, og hvis ikke, forklar hvorfor.
 \item Betrakt EBNF'en,
 \begin{lstlisting}[language=ebnf]
 aString = 'b', {'a'}; (* No space between terminals *)
@@ -41,7 +41,7 @@ operator = '+' | '-' | '*' | '/';
 expression = number | number, operator, expression;
 \end{lstlisting}
 Giv eksempler på,  gyldige udtryk (\lstinline[language=ebnf]{expressions}), som bruger hhv.\ 0, 1, 2 eller flere operatorer (\lstinline[language=ebnf]{operator}).
-\item Skriv et udtryk, som konkattenerer strengene \lstinline{"hello"}, \lstinline{" "}, \lstinline{"world"} og afprøv det i F\#.
+\item Skriv et udtryk, som konkatenerer strengene \lstinline{"hello"}, \lstinline{" "}, \lstinline{"world"} og afprøv det i F\#.
 \item Prøv følgende udtryk i F\#,
 \begin{lstlisting}
 3 + 1.0;;
@@ -84,9 +84,10 @@ Opskriv 3 forskellige gyldige \lstinline[language=ebnf]{expressions} udelukkende
     \end{tabular}
   \end{center}
 således at hver række repræsenterer den samme værdi men opskrevet på 4 forskellige former, og angiv mellemregningerne du brugte, for at udregne konverteringerne.
-\item Opskriv 2 F\#-udtryk, som ved brug af indiceringssyntaksen udtrækker 1. og 2. ord i strengen "`hello world"'.
+\item Opskriv 2 F\#-udtryk, som ved brug af indiceringssyntaksen udtrækker 1.\ og 2.\ ord i strengen "`hello world"'.
 \end{enumerate}
-Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF, samt en fsx tekstfil med løsningen for hver delopgave, som kan oversættes med fsharpc og hvis resultat kan køres med mono. Det hele skal samles i en zip fil og afleveres elektronisk i Absalon.
+Afleveringsopgaven skal afleveres som både LaTeX, den genererede PDF,
+samt en fsx tekstfil kaldet \verb|opgave2i16.fsx|, som kan oversættes med fsharpc, og hvis resultat kan køres med mono. Det hele skal samles i en zip fil og afleveres elektronisk i Absalon.
 
 Til øvelserne forventer vi at I arbejder efter følgende skema:
 \begin{description}
