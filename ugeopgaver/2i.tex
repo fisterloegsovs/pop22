@@ -14,7 +14,7 @@ I denne periode skal I arbejde individuelt. Formålet er at:
 \begin{itemize}
 \item I laver jeres første F\# program
 \item I kommer til at forstå Extended Backus-Naur Form grammatikker
-\item I kommer til at kende forskellen mellem decimal, binær, heximal, og oktal repræsentation af heltal, samt at kunne konvertere imellem dem.
+\item I kommer til at kende forskellen mellem decimal, binær, hexadecimal, og oktal repræsentation af heltal, samt at kunne konvertere imellem dem.
 \item I kommer til at kunne beskrive simple typer i F\#: \lstinline{int}, \lstinline{float}, \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt konvertering imellem dem.
 \item I kommer til at kunne bruge F\# som en lommeregner.
 \end{itemize}
@@ -29,12 +29,12 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver. For de individuel
 \end{lstlisting}
 Beskriv (for dig selv), hvad F\# gjorde, og hvis der opstod en fejl, find fejlen og gentag.
 \item Gentag øvelsen ovenfor, men denne gang indtast udtrykket i Emacs og gem det i en fil med suffix \verb|.fsx|. Kør filen med \lstinline[language=console]{fsharpi} og \lstinline[language=console]{fsharpc}+\lstinline[language=console]{mono}. Overvej om resultatet er som forventet, og hvis ikke, forklar hvorfor.
-\item Betrakt EBNF'en,
+\item Betragt EBNF'en,
 \begin{lstlisting}[language=ebnf]
 aString = 'b', {'a'}; (* No space between terminals *)
 \end{lstlisting}
 for hvert af følgende tekst strenge, angiv hvorvidt de er gyldige mht.\ ovenstående EBNF'en eller ej: "`a"', "`b"', "`aa"', "`ab"', "`ba"', "`bb"', "`aaa"', "`aab"', "`aba"', "`abb"', "`baa"', "`bab"', "`bba"', "`bbb"', "`b,aa"', "`baa;"', "`b,aa;"'
-\item Betrakt EBNF'en,
+\item Betragt EBNF'en,
 \begin{lstlisting}[language=ebnf]
 number = ?any decimal number?;
 operator = '+' | '-' | '*' | '/';
@@ -59,7 +59,7 @@ og forklar resultatet. Forbedr evt.\ udtrykket.
 
 Afleveringsopgaven er:
 \begin{enumerate}[label=2i.\arabic*,start=0]
-\item Betrakt EBNF'en,
+\item Betragt EBNF'en,
 \begin{lstlisting}[language=ebnf]
 charLiteral = ?any unicode codepoint?;
 stringLiteral = '"', {charLiteral}, '"';
@@ -71,7 +71,7 @@ Opskriv 3 forskellige gyldige \lstinline[language=ebnf]{expressions} udelukkende
   \begin{center}
     \begin{tabular}{|c|c|c|c|}
       \hline
-      Decimal & Binær & Heximal & Oktal\\
+      Decimal & Binær & Hexadecimal & Oktal\\
       \hline
               10 &  &  & \\
       \hline
