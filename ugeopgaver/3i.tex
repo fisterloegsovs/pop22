@@ -106,7 +106,7 @@ som i stedet benytter formlen $\frac{n(n+1)}{2}$.
     \mbox{\lstinline!mulTable : n:int -> string!}
   \end{quote}
   som tager 1 argument og returnerer en streng indeholdende de første $1\leq n\leq 10$ linjer i multiplikationstabellen inklusiv ny-linje tegn, således at hele tabellen kan udskrives med et enkelt \lstinline!printf "%s"! statement. F.eks.\ skal kald til \mbox{\lstinline!mulTable 3!} returnere
-\begin{lstlisting}[caption=Example of use and output from \lstinline!mulTab!,label=mulTab]
+\begin{lstlisting}[caption=Eksempel på brug og output fra \lstinline!mulTab!,label=mulTab]
 printf "%s" (mulTab 3);;
        1   2   3   4   5   6   7   8   9  10
    1   1   2   3   4   5   6   7   8   9  10
@@ -131,10 +131,10 @@ så den benytter en lokal streng-variabel, som bliver opbygget dynamisk vha.\ 2 
     \end{quote}
 som benytter rekursion og uden brug af variable opbygger strengen. Afprøv \mbox{\lstinline!recMulTable n!} for $n= 1, 2, 3, 10$.
   \item Lav et program, som benytter sammenligningsoperatoren for strenge \lstinline!=!, og som skriver en tabel ud på skærmen med 3 kolonner: \lstinline!n!, og resultatet af sammenligningen af \mbox{\lstinline!mulTable n!} med hhv.\ \mbox{\lstinline!loopMulTable n!} og \mbox{\lstinline!recMulTable n!} som \lstinline!true! eller \lstinline!false!.
-  \item Forklar forskellen mellem at benytte \lstinline!printf "%s"! og \lstinline!printf "%A"! til at printe resultatet af \lstinline!multTab!.
+  \item Forklar forskellen mellem at benytte \lstinline!printf "%s"! og \lstinline!printf "%A"! til at printe resultatet af \lstinline!mulTab!.
   \end{enumerate}
 \end{enumerate}
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!3i1a.fsx! for delopgave a af første opgave. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og ud over selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!3i0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
 
 \flushright God fornøjelse.
 \end{document}
