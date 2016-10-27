@@ -21,7 +21,7 @@ I denne periode skal I arbejde individuelt. Regler for individuelle afleveringso
 Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
 
 Øve-opgaverne er:
-\begin{enumerate}[label=8ø.\arabic*,start=0]
+\begin{enumerate}[label=7ø.\arabic*,start=0]
 \item implementer fakultetsfunktionen
   \begin{quote}
     \mbox{\lstinline!fac : n:int -> int!}
@@ -50,7 +50,7 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver.
 \end{enumerate}
 
 Afleveringsopgaven er:
-\begin{enumerate}[label=8i.\arabic*,start=0]
+\begin{enumerate}[label=7i.\arabic*,start=0]
 \item Der skal laves følgende implementationer af samme funktion
   \begin{quote}
     \mbox{\lstinline!safeIndexIf : arr:'a [] -> i:int -> 'a!}
@@ -63,19 +63,20 @@ Afleveringsopgaven er:
   \item \lstinline!safeIndexIf! må ikke gøre brug af \lstinline!try!-\lstinline!with! og må ikke kaste en undtagelse. 
   \item \lstinline!safeIndexOption! skal returnere \lstinline!None! i en fejlsituation. 
   \end{itemize}
-   Der skal laves en kort afprøvning af alle 3 funktioner, der indebefatter at den indicerede værdi udskrives til skærmen som et heltal og ikke som en option type. Afprøvningen skal også afprøve korrekt håndtering af funktionernes evt.\ kastede undtagelser.  Lav en kort beskrivende sammenligning af de metodernes evne til at håndtere fejltilstande.
+   Der skal laves en kort afprøvning af alle 3 funktioner, der indebefatter at den indicerede værdi udskrives til skærmen som et heltal og ikke som en option type. Afprøvningen skal også afprøve korrekt håndtering af funktionernes evt.\ kastede undtagelser.  Lav en kort beskrivende sammenligning af metodernes evne til at håndtere fejltilstande.
  \item Der skal laves et program
   \begin{quote}
-    \mbox{\lstinline!fileReplace : filename:string -> old:string -> new:string -> unit!}
+    \lstinline!fileReplace :!
+    \\\noindent\lstinline!  filename:string -> needle:string -> replace:string -> unit!
   \end{quote}
-  som erstatter alle forekomster af \lstinline!old! argumentet med \lstinline!new! argumentet i filen med navn \lstinline!filename!. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
+  som erstatter alle forekomster af \lstinline!needle! argumentet med \lstinline!replace! argumentet i filen med navn \lstinline!filename!. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
 \item I html-standarden angives links med \lstinline!<a></a>! tags, f.eks. kunne et link til Googles hjemmeside skrives som \lstinline!<a href="https://google.com>Tryk her for Google</a>"!. Der skal laves et program
   \begin{quote}
     \mbox{\lstinline!countLinks : url:string -> int!}
   \end{quote}
-  som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
+  som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
 \end{enumerate}
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!8i0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Hvis der er mere end 1 fsx-fil, så skal de samples i en zip-fil. Der skal også laves en kort beskrivelse af løsningen for hver opgave i Latex som afleveres ved siden af zip-filen i pdf format. Begge filer uploades tilAbsalon.
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!7i0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden. Hvis der er mere end 1 fsx-fil, så skal de samles i en zip-fil. Der skal også laves en kort beskrivelse af løsningen for hver opgave i Latex som afleveres ved siden af zip-filen i pdf format. Begge filer uploades til Absalon.
 
 \flushright God fornøjelse.
 \end{document}
