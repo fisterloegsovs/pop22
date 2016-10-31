@@ -7,8 +7,8 @@ let reader =
 
 if reader.IsSome then
   while not(reader.Value.EndOfStream) do
-    let c = reader.Value.ReadLine ()
-    printfn "\"%s\", " c
+    let c = reader.Value.Read ()
+    printf "'%c', " (char c)
     
   reader.Value.Close ()
 else
