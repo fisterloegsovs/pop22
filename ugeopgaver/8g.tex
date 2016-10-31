@@ -14,20 +14,20 @@ I denne periode skal I arbejde grupper. Formålet er at arbejde med et stort pro
 \begin{enumerate}[label=8g.\arabic*,start=0]
 \item I skal programmere spillet Mastermind. 
   \begin{quote}
-    Spillet Mastermind er et spil for 2 deltagere, en koder og en kodeløser. Koderen laver en skjult ode bestående af en kombination af 4 farvede kodestifter i ordnet rækkefølge, hvor farverne kan være rød, grøn, blå, lilla, hvid og sort. Kodeløseren skal nu forsøge at gætte koden. Dette gøres ved, at kodeløseren foreslår en kombination af farver, og til hvert forslag svarer koderen med et antal sorte og hvide Svarstifter. Antallet af sorte Svarstifter svarer til hvor mange af kodestifterne, som havde den rigtige farve og er på den rette plads, og antallet af hvide Svarstifter svarer til antallet af kodestifter, som findes i koden men på den forkerte plads. F.eks.\ hvis koden er (rød, sort, grøn, blå), og gættet er (grøn, sort, hvid, hvid) er svaret 1 sort og 1 hvid.
+    Spillet Mastermind er et spil for 2 deltagere, en opgavestiller og en opgaveløser. Opgavestilleren laver en skjult opgave bestående af en kombination af 4 farvede opgavestifter i ordnet rækkefølge, hvor farverne kan være rød, grøn, blå, lilla, hvid og sort. Opgaveløseren skal nu forsøge at gætte opgave. Dette gøres ved, at opgaveløseren foreslår en kombination af farver, og til hvert forslag svarer opgavestilleren med et antal sorte og hvide Svarstifter. Antallet af sorte Svarstifter svarer til hvor mange af opgavestifterne, som havde den rigtige farve og er på den rette plads, og antallet af hvide Svarstifter svarer til antallet af opgavestifter, som findes i opgaven men på den forkerte plads. F.eks.\ hvis opgaven er (rød, sort, grøn, blå), og gættet er (grøn, sort, hvid, hvid) er svaret 1 sort og 1 hvid.
   \end{quote}
   Minimumskrav til jeres aflevering er:
   \begin{itemize}
-  \item Programmet skal både kunne være koder og kodegætter
-  \item Programmet skal dokumenteres efter kodestandarden
+  \item Programmet skal både kunne være opgavestiller og opgaveløser
+  \item Programmet skal dokumenteres efter fsharp kodestandarden
   \item Programmet skal afprøves
-  \item Opgaveløsningen skal dokumenteres som en rapport skrevet i LaTeX på maksimalt 20 oversatte sider eksl.\ bilag, der som minimum indeholder
+  \item Opgaveløsningen skal dokumenteres som en rapport skrevet i LaTeX på maksimalt 20 oversatte sider ekslusiv bilag, der som minimum indeholder
     \begin{itemize}
     \item En forside med en titel, dato for afleveringen og jeres navne
     \item En forord som kort beskriver omstændighederne ved opgaven
     \item En analyse af problemet
     \item En beskrivelse af de valg, der er foretaget inklusiv en kort gennemgang af alternativerne
-    \item En beskrivelse af det overordnede design, f.eks.\ som pseudo-kode
+    \item En beskrivelse af det overordnede design, f.eks.\ som pseudokode
     \item En programbeskrivelse
     \item En brugervejledning
     \item En beskrivelse af afprøvningens opbygning
@@ -38,20 +38,20 @@ I denne periode skal I arbejde grupper. Formålet er at arbejde med et stort pro
   \end{itemize}
   Gode råd til opgave er:
   \begin{itemize}
-  \item Det er ikke noget krav til programmeringsparadigme. I må også gerne blande, men overvej i hvert tilfælde hvorfor I vælger det ene fremfor det andet.
-  \item Det er ikke noget krav, at opgaven benytter en grafisk brugergrænseflade, og det anbefales, at I starter med at lave en tekstbaseret version, før I overvejer evt. at lave en med grafisk brugergrænseflade.
-  \item Programmet som koder er måske den nemmeste del, så det er måske et godt sted at starte.
-  \item For programmet som kodegætter er det nyttigt at tænke over følgende: Det totale antal farvekombinationer, som et gæt kan være, er $6^4=1296$, og der er ikke noget ``intelligens''-krav. Uanset jeres ambitionsniveau vil det være nyttigt først at implementere en simpel strategi såsom at trække et tilfældigt gætte, som ikke har været prøvet før. Hvis I har mod på og tid til en mere advanceret strategi, så kan I overveje, hvilke gæt af dem, som endnu ikke er prøvet, er ugyldige med allerede givne svar.
-  \item I skal overveje detaljeringsgraden i jeres rapport, da I ikke vil have plads til alle detaljer, og I er derfor nød til at fokusere på de vigtige pointer.
-  \item Det er godt først at lave et programdesign på papir inden I implementere en løsning. F.eks.\ kan papirløsningen bruges til i grove træk at lave en håndkøring af designet. Man behøver ikke at have programmeret noget for at afprøve designet for et antal konkrete situationer, såsom ``hvad vil programmet gøre når brugeren er kodeløser, koden er (rød, sort, grøn, blå) og brugeren indtaster (grøn, sort, hvid, hvid)?''
-  \item Det er ofte sundt at programmere i cirkler, altså at man starter med at implementere en hel skald, hvor alle de væsentlige dele er tilstede, og programmet kan oversætte og køre uden at alle delelementer er færdigudviklet. Derefter går man tilbage og tilføjer bedre implementationer af delelementer som legoklodser.
-  \item Det er nyttigt at skrive på rapporten under hele forløbet i modsætning til kun at skrive på den den sidste dag.
-  \item Husk at rapporten er et produkt i sig selv: hvis vi ikke kan læse og forstå jeres rapport, så er det svært at vurdere dens indhold. Kør stavekontrol, fordel skrive og læseopgaverne, så en anden en den der har skrevet et afsnit læser korrektur på det.
+  \item Det er ikke noget krav til programmeringsparadigme, dvs. det står jer frit for om I bruger funktional eller imperativ programmeringsparadigme, og I må også gerne blande. Men overvej i hvert tilfælde hvorfor I vælger det ene fremfor det andet.
+  \item Det er ikke noget krav, at opgaven benytter en grafisk brugergrænseflade, og \textbf{det anbefales, at I starter med at lave en tekstbaseret version}, før I overvejer evt.\ at lave en med grafisk brugergrænseflade.
+  \item Programmet som opgavestiller er måske den nemmeste del, så \textbf{start med at lave den programdel, hvor programmet er opgavestiller.}
+  \item For programmet som opgaveløser er det nyttigt at tænke over følgende: Det totale antal farvekombinationer, som et gæt kan være, er $6^4=1296$, og der er ikke noget ``intelligens''-krav. Uanset jeres ambitionsniveau så \textbf{start med at lave en opgaveløser, som trækker et tilfældigt gæt.} Hvis I har mod på og tid til en mere advanceret strategi, så kan I overveje, hvilke gæt af dem, som endnu ikke er prøvet, er ugyldige med allerede givne svar.
+  \item I skal overveje detaljeringsgraden i jeres rapport, da I ikke vil have plads til alle detaljer, og I er derfor nødt til at fokusere på de vigtige pointer.
+  \item Det er godt først at lave et programdesign på papir inden I implementerer en løsning. F.eks.\ kan papirløsningen bruges til i grove træk at lave en håndkøring af designet. Man behøver ikke at have programmeret noget for at afprøve designet for et antal konkrete situationer, såsom ``hvad vil programmet gøre når brugeren er opgaveløser, opgaven er (rød, sort, grøn, blå) og brugeren indtaster (grøn, sort, hvid, hvid)?''
+  \item Det er ofte sundt at programmere i cirkler, altså at man starter med at implementere en skald, hvor alle de væsentlige dele er tilstede, og programmet kan oversættes (kompileres) og køres, men uden at alle delelementer er færdigudviklet. Derefter går man tilbage og tilføjer bedre implementationer af delelementer som legoklodser.
+  \item Det er nyttigt at skrive på rapporten under hele forløbet i modsætning til kun at skrive på den sidste dag.
+  \item Husk at rapporten er et produkt i sig selv: hvis vi ikke kan læse og forstå jeres rapport, så er det svært at vurdere dens indhold. Kør stavekontrol, fordel skrive- og læseopgaverne, så en anden, end den der har skrevet et afsnit, læser korrektur på det.
   \item Det er bedre at aflevere noget end intet.
   \item Der er afsat 1 undervisningsfri og 3/2 alm.\ undervisningsuger til opgaven (7/11-30/11 fraregnet 14/11-20/11, som er mellemuge, og kursusaktiveter på parallelkurser). Det svarer til ca.\ 40 timers arbejde. Brug dem struktureret og målrettet. Lav f.eks.\ en tidsplan, så I ikke taber overblikket over projektforløbet.
   \end{itemize}
 \end{enumerate}
-Afleveringsopgaven skal afleveres som fsx-tekstfil navngivet \lstinline!8g0a.fsx!, som skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og løsningen skal dokumenteres vha.\ en rapport i pdf-format med navn  \lstinline!8g0a.pdf!. Det hele skal samles i en zip fil og uploades på Absalon.
+Afleveringsopgaven skal afleveres som fsx-tekstfil navngivet \lstinline!8g0a.fsx!, som skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og løsningen skal dokumenteres vha.\ en rapport i pdf-format med navn \lstinline!8g0a.pdf!. Begge filer uploades hver for sig til Absalon.
 
 \flushright God fornøjelse.
 \end{document}
