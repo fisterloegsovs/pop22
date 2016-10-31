@@ -1,0 +1,1 @@
+System.Console.Write "Indtast et tegn: "; let c = System.Console.Read () in System.Console.WriteLine ("\n" + (string c));;
