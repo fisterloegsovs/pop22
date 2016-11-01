@@ -2,15 +2,21 @@ type codeColor = Red | Green | Blue | Purple | White | Black
 type code = codeColor list
 type answer = int * int
 type board = (code * answer) list
+type player = Human | Computer
 
 let rnd = System.Random ()
 let codeColorList : codeColor list = [Red; Green; Blue; Purple; White; Black]
 
-let rec guess (b : board) n : code =
-  if n > 0 then
-    codeColorList.[rnd.Next(codeColorList.Length-1)] :: (guess b (n-1))
-  else
-    []
+let guess (b : board) (p : player) : code =
+  let rec guessHelper (b : board) n : code =
+    if n > 0 then
+      codeColorList.[rnd.Next(codeColorList.Length-1)] :: (guessHelper b (n-1))
+    else
+      []
+  guessHelper b 4
+
+let makeCode (p : player) : code =
+  guess (List.empty<code * answer>) p
 
 let rec histogram bins list =
   match bins with
@@ -37,11 +43,11 @@ let validate (a : code) (g : code) : answer =
     
   (white - black, black)
       
+let a = makeCode Computer
 let mutable b = List.empty<code * answer>
-let a = guess b 4
 
 for i = 0 to 10 do
-  let g = (guess b 4)
+  let g = guess b Computer
   let v = validate a g
   b <- (g, v) :: b
   printfn "%A : (%A, %A)" a g v
