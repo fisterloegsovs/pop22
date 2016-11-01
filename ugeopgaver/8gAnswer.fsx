@@ -1,22 +1,63 @@
-type codeColor = Red | Green | Blue | Purple | White | Black
+type codeColor = Red | Green | Yellow | Purple | White | Black
 type code = codeColor list
 type answer = int * int
 type board = (code * answer) list
 type player = Human | Computer
 
 let rnd = System.Random ()
-let codeColorList : codeColor list = [Red; Green; Blue; Purple; White; Black]
+let codeColorList : codeColor list = [Red; Green; Yellow; Purple; White; Black]
 
-let guess (b : board) (p : player) : code =
-  let rec guessHelper (b : board) n : code =
+let getHumanOrComputer (question : string) =
+  printf "%s" question
+  let c = char (System.Console.Read ())
+  printfn ""
+  if c = 'H' || c = 'h' then
+    Human
+  else
+    Computer
+
+let getCode () : code = 
+  let getColorCode () = 
+    let c = char (System.Console.Read ()) 
+    match c with
+      | 'R' | 'r' -> Some Red
+      | 'G' | 'g' -> Some Green
+      | 'Y' | 'y' -> Some Yellow
+      | 'P' | 'p' -> Some Purple
+      | 'W' | 'w' -> Some White
+      | 'B' | 'b' -> Some Black
+      | _ -> None
+      
+  let rec getCodeHelper n : code =
     if n > 0 then
-      codeColorList.[rnd.Next(codeColorList.Length-1)] :: (guessHelper b (n-1))
+      printf "%d: " n
+      let c = getColorCode ()
+      printf " "
+      if c.IsNone then 
+          getCodeHelper n
+      else
+        (getCodeHelper (n-1)) @ [c.Value]
     else
       []
-  guessHelper b 4
+    
+  let c = getCodeHelper 4
+  printfn ""
+  c
 
+let guess (p : player) (b : board) : code =
+  let rec guessHelper (b : board) n : code =
+    if n > 0 then
+      codeColorList.[rnd.Next(codeColorList.Length)] :: (guessHelper b (n-1))
+    else
+      []
+  if p = Computer then
+    guessHelper b 4
+  else
+    printf "Type 4 colors (RGYPWB). "
+    getCode ()
+    
 let makeCode (p : player) : code =
-  guess (List.empty<code * answer>) p
+  guess p (List.empty<code * answer>)
 
 let rec histogram bins list =
   match bins with
@@ -24,30 +65,26 @@ let rec histogram bins list =
     | _ -> []
 
 let validate (a : code) (g : code) : answer =
-  (*
-  let mutable black = 0
-  for i = 0 to a.Length - 1 do
-    if a.[i] = g.[i] then
-      black <- black + 1
-  *)
   let black = List.sum (List.map2 (fun elm1 elm2 -> if elm1 = elm2 then 1 else 0) a g)
 
   let aHist = histogram codeColorList a
   let gHist = histogram codeColorList g
-  (*
-  let mutable white = 0
-  for i = 0 to codeColorList.Length - 1 do
-    white <- white + min aHist.[i] gHist.[i]
-  *)
   let white = List.sum (List.map2 (fun elm1 elm2 -> min elm1 elm2) aHist gHist)
     
   (white - black, black)
-      
-let a = makeCode Computer
+
 let mutable b = List.empty<code * answer>
 
-for i = 0 to 10 do
-  let g = guess b Computer
-  let v = validate a g
+let player1 = getHumanOrComputer "Who plays the task giver (H/C)? "
+let player2 = getHumanOrComputer "Who plays the task solver (H/C)? "
+
+printfn "Taks giver:"
+let a = makeCode player1
+
+printfn "Task solver:"
+let mutable v = (0,0)
+while v <> (0,4) do
+  let g = guess player2 b
+  v <- validate a g
   b <- (g, v) :: b
-  printfn "%A : (%A, %A)" a g v
+  printfn "%A : %d -> %A -> %A" a b.Length g v

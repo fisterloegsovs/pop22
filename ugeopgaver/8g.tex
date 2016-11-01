@@ -14,15 +14,16 @@ I denne periode skal I arbejde grupper. Formålet er at arbejde med et stort pro
 \begin{enumerate}[label=8g.\arabic*,start=0]
 \item I skal programmere spillet Mastermind. 
   \begin{quote}
-    Spillet Mastermind er et spil for 2 deltagere, en opgavestiller og en opgaveløser. Opgavestilleren laver en skjult opgave bestående af en kombination af 4 farvede opgavestifter i ordnet rækkefølge, hvor farverne kan være rød, grøn, blå, lilla, hvid og sort. Opgaveløseren skal nu forsøge at gætte opgave. Dette gøres ved, at opgaveløseren foreslår en kombination af farver, og til hvert forslag svarer opgavestilleren med et antal hvide og sorte Svarstifter. Antallet af sorte Svarstifter svarer til hvor mange af opgavestifterne, som havde den rigtige farve og er på den rette plads, og antallet af hvide Svarstifter svarer til antallet af opgavestifter, som findes i opgaven men på den forkerte plads. F.eks.\ hvis opgaven er (rød, sort, grøn, blå), og gættet er (grøn, sort, hvid, hvid) er svaret 1 sort og 1 hvid.
+    Spillet Mastermind er et spil for 2 deltagere, en opgavestiller og en opgaveløser. Opgavestilleren laver en skjult opgave bestående af en kombination af 4 farvede opgavestifter i ordnet rækkefølge, hvor farverne kan være rød, grøn, gul, lilla, hvid og sort. Opgaveløseren skal nu forsøge at gætte opgave. Dette gøres ved, at opgaveløseren foreslår en kombination af farver, og til hvert forslag svarer opgavestilleren med et antal hvide og sorte Svarstifter. Antallet af sorte Svarstifter svarer til hvor mange af opgavestifterne, som havde den rigtige farve og er på den rette plads, og antallet af hvide Svarstifter svarer til antallet af opgavestifter, som findes i opgaven men på den forkerte plads. F.eks.\ hvis opgaven er (rød, sort, grøn, gul), og gættet er (grøn, sort, hvid, hvid) er svaret 1 sort og 1 hvid.
   \end{quote}
   Minimumskrav til jeres aflevering er:
   \begin{itemize}
   \item Det skal være muligt at spille bruger mod bruger, program mod bruger i valgfrie roller og program mod sig selv.
+  \item Programmet skal kommunikere med brugeren på engelsk.
   \item Programmet skal bruge følgende typer:
     \begin{lstlisting}
 type codeColor = 
-  Red | Green | Blue | Purple | White | Black
+  Red | Green | Yellow | Purple | White | Black
 type code = codeColor list
 type answer = int * int
 type board = (code * answer) list
@@ -33,11 +34,11 @@ hvor \lstinline!codeColor! er farven på en opgavestift; \lstinline!code! er en 
   \begin{lstlisting}
     makeCode : player -> code
   \end{lstlisting}
-  som returnerer en opgave enten ved at få input fra brugeren eller ved at beregne en opgave.
+  som tage en spillertype og returnerer en opgave enten ved at få input fra brugeren eller ved at beregne en opgave.
   \begin{lstlisting}
-    guess : board -> player -> code
+    guess : player -> board -> code
   \end{lstlisting}
-  som tager et bræt bestående af et spils tidligere gæt og svar og returnerer et nyt gæt enten ved input fra brugeren eller ved at programmet beregner et gæt.
+  som tager en spillertype, et bræt bestående af et spils tidligere gæt og svar og returnerer et nyt gæt enten ved input fra brugeren eller ved at programmet beregner et gæt.
   \begin{lstlisting}
     validate : code -> code -> answer
   \end{lstlisting}
@@ -65,7 +66,7 @@ hvor \lstinline!codeColor! er farven på en opgavestift; \lstinline!code! er en 
   \item Det er ikke noget krav til programmeringsparadigme, dvs. det står jer frit for om I bruger funktional eller imperativ programmeringsparadigme, og I må også gerne blande. Men overvej i hvert tilfælde hvorfor I vælger det ene fremfor det andet.
   \item For programmet som opgaveløser er det nyttigt at tænke over følgende: Der er ikke noget ``intelligens''-krav, så start med at lave en opgaveløser, som trækker et tilfældigt gæt. Hvis I har mod på og tid til en mere advanceret strategi, så kan I overveje, at det totale antal farvekombinationer er $6^4=1296$, og hvert afgivne svar begrænser de tilbageværende muligheder.
   \item Summen af det hvide og sorte svarstifter kan beregnes ved at sammenlinge histogrammerne for de farvede stifter i hhv.\ opgaven og gættet: F.eks.\ hvis opgaven består af 2 røde og gættet har 1 rød, så er antallet af svarstifter for den røde farve 1. Ligeledes, hvis opaven består af 1 rød, og gættet består af 2 røde, så er antallet af svarstifter for den røde farve 1. Altså er antallet af svarstifter for en farve lig minimum af antallet af farven for opgaven og gættet for den givne farve, og antallet af svarstifter for et gæt er summen af minima over alle farver. 
-  \item Det er godt først at lave et programdesign på papir inden I implementerer en løsning. F.eks.\ kan papirløsningen bruges til i grove træk at lave en håndkøring af designet. Man behøver ikke at have programmeret noget for at afprøve designet for et antal konkrete situationer, såsom ``hvad vil programmet gøre når brugeren er opgaveløser, opgaven er (rød, sort, grøn, blå) og brugeren indtaster (grøn, sort, hvid, hvid)?''
+  \item Det er godt først at lave et programdesign på papir inden I implementerer en løsning. F.eks.\ kan papirløsningen bruges til i grove træk at lave en håndkøring af designet. Man behøver ikke at have programmeret noget for at afprøve designet for et antal konkrete situationer, såsom ``hvad vil programmet gøre når brugeren er opgaveløser, opgaven er (rød, sort, grøn, gul) og brugeren indtaster (grøn, sort, hvid, hvid)?''
   \item Det er ofte sundt at programmere i cirkler, altså at man starter med at implementere en skald, hvor alle de væsentlige dele er tilstede, og programmet kan oversættes (kompileres) og køres, men uden at alle delelementer er færdigudviklet. Derefter går man tilbage og tilføjer bedre implementationer af delelementer som legoklodser.
   \item Det er nyttigt at skrive på rapporten under hele forløbet i modsætning til kun at skrive på den sidste dag.
   \item I skal overveje detaljeringsgraden i jeres rapport, da I ikke vil have plads til alle detaljer, og I er derfor nødt til at fokusere på de vigtige pointer.
