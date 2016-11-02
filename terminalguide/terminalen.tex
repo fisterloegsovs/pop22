@@ -17,7 +17,7 @@
 
 \section{Terminalen}
 
-Næsten alle populære styresystemer tilgås gennem en grafisk brugergrænseflade, som er designet til at gøre typiske opgaver lette at lære at løse. Som datalog har man ofte behov for at tilgå nogle af computerens funktionaliteter, som desværre nogle gange besværliggøres af netop denne brugerflade. Terminalen, som også kaldes kommandolinjen i Windows, er datalogen højre hånd. Terminalen er et simpelt program, hvor man kan afvikle tekst-kommandoer. Næsten alle de opgaver, der kan laves med den grafiske brugerflade kan laves i terminalen og omvendt. Vi vil først og fremmest drage nytte af den terminalens direkte kontrol over de programmer, vi skriver, og videre i din uddannelse vil du have gavn af den hurtige og rå information, som man får igennem terminalen.
+Næsten alle populære styresystemer tilgås gennem en grafisk brugergrænseflade, som er designet til at gøre typiske opgaver lette at lære at løse. Som datalog har man ofte behov for at tilgå nogle af computerens funktionaliteter, som desværre nogle gange besværliggøres af netop denne brugerflade. Terminalen, som også kaldes kommandolinjen i Windows, er datalogens højre hånd. Terminalen er et simpelt program, hvor man kan afvikle tekst-kommandoer. Næsten alle de opgaver, der kan laves med den grafiske brugerflade kan laves i terminalen og omvendt. Vi vil først og fremmest drage nytte af terminalens direkte kontrol over de programmer, vi skriver, og videre i din uddannelse vil du have gavn af den hurtige og rå information, som man får igennem terminalen.
 
 \section{Den hierarkiske mappestruktur}
 
@@ -33,7 +33,7 @@ Når du åbner en mappe i dit foretrukne styresystem vil mappen have en placerin
  Når du begynder at arbejde i terminalen på din nuværende computer er det praktisk både at forestille sig strukturen du kender med mapper og filer i mapper, samt den hierarkiske struktur.
 
 \section{De vigtigste kommandoer}
-Der findes et væld af terminalkommandoer, man kan køre fra terminalen, og man kan selv lave yderligere. I det følgende vil vi gennemgå de vigtigeste kommandoer i de 3 forskellige operativsystemet
+Der findes et væld af terminalkommandoer, man kan køre fra terminalen, og man kan selv lave flere. I det følgende vil vi gennemgå de vigtigeste kommandoer i de 3 forskellige operativsystemet
 
 \subsection{Windows.}
 I dette afsnit vil vi gennemgå komandoerne opsummeret i Tabel~\ref{tab:WindowsKommandoer}.
@@ -144,7 +144,7 @@ C:\Users\sporring\Documents>dir
 
 C:\Users\sporring\Documents>
 \end{lstlisting}
-Vi kan oprette en fil \verb|echo| og \textit{redirection},
+Vi kan oprette en fil vha.\ \verb|echo| og \textit{redirection},
 \begin{lstlisting}[frame=single]
 C:\Users\sporring\Documents>echo "Hej" > hej.txt
 
@@ -163,14 +163,14 @@ C:\Users\sporring\Documents>dir
 
 C:\Users\sporring\Documents>
 \end{lstlisting}
-Hvis vi nu gerne vil flytte filen \verb|hej.txt| til mappen \verb|minMappe| gør man som følger,
+Hvis vi gerne vil flytte filen \verb|hej.txt| til mappen \verb|minMappe| gør man som følger,
 \begin{lstlisting}[frame=single]
 C:\Users\sporring\Documents>move hej.txt minMappe
         1 file(s) moved.
 
 C:\Users\sporring\Documents>
 \end{lstlisting}
-og endeligt, hvis man ønsker at slette filen og derefter mappen skriver man
+og endelig, hvis man ønsker at slette filen og derefter mappen skriver man
 \begin{lstlisting}[frame=single]
 C:\Users\sporring\Documents>cd minMappe
 
@@ -200,9 +200,9 @@ C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\Wind
 
 C:\Users\sporring\Documents>
 \end{lstlisting}
-og stien kan ændres ved at gå ind i Kontrolpanelet og vælge \verb|System and Security| $\rightarrow$ \verb|System| $\rightarrow$ \verb|Advanced system settings| $\rightarrow$ \verb|Environment Variables| og i \verb|System variables| boksen dobbeltklikke på \verb|Path| og tilføje eller fjerne en sti i dens liste. Stiens elementer adskilles af "`;"'. Vær opmærksom på, at Windows afhænger af denne indstilling, så fjerne kun stier, som du er sikker på ikke skal bruges til noget.
+og stien kan ændres ved at gå ind i Kontrolpanelet og vælge \verb|System and Security| $\rightarrow$ \verb|System| $\rightarrow$ \verb|Advanced system settings| $\rightarrow$ \verb|Environment Variables| og i \verb|System variables| boksen dobbeltklikke på \verb|Path| og tilføje eller fjerne en sti i dens liste. Stiens elementer adskilles af "`;"'. Vær opmærksom på, at Windows afhænger af denne indstilling, så fjern kun stier, som du er sikker på ikke skal bruges til noget.
 
-En nyttig feature ved terminalen er, at man bruge \verb|tab| til at blade gennem filnavne.  F.eks. hvis man skriver \verb|cd| efterfulgt af mellemrum og \verb|tab| et antal gange, vil terminal foreslå de forskellige underkataloger, hvor du står.
+En nyttig feature ved terminalen er, at man kan bruge \verb|tab| til at blade gennem filnavne.  F.eks. hvis man skriver \verb|cd| efterfulgt af mellemrum og \verb|tab| et antal gange, vil terminal foreslå de forskellige underkataloger, hvor du står.
 
 \subsection{MacOS X og Linux}
 MacOS X (OSX) og Linux har mange lighedspunkter. I dette afsnit vil vi gennemgå de vigtigeste kommandoer i terminalen, \verb|bash|, som er standard terminal i OSX og mange Linux versioner. En opsummering ses i Tabel~\ref{tab:bashKommandoer}.
@@ -269,19 +269,19 @@ drwx------+  3 sporring  staff   102 Jun 29 21:48 Pictures
 drwxr-xr-x+  5 sporring  staff   170 Jun 29 21:48 Public
 FN11194:~ sporring$ 
 \end{lstlisting}
-hvorved man ud fra venstre kolonne kan lære at alle navnene er kataloger (d) og at du men ingen andre har læse, skrive og adgang til mapperne (rwx). Informationen i den næste kolonne kan oftes ignoreres, men viser hvor mange links der er til denne fil eller mappe, derefter kommer ejeren af filens brugernavn og brugergruppe, her sporring og staff, så filen eller mappens størrelse, dato og tidsstempel for hvornår filen eller mappen senest er blevet ændret, og til sidst fil- eller mappenavnet.  Der er også altid 2 skjulte mapper, \verb|.| og \verb|..|, hvor \verb|.| et alias for \verb|C:\Users\sporring| og \verb|..| for \verb|C:\Users|.
+hvorved man ud fra venstre kolonne kan lære at alle navnene er kataloger (d) og at du - men ingen andre - har læse, skrive og adgang til mapperne (rwx). Informationen i den næste kolonne kan oftes ignoreres, men viser hvor mange links der er til denne fil eller mappe, derefter kommer ejeren af filens brugernavn og brugergruppe, her sporring og staff, så filen eller mappens størrelse, dato og tidsstempel for hvornår filen eller mappen senest er blevet ændret, og til sidst fil- eller mappenavnet.  Der er også altid 2 skjulte mapper, \verb|.| og \verb|..|, hvor \verb|.| et alias for \verb|C:\Users\sporring| og \verb|..| for \verb|C:\Users|.
 
 Hvis du vil skifte mappe til \verb|Documents| skriver du
 \begin{lstlisting}[frame=single]
 FN11194:~ sporring$ cd Documents/
 FN11194:Documents sporring$ 
 \end{lstlisting}
-som er den samme mappe, som man kan finde ved at trykker på \verb|Dokumenter| i det grafiske brugergrænseflade. Bemærk, at nogle systemet oversætter standard filnavne således at deres navne skrives på forskellige sprog i den grafiske brugergrænseflade og i terminalen. Man siger at man går ind eller ned i \verb|Dokumenter|. Kommandoen \verb|cd ..| bringer dig ud/op igen. På en ny computer er denne mappe typisk tom,
+som er den samme mappe, som man kan finde ved at trykker på \verb|Dokumenter| i det grafiske brugergrænseflade. Bemærk, at nogle systemer oversætter standard filnavne således at deres navne skrives på forskellige sprog i den grafiske brugergrænseflade og i terminalen. Man siger at man går ind eller ned i \verb|Dokumenter|. Kommandoen \verb|cd ..| bringer dig ud/op igen. På en ny computer er denne mappe typisk tom,
 \begin{lstlisting}[frame=single]
 FN11194:Documents sporring$ ls
 FN11194:Documents sporring$  
 \end{lstlisting}
-Hvis du vil oprette en ny mappe f.eks.\ med navn \verb|minMappe|, der hvor du står, skriver du
+Hvis du vil oprette en ny mappe med navn \verb|minMappe|, der hvor du står, skriver du
 \begin{lstlisting}[frame=single]
 FN11194:Documents sporring$  mkdir minMappe
 FN11194:Documents sporring$ ls
@@ -299,7 +299,7 @@ Hvis vi nu gerne vil flytte filen \verb|hej.txt| til mappen \verb|minMappe| gør
 FN11194:Documents sporring$ echo mv hej.txt minMappe/
 FN11194:Documents sporring$ 
 \end{lstlisting}
-og endeligt, hvis man ønsker at slette filen og derefter mappen skriver man
+og endeligt, hvis man ønsker at slette filen og derefter mappen, skriver man
 \begin{lstlisting}[frame=single]
 FN11194:Documents sporring$ cd minMappe/
 FN11194:minMappe sporring$ rm hej.txt 
@@ -308,7 +308,7 @@ FN11194:Documents sporring$ rmdir minMappe/
 FN11194:Documents sporring$ ls
 FN11194:Documents sporring$ 
 \end{lstlisting}
-De kommandoer, man kan køre fra kommandolinjen, skal være indbygget eller i terminalens søgesti. Man kan se, hvad søgestien er ved at skrive
+De kommandoer, man kan køre fra kommandolinjen, skal være indbygget eller findes i terminalens søgesti. Man kan se, hvad søgestien er ved at skrive
 \begin{lstlisting}[frame=single]
 FN11194:Documents sporring$ echo $PATH
 /Applications/Maple 17/:/Applications/PackageMaker.app/Contents/MacOS/:/Applications/MATLAB_R2014b.app/bin/:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin

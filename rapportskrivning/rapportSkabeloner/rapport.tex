@@ -80,10 +80,10 @@ Dette afsnit skal give en indledning til rapportens emne på et overordnet plan.
 Kan slås sammen med indledning. Problemformuleringen indeholder typisk en præcis beskrivelse af det problem eller den hypotese, som rapporten omhandler. Dette vil også være et naturligt sted at beskrive hvilke afgrænsninger mht. problem domæne og løsningsrum, som man har gjort.
 
 \section{Problemanalyse og design}
-I dette afsnit beskrives den analyse, som man har gjort for at løse problemet. Det er vigtigt, at de løsningsmuligheder, der er blevet overvejet, beskrives, samt at man kommer med objektive begrundelser for de valg, som er gjort. Figurer af f.eks.\ programdesignet, er som regel at finde i dette afsnit. Dette afsnit indeholder ofte en overordnet beskrivelse af de centrale datastrukturer skitseres samt en skitse af de vigtigste (dele af) funktioner og deres typer.
+I dette afsnit beskrives den analyse, som man har gjort for at løse problemet. Det er vigtigt, at de løsningsmuligheder, der er blevet overvejet, beskrives, samt at man kommer med objektive begrundelser for de valg, som er gjort. Figurer af f.eks.\ programdesignet, er som regel at finde i dette afsnit. Dette afsnit indeholder ofte en overordnet beskrivelse af de centrale datastrukturer samt en skitse af de vigtigste (dele af) funktioner og deres typer.
 
 \section{Programbeskrivelse}
-Programbeskrivelsen er en gennemgang af det producerede program. De centrale problemstillinger med at omforme centrale valg for Problemanalysen til det konkrete program. Det vil ofte være naturligt kun at fokusere på ikke-oplagte løsninger og særlige indsigter og tricks, der er brugt. Eksempelvis kunne man inkludere programkode stumper som f.eks.\ vist i Figur~\ref{fig:fsharpCodeExample}
+Programbeskrivelsen er en gennemgang af det producerede program, dvs. en gennemgang af de centrale problemstillinger med at omforme centrale valg for Problemanalysen til det konkrete program. Det vil ofte være naturligt kun at fokusere på ikke-oplagte løsninger og særlige indsigter og tricks, der er brugt. Eksempelvis kunne man inkludere programkode stumper som f.eks.\ vist i Figur~\ref{fig:fsharpCodeExample}
 \begin{figure}
   \lstset{language=FSharp}
 \begin{lstlisting}
@@ -98,27 +98,27 @@ let rec fib n =
 \end{figure}
 
 
-Programbeskrivelsen giver en kort beskrivelse af, hvordan programmet bruges. F.eks.\ hvis programmet skal køres fra kommandolinjen, hvilke argumenter kan benyttes og hvad er deres effekt. 
+Programbeskrivelsen giver en kort beskrivelse af, hvordan programmet bruges. F.eks.\ hvis programmet skal køres fra kommandolinjen, hvilke argumenter, der kan benyttes, og hvad er deres effekt. 
 
 
 \section{Afprøvning og eksperimenter}
-Afprøvningens formål er at dokumentere det udviklede programs korrekthed ved at forfatteren/forfatterne har designet et sæt af tekstkørsler. Hvis der er tale om et mere eksperimentelt arbejde, hvor en grundig gennemgang af inputdomæne ikke er muligt, vil afsnittet også indeholde en beskrivelse af og resultatet af et sæt af eksperimenter, som sandsynliggør i hvilken grad programmet løser Problemformuleringen. Hvis man f.eks.\ ønsker at dokumentere køretider, vil det være naturligt at lave realistiske eksperimenter, hvor programmet køres på forskellig data.
+Afprøvningens formål er at dokumentere det udviklede programs korrekthed ved at forfatteren/forfatterne har designet et sæt af testkørsler. Hvis der er tale om et mere eksperimentelt arbejde, hvor en grundig gennemgang af inputdomæne ikke er muligt, vil afsnittet også indeholde en beskrivelse af og resultatet af et sæt af eksperimenter, som sandsynliggør i hvilken grad programmet løser Problemformuleringen. Hvis man f.eks.\ ønsker at dokumentere køretider, vil det være naturligt at lave realistiske eksperimenter, hvor programmet køres på forskellig data.
 
 Det er vigtigt at huske at beskrive, efter hvilke principper afprøvningen og eksperimenterne er blevet designet, og at argumentere for i hvilken grad de dækker det relevante problemområde og i hvor høj grad de viser, at programmet løser Problemformuleringen. Dette afsnit vil ofte drage delkonklusioner, som opsummeres i konklusionsafsnittet.
 
 \section{Diskussion og konklusion}
 Diskussion og konklusionsafsnittet opsummerer problemstillingen, gennemgår de resultater, der er opnået. Dette afsnit skal også på kort og præcis form beskrive, om evt. i hvor høj grad Problemformuleringen er løst. Dette afsnit skal også indeholde reflektioner over valg, opsummering af, hvad man har lært i processen, og kan indeholde forslag til videre arbejde.
 
-Husk at dette afsnit oftest læses først, lige efter introduktionen, og den skal derfor kunne fungere uden detaljeret kendskab til de mellemlæggende afsnit.
+Husk at dette afsnit oftest læses først, lige efter introduktionen, og den skal derfor kunne fungere uden detaljeret kendskab til de mellemliggende afsnit.
 
 \section{Efterskrift}
 Ofte indeholder videnskabelige arbejder ikke et efterskrift, men i denne korte oversigt vil efterskriftet blive brugt til at liste generelle råd til rapportskrivning:
 \begin{itemize}
-\item Husk det er din opgave at sikre at dine ideer og tanker bliver kommunikeret til læseren. At det højst sandsynligt er første gang, læseren ser din tekst og figurer, og du derfor ikke kan antage, at læseren kan gætte, hvad du måske finder oplagt.
+\item Husk det er din opgave at sikre, at dine ideer og tanker bliver kommunikeret til læseren. At det højst sandsynligt er første gang, læseren ser din tekst og figurer, og du derfor ikke kan antage, at læseren kan gætte, hvad du måske finder oplagt.
 \item En typisk rækkefølge, som en garvet læser læser rapporter er: 1) Introduktion og Konklusion, 2) Bladre igennem rapporten og kigge på figurerne og centrale visuelle elementer som en tegneserie, 3) Læse rapporten fra forside til bagside. Det kan anbefales, at man prøver at kigge på sin rapport med lignende briller.
-\item Introduktion og konklusioner er første bastion, som ofte afgør om læseren vil fortsætte læsning (med glæde). De er ofte de afsnit, som skrives sidst, da det indre af rapporten ofte udvikler sig indtil sidste, og da det er derfor vigtigt at vente med en færdigskrivning, så alt kommer med.
-\item Husk at alle grafiske elementer, som benyttes i figuren skal beskrives i figurteksten inkl.\ f.eks.\ en beskrivelse af aksers enheder og hvad graferne viser, at der er tale om pseudokode, eller at det er et uml diagram, etc.. Husk at læseren sandsynligvis ser figurerne for første gang, og derfor ikke har samme antagelser eller synes at de samme ting er oplagte som forfatteren.
-\item Som skribent oplever man ofte en blindhed overfor sin produktion: Når man læser, hvad man har skrevet, overser man fejl og mangler og i stedet læser, hvad der burde have stået. En simpel måde, at sikre at rapport bliver en fornøjelse at læse er Læse Højt metoden. Metodens formål er at sikre, at sætninger kan læses og argumenter kommer i en logisk rækkefølge.  Metoden er som følger: Bed en læse central afsnit højt for dig, og noter dig, hvilke steder i teksten, højtlæsningen går i stå eller på anden vis giver højtlæseren problemer. For afsnit som f.eks.\ introduktion og konklusion behøver højtlæseren ikke at have domæneviden, da disse afsnit ofte skal skrives så udenforstående kan få noget ud af at læse dem.
+\item Introduktion og konklusioner er første bastion, som ofte afgør om læseren vil fortsætte læsning (med glæde). De er ofte de afsnit, som skrives sidst, da det indre af rapporten ofte udvikler sig indtil det sidste, og da det er derfor vigtigt at vente med en færdigskrivning, så alt kommer med.
+\item Husk at alle grafiske elementer, som benyttes i figuren skal beskrives i figurteksten f.eks.\ en beskrivelse af aksers enheder og hvad graferne viser, at der er tale om pseudokode, eller at det er et uml diagram, etc.. Husk at læseren sandsynligvis ser figurerne for første gang, og derfor ikke har samme antagelser eller synes at de samme ting er oplagte som forfatteren.
+\item Som skribent oplever man ofte en blindhed overfor sin produktion: Når man læser, hvad man har skrevet, overser man fejl og mangler og i stedet læser, hvad der burde have stået. En simpel måde, at sikre at rapport bliver en fornøjelse at læse er Læse Højt metoden. Metodens formål er at sikre, at sætninger kan læses og argumenter kommer i en logisk rækkefølge.  Metoden er som følger: Bed en kammerat læse et eller flere centrale afsnit højt for dig, og noter dig, hvilke steder i teksten, højtlæsningen går i stå eller på anden vis giver højtlæseren problemer. For afsnit som f.eks.\ introduktion og konklusion behøver højtlæseren ikke at have domæneviden, da disse afsnit ofte skal skrives så udenforstående kan få noget ud af at læse dem.
 \item Et klikbart links kan indsættes med hyperlink pakken og pdflatex: \url{https://www.ctan.org}.
 \end{itemize}
 
