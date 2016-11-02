@@ -7,8 +7,8 @@ let rec readFile (stream : System.IO.StreamReader) =
 let rec writeFile (stream : System.IO.StreamWriter) text =
   match text with
   | (l : string) :: ls ->
-    stream.WriteLine l
     writeFile stream ls
+    stream.WriteLine l
   | _ -> ()
 
 let reverseString (s : string) =
