@@ -20,7 +20,9 @@ let listOfPoints = [Point (0,0); Point (10,170); Point (320,20); Point (0,0)]
 /// panel data structure and add its draw function.
 let pArr = Array.ofList listOfPoints
 let pen = new Pen (penColor)
-let panel = new Panel (Dock = DockStyle.Fill)
+//let panel = new Panel (Dock = DockStyle.Fill)
+let panel = new Panel ()
+panel.Dock <- DockStyle.Fill
 panel.Paint.Add (fun e -> e.Graphics.DrawLines (pen, pArr))
 
 /// Create the window data structure and add its panel.
