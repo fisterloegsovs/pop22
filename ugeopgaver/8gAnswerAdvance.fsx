@@ -60,9 +60,9 @@ let getCode () : code =
 
 let guess (p : player) (b : board) : code =
   if p = Computer then
-    let rec listProd (list1 : codeColor list) (list2 : code list) =
-      match list1 with
-        | elm::rest -> (List.map (fun subList -> elm :: subList) list2) @ (listProd rest list2)
+    let rec listProd (aCode : code) (aCodeList : code list) =
+      match aCode with
+        | elm::rest -> (List.map (fun subList -> elm :: subList) aCodeList) @ (listProd rest aCodeList)
         | _ -> []
 
     let rec autoListProdN (l : codeColor list) n =
@@ -71,10 +71,13 @@ let guess (p : player) (b : board) : code =
       else
         [[]]
 
-    let rec sieve (l : code list) (b : board) : code list=
+    let rec sieve (aCodeList : code list) (b : board) : code list=
+      let filterValidPossibility (aGuess, anAnswer) aPossibleGuess =
+        (aGuess <> aPossibleGuess) && (validate aGuess aPossibleGuess) = anAnswer
+        
       match b with
-        | (g, v) :: rest -> sieve (List.filter (fun o -> (validate g o) = v) l) rest
-        | _ -> l
+        | line :: rest -> sieve (List.filter (filterValidPossibility line) aCodeList) rest
+        | _ -> aCodeList
 
     let all = autoListProdN codeColorList 4
     let remaining = sieve all b

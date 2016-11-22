@@ -12,7 +12,7 @@ let buttonLst =
    (new Button (), "Button2");
    (new Button (), "Button3")]
 let wrapContentsCheckBox = new CheckBox ()
-let panel = new FlowLayoutPanel ()
+let panel = new TableLayoutPanel ()
 let initiallyWrapped = true
 let radioButtonLst =
   [(new RadioButton (), "TopDown", FlowDirection.TopDown);
@@ -26,6 +26,7 @@ for (btn, txt) in buttonLst do
 
 // customize radio buttons
 for (btn, txt, dir) in radioButtonLst do
+  btn.Name <- txt
   btn.Text <- txt
   btn.Checked <- flowLayoutPanel.FlowDirection = dir
   btn.CheckedChanged.Add (fun _ -> flowLayoutPanel.FlowDirection <- dir)
@@ -44,10 +45,12 @@ wrapContentsCheckBox.CheckedChanged.Add (fun _ -> flowLayoutPanel.WrapContents <
 // customize panel
 // changing border style changes ClientSize
 panel.BorderStyle <- BorderStyle.Fixed3D
-let width = panel.ClientSize.Width / 2 - panel.Margin.Left - panel.Margin.Right
+panel.ColumnCount <- 2
 for (btn, txt, dir) in radioButtonLst do
-  btn.Width <- width
-  panel.Controls.Add (btn)
+  panel.Controls.Add btn
+  // The control added to the panel's list of controls has added information. To access this, we need to find it, and one method is using Find on the control's Name.
+  let ctrl = panel.Controls.Find (txt,true)
+  Array.iter (fun elm -> printfn "%A at %A" (panel.GetPositionFromControl elm) (elm.Location)) ctrl
 
 mainPanel.Location <- new Point (mainPanelBorder, mainPanelBorder)
 mainPanel.BorderStyle <- BorderStyle.Fixed3D
