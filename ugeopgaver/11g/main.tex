@@ -79,9 +79,9 @@ Dette er selvfølgelig grove tilnærmelser til det virkelige solsystem, men mode
 Under disse antagelser, kan vi for planet $i$ beregne dens acceleration omkring Solen ved,
 \begin{equation}
   \label{eq:2-gravitationalacceleration}
-  \vec{a} = - \frac{G M_{\mathrm{Solen}} }{r^3} \vec{r}_{i-\mathrm{Solen}} 
+  \vec{a}_i = - \frac{G M_{\mathrm{Solen}} }{\|\vec{r}_i \|^3} \vec{r}_i
 \end{equation}
-hvor $G$ er gravitationskonstanten (se Tabel~\ref{tab:constants}), og hvor $\vec{r}_{i-\mathrm{Solen}} = \vec{r}_{i} - \vec{r}_{\mathrm{Solen}}$ angiver vektoren fra Solen til planet $i$ og $r = \| \vec{r}_{i-\mathrm{Solen}}\|$.  Oftest estimeres produktet $G M_i$ for de enkelte planeter i stedet for at estimere massen $M_i$ og gravitationskonstanten $G$ separat. Se Tabel~\ref{tab:constants} for et estimat af dette produkt for Solen.
+hvor $G$ er gravitationskonstanten og $M_{\mathrm{Solen}}$ er solens masse (se Tabel~\ref{tab:constants}). Vektoren $\vec{r}_i$ angiver vektoren fra Solen til planet $i$, og $\| \vec{r}_i\|$ er længden af denne. 
 \begin{table}
   \caption{Relevante naturkonstanter og enheder, samt estimater af produktet mellem gravitationskonstanten og de forskellige planeters masser. Tal fra JPL Ephemeris \cite{JPL}} \label{tab:constants}
   \begin{center}
@@ -125,13 +125,10 @@ For at opnå høj præcision i simulatoren er det vigtigt at de initielle værdi
 For at vurdere hvor præcis din simulation er, skal du sammenligne simulatorens resultat med data fra NASA JPL Ephemeris \cite{JPL}. JPL Ephemeris er en kombination af observationer af planeternes bevægelse og simulering med høj præcision. NASA anvender blandt andet dette datasæt til planlægning af rummissioner.
 
 %Vi har forberedt et udsnit af JPL Ephemeris datasættet som består af position $(X,Y,Z)$ og hastighed $(V_x, V_y, V_z)$ for Solen, de otte planeter og dværgplaneten Pluto ved midnat den første dag i hver måned i perioden 1/1 2013 til 1/1 2014.  
-Sammen med opgaveteksten finder du en tekstfil for hvert himmellegeme med informationer taget fra JPL Ephemeris datasættet. Datasættet består af position $(X,Y,Z)$ og hastighed $(V_x, V_y, V_z)$ for Solen, de otte planeter og dværgplaneten Pluto ved midnat den første dag i hver måned i perioden 1/1 2013 til 1/1 2014. Formatet for filerne er kommaseparerede dataelementer med en linje pr. tidspunkt. De første to dataelementer er datoangivelser i hhv. Epoch Julian Date (EJD) og koordinattidspunkt (CT) (standard dato-tid format), derpå kommer position $(X,Y,Z)$ som de næste tre dataelementer og til slut hastighed $(V_x, V_y, V_z)$ som de sidste tre dataelementer:
-\begin{center}
-  EJD, CT, $X, Y, Z, V_x, V_y, V_z$
-\end{center}
+Sammen med opgaveteksten finder du en tekstfil for hvert himmellegeme med informationer taget fra JPL Ephemeris datasættet. Datasættet beskriver positionen for de otte planeter og dværgplaneten Pluto ved midnat den første dag i hver måned i perioden 1/1 1966 til 31/12 2016 i et sfærisk koordinatsystem. Formatet filerne er som følger: først kommer der data for planeten, og derefter en tabel af positioner, med en tidspunkt per linje. Den første kolonne er dagens nummer i hhv. Epoch Julian Date (EJD) og, derpå kommer længdegrad (Lon), breddegrad (Lat), og radius (R) for planetens position, som set fra solens centrum. Den sidste kolonne kan ignoreres.
 EJD er angivet som et reelt tal som tæller antal dage siden en referencedato og kan med fordel anvendes som intern repræsentation af dato-tid i din implementation af simulatoren.
 
-For præcision i beregningerne anvendes ofte astronomiske enheder (AU) i stedet for meter (m). Den astronomiske enhed er defineret ved gennemsnitsafstanden mellem jorden og solen og er fastsat til 1~AU = 149597870700~m. Denne relation kan anvendes til konvertering af tal angivet i meter til astronomisk enhed eller omvendt. I JPL Ephemeris er position $(X,Y,Z)$ angivet i enheden $\AU$ og hastighed $(V_x, V_y, V_z)$ er angivet i enheden $\AU / \udag$.
+For præcision i beregningerne anvendes ofte astronomiske enheder (AU) i stedet for meter (m). Den astronomiske enhed er defineret ved gennemsnitsafstanden mellem jorden og solen og er fastsat til 1~AU = 149597870700~m. Denne relation kan anvendes til konvertering af tal angivet i meter til astronomisk enhed eller omvendt. I JPL Ephemeris er radius R angivet i enheden $\AU$ og vinklerne Lon og Lat i grader.
 
 JPL Ephemeris datasættet benytter det solsystem-barycentriske koordinatsystem, hvor origo er angivet ved solsystemets massecenter og akser angivet udfra jordens orientering på et referencetidspunkt. Du skal anvende dette koordinatsystem i din simulator (dette gøres uden videre ved at anvende JPL Ephemeris data til at angive initielle positioner og hastigheder for planeterne).
 

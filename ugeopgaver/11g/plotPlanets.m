@@ -1,6 +1,6 @@
 path = 'data';
 filenames={'Mercury.txt','Venus.txt','Earth.txt','Mars.txt','Jupiter.txt','Saturn.txt','Uranus.txt','Neptune.txt','Pluto.txt'};
-N = length(filenames);
+N = 4;%length(filenames);
 data = cell(N,1);
 formatSpec = '%f %f %f %f %f';
 plot3(0,0,0,'+');
@@ -31,8 +31,11 @@ for i = 1:N
 end
 hold off
 
-G = 6.67384e-11;
-GM = 2.959122082322128e-4;
+G = 6.67384e-11; % N (m / kg)^2, N = kg m / s^2
+AUPerM = 149597870700; % m
+Msun = 1.989e30; % kg
+sPerDay = 24*60*60; % s
+GM = G*Msun/AUPerM^3*sPerDay^2; % (kg m / s^2) (m / kg)^2 kg (AU^3 / m^3) (s^2 / day^2) = (AU^3 / day^2)
 dt = 0.1;
 t = 0;
 r = cell(size(data,1),2);
