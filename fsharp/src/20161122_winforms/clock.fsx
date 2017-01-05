@@ -7,6 +7,7 @@ let clock = new Form ()
 let panel = new TableLayoutPanel ()
 let label = new Label()  
 let button = new Button ()
+let timer = new Timer()
 panel.Controls.Add(label)  
 panel.Controls.Add(button)  
 clock.Controls.Add panel
@@ -35,7 +36,6 @@ button.Margin <- Padding 10
 button.Anchor <- AnchorStyles.None
 
 // make a timer and link to label
-let timer = new Timer()
 timer.Interval <- 1000
 timer.Enabled <- true  
 let setTime (label : Label) showtime =

@@ -73,7 +73,7 @@ and ruleB n C : curve =
     C
 
 // Calculate curve
-let order = 5
+let order = 2
 let l = 20.0
 let (_, dir, c) = ruleA order (l, 0.0, [(0.0, 0.0)])
 
