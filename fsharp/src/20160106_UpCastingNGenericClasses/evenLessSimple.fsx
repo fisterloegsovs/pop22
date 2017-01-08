@@ -13,4 +13,4 @@ let yetAnotherChild = anotherChild :?> child
 
 printfn "%A" [aParent.a; aChild.a; aChild.b; anotherChild.a; yetAnotherChild.a; yetAnotherChild.b]
 
-//let ajjj = aParent :?> child
+let ajjj = aParent :?> child

@@ -2,7 +2,7 @@ type parent(v) =
   member val a = v
 
 type child(v1, v2) = 
-  inherit parent(v1)
+  inherit parent(v1+v2)
   member val a = v1
   member val b = v2
 

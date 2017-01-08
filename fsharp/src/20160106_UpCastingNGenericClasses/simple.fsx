@@ -10,4 +10,4 @@ let aParent = new parent()
 let aChild = new child()
 let anotherChild = aChild :> parent
 
-printfn "%A" [aParent.a; aChild.a; aChild.b; anotherChild.a; anotherChild.b]
+printfn "%A" [aParent.a; aChild.a; aChild.b; anotherChild.a]//; anotherChild.b]
