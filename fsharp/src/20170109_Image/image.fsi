@@ -1,57 +1,62 @@
 module Image
 /// A set of functions for image processing
 
-/// <summary>Convert a System.Drawing.Bitmap into a gray value Array2D.</summary>
-/// <param name="I">The original image.</param>
-/// <returns>A new Array2D with the same size is I, but where the RGB colorvalue has been replaced by their average value.</returns>
-val bitmap2GrayArray2D : I:System.Drawing.Bitmap -> float [,]
+/// Convert a Bitmap to an Array2D
+val fromBitmap : bmp:System.Drawing.Bitmap -> System.Drawing.Color [,]
 
-/// <summary>Convert a gray value Array2D into a System.Drawing.Bitmap.</summary>
-/// <param name="I">The original image.</param>
-/// <returns>A new System.Drawing.Bitmap RGB image, where R, G, and B have identical value.</returns>
-val grayArray2D2Bitmap : I:float [,] -> System.Drawing.Bitmap
+/// Convert an Array2D to a Bitmap
+val toBitmap : I:System.Drawing.Color [,] -> System.Drawing.Bitmap
 
-/// <summary>Find the maximum value of an image.</summary>
-/// <param name="I">An image.</param>
-/// <returns>The maximum value.</returns>
-val array2dMax : I:float [,] -> float
+/// Read a Bitmap from file and convert it to an Array2D
+val fromFile : name:string -> System.Drawing.Color [,]
 
-/// <summary>Find the minimum value of an image.</summary>
-/// <param name="I">An image.</param>
-/// <returns>The minimum value.</returns>
-val array2dMin : I:float [,] -> float
+/// Write a Bitmap to file
+val toFile : name:string -> I:System.Drawing.Color [,] -> System.Drawing.Bitmap
 
-/// <summary>Sum all values of an image.</summary>
-/// <param name="I">An image.</param>
-/// <returns>The sum.</returns>
-val array2dSum : float [,] -> float
+/// Convert a Color to a float value
+val colorToGray : c:System.Drawing.Color -> float
 
-/// <summary>Linearly scale an image intensities, such that the resulting min and max are newMin and newMax.</summary>
-/// <param name="I">An image.</param>
-/// <param name="newMin">The desired minimum.</param>
-/// <param name="newMax">The desired maximum.</param>
-/// <returns>A new image.</returns>
-val normalize : I:float [,] * newMin:float * newMax:float -> float [,]
+/// Convert an Array2D of Color to an Array2D of float values
+val toGray : I:System.Drawing.Color [,] -> float [,]
 
-/// <summary>Calculate the gradient vector w.r.t. the image index coordinates in all positions.</summary>
-/// <param name="I">An image.</param>
-/// <returns>A tupple of images, (Ix, Iy), where (Ix.[i,j], Iy.[i,j]) are the derivative along the first and second index directions respectively at location i, j.</returns>
-val d : I:float [,] -> float [,] * float [,]
+/// Convert a float value to a Color
+val grayToColor : g:float -> System.Drawing.Color
 
-/// <summary>Calculate the gradient length in every position.</summary>
-/// <param name="I">An image.</param>
-/// <returns>A new image containing the gradient in each location.</returns>
-val grad : Ix:float [,] * Iy:float [,] -> float [,]
+/// Convert an Array2D of float values to an Array2D of Colors
+val toColor : I:float [,] -> System.Drawing.Color [,]
 
-/// <summary>Convolve 2 images.</summary>
-/// <param name="I">An image.</param>
-/// <param name="K">A kernel (also an image).</param>
-/// <returns>A new image, which is the convolution of I and K.</returns>
-val convolve : I:float [,] * K:float [,] -> float [,]
+/// Fold the values of an Array2D of floats into a single float
+val fold : f:(float -> float -> float) -> initial:float -> I:float [,] -> float
 
-/// <summary>The image of a 2 dimensional gaussian kernel.</summary>
-/// <param name="width">The resulting width (first coordinate).</param>
-/// <param name="height">The resulting height (second coordinate).</param>
-/// <param name="sigma">The standard devation of the gaussina.</param>
-/// <returns>An image of the gaussian.</returns>
-val gauss : width:int * height:int * sigma:float -> float [,]
+/// Combine 2 Array2D of floats into a single Array2D of tuples
+val zip : I1:float [,] -> I2:float [,] -> (float * float) [,]
+
+/// Calculate the maximum value of a an Array2D of floats
+val max : I:float [,] -> float
+
+/// Calculate the minimum value of a an Array2D of floats
+val min : I:float [,] -> float
+
+/// Calculate the sum of all values of an Array2D of floats
+val sum : I:float [,] -> float
+
+/// Linearly stretch the values of Array2D of floats to a new set of minimum and maximum values
+val normalize : I:float [,] -> newMin:float -> newMax:float -> float [,]
+
+/// Calculate the histogram of values of an Array2D of floats in n+1 bins
+val histogram : I:float [,] -> n:int -> float [] * int []
+
+/// Calculate the first order derivative of an Array2D of floats.
+val d : I:float [,] -> (float * float) [,]
+
+/// Calculate the Euclidean lenght of a tuple
+val euclideanLength : float * float -> float
+
+/// Calculate the gradient magnitude of an Array2D of tuples
+val grad : dI:(float * float) [,] -> float [,]
+
+/// Convolve two images with each other
+val convolve : I:float [,] -> K:float [,] -> float [,]
+
+/// Create an image of a Gaussian function centered in the middle of the image
+val gauss : width:int -> height:int -> sigma:float -> float [,]
