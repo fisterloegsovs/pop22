@@ -68,7 +68,6 @@ for sigma in [ 1.0; 5.0 ] do
   let JGrad = J |> Image.d |> Image.grad
   printfn "JGrad : %g %g" (Image.min JGrad) (Image.max JGrad)
   displayScaled (sprintf "The normalized gradient of the smoothed image (sigma = %.1f)" sigma) JGrad |> ignore
-//*)
 
 printfn "Press crtl-c to quit"
 System.Windows.Forms.Application.Run ()

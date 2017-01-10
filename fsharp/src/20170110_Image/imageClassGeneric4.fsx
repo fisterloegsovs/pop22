@@ -46,23 +46,18 @@ type Image<'a>(data : 'a [,]) =
     new Image<'a>(_data.[rowStart..rowFinish, colStart..colFinish])
 
   // Matrix operator basics
-  static member ImageOppImage (opp : Image<'a> -> Image<'b> -> int -> int -> 'c) (I1 : Image<'a>) (I2 : Image<'b>) =
-    if not (I1.rows = I2.rows) || not (I1.cols = I2.cols) then
-      failwith "The two images are not the same size"
-    Image<'c>(Collections.Array2D.init<'c> I1.rows I1.cols (opp I1 I2))
-
-  static member ImageOppConst (opp : Image<'a> -> 'b -> int -> int -> 'c) (I1 : Image<'a>) (a : 'b) =
-    Image<'c>(Collections.Array2D.init<'c> I1.rows I1.cols (opp I1 a))
+  static member ImageOppOther (opp : Image<'a> -> 'b -> int -> int -> 'c) (fst : Image<'a>) (snd : 'b) =
+    Image<'c>(Collections.Array2D.init<'c> fst.rows fst.cols (opp fst snd))
 
   static member OppImage (opp : Image<'a> -> int -> int -> 'b) (I1 : Image<'a>) =
     Image<'b>(Collections.Array2D.init<'b> I1.rows I1.cols (opp I1))
 
   // Multiplication
   static member ( * ) (I1 : Image<float>, I2 : Image<float>) =
-    Image.ImageOppImage (fun I1 I2 i j -> I1.[i,j] * I2.[i,j]) I1 I2
+    Image.ImageOppOther (fun I1 (I2 : Image<float>) i j -> I1.[i,j] * I2.[i,j]) I1 I2
 
   static member ( * ) (I1 : Image<float>, a : float) =
-    Image.ImageOppConst (fun I1 a i j -> I1.[i,j] * a) I1 a
+    Image.ImageOppOther (fun I1 a i j -> I1.[i,j] * a) I1 a
 
   static member ( * ) (a : float, I1 : Image<float>) =
     I1 * a
@@ -72,13 +67,13 @@ type Image<'a>(data : 'a [,]) =
       let c1 = I1.[i,j]
       let c2 = I2.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) * (int c2.R), (int c1.G) * (int c2.G), (int c1.B) * (int c2.B))
-    Image.ImageOppImage opp I1 I2
+    Image.ImageOppOther opp I1 I2
 
   static member ( * ) (I1 : Image<System.Drawing.Color>, c : System.Drawing.Color) =
     let opp (I1 : Image<System.Drawing.Color>) (c : System.Drawing.Color) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) * (int c.R), (int c1.G) * (int c.G), (int c1.B) * (int c.B))
-    Image.ImageOppConst opp I1 c
+    Image.ImageOppOther opp I1 c
 
   static member ( * ) (c : System.Drawing.Color, I1 : Image<System.Drawing.Color>) =
     I1 * c
@@ -87,17 +82,17 @@ type Image<'a>(data : 'a [,]) =
     let opp (I1 : Image<System.Drawing.Color>) (a : int) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) * a, (int c1.G) * a, (int c1.B) * a)
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
   static member ( * ) (a : int, I1 : Image<System.Drawing.Color>) =
     I1 * a
 
   // Addition
   static member ( + ) (I1 : Image<float>, I2 : Image<float>) =
-    Image.ImageOppImage (fun I1 I2 i j -> I1.[i,j] + I2.[i,j]) I1 I2
+    Image.ImageOppOther (fun I1 (I2 : Image<float>) i j -> I1.[i,j] + I2.[i,j]) I1 I2
 
   static member ( + ) (I1 : Image<float>, a : float) =
-    Image.ImageOppConst (fun I1 a i j -> I1.[i,j] + a) I1 a
+    Image.ImageOppOther (fun I1 a i j -> I1.[i,j] + a) I1 a
 
   static member ( + ) (a : float, I1 : Image<float>) =
     I1 + a
@@ -107,13 +102,13 @@ type Image<'a>(data : 'a [,]) =
       let c1 = I1.[i,j]
       let c2 = I2.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) + (int c2.R), (int c1.G) + (int c2.G), (int c1.B) + (int c2.B))
-    Image.ImageOppImage opp I1 I2
+    Image.ImageOppOther opp I1 I2
 
   static member ( + ) (I1 : Image<System.Drawing.Color>, a : System.Drawing.Color) =
     let opp (I1 : Image<System.Drawing.Color>) (a : System.Drawing.Color) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) + (int a.R), (int c1.G) + (int a.G), (int c1.B) + (int a.B))
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
   static member ( + ) (a : System.Drawing.Color, I1 : Image<System.Drawing.Color>) =
     I1 + a
@@ -122,7 +117,7 @@ type Image<'a>(data : 'a [,]) =
     let opp (I1 : Image<System.Drawing.Color>) (a : int) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) + a, (int c1.G) + a, (int c1.B) + a)
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
   static member ( + ) (a : int, I1 : Image<System.Drawing.Color>) =
     I1 + a
@@ -133,10 +128,10 @@ type Image<'a>(data : 'a [,]) =
 
   // Subtraction
   static member ( - ) (I1 : Image<float>, I2 : Image<float>) =
-    Image.ImageOppImage (fun I1 I2 i j -> I1.[i,j] - I2.[i,j]) I1 I2
+    Image.ImageOppOther (fun I1 (I2 : Image<float>) i j -> I1.[i,j] - I2.[i,j]) I1 I2
 
   static member ( - ) (I1 : Image<float>, a : float) =
-    Image.ImageOppConst (fun I1 a i j -> I1.[i,j] - a) I1 a
+    Image.ImageOppOther (fun I1 a i j -> I1.[i,j] - a) I1 a
 
   static member ( - ) (a : float, I1 : Image<float>) =
     I1 - a
@@ -145,26 +140,26 @@ type Image<'a>(data : 'a [,]) =
     let opp (I1 : Image<System.Drawing.Color>) (a : System.Drawing.Color) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) - (int a.R), (int c1.G) - (int a.G), (int c1.B) - (int a.B))
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
   static member ( - ) (a : System.Drawing.Color, I1 : Image<System.Drawing.Color>) =
     let opp (I1 : Image<System.Drawing.Color>) (a : System.Drawing.Color) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int a.R) - (int c1.R), (int a.G) - (int c1.G), (int a.B) - (int c1.B))
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
   static member ( - ) (I1 : Image<System.Drawing.Color>, I2 : Image<System.Drawing.Color>) =
     let opp (I1 : Image<System.Drawing.Color>) (I2 : Image<System.Drawing.Color>) i j =
       let c1 = I1.[i,j]
       let c2 = I2.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) - (int c2.R), (int c1.G) - (int c2.G), (int c1.B) - (int c2.B))
-    Image.ImageOppImage opp I1 I2
+    Image.ImageOppOther opp I1 I2
 
   static member ( - ) (I1 : Image<System.Drawing.Color>, a : int) =
     let opp (I1 : Image<System.Drawing.Color>) (a : int) i j =
       let c1 = I1.[i,j]
       System.Drawing.Color.FromArgb ((int c1.R) - a, (int c1.G) - a, (int c1.B) - a)
-    Image.ImageOppConst opp I1 a
+    Image.ImageOppOther opp I1 a
 
 
 // Test creation of an image
