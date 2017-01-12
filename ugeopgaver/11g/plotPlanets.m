@@ -1,6 +1,6 @@
 path = 'data';
 filenames={'Mercury.txt','Venus.txt','Earth.txt','Mars.txt','Jupiter.txt','Saturn.txt','Uranus.txt','Neptune.txt','Pluto.txt'};
-N = 4;%length(filenames);
+N = length(filenames);
 data = cell(N,1);
 formatSpec = '%f %f %f %f %f';
 plot3(0,0,0,'+');
