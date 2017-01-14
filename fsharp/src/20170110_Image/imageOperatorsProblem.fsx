@@ -31,7 +31,7 @@ let ( * ) I1 I2 =
 
 let J = Collections.Array2D.create (Collections.Array2D.length1 I) (Collections.Array2D.length2 I) 2.0
 let K = J*I
-//let a = 2.0*1.0
+let a = 2.0*1.0
 
 printfn "K : %g %g" (Image.min K) (Image.max K)
 displayScaled "The multiplied version" K
