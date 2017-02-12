@@ -51,6 +51,7 @@ with open(sys.argv[2], 'r') as f:
 
 for line in data:
         words = line.split(' ', 1)
+        words[0] = words[0].upper()
         gradesl[words[0]] = words[1][:-1]
 
 #print(gradesl)
