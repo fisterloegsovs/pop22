@@ -1,0 +1,258 @@
+\documentclass[a4paper]{article}
+
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Uge(r)seddel 4 -- gruppeopgave (rev. 1.1)}
+
+\author{Torben Mogensen}
+\date{Deadline 5.\ oktober}
+
+\maketitle
+
+\noindent
+I denne periode skal I arbejde i grupper.  Formålet er at arbejde med
+tupler, lister, mønstergenkendelse og afprøvning.
+
+Opgaverne i denne uge er delt i øve- og afleveringsopgaver.  Vi
+bruger forkortelsen ``HR'' for Hansen \& Rischels bog ``Functional
+Programming Using F\#''.
+
+NB! Der skal for alle opgaver laves black-box testing som beskrevet i
+afsnit 10.2 i Jon Sporrings F\#{} noter.  Dette gælder også afleveringsopgaverne.
+
+\subsubsection*{Øveopgaverne er:}
+
+\begin{description}
+\item[4ø.1.] HR: 4.1, 4.7, 4.8.
+
+\item[4ø.2.] En tabel kan repræsenteres som en liste af lister, hvor alle
+  listerne er lige lange.
+
+Listen \texttt{[[1; 2; 3]; [4; 5; 6]]} repræsenterer for eksempel tabellen
+
+\[\left [\begin{array}{rrr}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{array}
+\right ]\]
+
+\begin{enumerate}[i]
+\item Lav en funktion \texttt{isTable : 'a list list -> bool}, der
+  givet en liste af lister afgør, om det er en lovlig ikke-tom tabel,
+  altså om alle listerne har ens længde, og at der er mindst en liste
+  med mindst et element.  Vink: Se \texttt{TuplesAndLists.pdf}.
+
+\item Lav en funktion \texttt{firstColumn : 'a list list -> 'a list},
+  der tager en liste af lister og returnerer listen af førsteelementer
+  i de indre lister.  F.eks.\ skal \texttt{firstColumn [[1; 2; 3]; [4;
+        5; 6]]} returnere listen \texttt{[1; 4]}.
+
+  Hvis en eller flere af listerne er tomme, er \texttt{firstColumn}
+  udefineret.  Derfor er det i orden, hvis  \texttt{fsharpi} giver
+  advarsel om ``incomplete pattern matches'', og en tilsvarende
+  fejlmeddelelse, hvis \texttt{firstColumn} kaldes med et
+  argument, hvor en af listerne er tom.
+
+
+\item Lav en funktion \texttt{dropFirstColumn : 'a list list -> 'a
+  list list}, der tager en liste af lister og returnerer en liste af
+  lister, hvor førsteelementerne i de indre lister er fjernet.
+  F.eks.\ skal \texttt{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]}
+  returnere \texttt{[[2; 3]; [5; 6]]}.
+
+  Hvis en eller flere af listerne er tomme, er \texttt{dropFirstColumn}
+  udefineret.  Derfor er det i orden, hvis  \texttt{fsharpi} giver
+  advarsel om ``incomplete pattern matches'', og en tilsvarende
+  fejlmeddelelse, hvis \texttt{dropFirstColumn} kaldes med et
+  argument, hvor en af listerne er tom.
+
+\item Lav en funktion \texttt{transpose : 'a list list -> 'a list
+  list}, der \emph{transponerer} en tabel.  Transponering er spejling over
+  diagonalen, så den transponerede tabel til den herover viste tabel er
+
+\[\left [\begin{array}{rr}
+1 & 4 \\
+2 & 5 \\
+3 & 6
+\end{array}
+\right ]\]
+
+\noindent
+Kaldet \texttt{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \texttt{[[1; 4]; [2; 5]; [3; 6]]}.
+
+Det kan antages, at argumentet til \texttt{transpose} er en lovlig
+tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis
+funktionen eller virker.
+
+Bemærk, at \texttt{transpose (transpose t) = t}, hvis \texttt{t} er en
+tabel.
+
+Vink: Brug funktionerne \texttt{firstColumn} og \texttt{dropFirstColumn}.
+
+\end{enumerate}
+
+\end{description}
+
+\subsubsection*{Afleveringsopgaven løses i grupper og er:}
+
+
+\begin{description}
+\item[4g.1.] HR: 4.11 og 4.15.
+
+\item[4g.2.] Lav en funktion \texttt{removeDuplicates : 'a list -> 'a list
+  when 'a : equality}, som fjerner duplikater i en liste.  For
+  eksempel skal kaldet \texttt{removeDuplicates [1; 2; 1; 3: 2]}
+  give resultatet \texttt{[1; 2; 3]}.  Bemærk, at den første
+  forekomst af et givet elememt bevares, mens de øvrige forekomster
+  fjernes.  De bevarede elementer bevarer deres indbyrdes position.
+
+\end{description}
+
+\noindent
+Afleveringsopgaven skal afleveres som en f\#{} fil med løsningerne for
+alle delopgaverne, og som kan køres med fsharpi.  Indsæt delopgavernes
+nummer som kommentarer over løsningerne til disse.  Husk at inkludere
+afprøvning (black-box testing) for alle funktioner, og dokumenter
+funktionerne med kommentarer som beskrevet i kapitel 7 af Jon
+Sporrings F\#{} noter.  Filen skal navngives efter følgende
+konvention: \texttt{H$n$-\emph{fornavn$1$}.\emph{efternavn$1$}-\ldots-\emph{fornavn$m$}.\emph{efternavn$m$}-4g.fsx}, hvor
+$n$ er et tocifret holdnummer.  Eksempel:
+\texttt{H07-Anders.And-Faetter.Guf-Georg.Gearloes-4g.fsx}.
+
+\vspace{1ex}
+
+\hfill God fornøjelse
+
+\section*{Ugens nød \#1}
+
+Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
+som interesserede kan løse.  Det er helt frivilligt at lave disse
+opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
+mindre præmie til den bedste løsning, der afleveres i Absalon.
+
+Ugens nød i denne uge omhandler en variant af spillet "`Minestryger"'
+(\url{http://da.wikipedia.org/wiki/Minestryger_%28spil%29}).
+
+I vores variant er det for alle felter på forhånd kendt, hvor mange
+bomber, der i alt er i de otte nabofelter samt feltet selv.  Det
+gælder både felter med og felter uden bomber.  Det er samme variant,
+der blev brugt i dagsløbet i campusdagene.
+
+Et eksempel på et sådant spil er
+
+\begin{verbatim}
+        221
+        232
+        232
+\end{verbatim}
+  
+svarende til bombeplaceringen
+
+\begin{verbatim}
+        000
+        110
+        001
+\end{verbatim}
+
+\noindent
+hvor tomme felter er angivet med \texttt{0} og bomber med \texttt{1}.
+
+Der er ikke altid en entydig løsning.  For eksempel vil spillet
+
+\begin{verbatim}
+        11
+        11
+\end{verbatim}
+ 
+\noindent
+have fire løsninger:
+
+\vspace{1ex}
+
+\begin{tabular}{@{\quad\quad\quad}l@{\quad\quad}l@{\quad\quad}l@{\quad\quad}l}
+\texttt{01} & \texttt{10} & \texttt{00} & \texttt{00}\\
+\texttt{00} & \texttt{00} & \texttt{01} & \texttt{10}
+\end{tabular}
+\vspace{1ex}
+
+
+\noindent
+Der er heller ikke altid løsninger, idet for eksempel
+
+\begin{verbatim}
+        10
+        00
+\end{verbatim}
+ 
+\noindent
+ikke har en løsning.
+
+Vi repræsenterer et spil som en tabel af heltal, som alle ligger
+mellem 0 og 9.  Løsninger repræsenteres som tabeller af heltal, der
+alle har værdi 0 eller 1.
+
+\begin{enumerate}[Nød {1}.1]
+
+\item funktion \texttt{minelaegger : int list list -> int list list},
+  som givet en \emph{løsning} returnerer et spil.  Det kan antages, at
+  input er en liste af lister af tal, der alle er enten 0 eller 1.
+
+For eksempel skal kaldet
+\texttt{minelaegger [[0; 0; 0]; [1; 1; 0]; [0; 0; 1]]}
+returnere spillet \texttt{[[2; 2; 1]; [2; 3; 2]; [2; 3; 2]]}.
+
+
+\item Lav en funktion \texttt{minestryger : int list list -> int list list
+  list}, som givet et spil finder alle løsninger.  Det kan antages, at input er en liste af lister af tal mellem 0 og 9.
+
+For eksempel skal kaldet
+\texttt{minestryger [[1; 1]; [1; 1]];;}
+returnere listen
+
+\begin{verbatim}
+  [[[0; 1]; [0; 0]];
+   [[1; 0]; [0; 0]];
+   [[0; 0]; [0; 1]];
+   [[0; 0]; [1; 0]]]
+\end{verbatim}
+
+\noindent
+eller en permutation af denne liste, mens 
+\texttt{minestryger [[1; 0]; [0; 0]]}
+skal returnere den tomme liste.
+
+
+Det er ikke vigtigt, om løsningerne findes hurtigt, men hvis flere
+korrekte programmer indleveres, gives præmien til det hurtigste.
+
+\end{enumerate}
+
+\noindent
+Der skal uploades både en \LaTeX-fil, der beskriver fremgangsmåden,
+samt en fsx fil, der indeholder definitionerne af de to funktioner.
+Navngivningen af filerne er ikke vigtig.  Der er oprettet en særlig
+opgave til ugens nød.  Opgaven er individuel.
+
+Endnu et par eksempelspil til afprøvning er angivet herunder.
+
+\begin{verbatim}
+        22222      33333      44444      23232      23321
+        22222      33333      44444      24453      34421
+        22222      33333      44444      45543      45532
+        22222      33333      44444      34443      23321
+        22222      33333      44444      33222      12221
+\end{verbatim}
+
+\end{document}
+

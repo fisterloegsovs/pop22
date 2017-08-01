@@ -1,0 +1,519 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Opremsede typer (også kaldet ``sum typer'')}
+
+\date[2016]{PoP 10102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Opremsede typer}
+
+Man kan definere en type til at have et endeligt antal navngivne
+værdier, f.eks.
+\begin{verbatim}
+type weekday = Monday | Tuesday | Wednesday | Thursday
+             | Friday | Saturday | Sunday
+\end{verbatim}
+
+og lave funktioner og værdier med disse, f.eks.:
+\begin{verbatim}
+let firstDayOfWeek = Monday
+
+let isWeekend day =
+  match day with
+  | Saturday -> true
+  | Sunday -> true
+  | _ -> false
+\end{verbatim}
+
+\textbf{NB!} Navne (også kaldet \emph{konstruktorer} skal starte med
+stort bogstav, og forskellige typer må ikke bruge samme navne.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Parametriserede navne}
+
+Navne/konstruktorer i en opremset type kan have parametre, f.eks.
+
+\begin{verbatim}
+type number = I of int | F of float
+\end{verbatim}
+
+Denne type kan have værdier såsom \texttt{I 7} og \texttt{F 3.1416}.
+
+Vi kan definere funktioner på sædvanlig vis:
+
+
+\begin{verbatim}
+let toString x =
+  match x with
+  | I n -> sprintf "%d" n
+  | F a -> sprintf "%g" a
+
+let add x y =
+  match (x, y) with
+  | (I m, I n) -> I (m + n)
+  | (F a, F b) -> F (a + b)
+  | (I m, F b) -> F (float m + b)
+  | (F a, I n) -> F (a + float n)
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Option-typen}
+
+Option-typen er et eksempel på en opremset type, hvor kun det ene navn har
+en parameter:
+
+\begin{verbatim}
+type 'a option = None | Some of 'a
+\end{verbatim}
+
+Biblioteket \texttt{Option} definerer funktioner på option-typen, bl.a.:
+
+\begin{itemize}
+\item \texttt{Option.isSome : 'a option -> bool}~~ er defineret som
+
+\begin{verbatim}
+let isSome x =
+  match x with
+  | None -> false
+  | Some _ -> true
+\end{verbatim}
+
+\item \texttt{Option.get : 'a option -> 'a}~~ er defineret som
+
+\begin{verbatim}
+let get x =
+  match x with
+  | None -> failwith "The option value was None"
+  | Some value -> value
+\end{verbatim}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Rekursive typer}
+
+Man kan definere rekursive typer ligesom rekursive funktioner, f.eks,
+
+
+\begin{verbatim}
+type unaryNumber = Zero | Plus1 of unaryNumber
+\end{verbatim}
+
+Denne type har uendeligt mange forskellige værdier:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{l}
+Zero \\
+Plus1 Zero\\
+Plus1 (Plus1 Zero)\\
+Plus1 (Plus1 (Plus1 Zero))\\
+\textrm{og så videre}
+\end{tabular}
+}
+
+\vspace{1ex}
+
+og man kan definere rekursive funktioner på den, f.eks.
+
+\begin{verbatim}
+let rec add x y =
+  match x with
+  | Zero -> y
+  | Plus1 x -> Plus1 (add x y)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Dobbelt rekursive typer}
+
+Typen erklæret med
+
+
+\begin{verbatim}
+type  tree = Leaf | Node of tree * tree
+\end{verbatim}
+
+
+har værdierne:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{l}
+Leaf \\
+Node (Leaf, Leaf)\\
+Node (Node (Leaf, Leaf), Leaf)\\
+Node (Leaf, Node (Leaf, Leaf)))\\
+Node (Node (Leaf, Leaf), Node (Leaf, Leaf))\\
+Node (Node (Node (Leaf, Leaf), Leaf), Node (Leaf, Leaf))\\
+Node (Node (Leaf, Node (Leaf, Leaf)), Node (Leaf, Leaf))\\
+\textrm{og så videre}
+\end{tabular}
+}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Træstrukturer}
+
+Vi kan tegne værdier af typen \texttt{tree} som efterkommertræer:
+
+\vspace{1ex}
+
+\setlength{\unitlength}{0.01\textwidth}
+
+\begin{picture}(100,50)
+\put(5,45){\makebox(0,0){\texttt{Leaf}}}
+
+\put(25,45){\makebox(0,0){\texttt{Node}}}
+\put(20,35){\makebox(0,0){\texttt{Leaf}}}
+\put(30,35){\makebox(0,0){\texttt{Leaf}}}
+\put(23,42){\line(-1,-2){2.5}}
+\put(27,42){\line(1,-2){2.5}}
+
+\put(53,45){\makebox(0,0){\texttt{Node}}}
+\put(48,35){\makebox(0,0){\texttt{Node}}}
+\put(43,25){\makebox(0,0){\texttt{Leaf}}}
+\put(53,25){\makebox(0,0){\texttt{Leaf}}}
+\put(46,32){\line(-1,-2){2.5}}
+\put(50,32){\line(1,-2){2.5}}
+\put(58,35){\makebox(0,0){\texttt{Leaf}}}
+\put(51,42){\line(-1,-2){2.5}}
+\put(55,42){\line(1,-2){2.5}}
+
+\put(80,45){\makebox(0,0){\texttt{Node}}}
+\put(75,35){\makebox(0,0){\texttt{Leaf}}}
+\put(80,25){\makebox(0,0){\texttt{Leaf}}}
+\put(90,25){\makebox(0,0){\texttt{Leaf}}}
+\put(83,32){\line(-1,-2){2.5}}
+\put(87,32){\line(1,-2){2.5}}
+\put(85,35){\makebox(0,0){\texttt{Node}}}
+\put(78,42){\line(-1,-2){2.5}}
+\put(82,42){\line(1,-2){2.5}}
+
+
+\put(23,15){\makebox(0,0){\texttt{Node}}}
+\put(8,5){\makebox(0,0){\texttt{Node}}}
+\put(3,-5){\makebox(0,0){\texttt{Leaf}}}
+\put(13,-5){\makebox(0,0){\texttt{Leaf}}}
+\put(6,2){\line(-1,-2){2.5}}
+\put(10,2){\line(1,-2){2.5}}
+\put(38,5){\makebox(0,0){\texttt{Node}}}
+\put(21,12){\line(-2,-1){10}}
+\put(25,12){\line(2,-1){10}}
+\put(33,-5){\makebox(0,0){\texttt{Leaf}}}
+\put(43,-5){\makebox(0,0){\texttt{Leaf}}}
+\put(36,2){\line(-1,-2){2.5}}
+\put(40,2){\line(1,-2){2.5}}
+
+\put(70,5){\makebox(0,0){osv.}}
+
+\end{picture}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Funktioner på træer}
+
+Tæl antallet af knuder:
+\begin{verbatim}
+  let rec nodes t =
+    match t with
+    | Leaf -> 0
+    | Node (t1, t2) -> 1 + nodes t1 + nodes t2
+\end{verbatim}
+
+Højden af et træ:
+\begin{verbatim}
+  let rec height t =
+    match t with
+    | Leaf -> 0
+    | Node (t1, t2) -> 1 + max (height t1) (height t2)
+\end{verbatim}
+
+Spejl et træ:
+\begin{verbatim}
+  let rec flip t =
+    match t with
+    | Leaf -> Leaf
+    | Node (t1, t2) -> Node (flip t2, flip t1)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Træer med værdier i bladene}
+
+\begin{verbatim}
+type  'a treeL = LeafL of 'a
+               | NodeL of 'a treeL * 'a treeL
+\end{verbatim}
+
+Instansen \texttt{int treeL} har f.eks. følgende værdier:
+
+\vspace{1ex}
+
+\texttt{\small
+\begin{tabular}{l}
+LeafL 3\\
+LeafL 7\\
+NodeL (LeafL 9, LeafL 13)\\
+NodeL (NodeL (LeafL 9, LeafL 5), LeafL 42)\\
+NodeL (LeafL 9, NodeL (LeafL 5, LeafL 42)))\\
+NodeL (NodeL (LeafL 7, LeafL 9), NodeL (LeafL 3, LeafL 1))\\
+\end{tabular}
+}
+
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Grafisk form}
+
+\setlength{\unitlength}{0.01\textwidth}
+
+\begin{picture}(100,50)
+\put(5,45){\makebox(0,0){\texttt{\small LeafL\,3}}}
+
+\put(25,45){\makebox(0,0){\texttt{\small NodeL}}}
+\put(18,35){\makebox(0,0){\texttt{\small LeafL\,9}}}
+\put(32,35){\makebox(0,0){\texttt{\small LeafL\,13}}}
+\put(23,42){\line(-1,-2){2.5}}
+\put(27,42){\line(1,-2){2.5}}
+
+\put(53,45){\makebox(0,0){\texttt{\small NodeL}}}
+\put(48,35){\makebox(0,0){\texttt{\small NodeL}}}
+\put(41,25){\makebox(0,0){\texttt{\small LeafL\,5}}}
+\put(55,25){\makebox(0,0){\texttt{\small LeafL\,42}}}
+\put(46,32){\line(-1,-2){2.5}}
+\put(50,32){\line(1,-2){2.5}}
+\put(60,35){\makebox(0,0){\texttt{\small LeafL\,9}}}
+\put(51,42){\line(-1,-2){2.5}}
+\put(55,42){\line(1,-2){2.5}}
+
+\put(80,45){\makebox(0,0){\texttt{\small NodeL}}}
+\put(73,35){\makebox(0,0){\texttt{\small LeafL\,9}}}
+\put(78,25){\makebox(0,0){\texttt{\small LeafL\,5}}}
+\put(92,25){\makebox(0,0){\texttt{\small LeafL\,42}}}
+\put(83,32){\line(-1,-2){2.5}}
+\put(87,32){\line(1,-2){2.5}}
+\put(85,35){\makebox(0,0){\texttt{\small NodeL}}}
+\put(78,42){\line(-1,-2){2.5}}
+\put(82,42){\line(1,-2){2.5}}
+
+
+\put(23,15){\makebox(0,0){\texttt{\small NodeL}}}
+\put(8,5){\makebox(0,0){\texttt{\small NodeL}}}
+\put(1,-5){\makebox(0,0){\texttt{\small LeafL\,7}}}
+\put(15,-5){\makebox(0,0){\texttt{\small LeafL\,9}}}
+\put(6,2){\line(-1,-2){2.5}}
+\put(10,2){\line(1,-2){2.5}}
+\put(38,5){\makebox(0,0){\texttt{\small NodeL}}}
+\put(21,12){\line(-2,-1){10}}
+\put(25,12){\line(2,-1){10}}
+\put(31,-5){\makebox(0,0){\texttt{\small LeafL\,3}}}
+\put(45,-5){\makebox(0,0){\texttt{\small LeafL\,1}}}
+\put(36,2){\line(-1,-2){2.5}}
+\put(40,2){\line(1,-2){2.5}}
+
+\end{picture}
+
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Simplificeret grafisk form}
+
+Vi undlader at vise navnene på konstruktorerne:
+
+\vspace{1ex}
+
+\setlength{\unitlength}{0.01\textwidth}
+
+\begin{picture}(100,50)
+\put(5,45){\makebox(0,0){\texttt{3}}}
+
+\put(25,45){\makebox(0,0){$\bullet$}}
+\put(20,35){\makebox(0,0){\texttt{9}}}
+\put(30,35){\makebox(0,0){\texttt{13}}}
+\put(23,42){\line(-1,-2){2.5}}
+\put(27,42){\line(1,-2){2.5}}
+
+\put(53,45){\makebox(0,0){\texttt{$\bullet$}}}
+\put(48,35){\makebox(0,0){\texttt{$\bullet$}}}
+\put(43,25){\makebox(0,0){\texttt{5}}}
+\put(53,25){\makebox(0,0){\texttt{42}}}
+\put(46,32){\line(-1,-2){2.5}}
+\put(50,32){\line(1,-2){2.5}}
+\put(58,35){\makebox(0,0){\texttt{9}}}
+\put(51,42){\line(-1,-2){2.5}}
+\put(55,42){\line(1,-2){2.5}}
+
+\put(80,45){\makebox(0,0){\texttt{$\bullet$}}}
+\put(75,35){\makebox(0,0){\texttt{9}}}
+\put(80,25){\makebox(0,0){\texttt{5}}}
+\put(90,25){\makebox(0,0){\texttt{42}}}
+\put(83,32){\line(-1,-2){2.5}}
+\put(87,32){\line(1,-2){2.5}}
+\put(85,35){\makebox(0,0){\texttt{$\bullet$}}}
+\put(78,42){\line(-1,-2){2.5}}
+\put(82,42){\line(1,-2){2.5}}
+
+
+\put(23,14){\makebox(0,0){\texttt{$\bullet$}}}
+\put(8,5){\makebox(0,0){\texttt{$\bullet$}}}
+\put(3,-5){\makebox(0,0){\texttt{7}}}
+\put(13,-5){\makebox(0,0){\texttt{9}}}
+\put(6,2){\line(-1,-2){2.5}}
+\put(10,2){\line(1,-2){2.5}}
+\put(38,5){\makebox(0,0){\texttt{$\bullet$}}}
+\put(21,12){\line(-2,-1){10}}
+\put(25,12){\line(2,-1){10}}
+\put(33,-5){\makebox(0,0){\texttt{3}}}
+\put(43,-5){\makebox(0,0){\texttt{1}}}
+\put(36,2){\line(-1,-2){2.5}}
+\put(40,2){\line(1,-2){2.5}}
+
+\end{picture}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Funktioner på træer med værdier i blade}
+
+Lav liste af blade (fra venstre mod højre):
+\begin{verbatim}
+  let rec toList t =
+    match t with
+    | LeafL v -> [v]
+    | NodeL (t1, t2) -> toList t1 @ toList t2
+\end{verbatim}
+
+Anvend funktion på alle blade:
+\begin{verbatim}
+  let rec mapL f t =
+    match t with
+    | LeafL v -> LeafL (f v)
+    | NodeL (t1, t2) -> NodeL (mapL f t1, mapL f t2)
+\end{verbatim}
+
+Fold med funktion af type \texttt{'a -> 'a -> 'a}:
+\begin{verbatim}
+  let rec foldL f t =
+    match t with
+    | LeafL v -> v
+    | NodeL (t1, t2) -> f (foldL f t1) (foldL f t2)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Andre slags træer}
+
+\begin{itemize}
+\item Træer med værdier i knuder, men ikke i blade.
+\item Træer med værdier i knuder og blade -- evt. af forskellige typer.
+\item Træer, hvor knuder har mere end to børn.
+\item Træer, hvor der er flere slags blade.
+\item Træer, hvor der er flere slags knuder.
+\item Træer, hvor en knude har en liste af børn.
+\item osv.
+\end{itemize}
+
+Alle disse kan defineres som rekursive typer.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel fra ugeseddel}
+
+\begin{verbatim}
+type point = int * int // (x, y)
+type colour = int * int * int  // (red, green, blue)
+
+type figure =
+        | Circle of point * int * colour
+          // center, radius, colour
+        | Rectangle of point * point * colour
+          // bottom-left, top-right, colour
+        | Mix of figure * figure
+\end{verbatim}
+
+\begin{itemize}
+\item \texttt{Circle} og \texttt{Rectangle} er forskellige blade med
+  forskellige typer af værdier.
+\item \texttt{Mix} er en knude uden tilknyttet værdi.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel på funktion på typen \texttt{figure}}
+
+Finder farven i et punkt (som option-type).
+
+\begin{verbatim}
+let rec colourAt (x,y) figure =
+  match figure with
+  | Circle ((cx,cy), r, col) ->
+      if (x-cx)*(x-cx)+(y-cy)*(y-cy) <= r*r
+      then Some col else None
+  | Rectangle ((x0,y0), (x1,y1), col) ->
+      if x0<=x && x <= x1 && y0 <= y && y <= y1
+      then Some col else None
+  | Mix (f1, f2) ->
+      match (colourAt (x,y) f1, colourAt (x,y) f2) with
+      | (None, c) -> c
+      | (c, None) -> c
+      | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
+           Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)
+\end{verbatim}
+
+\end{frame}
+
+\end{document}

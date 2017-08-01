@@ -1,0 +1,195 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Mere om moduler}
+
+\date[2016]{PoP 02122016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Flere overloadede versioner af en operator}
+
+Vi vil gerne lave et modul for N-dimensionale vektorer med følgende signatur:
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+module Vector  // N-dimensional vectors
+
+[<Sealed>]
+type Vector =
+  static member (+) : Vector * Vector -> Vector
+  static member (-) : Vector * Vector -> Vector
+  static member ( * ) : Vector * float -> Vector
+  static member ( * ) : float * Vector -> Vector
+  static member ( * ) : Vector * Vector -> float
+
+val ofArray : float [] -> Vector
+val toArray : Vector -> float []
+val length : Vector -> int
+val norm : Vector -> float
+val init : int -> (int -> float) -> Vector
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Bemærk, at \texttt{*} findes med tre forskellige typer.
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Implementering af vektormodulet}
+
+\renewcommand{\baselinestretch}{0.77}
+{\scriptsize
+\begin{verbatim}
+module Vector
+
+type Vector =
+  | V of float []
+
+  static member (+) (V a : Vector, V b : Vector) =
+    if Array.length a = Array.length b
+    then V (Array.map2 (+) a b)
+    else failwith "Can not add vectors of different length"
+
+  static member (-) (V a : Vector, V b : Vector) =
+    if Array.length a = Array.length b
+    then V (Array.map2 (-) a b)
+    else failwith "Can not subtract vectors of different length"
+
+  static member ( * ) (V a : Vector, b : float) =
+    V (Array.map (fun x -> x*b) a)
+  static member ( * ) (a : float, V b : Vector) =
+    V (Array.map (fun x -> a*x) b)
+  static member ( * ) (V a : Vector, V b : Vector) =
+    if Array.length a = Array.length b
+    then Array.fold2 (fun s x y -> s+x*y) 0.0 a b
+    else failwith "Can not multiply vectors of different length"
+
+let toArray (V a) = a
+let ofArray a = (V a)
+let length (V a) = Array.length a
+let norm (a : Vector) = sqrt(a * a)
+let init n f = V (Array.init n (fun i -> f i))
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Indeksering i vektorer}
+
+Vi indicerer i lister og arrays med notationen
+\texttt{$x$.[$i$]}, hvor $x$ er en liste eller et array, og $i$ er et
+heltal.
+
+Vi kan tilføje denne mulighed til vektorer ved at tilføje følgende til
+signaturen (efter de andre member funktioner):
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+  member Item : int -> float
+    with get, set
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+og følgende til implementeringsfilen (ditto):
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+  member v.Item
+    with get  (i : int) : float =
+      let (V a) = v
+      if 0<=i && i < Array.length a then a.[i]
+      else failwith "Vector index out of range"
+    and set (i : int) (x : float) =
+      let (V a ) = v
+      if 0<=i && i < Array.length a then a.[i] <- x
+      else failwith "Vector index out of range"
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Man kan nøjes med \texttt{get}, hvis man ikke vil gøre vektorerne muterbare.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Indlejrede moduler}
+
+Vi har set, at nogle biblioteksmoduler er indlejrede i hinanden, så
+man f.eks. skriver \texttt{System.IO.File.Open}, hvor \texttt{Open} er
+en funktion i modulet \texttt{File}, som er indlejret i modulet
+\texttt{IO}, som er indlejret i modulet \texttt{System}.
+Vi kan også selv definere den slags indlejrede moduler.
+
+Vi kan f.eks. lave et modul \texttt{Map} med en map-funktion lokalt i
+\texttt{Vector} ved at tilføje linjerne
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+module Map =
+  val map : (float -> float) -> Vector -> Vector
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+til signaturen og følgende til implementeringsfilen:
+
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+module Map =
+  let map f (V a) = V (Array.map f a)
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Vi kan nu skrive f.eks.\ \texttt{Vector.Map.map f v}.
+
+Bemærk, at der skal et \texttt{=} efter modulnavnet,
+og at definitionerne i det lokale modul skal indrykkes.
+
+
+\end{frame}
+
+\end{document}

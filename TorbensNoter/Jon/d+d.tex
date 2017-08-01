@@ -1,0 +1,264 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx,color}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Suggestion for exercise based on D\&D}
+
+\author{Torben Mogensen}
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+This exercise suggestion is about modelling a very simplified variant
+of the role-playing game Dungeons \& Dragons\textsuperscript{\sf TM}.
+\end{abstract}
+
+\section{Characters}
+
+A \emph{character} describes an adventurer.  A character is defined by
+the following attributes:
+
+\begin{itemize}
+\item \texttt{body : int}, a read-only attribute that is a value
+  between 3 and 18.
+\item \texttt{mind : int}, a read-only attribute that is a value
+  between 3 and 18.
+\item \texttt{level : int}, a read-write attribute that is a non-negative
+  integer.
+\item \texttt{maxHitpoints : int}, a read-write attribute that is a
+  non-negative integer.
+\item \texttt{currentHitpoints : int}, a read-write attribute that is a
+  non-negative integer less than or equal to \texttt{maxHitpoints}.
+\end{itemize}
+
+\noindent
+Define a class \texttt{Character} with these attributes.  It should
+include a constructor that takes the values of the first two
+attributes.  The remaining three attributes should be set to 0.
+
+The class should implement the following methods:
+
+\begin{itemize}
+\item \texttt{levelUp : unit} that increases the level by one and
+  increases the maximum hit points by the value of the \texttt{body}
+  attribute.  It also sets the current hit points to equal the maximum
+  hit points.
+\item \texttt{takeDamage : int -> unit}  that reduces the current hit
+  points by the amount given, which must be a non-negative integer.
+\item \texttt{healDamage : int -> unit} that increases the current hit
+  points by the amount given, which must be a non-negative integer.
+\item \texttt{isAlive : unit -> bool} that checks whether the current
+  hit points is non-negative.
+\end{itemize}
+
+\section{Character Classes}
+
+A \emph{character class} describes a special kind of adventurer, so it
+is a subclass of \emph{character}.  You must implement the following
+character classes:
+
+\subsection{Fighter}
+
+A fighter is a character that has the following extra attributes and
+methods:
+
+\begin{itemize}
+
+\item A read-write attribute \texttt{weapon : Weapon} describing the
+  weapon that the fighter uses, see Section~\ref{weapon}.
+
+\item A read-write attribute \texttt{armour : Armour} describing the
+  weapon that the fighter is wearing, see Section~\ref{armour}.
+
+\item A method \texttt{hit : Character -> unit}, indicating that the
+  fighter tries to hit another character.  If the fighter is dead,
+  nothing happens.
+
+The chance of hitting the opposing character is
+(10×\texttt{level}+\texttt{mind})\%, where \texttt{level} and
+\texttt{mind} are attributes of the fighter.
+
+The amount of damage dealt (if successfully hitting the opponent) is
+\texttt{level} + weapon damage, where \texttt{level} is the
+\texttt{level} attribute of the fighter and weapon damage is found by
+calling the \texttt{damage} method of the fighter's weapon.
+
+\item An overridden method \texttt{takeDamage : int -> unit} that
+  reduces the damage taken by the value found by calling the
+  \texttt{protect} method of the figher's armour.
+
+\end{itemize}
+
+\noindent
+A fighter starts with cloth armour and a knife (see
+Sections~\ref{weapon} and~\ref{armour}, but must have at least 11 in
+her \texttt{body} attribute.  Override the constructor method to
+ensure this.
+
+\subsection{Mage}
+
+A \emph{mage} is a magician that employs spells instead of weapons.
+It has the following additional attributes and methods:
+
+\begin{itemize}
+\item An attribute \texttt{currentMana : int} indicating the amount of
+  mana points that the mage hsa available for spell casting.  It is a
+  non-negative integer.
+
+\item An attribute \texttt{maxMana : int} indicating the maximum
+  amount of mana that points the mage can have.
+
+\item A method \texttt{cast : Spell -> Character -> unit} that casts a
+  spell (see Section~\ref{spell}) on the indicated character,
+  subtracting the necessary amount from the mage's mana points.  If
+  the mage has less than the indicated mana left, or if the mage is
+  dead, the spell is not cast, and the mana is unmodified.
+
+\item A method \texttt{rest : unit} that makes the mage rest,
+  regaining his level in mana points, up to his maximum mana.  A dead
+  mage can not rest.
+
+\end{itemize}
+
+\noindent
+A mage starts (at level 0) with 0 mana points and must have at least
+11 in \texttt{mind}.  Override the constructor method to ensure this.
+
+At every level increase, the maximum mana of the mage is set to
+\texttt{level×mind}.  Override the \texttt{levelUp} method to ensure
+this.
+
+\subsection{Your Choice}
+
+Define a character class of your own (such as Priest or Rogue).  It
+should use the \texttt{body} and \texttt{mind} attributes more or less
+equally.
+
+\section{Weapons, Armour and Spells}
+
+These are the tools that characters can employ.
+
+\subsection{Weapons}\label{weapon}
+
+A \texttt{Weapon} has the following method:
+
+\begin{itemize}
+\item \texttt{damage : unit -> int} that returns the amount of damage
+  that the weapons deals.
+\end{itemize}
+
+\noindent
+You must implement at least the following instances of the
+\texttt{Weapon} class:
+
+\begin{itemize}
+\item A \texttt{Knife} is a weapon that deals 1d8 points of damage,
+  i.e, 1--8 points chosen randomly with equal probability.
+
+\item A \texttt{Mace} is a weapon that deals 2d4 points of damage,
+  i.e, 1--4 points chosen randomly with equal probability plus another
+  1--4 points chosen randomly with equal probability.
+
+\item One more weapon of your design.
+\end{itemize}
+
+\subsection{Armour}\label{armour}
+
+A suit of \texttt{Armour} has the following method:
+
+\begin{itemize}
+\item \texttt{protect : unit -> int} that returns the amount of damage
+  by which the armour reduces the damage taken when hit.
+\end{itemize}
+
+\noindent
+You must implement at least the following instances of the
+\texttt{Armour} class:
+
+\begin{itemize}
+\item \texttt{Cloth} is a type of armour that subtracts 2 points of
+  damage.
+\item \texttt{Chain} is a type of armour that subtracts 1d4 points of
+  damage, i.e, 1--4 points chosen randomly with equal probability.
+
+\item One more type of armour of your design.
+\end{itemize}
+
+\subsection{Spells}\label{spells}
+
+A mage can employ spells.  A spell has the following attributes and
+methods:
+
+\begin{itemize}
+\item An attribute \texttt{manaCost : integer} is the number of mana
+  points it costs to cast the spell.
+\item A method \texttt{effect : Character -> unit} is the effect that
+  the spell has on the recipient character.
+\end{itemize}
+
+\noindent
+You must implement the following spells:
+
+\begin{itemize}
+\item \texttt{MagicMissile} costs 1 mana point and deals 2 points of
+  damage to the recipient.
+
+\item \texttt{Heal} costs 2 mana points and heals 4 points of damage
+  to the recipient.  The recipient can be the mage herself.
+
+\item \texttt{Drain} costs 5 mana points and deals 1d6 damage to the
+  recipient.  The damage dealt will be added as mana points to the
+  mana pool of the caster.
+
+\item And one spell of your own design, for example a spell that
+  enchants the weapon of the recipient (who must be a fighter) to do
+  more damage for a limited number of uses.
+\end{itemize}
+
+\section{Random character creation}
+
+\begin{itemize}
+
+\item Make a function \texttt{createCharacter : unit -> Character}
+  that randomly creates a character by using the following steps:
+
+\begin{enumerate}
+\item roll 3d6, i.e, find a value equal to adding three random numbers
+  equally distributed in the 1--6 range.
+\item Set \texttt{body} to this value and \texttt{mind} to 21 minus
+  \texttt{body}.
+\item Choose an appropriate character class.
+\end{enumerate}
+
+\noindent
+The character starts at level 0.
+
+\item Make a function \texttt{createParty : int -> int -> Character
+  list} that creates a party of $M$ level $L$ characters, using the
+  \texttt{createCharacter} function and the \texttt{levelUp} method of
+  each character.
+
+\end{itemize}
+
+\section{Simulate Battle}
+
+Simulate a battle between two parties.  A battle consists of a number
+of rounds in which all characters in both parties take an action
+each.  The order in which characters act is determined randomly in
+each round.  An action is using a method such as \texttt{hit},
+\texttt{cast} or \texttt{rest} implemented by the character class.
+
+The battle continues until all characters in one of the parties are
+dead.
+
+\end{document}
+

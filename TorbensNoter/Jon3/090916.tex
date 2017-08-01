@@ -1,0 +1,371 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Kommandolinjen, Emacs og \LaTeX.}
+
+\date[2016]{PoP 09092016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}
+\frametitle{Kommandolinjen / terminalen}
+
+Alternativ til point-and-click interface, specielt egnet til
+gentagelse af kommandoer med små variationer.
+
+\vspace{1ex}
+
+Åben terminalvindue:
+
+\begin{itemize}
+\item \textbf{Windows:} Start → Run, skriv \texttt{cmd}.  Eller
+  \makebox(1,0.3){\includegraphics[width=1cm]{run-command-win-plus-r.png}}.
+\item \textbf{Alternativt:} Vælg Windows PowerShell fra
+  desktop eller startskærm.
+\item \textbf{Linux:} Klik terminalikon eller Ctrl+Alt+T.
+\item \textbf{MacOS X:} Finder, Applications → Utilities → Terminal.
+\end{itemize}
+
+Vinduet vil vise en \emph{prompt}, der et foldernavn efterfulgt af
+\texttt{>} eller \texttt{\$}.  Du kan skrive en kommando efter
+prompten, se resultatet i vinduet, og få en ny prompt nedenunder.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Kommandoer}
+
+\scalebox{0.87}{
+\hspace{-2em}
+\begin{tabular}{l|ll}
+\textbf{Funktion} & \textbf{Windows} & \textbf{Linux/MacOS} \\\hline
+Vis mappe & \texttt{dir} & \texttt{ls} \\
+Skift mappe & \texttt{cd} & \texttt{cd} \\
+Lav ny mappe & \texttt{mkdir} navn & \texttt{mkdir} navn \\
+Slet mappe & \texttt{rmdir} navn & \texttt{rmdir} navn \\
+Omdøb fil &  \texttt{move} franavn tilnavn & \texttt{mv} franavn tilnavn\\
+Flyt fil(er) &  \texttt{move} franavn(e) tilmappe & \texttt{mv} franavn(e) tilmappe\\
+Kopier fil(er) &  \texttt{copy} franavn(e) tilnavn/mappe & \texttt{cp}
+franavn(e) tilnavn/mappe\\
+Slet fil(er) & \texttt{del} navn(e) & \texttt{rm} navn(e) \\
+Kør program & programnavn parametre & programnavn parametre\\
+Gentag kommando & ↑ & ↑ \\
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Filnavne og stinavne}
+
+Mapper er organiseret i en træstruktur, hvor mapper kan have
+undermapper osv.  En \emph{sti} er en angivelse af en fil eller
+katalog, enten relativt til rodkataloget eller relativt til den
+nuværende mappe.
+
+\vspace{2ex}
+
+\begin{tabular}{l|l@{\quad\quad}l}
+\textbf{Stinavne} & \textbf{Windows} & \textbf{Linux/MacOS} \\\hline
+Rodkatalog & \texttt{C:} & \texttt{/} \\
+Hjemmekatalog & \texttt{\%HOMEPATH\%} & \texttt{\~{}} \\
+Adskil mapper i stinavne & \texttt{$\backslash$} & \texttt{/} \\
+Store og små bogstaver & gør ikke forskel & gør forskel \\
+Denne mappe & \texttt{.} &  \texttt{.} \\
+Forældremappe & \texttt{..} &  \texttt{..} \\
+Matcher alle tegnfølger & \texttt{*} &  \texttt{*} \\
+Matcher alle enkelttegn & \texttt{?} &  \texttt{?} \\[1ex]
+Eksempel:\\
+Vis alle filer i forældrekataloget \\
+med endelsen \texttt{.txt}
+& \texttt{dir ..$\backslash$*.txt} & \colorbox{white}{\texttt{ls ../*.txt}}
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Emacs}
+
+
+Emacs er et tekstredigeringsværktøj, der kan redigere ``rå'',
+uformateret tekst.  Velegnet til programtekster o.lign.
+
+\vspace{1ex}
+
+Se \texttt{emacs.pdf} for installeringsvejledning, eller få hjælp af
+jeres instruktorer i øvelsestimen.
+
+\vspace{1ex}
+
+Emacs køres fra kommandolinjen ved at skrive \textcolor{blue}{\texttt{emacs}~filnavn}.
+
+\vspace{1ex}
+
+Emacs kan bruges med menufunktioner eller tastaturgenveje (foretrukket).
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\LaTeX}
+
+\LaTeX{} er et gratis, open source tekstformateringsværktøj, som kan
+bruges til alt fra lærebøger og forelæsningsslides til nodehæfter og
+breve.
+
+\vspace{1ex}
+
+Følg installeringsvejledningen i \texttt{latex.pdf} eller få hjælp af
+jeres instruktor til øvelserne.
+\vspace{1ex}
+
+Man skriver sin tekst i en rå tekstfil
+\textcolor{blue}{\texttt{filnavn.tex}} med Emacs (eller lignende) og
+kører programmet \textcolor{blue}{\texttt{pdflatex~filnavn}}, som
+producerer den formaterede tekst i \textcolor{blue}{\texttt{filnavn.pdf}}.
+
+\vspace{1ex}
+
+\LaTeX{} indeholder et programmeringssprog, som bruges til at styre
+formatering af tekst, formler, tabeller, krydsreferencer, osv.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Eksempler på ting lavet med \LaTeX}
+
+\setlength{\unitlength}{0.5mm}
+\begin{picture}(200,150)
+\put(0,0){\includegraphics[width=0.5\textwidth]{example1.png}}
+
+\put(110,130){\scalebox{1.8}[1]{De slides, du ser nu}}
+\put(120,115){\rotatebox{-15}{\textbf{Lærebogen}}}
+\put(110,80){\rotatebox{15}{\textbf{Noter og ugesedler til PoP}}}
+\put(110,20){\includegraphics[width=0.5\textwidth]{example2.png}}
+\end{picture}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Minimalt \LaTeX{} dokument}
+
+\begin{verbatim}
+\documentclass{report}
+
+\begin{document}
+
+Hello World
+
+\end{document}
+\end{verbatim}
+
+\vspace{2ex}
+
+Hvis denne tekst er indeholdt i filen \texttt{Hello.tex}, køres
+kommandoen \texttt{pdflatex Hello.tex} for at få filen
+\texttt{Hello.pdf}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\LaTeX{} kommandoer}
+
+En \LaTeX{} kommando består af et \verb|\|, et navn og måske nogle
+parametre.  Et navn er enten et enkelt ikke-alfabetisk tegn eller en
+sekvens af alfabetiske tegn. Eksempler:
+
+\vspace{2ex}
+
+\begin{tabular}{ll}
+\textbf{Kommando} & \textbf{Betydning} \\\hline
+\verb|\{| & Producerer tegnet \{ \\
+\verb|\newline| & Tvunget linjeskift \\
+\verb|\LaTeX| & Producerer \LaTeX{} logoet\\
+\verb|\textbf{|tekst\verb|}| & \textbf{Skriver teksten i fed skrift} \\
+\verb|\emph{|tekst\verb|}| & \emph{Fremhæver teksten} \\
+\verb|\includegraphics{|filnavn.png\verb|}| & Inkluderer billede fra fil\\
+\verb|\chapter{|titel\verb|}| & Begynder nyt kapitel \\
+\verb|\section{|titel\verb|}| & Begynder nyt afsnit \\
+\end{tabular}
+
+\vspace{2ex}
+
+Kan indlejres: \verb|\emph{Hej \textbf{alle} russer}| giver\newline
+\emph{Hej \textbf{alle} russer}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\LaTeX{} omgivelser (environments)}
+
+En \emph{omgivelse} begynder med \verb|\begin{|navn\verb|}| og ender
+med  \verb|\end{|navn\verb|}|.  Bruges typisk til effekter, der
+strækker sig over flere linjer.  Eksempler:
+
+\vspace{2ex}
+
+\begin{tabular}{lcl}
+\textbf{Omgivelse} & \textbf{Betydning} & \textbf{Resultat} \\\hline
+\verb|\begin{verbatim}| & gengiv ordret\\
+\verb|{%   \&}| &   & \verb|{%   \&}| \\
+\verb|\end{verbatim}| \\\\
+
+\verb|\begin{center}| & centrer tekst\\
+\verb|Hello| &   & \multicolumn{1}{c}{Hello} \\
+\verb|all| &   & \multicolumn{1}{c}{all} \\
+\verb|\end{center}| \\\\
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\LaTeX{} pakker}
+
+\LaTeX{} kan udvides ved at inkludere \emph{pakker} (der også er
+skrevet i \LaTeX{}).  En pakke inkluderes med kommandoen
+\verb|\usepackage{|navn\verb|}|, evt. med parametre i firkantede
+parametre før navnet.  Disse kommandoer placeres i reglen inden
+\verb|\begin{document}|.  Vi bruger som standard følgende indledning
+før \verb|\begin{document}|:
+
+\vspace{1ex}
+
+\begin{verbatim}
+\documentclass[a4paper]{report}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Strukturen af en rapport}
+
+\setlength{\baselineskip}{0.95\baselineskip}
+\begin{verbatim}
+\documentclass[a4paper]{report} % angiver A4 papir
+% alle \usepackage kommandoer
+\begin{document}
+\title{Rapportens titel}
+\author{Forfattere}
+\date{\today} % indsætter dags dato
+\maketitle % laver forside
+\tableofcontents % laver indholdsfortegnelse
+\chapter{Introduktion}
+Beskrivelse af rapportens mål og indhold.
+\chapter{Hovedindhold}
+Eventuel delt i flere kapitler.
+\chapter{Konklusion}
+Reflektioner over arbejdet og dets resultater
+\section{Videre arbejde}
+Hvad mangler der? Hvad kan man arbejde videre med?
+\end{document}
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Strukturen af en artikel}
+
+\setlength{\baselineskip}{0.95\baselineskip}
+\begin{verbatim}
+\documentclass[a4paper]{article} % angiver A4 papir
+% alle \usepackage kommandoer fra før
+\begin{document}
+\title{Rapportens titel}
+\author{Forfattere}
+\date{\today} % indsætter dags dato
+\maketitle % laver overskrift
+% ingen indholdsfortegnelse
+\section{Introduktion}
+Beskrivelse af rapportens mål og indhold.
+\section{Hovedindhold}
+Eventuel delt i flere kapitler.
+\section{Konklusion}
+Reflektioner over arbejdet og dets resultater
+\subsection{Videre arbejde}
+Hvad mangler der? Hvad kan man arbejde videre med?
+\end{document}
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Formler}
+
+\LaTeX{} er god til formler.  Man kan skrive en formel på to måder:
+Som formel i en linje, hvilket sker mellem to \$-tegn, eller som
+formel på linje for sig, hvilket sker mellem \verb|\[| og \verb|\[|.
+
+Formlen $ax^2+bx+c$ skrives som \verb|$ax^2+bx+c$|, og
+formlen \[ax^2+bx+c\] skrives som \verb|\[ax^2+bx+c\]|.  Man kan
+relativt nemt lave meget avancerede formler, såsom
+
+\[\int_{x=0}^\infty{\frac{\log(x)}{x^2} dx}\]
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\LaTeX{} mode til Emacs}
+
+Når man redigerer en fil med endelse \texttt{.tex}, går Emacs i
+\LaTeX{} mode.  Det betyder til dels, at kommandoer, formler,
+kommentarer, osv.\ fremhæves med farve, fed tekst, kursiv, osv.\ vises
+som sådan, og at der er ekstra redigeringsfunktioner.  Et par
+eksempler:
+
+\vspace{2ex}
+\begin{tabular}{lp{7cm}}
+\textbf{Tastesekvens} & \textbf{Funktion} \\\hline
+C-c C-e & Tilføjer \verb|\end{...}| svarende til uafsluttet
+\verb|\begin{...}|.\\\\
+
+C-c C-o & Tilføjer\verb|\begin{}| og \verb|\end{}| par (spørger om navnet).\\
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Kom selv videre}
+
+Læs introduktionerne til Emacs og \LaTeX, og se de henvisninger, der
+er fra dem.  Begge værktøjer har enorme mængder af funktionalitet, og
+de kan nemt udvides til mere, så vi kan umuligt dække alt.  Men
+introduktionerne burde være nok til den første rapport.
+\end{frame}
+
+\end{document}

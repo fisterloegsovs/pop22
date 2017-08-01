@@ -1,0 +1,370 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Sorterede træer, søgetræer og bunker}
+
+\date[2016]{PoP 25102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Sorterede binære træer}
+
+Vi kalder et binært træ \emph{sorteret}, hvis et inordens gennemløb af
+træet giver en sorteret liste.  Eksempel:
+
+\begin{center}
+\setlength{\unitlength}{0.5mm}
+\begin{picture}(50,60)
+\put(30,50){\makebox(0,0){7}}
+\put(20,30){\makebox(0,0){3}}
+\put(40,30){\makebox(0,0){11}}
+\put(10,10){\makebox(0,0){0}}
+\put(30,10){\makebox(0,0){6}}
+\put(12,13){\line(1,2){6}}
+\put(22,33){\line(1,2){6}}
+\put(28,13){\line(-1,2){6}}
+\put(38,33){\line(-1,2){6}}
+\end{picture}
+\end{center}
+
+Ide: Vi kan sortere en liste ved at bygge et sortret træ og derefter
+lave et inordens gennemløb af dette.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Repræsentation af sorterede binære træer}
+
+Vi erindrer:
+
+\begin{verbatim}
+type 'a binTree =
+  Node of 'a * ('a binTree * 'a binTree) option
+\end{verbatim}
+
+Denne struktur tillader kun et ulige antal knuder, så for at kunne
+repræsentere lige antal værdier, bruger vi i stedet
+
+\begin{verbatim}
+type 'a sBinTree =
+  Leaf | Inner of 'a * 'a sBinTree * 'a sBinTree
+
+let inorder t =
+  let rec inO t acc =
+    match t with
+    | Leaf -> acc
+    | Inner (v, l, r) -> inO l (v :: inO r acc)
+  inO t []
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Indsætning i sorteret binært træ}
+
+Indsætning kan nu programmeres som
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec insert t v =
+  match t with
+  | Leaf -> Inner (v, Leaf, Leaf)
+  | Inner (w, l, r) ->
+      if v < w then Inner (w, insert l v, r)
+      else Inner (w, l, insert r v)
+\end{verbatim}
+
+\renewcommand{\baselinestretch}{1.0}
+
+Og sortering af en liste kan laves som
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let tSort l = inorder (List.fold insert Leaf l)
+\end{verbatim}
+
+Gennemsnitskøretiden er O($n\log n$), men værste tilfælde er O($n^2$).
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Søgetræer}
+
+Et \emph{søgetræ} er et sorteret træ,hvor elementerne er par, hvor
+hvert par består af en nøgle og en værdi.  Vi antager, at hver nøgle
+kun findes en gang.
+
+Et søgetræ kan f.eks.\ bruges til at repræsentere en telefonbog, hvor
+nøglerne er navne og værdierne er telefonnumre.
+
+Indsætning sker som allerede vist, men vi vil også gerne kunne finde
+en værdi ved at give en nøgle:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec tryFind t key =
+  match t with
+  | Leaf -> None
+  | Inner ((key', v), l, r) ->
+      if key = key' then Some v
+      else if key < key' then tryFind l key
+      else tryFind r key
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Balancerede træer}
+
+Indsætning og søgning i sorterede træer bruger tid proportional med
+træets \emph{dybde}.  Dybden af et træ er i bedste fald proportional
+med logaritmen af antallet af knuder og i værste fald proportional med
+antallet af knuder.
+
+Et træ siges at være \emph{balanceret} hvis der for enhver knude i
+træet gælder, at størrelsen af de to undertræer er \emph{næsten} ens.
+Eksempler:
+
+
+\begin{center}
+\setlength{\unitlength}{0.5mm}
+\begin{picture}(160,80)
+
+\put(30,73){\makebox(0,0){Ikke balanceret}}
+\put(30,60){\makebox(0,0){7}}
+\put(20,40){\makebox(0,0){3}}
+\put(40,40){\makebox(0,0){11}}
+\put(10,20){\makebox(0,0){0}}
+\put(30,20){\makebox(0,0){6}}
+\put(12,23){\line(1,2){6}}
+\put(22,43){\line(1,2){6}}
+\put(28,23){\line(-1,2){6}}
+\put(38,43){\line(-1,2){6}}
+
+\put(5,8.5){\line(1,2){3.6}}
+\put(25,8.5){\line(1,2){3.6}}
+\put(35,28.5){\line(1,2){3.6}}
+\put(15,8.5){\line(-1,2){3.6}}
+\put(35,8.5){\line(-1,2){3.6}}
+\put(45,28.5){\line(-1,2){3.6}}
+
+\put(130,73){\makebox(0,0){Balanceret}}
+\put(130,60){\makebox(0,0){6}}
+\put(120,40){\makebox(0,0){3}}
+\put(140,40){\makebox(0,0){7}}
+\put(110,20){\makebox(0,0){0}}
+\put(150,20){\makebox(0,0){11}}
+\put(112,23){\line(1,2){6}}
+\put(122,43){\line(1,2){6}}
+\put(148,23){\line(-1,2){6}}
+\put(138,43){\line(-1,2){6}}
+
+\put(105,8.5){\line(1,2){3.6}}
+\put(145,8.5){\line(1,2){3.6}}
+\put(135,28.5){\line(1,2){3.6}}
+\put(115,8.5){\line(-1,2){3.6}}
+\put(155,8.5){\line(-1,2){3.6}}
+\put(125,28.5){\line(-1,2){3.6}}
+\end{picture}
+\end{center}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Undersøgelse af balancering (naiv)}
+
+Vi undersøger om forskellen af størrelsen af undertræer er højest
+\texttt{maxDiff}:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec isBalanced maxDiff t =
+  let rec size t =
+     match t with
+     | Leaf -> 0
+     | Inner (v, l, r) ->
+         size l + size r + 1
+  match t with
+  | Leaf -> true
+  | Inner (_, l, r) ->
+      isBalanced l && isBalanced r
+      && abs (size l - size r) <= maxDiff
+\end{verbatim}
+
+Problem: Vi genberegner størrelsen af undertræer mange gange.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Undersøgelse af balancering (effektiv)}
+
+Ide: Lad \texttt{bSize} returnere \texttt{None}, hvis træet ikke er
+balanceret, og \texttt{Some $s$}, hvis træet er balanceret og af
+størrelse $s$.
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let isBalanced maxDiff t =
+  let rec bSize t =
+     match t with
+     | Leaf -> Some 0
+     | Inner (_, l, r) ->
+         match (bSize l, bSize r) with
+         | (Some sl, Some sr) ->
+              if abs (sl - sr) <= maxDiff
+              then Some (sl + sr + 1)
+              else None
+         | _ -> None
+  Option.isSome (bSize t)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Bunker}
+
+En \emph{bunke} (eng: \emph{heap}) er et træ, hvor værdien af en knude
+er mindre eller lig med end alle værdierne i børnene.  Vi kan
+nemt undersøge om et træ er en bunke:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let isHeap t =
+  let rec isH minVal t =
+    match t with
+    | Leaf -> true
+    | Inner (v, l, r) ->
+        minVal <= v && isH v l && isH v r
+  match t with
+  | Leaf -> true
+  | Inner (v, l, r) -> isH v l && isH v r
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Indsætning i bunke}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec insert v t =
+  match t with
+  | Leaf -> Inner (v, Leaf, Leaf)
+  | Inner (w, l, r) ->
+      Inner (min v w, insert (max v w) l, r)
+\end{verbatim}
+
+Problem: Træet bliver komplet ubalanceret, fordi vi aldrig indsætter i
+højre undertræ.
+
+En mulighed er at indsætte i et tilfældigt undertræ, hvilket med stor
+sandsynlighed giver et balanceret træ.
+
+En anden mulighed er at lade en knude indeholde information om,
+hvilket undertræ er størst.  Det er den mulighed, vi vælger.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Balancerede bunker}
+
+En indre knude indeholder forskellen i størrelsen mellem de to
+undertræer (højre minus venstre):
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+type 'a heap =
+  Leaf | Inner of ('a * int * 'a heap * 'a heap)
+
+let rec insert h v =
+  match h with
+  | Leaf -> Inner (v, 0, Leaf, Leaf)
+  | Inner (w, diff, l, r) ->
+      if diff > 0 then // left tree is smallest
+        Inner (min v w, diff - 1, insert l (max v w), r)
+      else
+        Inner (min v w, diff + 1, l, insert r (max v w))
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Udtræk af mindste værdi i balanceret bunke}
+
+Returnerer mindste værdi og reduceret bunke (ikke nødvendigvis balanceret):
+
+\renewcommand{\baselinestretch}{0.9}
+{\small
+\begin{verbatim}
+let rec getMin h =
+  match h with
+  | Leaf -> failwith "Empty heap"
+  | Inner (v, diff, Leaf, r) -> (v, r)
+  | Inner (v, diff, l, Leaf) -> (v, l)
+  | Inner (v, diff, (Inner (w1, _, _, _) as l),
+                    (Inner (w2, _, _, _) as r)) ->
+      if w1 < w2 then
+        let (w1, l') = getMin l
+        (v, Inner (w1, diff + 1, l', r))
+      else
+        let (w2, r') = getMin r
+        (v, Inner (w2, diff - 1, l, r'))
+\end{verbatim}
+}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Bunkesortering}
+
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let heapSort l =
+  let rec getAll h =
+    match h with
+    | Leaf -> []
+    | _ -> let (v, h') = getMin h
+           v :: getAll h'
+  getAll (List.fold insert Leaf l)
+\end{verbatim}
+
+Maksimal tid er O($n \log n$).
+
+\end{frame}
+
+\end{document}

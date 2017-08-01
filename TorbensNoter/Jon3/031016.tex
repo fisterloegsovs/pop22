@@ -1,0 +1,458 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Partielle funktioner og funktionsværdier}
+
+\date[2016]{PoP 03102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}
+\frametitle{Partielle funktioner}
+
+Når man har en funktion af f.eks.\ typen \texttt{int -> int}, så er
+det ikke givet, at den er veldefineret for alle værdier af typen
+\texttt{int}.  For eksempel kan funktionen være udefineret på negative
+tal.  En funktion, der ikke er defineret på alle værdier indeholdt i
+argumenttypen kaldes en \emph{partiel funktion}.  Modsat er en
+\emph{total funktion} defineret på hele argumenttypen.
+
+Vi har set flere eksempler på partielle funktioner: \texttt{fib} og
+\texttt{fac} er ikke defineret for negative argumenter, og
+\texttt{largest} er ikke defineret for den tomme liste.
+
+Når en partiel funktion anvendes på argumenter udenfor dens
+definitionsmængde, kan der ske forskellige ting:
+
+\begin{itemize}
+\item \texttt{fsharpi} eller \texttt{mono} kan komme med en
+  køretidsfejl, som kan være mere eller mindre kryptisk.
+\item Funktionen bliver aldrig færdig.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Fejlmeddelelser med \texttt{failwith}}
+
+En funktion, der ikke er defineret på alle tænkelige inputs, bør give
+en forklarende fejlmeddelelse for de input, hvor den ikke er
+defineret. Dette kan gøres med standardfunktionen \texttt{failwith},
+f.eks.
+
+\begin{verbatim}
+let rec fac n =
+  match n with
+  | n when n<0 -> failwith "fac is not defined for n<0"
+  | 0 -> 1
+  | n -> n * fac (n - 1)
+\end{verbatim}
+
+Når man efterfølgende kalder \texttt{fac} med et negativt input,
+får man meddelelsen
+
+\begin{verbatim}
+System.Exception: fac is not defined for n<0
+\end{verbatim}
+
+Efterfulgt af en masse systeminformation.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Håndtering af exceptions}
+
+Selv om \texttt{failwith} og lignende primært bruges til
+fejlmeddelelser, er det godt at kunne afprøve tilfælde, hvor der skal
+komme fejlmeddelelser, uden at testprogrammet stopper.  Det kan man
+gøre med en \texttt{try-with} blok, som kan håndtere exceptions.  Vi
+bruger indtil videre kun denne form:
+
+\begin{verbatim}
+try
+  let _ = fac -7
+  false
+with
+| Failure s -> s = "fac is not defined for n<0"
+\end{verbatim}
+
+Denne vil køre \texttt{fac} på \texttt{-7}, og hvis dette kald returnerer
+en værdi, ignoreres denne, og \texttt{false} returneres, da vores
+forventning er, at \texttt{fac -7} ikke skal returnere nogen værdi.
+
+Hvis \texttt{fac -7} (som forventet) i stedet kalder
+\texttt{failwith}, bliver dette fanget af mønstret
+``\texttt{|~Failure~s}'', og så checker vi om vi får den forventede besked
+ved at sammenligne \texttt{s} med denne.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Option typen}
+
+En anden måde at håndtere partielle funktioner på er at gøre dem
+totale.
+Ikke ved at lade en partiel funktion $f~:~ 'a \texttt{ -> } 'b$
+returnere en vilkårlig værdi af type $'b$, når den er udefineret, men
+ved at lave den om til en funktion $f'~:~ 'a \texttt{ -> }
+'b\ \texttt{option}$, som opfører sig på følgende måde:
+
+\begin{itemize}
+\item Hvis $f~x \leadsto v$, skal $f'~x \leadsto \texttt{Some }v$.
+\item  Hvis $f~x$ ikke er defineret, skal $f'~x \leadsto \texttt{None}$.
+\end{itemize}
+
+Vi kan f.eks. definere
+
+\begin{verbatim}
+let fac' n =
+  let rec fac n =
+    match n with
+    | 0 -> 1
+    | n -> n * fac (n - 1)
+  if n<0 then None else Some (fac n)
+\end{verbatim}
+
+Så \texttt{fac' 7 $\leadsto$ Some 5040}, og \texttt{fac' -7 $\leadsto$ None}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Funktioner som værdier}
+
+Funktioner er værdier, der kan bruges på samme måde som tal, strings,
+lister, osv, med nogle få undtagelser:
+
+\begin{enumerate}[~1.]
+\item Man kan ikke sammenligne funktioner med \texttt{=} eller
+  \texttt{<}.
+\item Man kan ikke printe en funktion og se dens indhold.
+\end{enumerate}
+
+Hvis vi f.eks. skriver
+
+\begin{verbatim}
+[fib; fib; fac]
+\end{verbatim}
+
+skriver F\# noget i stil med
+
+{\footnotesize
+\begin{verbatim}
+val it : (int -> int) list = [<fun:it@3>; <fun:it@3-1>; <fun:it@3-2>]
+\end{verbatim}
+}
+
+Bemærk, at \texttt{fib} udskrives forskelligt de to gange.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Currying}
+
+Man kan definere en funktion af to argumenter, f.eks,
+
+
+\begin{verbatim}
+let plus x y = x + y
+\end{verbatim}
+
+som har typen \texttt{int -> int -> int}.
+
+\texttt{plus} kan blive anvendt på bare et argument, hvilket giver en
+ny funktion af et argument, f.eks.\ \texttt{(plus 5) : int -> int}.
+Denne kan bruges flere gange, f.eks.
+
+
+\begin{verbatim}
+let plus5 = plus 5
+(plus5 3) * (plus5 7)
+\end{verbatim}
+
+som giver 96.
+
+Denne måde at lave funktioner af to eller flere parametre kaldes
+\emph{Currying} efter logikeren Haskell B.\ Curry.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Infix operatorer}
+
+En infix operator kan bruges som en funktion, hvis man sætter parentes
+omkring, f.eks.\ \texttt{(+) : int -> int -> int}.  Så vi kan skrive
+
+
+\begin{verbatim}
+let plus5 = (+) 5
+(plus5 3) * (plus5 7)
+\end{verbatim}
+
+som stadig giver 96.
+
+\vspace{1ex}
+
+En undtagelse er \texttt{::}, som \emph{ikke} kan bruges som
+funktion.  Her må man f.eks.\ definere
+
+
+\begin{verbatim}
+let cons x xs = x :: xs
+\end{verbatim}
+
+for at få en funktionsudgave af \texttt{::}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Anonyme funktioner}
+
+Når vi skriver
+
+\begin{verbatim}
+let plus x y = x + y
+\end{verbatim}
+
+er det en forkortelse for
+
+\begin{verbatim}
+let plus = fun x y -> x + y
+\end{verbatim}
+
+Vi behøver ikke at give funktionen navn, men kan f.eks. skrive
+
+\begin{verbatim}
+(fun x y -> x + y) 5 7
+\end{verbatim}
+
+som giver 12.
+
+\vspace{1ex}
+
+Man kan også skrive anonyme funktioner med pattern matching ved at
+bruge nøgleordet \texttt{function} i stedet for \texttt{fun}.  Se
+noter og lærebog.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Biblioteket \texttt{List}}
+
+Udover simple funktioner såsom \texttt{List.length} og
+\texttt{List.isEmpty}, definerer listebiblioteket en række funktioner,
+der bruger funktioner som argumenter.  Disse kan ofte bruges i stedet
+for løkker eller rekursion.
+
+Vi kan f.eks. skrive
+
+{\small
+\begin{verbatim}
+let listSum = List.fold (+) 0
+
+let fac n = List.foldBack (*) [2..n] 1
+
+let sameLength xs =
+  match xs with
+  | [] -> true
+  | x :: xs ->
+     List.forall (fun y -> List.length y = List.length x) xs
+\end{verbatim}
+}
+
+til at definere \texttt{listSum}, \texttt{fac}, og \texttt{sameLength}
+uden rekursion.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\texttt{List.filter}}
+
+\texttt{List.filter : ('a -> bool) -> 'a list -> 'a list}
+
+tager et prædikat og filtrerer de elementer i en liste fra, der ikke
+opfylder prædikatet.  For eksempel:
+
+\texttt{List.filter even [1..10] $\leadsto$ [2; 4; 6; 8; 10]}.
+
+Vi kan bruge det til at lave en sorteringsfunktion:
+
+\begin{verbatim}
+let rec qsort xs =
+  match xs with
+  | [] -> []
+  | x :: xs ->
+      qsort (List.filter ((>) x) xs)
+      @ [x] @
+      qsort (List.filter ((<=) x) xs)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\texttt{List.foldBack}}
+
+
+\texttt{List.foldBack : ('a -> 'b -> 'b) -> 'a list -> 'b -> 'b)}
+
+tager en funktion og anvender den ``mellem'' alle elementer, hvor den
+tomme liste gives en værdi $b$.  Det ses
+nemmest med infix operatorer:
+
+\vspace{1ex}
+\texttt{
+\begin{tabular}{rl}
+List.foldBack ($\bullet$) & ($a_1$ :: ($a_2$ :: ($\ldots$ []))) ~$b$\\
+$\leadsto$ &  ($a_1$ \,\,$\bullet$\, ($a_2$ \,\,$\bullet$\, ($\ldots$\, $b$)))
+\end{tabular}
+}
+
+\vspace{1ex}
+
+Eksempel:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{rl}
+& List.foldBack (*) [1; 2; 3; 4] 1 \\
+$=$ &  List.foldBack (*) (1 :: 2 :: 3 :: 4 :: []) 1 \\
+$\leadsto$ &  1 * 2 * 3 * 4 * 1 \\
+$\leadsto$ & 24
+\end{tabular}
+}
+
+\vspace{2ex}
+
+Derfor:
+
+\begin{verbatim}
+let fac n = List.foldBack (*) [2..n] 1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\texttt{List.fold}}
+
+
+\texttt{List.fold : ('b -> 'a -> 'b) -> 'b -> 'a list-> 'b)}
+
+Minder om \texttt{List.foldBack}, men sætter parenteserne og
+startelementet fra venstre:
+
+Eksempel:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{rl}
+& List.fold (*) 1 [2; 3; 4; 5] \\
+$\leadsto$ &  (((1 * 2) * 3) * 4) * 5 \\
+$\leadsto$ & 120
+\end{tabular}
+}
+
+\vspace{2ex}
+
+Derfor kan vi også:
+
+\begin{verbatim}
+let fac n = List.fold (*) 1 [2..n]
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{\texttt{List.fold} versus \texttt{List.foldBack}}
+
+Følgende gælder:
+\vspace{1ex}
+\begin{tabular}{rcl}
+\texttt{List.fold (*) 1 $xs$} &$=$& \texttt{List.foldBack (*) $xs$ 1}\\
+\texttt{List.fold (+) 0 $xs$}  &$=$& \texttt{List.foldBack (+) $xs$ 0}\\
+\texttt{List.fold (-) 0 $xs$}  &$\neq$& \texttt{List.foldBack (-) $xs$ 0}
+\end{tabular}
+
+\vspace{2ex}
+
+\texttt{List.fold ($\bullet$) $b$ $l$ $=$ List.foldBack ($\bullet$)
+  $l$ $b$} gælder \emph{kun} hvis $\bullet$ er associativ
+(dvs.\ $(x\bullet (y \bullet z) = (x\bullet y) \bullet z$) \emph{og}
+enten
+
+\begin{enumerate}[~1.]
+\item $\bullet$ er kommutativ (dvs.\ $x\bullet y = y\bullet x$), eller
+\item $\bullet$ $b$ er et neutralt element for $\bullet$ (dvs. $x
+  \bullet b = x = b \bullet x$).
+\end{enumerate}
+
+Det gælder f.eks. for \texttt{+}, \texttt{*}, \texttt{max}, og
+\texttt{@}, men ikke for \texttt{-} (er ikke associativ), og kun for
+\texttt{>>} (funktionskomposition), hvis $b$ er identitetsfunktionen
+\texttt{fun x -> x} (som er neutralt element for \texttt{>>}), da
+funktionskomposition ikke er kommutativ.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel på brug af \texttt{List.fold}}
+
+
+\begin{verbatim}
+let reverse xs = List.fold (fun ys x -> x :: ys) [] xs
+\end{verbatim}
+
+Eksempel:
+
+Vi forkorter \texttt{(fun ys x -> x :: ys)} til $\Theta$, og får:
+
+\vspace{1ex}
+\texttt{
+\begin{tabular}{ll}
+& reverse [1; 2; 3] \\
+$\leadsto$ & List.fold $\Theta$ [] [1; 2; 3]\\
+$\leadsto$ & (($\Theta$ [] 1) $\Theta$ 2) $\Theta$ 3\\
+$\leadsto$ & ($\Theta$ (1 :: []) 2) $\Theta$ 3\\
+$\leadsto$ & $\Theta$ (2 :: (1 :: [])) 3\\
+$\leadsto$ & 3 :: (2 :: (1 :: [])) \\
+$\leadsto$ & [3; 2; 1]
+\end{tabular}
+}
+
+%\pause
+\vspace{3ex}
+Bemærk: $\Theta$ er ikke associativ, så vi kan ikke bruge \texttt{foldBack}.
+\end{frame}
+
+\end{document}

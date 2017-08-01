@@ -1,0 +1,686 @@
+\documentclass[a4paper]{article}
+
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Functions as Values and Collections (rev.\ 1.2)}
+
+\author{Torben Mogensen}
+\date{\today}
+
+\maketitle
+
+\noindent
+These notes are supplementary to chapters 2 and 5 in Hansen \&
+Rischel.
+
+\section{Functional Values and Types}
+
+In F\#, a function is a value that can be used in the same way as
+numbers, strings, booleans and so on: You can pass functions as
+arguments to other functions, return functions as results, build lists
+of functions, and so on.  Just about the only things you can not do
+with a function that you can do with numbers, strings, and other
+values are:
+
+\begin{itemize}
+\item You can not compare functions.  If you define a function
+  \texttt{f} and afterwards write \texttt{f=f}, you get an error
+  saying that equality is not defined on function types.  Similarly
+  for inequality (\texttt{<}, \texttt{>}, and so on).
+\item You can not print a function to see its definition.  If you
+  write \texttt{printfn "\%A" f}, where \texttt{f} is a function, F\#
+  will write something like \texttt{<fun:it@2>}, and it will even be
+  different strings if you print the function several times.  For
+  example, \texttt{printfn "\%A \%A" f f} can print
+  \texttt{<fun:it@8-6> <fun:it@8-7>} or something similar.
+\end{itemize}
+
+\noindent
+To illustrate functions as values, let us define
+
+\begin{verbatim}
+let f x = x + 1
+let g y = y * 2
+let h z = z * z + 2 * z + 3
+let fl = [f; g; h]
+\end{verbatim}
+
+\noindent
+\texttt{fsharpi} will show the types of these definitions:
+
+\begin{verbatim}
+val f : x:int -> int
+val g : y:int -> int
+val h : z:int -> int
+val fl : (int -> int) list = [<fun:fl@5>; <fun:fl@5-1>; <fun:fl@5-2>]
+\end{verbatim}
+
+\noindent
+and for \texttt{fl} it will even print its value, though all you can
+see of the value is that it is a list of three functions.  You can't
+even see that if they are the same function three times or three
+different functions.
+
+The types \texttt{x:int -> int}, \texttt{y:int -> int}, \texttt{z:int
+  -> int}, and \texttt{int -> int} are the same.  The name of the
+parameter shown in the types for \texttt{f}, \texttt{g}, and
+\texttt{h} is not actually a part of the type, which is just
+\texttt{int -> int}, as shown in the list type.
+
+We can pick an element from the list and apply it, for example,
+\texttt{fl.[2]~5}, which will return the value 38.
+
+When you define a function of two arguments, for example,
+
+\begin{verbatim}
+let plus x y = x + y
+\end{verbatim}
+
+\noindent
+it has a type with two arrows, in this case \texttt{int -> int -> int}
+(with some naming or arguments that we ignore).  This type is
+equivalent to \texttt{int -> (int -> int)}, which says that when you
+give \texttt{plus} one integer argument, it will return a function of
+type \texttt{int -> int}.  This can later be applied (once or several
+times) to another integer argument to give an integer result, for
+example,
+
+\begin{verbatim}
+let plus5 = plus 5
+(plus5 3) * (plus5 7)
+\end{verbatim}
+
+\noindent
+which will give the value 96.
+
+A function can also accept functions as arguments, so we can define
+
+\begin{verbatim}
+let applyTwice f x = f (f x)
+\end{verbatim}
+
+\noindent
+which defines a function \texttt{applyTwice} that takes a function
+\texttt{f} and applies it twice to an argument \texttt{x}.  For
+example, \texttt{applyTwice plus5 3} will return 13.
+
+\section{Anonymous Functions}
+
+When you make a definition
+
+\begin{verbatim}
+let plus x y = x + y
+\end{verbatim}
+
+\noindent
+it is actually an abbreviation for
+
+
+\begin{verbatim}
+let plus = fun x y -> x + y
+\end{verbatim}
+
+\noindent
+which you can read as ``let \texttt{plus} be a function that takes two
+arguments, \texttt{x} and  \texttt{y}, and returns \texttt{x+y}''.
+This also works with recursive functions, so
+
+
+\begin{verbatim}
+let rec gcd a b = if b = 0 then a else gcd b (a % b)
+\end{verbatim}
+
+\noindent
+is an abbreviation for
+
+\begin{verbatim}
+let rec gcd = fun a b -> if b = 0 then a else gcd b (a % b)
+\end{verbatim}
+
+\noindent
+You do not need to give names to functions defined using \texttt{fun},
+so you can, for example, write
+
+
+\begin{verbatim}
+[(fun x -> x + 1); (fun y -> y * y); (fun z -> 2 * z + 3)]
+\end{verbatim}
+
+\noindent
+to define a list of three functions.  Note that the parentheses are
+needed to avoid F\#{} treating the semicolons as part of the function
+instead of separating these.  This is because seimicolon has higher
+operator precedence than \texttt{->}.  If in doubt, always enclose
+anonymous function definitions in parentheses.
+
+Anonymous function definitions are useful if you want to pass a small
+function as argument to another function.  For example, with
+\texttt{applyTwice} as defined above, we can make the call
+\texttt{applyTwice~(fun~x~->~x*x)~7} to get 2401.
+
+You can also make anonymous pattern-matching functions.  When
+you write a definition like
+
+
+\begin{verbatim}
+let isEmpty = function
+  | [] -> true
+  | n :: ns -> false
+\end{verbatim}
+
+\noindent
+this first defines an anonymous function (using the keyword
+\texttt{function} followed by a list of rules) and then binds the name
+\texttt{isEmpty} to that function.  Note that a function defined with
+\texttt{function} can use pattern matching with multiple rules, but it
+can take only one argument.  In contrast, a function defined with
+\texttt{fun} can take multiple arguments, but only use one rule.
+
+An infix operator written in parentheses is a function of two
+arguments.  For example: \texttt{(+) : int -> int -> int}, so you can
+make a function like \texttt{plus5} above by simply writing
+\texttt{((+) 5)}, which has type \texttt{int -> int}.  Note that
+\texttt{..} can not be made into a function this way.  You have to
+write \texttt{(fun x y -> x :: y)} or similar.
+
+\section{Selected Functions from the \texttt{List} Library}
+
+In addition to simple functions such as
+
+\vspace{1ex}
+
+\begin{tabular}{l}
+\texttt{List.length : 'a list -> int} \\
+\texttt{List.head : 'a list -> 'a} \\
+\texttt{List.isEmpty : 'a list -> bool}
+\end{tabular}
+
+\vspace{1ex}
+
+\noindent
+the \texttt{List} library also defines a number
+of useful functions that take functional arguments in addition to list
+arguments.  By using these library functions, you can avoid having to
+define recursive functions that use pattern matching.  Here are some
+examples:
+
+\begin{itemize}
+\item \texttt{List.map : ('a -> 'b) -> 'a list -> 'b list}
+
+takes a function $f$ and a list $xs$ and constructs a new list by
+applying $f$ to all elements of $xs$.  For example,
+
+\begin{verbatim}
+List.map (fun x -> x*x) [1..5]
+\end{verbatim}
+
+\noindent
+will produce the result \texttt{[1; 4; 9; 16; 25]}.
+
+\item \texttt{List.map2 : ('a -> 'b -> 'c) -> 'a list -> 'b list- > 'c list}
+
+takes a function $f$ and two lists $xs$ and $ys$ and constructs a new
+list by applying $f$ to all pairs constructed by taking corresponding
+elements of $xs$ and $ys$.  For example,
+
+\begin{verbatim}
+List.map2 (fun x y -> x * x + y) [1..5] [3..7]
+\end{verbatim}
+
+\noindent
+will produce the result \texttt{[1*1+3; 2*2+4; 3*3+5; 4*4+6; 5*5+7]}
+$\leadsto$ \texttt{[4; 8; 14; 24; 32]}.
+
+If the two lists are not of the same length, an error message will be
+given.
+
+
+\item \texttt{List.exists : ('a -> bool) -> 'a list -> bool}
+
+takes a predicate $p$ and a list $xs$ and checks if there is an
+element in $xs$ for which $p$ returns \texttt{true}.  For example, if
+you want to know if the value 7 is found in a list \texttt{xs}, you
+can write 
+
+\begin{verbatim}
+List.exists (fun x -> x = 7) xs
+\end{verbatim}
+
+
+\item \texttt{List.forall : ('a -> bool) -> 'a list -> bool}
+
+is similar to \texttt{List.exists}, but returns \texttt{true} only if
+the predicate returns \texttt{true} for \emph{all} elements of the
+list.
+
+For example,
+
+
+\begin{verbatim}
+List.forall (fun x -> x = 7) xs
+\end{verbatim}
+
+returns \texttt{true} if all elements in \texttt{xs} are equal to 7.
+If \texttt{xs} is empty, this is trivially true.
+
+\item \texttt{List.find : ('a -> bool) -> 'a list -> 'a}
+
+takes a predicate $p$ and a list $xs$ and returns the first
+element in $xs$ for which $p$ returns \texttt{true}. If there are
+none, an error is reported.
+
+For example,
+
+\begin{verbatim}
+List.find (fun (x, y) -> y = "Emil")
+          [(1, "Joachim"); (2, "Sune"); (3, "Emil"); (4, "Matthias")]
+\end{verbatim}
+
+will return \texttt{(3, "Emil")]}.
+
+\item \texttt{List.tryFind : ('a -> bool) -> 'a list -> 'a option}
+
+takes a predicate $p$ and a list $xs$ and, if there is an element in
+$xs$ for wh which $p$ returns \texttt{true} returns \texttt{Some $x$},
+where $x$ is the first element in $xs$ for which $p$ returns
+\texttt{true}. If there are no such elements, it returns
+\texttt{None}.  Option-typen er beskrevet i Hansen \& Rischel afsnit
+3.11.
+
+For example,
+
+\begin{verbatim}
+List.tryFind (fun (x, y) -> y = "Emil")
+          [(1, "Joachim"); (2, "Sune"); (3, "Emil"); (4, "Matthias")]
+\end{verbatim}
+
+will return \texttt{Some (3, "Emil")]}, and 
+
+\begin{verbatim}
+List.tryFind (fun (x, y) -> y = "Hans")
+          [(1, "Joachim"); (2, "Sune"); (3, "Emil"); (4, "Matthias")]
+\end{verbatim}
+
+will return \texttt{None}.
+
+\item \texttt{List.filter : ('a -> bool) -> 'a list -> 'a list}
+
+takes a predicate $p$ and a list $xs$ and returns all
+elements in $xs$ for which $p$ returns \texttt{true}.
+
+For example,
+
+\begin{verbatim}
+List.filter (fun (x, y) -> y < "Klaus")
+          [(1, "Joachim"); (2, "Sune"); (3, "Emil"); (4, "Matthias")]
+\end{verbatim}
+
+will return \texttt{[(1, "Joachim"); (3, "Emil")]}.
+
+
+\item \texttt{List.init : int -> (int -> 'a) -> 'a list}
+
+is used to construct new lists.  The call \texttt{List.init\,$n$\,$f$}
+will construct the list \texttt{[$f\,0$; $f\,1$;$\ldots$;$f\,(n{-}1)$]}.
+
+Generally, \texttt{(List.init\,$n$\,$f$).[$i$]} will be $f\,i$ for
+$0\leq i < n$.
+
+For example,
+
+\begin{verbatim}
+List.Init 5 (fun x -> x * x)
+\end{verbatim}
+
+will return \texttt{[0; 1; 4; 9; 16]}.
+
+\item \texttt{List.foldBack : ('a -> 'b -> 'b) -> 'a list -> 'b -> 'b}
+
+A call \texttt{List.foldBack $f$ [$a_1$;\ldots; $a_n$] $b$} does the
+following:
+
+\begin{enumerate}[1.]
+\item Views the list \texttt{[$a_1$; $a_2$;\ldots; $a_n$]} as the
+  equivalent
+
+
+  \texttt{$a_1$\,::\,($a_2$\,::\,\,\ldots  ($a_n$\,::\,\,[])  \ldots)}.
+
+\item Replaces \texttt{$a_i$\,::} with $f~a_i$ and \texttt{[]} with
+  $b$, yielding
+
+\texttt{$f~a_1$ ($f~a_2$ \ldots  ($f~a_n~b$)  \ldots)}.
+
+
+\item Calculates the result.
+
+\end{enumerate}
+
+For example,
+
+\begin{verbatim}
+let f x y = x * y
+List.foldBack f [2; 3; 4] 1
+\end{verbatim}
+
+first sees \texttt{[2; 3; 4]} as
+
+\texttt{2\,::\,(3\,::\,(4\,::\,[]))},
+
+then rewrites this to 
+
+\texttt{f 2 (f 3 (f 4 1))},
+
+which is evaluates to \texttt{2 * 3 * 4 * 1} $\leadsto$ 24.
+
+It is easier to understand the behavior if $f$ is an infix operator.
+For example, 
+
+
+\begin{verbatim}
+List.foldBack (*) [2; 3; 4] 1
+\end{verbatim}
+
+sees the list as
+
+\texttt{2\,::\,(3\,::\,(4\,::\,[]))},
+
+then replaces \texttt{::} by \texttt{*} and \texttt{[]} by \texttt{1},
+giving
+
+\texttt{2 * (3 * (4 * 1))},
+
+which evaluates to 24, as above.
+
+So we can define the factorial function and the length function as
+
+\begin{verbatim}
+let fac n = List.foldBack (*) [2..n] 1
+let length xs = List.foldBack (fun x y -> y + 1) xs 0
+\end{verbatim}
+
+The factorial function multiplies the elements in the list
+\texttt{[2..n]}, using \texttt{1} as a starting point.  The length
+function adds 1 for every element in the list, ignoring the actual
+elements (by not using \texttt{x}).
+
+We can define \texttt{foldBack} as a recursive function:
+
+
+\begin{verbatim}
+let rec foldback f xs b =
+  match xs with
+  | [] -> b
+  | x :: xs -> f x (foldBack f xs b)
+\end{verbatim}
+
+It is easy to see that this precisely replaces \texttt{[]} by
+\texttt{b} and every \texttt{x ::} by \texttt{f x}.
+
+
+\item \texttt{List.fold : ('b -> 'a -> 'b) -> 'b -> 'a list -> 'b}
+
+This function is similar to \texttt{List.foldBack}, but groups the
+elements differently:
+
+\texttt{List.fold $f$ $b$ [$a_1$; $a_2$;\ldots; $a_n$]} reduces to
+$(f\ldots(f\,(f\,b~a_1)\,a_2)\ldots a_n)$.
+
+If $f$ is an infix operator, this is easier to see.  For example,
+\texttt{List.fold (+) 0 [1; 2; 3]} reduces to \texttt{(((0 + 1) + 2) +
+  3)} $\leadsto$ 6.
+
+We can define \texttt{fold} recursively using an accumulating
+parameter \texttt{b}:
+
+\begin{verbatim}
+let rec fold f b xs =
+  match xs with
+  | [] -> b
+  | x :: xs -> fold f (f b x) xs
+\end{verbatim}
+
+Note that, if $f$ is an associative and commutative infix operator
+(like \texttt{+} or \texttt{*}), \texttt{List.fold $f$ $b$ $xs$} =
+\texttt{List.foldBack $f$ $xs$ $b$}.  For example, \texttt{(((0 + 1) +
+  2) + 3)} = \texttt{1 + (2 + (3 + 0))}.  So we can also define the
+factorial function function by
+
+\begin{verbatim}
+let fac n = List.fold (*) 1 [2..n]
+\end{verbatim}
+
+\end{itemize}
+
+\section{Arrays}
+
+Arrays are similar to lists: Sequences of elements of the same type,
+where the length of the sequence is unspecified by the type.  An array
+with elements of type $a$ is written as \texttt{$a$ []}, for example
+\texttt{int []} for an array of integers.
+
+Some similarities between lists and arrays can be seen in the table
+below:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{l@{\quad}l}
+\textrm{List expressions} & \textrm{Array expressions} \\\hline
+{}[1; 2; 3] : int list & [|1; 2; 3|] : int []\\
+{}[] : 'a list & [||] : 'a []\\
+List.head [1; 2; 3] $\leadsto$ 1 & Array.head [|1; 2; 3|] $\leadsto$ 1\\
+List.tail [1; 2; 3] $\leadsto$ [2; 3] & Array.tail [|1; 2; 3|] $\leadsto$ [|2; 3|]\\
+{}[1; 2; 3].[2] $\leadsto$ 3 & [|1; 2; 3|].[2] $\leadsto$ 3\\
+{}[1; 2; 3].[1..2] $\leadsto$ [2; 3] & [|1; 2; 3|].[1..2] $\leadsto$ [|2; 3|]\\
+List.length [1; 2; 3] $\leadsto$ 3& Array.length [|1; 2; 3|] $\leadsto$ 3\\
+List.map f [1; 2] $\leadsto$  [f 1; f 2] &
+ Array.map f [|1; 2|] $\leadsto$ [|f 1; f 2|]\\
+List.filter odd [1; 2; 3] $\leadsto$  [1; 3] &
+ Array.filter odd [|1; 2; 3|] $\leadsto$ [|1; 3|]\\
+{}[1; 2] @ [3] $\leadsto$ [1; 2; 3] &
+ Array.append [|1; 2|] [|3|] $\leadsto$ [|1; 2; 3|]\\
+\\
+\textrm{List patterns} & \textrm{Array patterns} \\\hline
+{}[x; y; z] & [|x; y; z|]\\
+{}[]  & [||]\\
+\end{tabular}}
+
+\vspace{1ex}
+
+\noindent
+Generally, almost all the library functions from the \texttt{List}
+library (\texttt{init}, \texttt{exists}, \texttt{find},
+\texttt{foldBack}, \ldots) are also found in the \texttt{Array}
+library with equivalent behaviour.  The main differences between lists
+and arrays are:
+
+\begin{itemize}
+\item The \texttt{::} operator and pattern is not defined for arrays.
+\item Array elements are \emph{mutable}, so you can write, for example
+
+\begin{verbatim}
+let aa = [|1..5|]
+aa.[2] <- 17
+printfn "%A" aa
+\end{verbatim}
+
+\noindent
+which will print \texttt{[|1; 2; 17; 4; 5|]}.
+
+\item Indexing into an array $a$ to get an element using $a.[i]$ is faster
+  than indexing into a list $l$ using $l.[i]$, unless $i<2$.
+
+\item Appending two arrays has a cost proportional to their combined
+  size, where appending two arrays has a cost proportional only to the
+  first argument to \texttt{@}.
+
+\item Using \texttt{::} to add an element to a list or split a list
+  into head and tail, or using \texttt{List.head} and
+  \texttt{List.tail} to split a list is \emph{very} cheap compared to
+  using \texttt{Array.append} to add an element to a list and
+  \texttt{Array.head} and \texttt{Array.tail} to split an array into
+  head and tail.
+
+\item There is a function \texttt{Array.create : int -> 'a -> 'a []}
+  such that \texttt{Array.create $n$ $v$} creates an array of $n$
+  elements all equal to $v$.
+
+\end{itemize}
+
+\noindent
+You can say that lists are optimised for recursive functions using
+\texttt{[]} and \texttt{::} patterns or \texttt{List.head} and
+\texttt{List.tail}, while arrays are optimized for indexing using
+\texttt{$a$.[$i$]}.  Library functions like \texttt{map},
+\texttt{filter}, \texttt{fold} and \texttt{init} have roughly similar
+cost for arrays and lists.
+
+It is perfectly possible (and quite efficient) to work with arrays
+without using assignment (the \texttt{<-} operator) by using
+\texttt{Array.init}, \texttt{Array.fold}, and so on, but it is also
+quite common to use loops and assignment when programming with arrays.
+For example, we can make a function that prints all primes up to a
+number $n$ this way, using the Sieve of Erastothenes
+(\url{https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes}):
+
+\vspace{1ex}
+\texttt{
+  \begin{tabular}{ll}
+\footnotesize{0:} &let primesUpto n =\\
+\footnotesize{1:} &~~let prime = Array.create (n+1) true\\
+\footnotesize{2:} &~~for p in 2 .. int (sqrt (float n)) do\\
+\footnotesize{3:} &~~~~if prime.[p] then\\
+\footnotesize{4:} &~~~~~~for i in (p*p) .. p .. n do\\
+\footnotesize{5:} &~~~~~~~~prime.[i] <- false\\
+\footnotesize{6:} &~~for i in 2 .. n do\\
+\footnotesize{7:} &~~~~if prime.[i] then printf " \%d" i\\
+  \end{tabular}
+}
+
+\noindent
+\begin{description}
+\item[Line 1] sets up an array with indices from 0 to $n$.  We will
+  not use indices 0 or 1.  The array is initialised to the value
+  \texttt{true} for all indices, indicating that, so far, we assume
+  all numbers greater than 1 to be prime.
+\item[Line 2] We loop for potential primes $p$ from 2 up to the square
+  root of $n$.  We can stop there, because, by then, we have eliminated
+  all prime factors up to $\sqrt{n}$, so the smallest possible
+  non-prime we have not eliminated must be $(\sqrt{n}+1)^2$, which is
+  greater than $n$.
+\item[Line 3--5] If we have not already eliminated $p$, it is a prime.
+  If so, we eliminate (by setting the array element to \texttt{false})
+  all multiplas of $p$ up to $n$.  We can start from $p^2$ because we
+  have already eliminated factors smaller than $p$.
+\item[Line 6--7] We print all numbers that are not eliminated.  These
+  are known to be primes.
+\end{description}
+
+\section{Two-dimensional Arrays}
+
+Two-dimensional arrays are just that: Rows and columns of elements.
+The type \texttt{$a$ [,]} denotes a two-dimensional array with
+elements of type $a$.  The corresponding library is called
+\texttt{Array2D} and has equivalents to many of the functions found in
+the \texttt{Array} library, but slightly different since we work in
+two dimensions.
+
+For example, \texttt{Array2D.init 3 5 (fun x y -> 10*x+y)} creates the
+two-dimensional array
+
+\begin{verbatim}
+[[0; 1; 2; 3; 4]
+ [10; 11; 12; 13; 14]
+ [20; 21; 22; 23; 24]]
+\end{verbatim}
+
+\noindent
+Note that the notation looks like a list of lists, and typing in the
+above in \texttt{fsharpi} will, indeed, produce something of type
+\texttt{int~list~list}.  There is no notation for entering a constant
+two-dimensional array, but you can use the function \texttt{array2D}
+to convert a list of lists into a two-dimensional array.
+
+Writing
+
+\begin{verbatim}
+[|[|0; 1; 2; 3; 4|]
+  [|10; 11; 12; 13; 14|]
+  [|20; 21; 22; 23; 24|]|]
+\end{verbatim}
+
+\noindent
+produces an array of arrays, i.e., something of type
+\texttt{int~[]~[]}.
+
+The differences between a two-dimensional array and an array of arrays
+are subtle:
+
+\begin{itemize}
+\item When indexing into a two-dimensional array $a2$, you use the notation
+  \texttt{$a2$.[$i$,$j$]}, where you use \texttt{$aa$.[$i$][$j$]} to
+  index into an array of arrays $aa$.
+\item 
+\item In a two-dimensional array, all the rows have the same length,
+  where an array of arrays can have rows of different length.
+\end{itemize}
+
+\noindent
+The following functions from \texttt{Array2D} are of interest:
+
+\begin{itemize}
+
+\item \texttt{array2D -> int list list -> -> 'a [,]} converts a list
+  of lists to a two-dimensional array, provided the inner lists are of
+  equal length.  The type is actually a bit more general, but it works
+  at this type.
+
+\item \texttt{Array2D.init : int -> int -> (int -> int -> 'a) -> 'a  [,]}
+
+We have already seen this in the example above.  The call
+\texttt{Array2D.init $i$ $j$ $f$} creates a two-dimensional array with
+$i$ rows and $j$ columns where the element at position $(i,j)$ i
+sgiven by $f(i,j)$.
+
+\item \texttt{Array2D.length1 : 'a  [,] -> int}
+
+Returns the number of rows in a two-dimensional array.
+
+\item \texttt{Array2D.length2 : 'a  [,] -> int}
+
+Returns the number of columns in a two-dimensional array.
+
+\item \texttt{Array2D.map : ('a -> 'b) -> 'a [,] -> 'b [,]}
+
+Works like \texttt{List.map} and \texttt{Array.map}, but on
+two-dimensional arrays.
+
+\item \texttt{$a$.[$i$,*]} finds the $i$'th row of $a$ (as a
+  one-dimensional array).
+
+\item \texttt{$a$.[*,$j$]} finds the $j$'th column of $a$ (as a
+  one-dimensional array).
+
+
+\end{itemize}
+
+\section{Further reading}
+
+The F\# language reference at Microsoft has a page about one- and
+two-dimensional arrays that also explains how to take whole rows or
+columns out of a two-dimensional arrays:
+
+\url{https://docs.microsoft.com/en-us/dotnet/articles/fsharp/language-reference/arrays}
+
+\end{document}
+

@@ -1,0 +1,108 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Bibliotekerne \texttt{List}, \texttt{Array} og \texttt{Array2D}}
+
+\date[2016]{PoP 07102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Udvalg af biblioteket \texttt{List}}
+
+\noindent
+\texttt{\begin{tabular}{@{$\!\!\!\!\!\!$}l}
+List.length\,:\,'a list -> int\\
+List.head\,:\,'a list -> 'a\\
+List.tail\,:\,'a list -> 'a list\\
+List.isEmpty\,:\,'a list -> bool\\
+List.concat\,:\,'a list list -> 'a list\\
+List.map\,:\,('a -> 'b) -> 'a list -> 'b list\\
+List.collect\,:\,('a -> 'b list) -> 'a list -> 'b list\\
+List.map2\,:\,('a -> 'b -> 'c) -> 'a list -> 'b list- > 'c list\\
+List.exists\,:\,('a -> bool) -> 'a list -> bool\\
+List.forall\,:\,('a -> bool) -> 'a list -> bool\\
+List.filter\,:\,('a -> bool) -> 'a list -> 'a list\\
+List.find\,:\,('a -> bool) -> 'a list -> 'a\\
+List.tryFind\,:\,('a -> bool) -> 'a list -> 'a option\\
+List.init\,:\,int -> (int -> 'a) -> 'a list\\
+List.foldBack\,:\,('a -> 'b -> 'b) -> 'a list -> 'b -> 'b\\
+List.fold\,:\,('b -> 'a -> 'b) -> 'b -> 'a list-> 'b
+\end{tabular}}
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Udvalg af biblioteket \texttt{Array}}
+
+\noindent
+\texttt{\begin{tabular}{@{$\!\!\!\!\!\!$}l}
+Array.length\,:\,'a [] -> int\\
+Array.head\,:\,'a [] -> 'a\\
+Array.tail\,:\,'a [] -> 'a []\\
+Array.isEmpty\,:\,'a [] -> bool\\
+Array.concat\,:\,'a [] [] -> 'a []\\
+Array.map\,:\,('a -> 'b) -> 'a [] -> 'b []\\
+Array.collect\,:\,('a -> 'b []) -> 'a [] -> 'b []\\
+Array.map2\,:\,('a -> 'b -> 'c) -> 'a [] -> 'b []- > 'c []\\
+Array.exists\,:\,('a -> bool) -> 'a [] -> bool\\
+Array.forall\,:\,('a -> bool) -> 'a [] -> bool\\
+Array.filter\,:\,('a -> bool) -> 'a [] -> 'a []\\
+Array.find\,:\,('a -> bool) -> 'a [] -> 'a\\
+Array.tryFind\,:\,('a -> bool) -> 'a [] -> 'a option\\
+Array.init\,:\,int -> (int -> 'a) -> 'a []\\
+Array.foldBack\,:\,('a -> 'b -> 'b) -> 'a [] -> 'b -> 'b\\
+Array.fold\,:\,('b -> 'a -> 'b) -> 'b -> 'a []-> 'b\\
+Array.create\,:\,int -> 'a -> 'a []
+\end{tabular}}
+\end{frame}
+
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Udvalg af biblioteket \texttt{Array2D}}
+
+\noindent
+\texttt{\begin{tabular}{@{$\!\!\!\!\!\!$}l}
+Array2D.length1\,:\,'a [,] -> int\\
+Array2D.length2\,:\,'a [,] -> int\\
+Array2D.map\,:\,('a -> 'b) -> 'a [,] -> 'b [,]\\
+Array2D.init\,:\,int -> int -> (int -> int -> 'a) -> 'a [,]\\
+Array2D.create\,:\,int -> int -> 'a -> 'a [,]\\\\
+$aa$.[$i$,*] finder $i$'te række\\
+$aa$.[*,$j$] finder $j$'te søjle
+\end{tabular}}
+\end{frame}
+
+
+\end{document}

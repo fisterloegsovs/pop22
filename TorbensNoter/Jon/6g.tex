@@ -1,0 +1,429 @@
+\documentclass[a4paper]{article}
+
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{graphpap}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Uge(r)seddel 6 -- gruppeopgave\\
+Revision 1.01 -- der er rettet et par trykfejl og klarificeret rapportindhold}
+
+\author{Torben Mogensen}
+\date{Deadline 26. oktober}
+
+\maketitle
+
+\noindent
+I denne periode skal I arbejde grupper.  Formålet er at arbejde
+med sumtyper og endelige træer.
+
+
+\vspace{1ex}
+
+\noindent
+Opgaverne i denne uge er delt i øve- og afleveringsopgaver.
+
+\subsubsection*{Øveopgaverne er:}
+
+Givet en sum-type til representation af ugedage:
+
+\begin{verbatim}
+type weekday = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+\end{verbatim}
+
+\begin{description}
+
+\item[ø6.1.]
+
+Lav en funktion \texttt{dayToNumber : weekday -> int}, der givet en
+ugedag returnerer et tal, hvor mandag skal give tallet 1, tirsdag
+tallet 2 osv.
+
+
+\item[ø6.2.]
+
+Lav en funktion \texttt{nextDay : weekday -> weekday}, der givet en
+ugedag returnerer den næste dag, så mandag skal give tirsdag, tirsdag
+skal give onsdag, osv, og søndag skal give mandag.
+
+\end{description}
+
+
+\noindent
+Vi arbejder i de følgende opgaver (både øveopgaver og
+afleveringsopgaver) med en træstruktur til at beskrive geometriske
+figurer med farver.  For at gøre det muligt at afprøve jeres opgaver,
+udleveres et simpelt bibliotek \texttt{makeBMP.dll}, der kan lave
+bitmapfiler.  Biblioteket er beskrevet i Ugens Nød i ugeseddel 5.  Her
+bruger vi kun funktionen
+
+\begin{verbatim}
+makeBMP : string -> int -> int -> (int*int -> int*int*int) -> unit
+\end{verbatim}
+
+\noindent
+Det første argument er navnet på den ønskede bitmapfil (uden
+extension).  Det andet argument er bredden af billedet i antal pixel,
+det tredje element er højden af billedet i antal pixel og det sidste
+argument er en funktion, der afbilder koordinater i billedet til
+farver.  En farve er en tripel af tre tal mellem 0 og 255 (begge
+inklusive), der beskriver hhv.\ den røde, grønne og blå del af farven.
+
+Koordinaterne starter med $(0,0)$ i nederste venstre hjørne og
+$(w-1,h-1)$ i øverste højre hjørne, hvis bredde og højde er hhv.\ $w$
+og $h$.  For eksempel vil en programfil \texttt{testBMP.fsx} med
+indholdet
+
+\begin{verbatim}
+makeBMP.makeBMP "test" 256 256 (fun (x,y) -> (x,y,0))
+\end{verbatim}
+
+\noindent
+kunne køres med kommandoen
+
+\begin{verbatim}
+fsharpi -r makeBMP.dll testBMP.fsx 
+\end{verbatim}
+
+\noindent
+og lave en billedfil med navnet \texttt{test.bmp}, der indeholder
+følgende billede:
+
+\begin{center}
+\includegraphics{test.png}
+\end{center}
+
+\noindent
+Bemærk, at alle programmer, der bruger \texttt{makeBMP} skal køres
+eller oversættes med \texttt{-r makeBMP.dll} som en del af kommandoen.
+
+Bemærk endvidere, at \LaTeX\ ikke kan inkludere BMP-filer med
+\texttt{includegraphics}.  Men man kan bruge diverse billedprogrammer
+(IrfanView, osv.) til at konvertere BMP til PNG, som
+\texttt{includegraphics} godt kan håndtere.
+
+I Linux kan man konvertere billeder med kommandoen \texttt{convert}.
+Hvis vi har billedfilen \texttt{test.bmp}, vil kommandoen
+\texttt{convert~test.bmp~test.png} lave en tilsvarende billedfil
+\texttt{test.png} i PNG-formatet.
+
+\vspace{2ex}
+
+\noindent
+Vi repræsenterer geometriske figurer med følgende datastruktur:
+
+\begin{verbatim}
+type point = int * int // a point (x, y) in the plane
+type colour = int * int * int  // (red, green, blue), 0..255 each
+
+type figure =
+        | Circle of point * int * colour
+          // defined by center, radius, and colour
+        | Rectangle of point * point * colour
+          // defined by bottom-left corner, top-right corner, and colour
+        | Mix of figure * figure
+          // combine figures with mixed colour at overlap
+\end{verbatim}
+
+\noindent
+For eksempel kan man lave følgende funktion til at finde farven af en
+figur i et punkt.  Hvis punktet ikke ligger i figuren, returneres
+\texttt{None}, og hvis punktet ligger i figuren, returneres
+\texttt{Some $c$}, hvor $c$ er farven.
+
+\begin{verbatim}
+// finds colour of figure at point
+let rec colourAt (x,y) figure =
+  match figure with
+  | Circle ((cx,cy), r, col) ->
+      if (x-cx)*(x-cx)+(y-cy)*(y-cy) <= r*r
+         // bruger Pythagoras sætning til at finde afstand til centrum
+      then Some col else None
+  | Rectangle ((x0,y0), (x1,y1), col) ->
+      if x0<=x && x <= x1 && y0 <= y && y <= y1  // indenfor hjørnerne
+      then Some col else None
+  | Mix (f1, f2) ->
+      match (colourAt (x,y) f1, colourAt (x,y) f2) with
+      | (None, c) -> c  // overlapper ikke
+      | (c, None) -> c  // ditto
+      | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
+           Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)  // gennemsnitsfarve
+\end{verbatim}
+
+\noindent
+Bemærk, at punkter på cirklens omkreds og rektanglens kanter er med i
+figuren.  Farver blandes ved at lægge dem sammen og dele med to, altså
+finde gennemsnitsfarven.
+
+\begin{description}
+
+\item[ø6.3.] Lav en figur \texttt{o61 : figure}, der består af en rød
+  cirkel med centrum i (50,50) og radius 45, samt en blå
+  rektangel med hjørnerne (40,40) og (90,110), som illustreret med
+  denne tegning:
+
+\definecolor{light}{gray}{0.6}
+
+\setlength{\unitlength}{0.25mm}
+\begin{picture}(120,150)(-20,-25)
+\textcolor{light}{\graphpaper(0,0)(100,120)}
+\put(50,50){\textcolor{red}{\scalebox{2}{\circle{45}}}}
+\put(5,50){\textcolor{red}{\line(1,0){90}}}
+\put(5.5,45){\textcolor{red}{\line(1,0){89}}}
+\put(5.5,55){\textcolor{red}{\line(1,0){89}}}
+\put(7,40){\textcolor{red}{\line(1,0){86}}}
+\put(7,60){\textcolor{red}{\line(1,0){86}}}
+\put(8,35){\textcolor{red}{\line(1,0){84}}}
+\put(8,65){\textcolor{red}{\line(1,0){84}}}
+\put(10,30){\textcolor{red}{\line(1,0){80}}}
+\put(10,70){\textcolor{red}{\line(1,0){80}}}
+\put(13,25){\textcolor{red}{\line(1,0){74}}}
+\put(13,75){\textcolor{red}{\line(1,0){74}}}
+\put(17,20){\textcolor{red}{\line(1,0){66}}}
+\put(17,80){\textcolor{red}{\line(1,0){66}}}
+\put(22,15){\textcolor{red}{\line(1,0){56}}}
+\put(22,85){\textcolor{red}{\line(1,0){56}}}
+\put(30,10){\textcolor{red}{\line(1,0){40}}}
+\put(30,90){\textcolor{red}{\line(1,0){40}}}
+\put(40,40){\textcolor{blue}{\scalebox{2}{\framebox(25,35){~}}}}
+\multiput(40,40)(5,0){10}{\textcolor{blue}{\line(0,1){70}}}
+\end{picture}
+
+\noindent
+Hvor vi dog har brugt skravering i stedet for udfyldende farver.
+
+\item[ø6.4.] Brug \texttt{makeBMP} og \texttt{colourAt} til at lave en
+  funktion
+
+\texttt{makePicture : string -> figure -> int -> int -> unit}
+
+\noindent
+sådan at kaldet \texttt{makePicture \emph{filnavn figur b h}} laver en
+billedfil ved navn \texttt{\emph{filnavn}.bmp} med et billede af
+\texttt{\emph{figur}} med bredde \texttt{\emph{b}} og højde
+\texttt{\emph{h}}.
+
+På punkter, der ingen farve har (jvf.\ \texttt{colourAt}), skal farven
+være grå (som defineres med RGB-værdien (128,128,128)).
+
+Du kan bruge denne funktion til at afprøve dine opgaver.
+
+\item[ø6.5.] Lav med \texttt{makePicture} en billedfil med navnet
+  \texttt{o63.bmp} og størrelse $100\times150$ (bredde 100, højde 150),
+  der viser figuren \texttt{o61} fra opgave ø6.1.
+
+\begin{tabular}{ll}
+Resultatet skulle gerne ligne & \includegraphics{o63.png}
+\end{tabular}
+
+
+
+\item[ø6.6.] Lav en funktion \texttt{checkFigure : figure -> bool},
+  der undersøger, om en figur er korrekt: At radiusen i cirkler
+  er ikke-negativ, at nederste venstre hjørne i en rektangel faktisk
+  er nedenunder og til venstre for det øverste højre hjørne (bredde og
+  højde kan dog godt være 0), og at farvekompenterne ligger mellem 0
+  og 255.
+
+  Vink: Lav en hjælpefunktion \texttt{checkColour : colour -> bool}.
+
+\item[ø6.7.] Lav en funktion \texttt{move : figure -> int * int ->
+  figure}, der givet en figur og en vektor flytter figuren langs
+  vektoren.
+
+  Hvis man kalder \texttt{makePicture "moveTest" (move o61 (-20,20))
+    100 150}, shulle det gerne lave en billedfil \texttt{moveTest.bmp}
+  med indholdet
+\includegraphics{moveTest.png}
+
+\item[ø6.8.] Lav en funktion \texttt{boundingBox : figure -> point *
+  point}, der givet en figur finder hjørnerne (bund-venstre og
+  top-højre) for den mindste akserette rektangel, der indeholder hele
+  figuren.
+
+  \texttt{boundingBox o61} skulle gerne give \texttt{((5, 5), (95,
+    110))}.
+
+\end{description}
+
+\newpage
+\subsubsection*{Afleveringsopgaven er:}
+
+\begin{description}
+
+\item[g6.1.] Givet typen for ugedage øverst på denne ugeseddel, lav en
+  funktion \texttt{numberToDay : int -> weekday option}, sådan at
+  \texttt{numberToDay $n$} returnerer \texttt{None}, hvis $n$ ikke
+  ligger i intervallet 1\ldots7, og returnerer \texttt{Some $d$}, hvor
+  $d$ er den til $n$ hørende ugedag, hvis $n$ ligger i intervallet
+  1\ldots7.
+
+  Det skulle gerne gælde, at \texttt{numberToDay (dayToNumber $d$)
+    $\leadsto$ Some $d$} for alle ugedage $d$.
+
+\end{description}
+
+\noindent
+Til de følgende opgaver udvider vi typen \texttt{figure}:
+
+\begin{verbatim}
+type figure =
+        | Circle of point * int * colour
+          // defined by center, radius, and colour
+        | Rectangle of point * point * colour
+          // defined by bottom-left corner, top-right corner, and colour
+        | Mix of figure * figure
+          // combine figures with mixed colour at overlap
+        | Twice of figure * (int * int)
+          // overlays figure with copy of self moved by vector
+\end{verbatim}
+
+\noindent
+hvor \texttt{Twice $f$ $(x,y)$} gentager figuren $f$ i to kopier, hvor
+det første kopi af $f$ ligger normalt, og andet kopi er forskudt med
+vektoren $(x,y)$.  Hvis de to kopier overlapper, ligger andet kopi
+ovenpå det første.  Der skal altså ikke blandes farver mellem de to
+kopier (men internt i hvert kopi kan \texttt{Mix} bruges til at blande
+farver ved overlap).  Bemærk, at $x$ og $y$ kan være negative.
+
+\begin{description}
+
+\item[g6.2.] Lav en figur \texttt{g61 : figure}, som består
+  af to kopier af figur \texttt{o61}, hvor det andet er forskudt med
+  vektoren $(50,70)$.
+
+\item[g6.3.] Udvid funktionen \texttt{colourAt} til at håndtere
+  udvidelsen.
+
+\item[g6.4.] Lav en fil \texttt{g63.bmp}, der viser figuren
+  \texttt{g61} i et $150×200$ bitmap.
+
+Resultatet skulle gerne ligne \includegraphics{g63.png}
+
+\item[g6.5.] Udvid funktionerne \texttt{checkFigure} og
+  \texttt{boundingBox} fra øvelsesopgaverne til at håndtere
+  udvidelsen.
+
+  \texttt{boundingBox g61} skulle gerne give \texttt{((5, 5), (145,
+    180))}.
+
+\end{description}
+
+\noindent
+Der skal laves black-box testing og in-code dokumentation af
+funktionerne.
+
+\vspace{1ex}
+
+\noindent
+Afleveringsopgaven skal afleveres som både \LaTeX, genererede
+billedfiler, den genererede PDF, samt en fsx fil med løsningen for
+hver delopgave, navngivet efter opgaven (f.eks.\ \texttt{g6-1.fsx}),
+som kan oversættes med fsharpc, og hvis resultat kan køres med mono.
+Det hele samles i en zip-fil med sædvanlig navnekonvention (se
+tidligere ugesedler).
+
+\LaTeX-rapporten skal vise de billedfiler, der bliver lavet i
+opgaverne, og forklare ikke-oplagte designvalg i løsningerne af
+opgaverne.
+
+\vspace{1ex}
+
+\hfill God fornøjelse
+
+\newpage
+\section*{Ugens nød 3}
+
+Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
+som interesserede kan løse.  Det er helt frivilligt at lave disse
+opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
+mindre præmie til den bedste løsning, der afleveres i Absalon.
+
+\vspace{1ex}
+
+Denne nød omhandler udvidelser/ændringer til datastrukturen for
+geometriske funktioner, som er introduceret i øvelses og
+afleveringsopgaverne herover.  Vi erstatter figurdatatypen med:
+
+
+\begin{verbatim}
+type figure =
+        | Circle of point * int * (colour * colour)
+          // defined by center, radius, and centre/edge colours
+        | Rectangle of point * point * (colour * colour * colour * colour)
+          // defined by bottom-left corner, top-right corner,
+          // and colours for each corner in the order (bl, br, tr, tl)
+        | Mix of figure * figure
+          // combine figures with mixed colour at overlap
+        | Twice of figure * (int * int)
+          // overlays figure with copy of self moved by vector
+        | Ellipse of point * point * int * (colour * colour)
+          // defined by two focal points and length of the great axis
+          // with colours at each focal point
+        | Triangle of point * point * point * (colour * colour * colour)
+          // defined by three vertices and colours at these
+\end{verbatim}
+
+\noindent
+Vi har dels udvidet figurerne med ellipser og trekanter, og dels
+ændret farverne fra at være ensartede henover en figur til at være
+glidende overgange:
+
+\begin{itemize}
+\item I en cirkel skal farven variere lineært fra centrum til kant
+  mellem de to specificerede farver.
+
+\item I en rektangel eller trekant skal farverne variere, sådan at
+  farverne i hjørnerne er som angivet, og farverne skifter glidende
+  mellem disse henover det indre.  Angiv hvordan du definerer
+  farveblandingen i et punkt.
+
+  Et kvadrat med farverne sort, rød, gul og grøn i hjørnerne skulle
+  gerne ligne billedet på side 1 i denne ugeseddel (men behøver ikke
+  at være eksakt ligedan).
+
+\item I en ellipse skal farverne i brændpunkterne være som angivet, og
+  farven i resten af ellipsen skal afhænge af afstandende til de to
+  brændpunkter.  Hvis de to afstande er lige store, skal farven
+  blandes ligeligt, ellers skal farven afhænge af forholdet mellem de
+  to afstande, sådan at farveovergangen er glidende.  Angiv formlen
+  for farve baseret på forholdet mellem afstandende.
+
+\item En trekant er korrekt, så længe farverne i hjørnerne er korrekt.
+
+\item En ellipse er korrekt, hvis de to brændpunkter er forskellige,
+  afstanden mellem brændpunkterne er skarpt mindre end storaksens
+  længde, og de to farver er korrekte.
+
+\end{itemize}
+
+\noindent
+Definer versioner af \texttt{colourAt}, \texttt{checkFigure}, og
+\texttt{boundingBox}, der passer til den nye udgave af
+\texttt{figure}, og følger de ovenstående retningslinjer.
+
+Lav figurer, der afprøver glidende farveovergange samt korrekthed af
+ovenstående funktioner.  Lav en rapport, der beskriver designvalg,
+blandt andet til farveovergange og til at finde bounding-box for en
+ellipse.  Bemærk, at en tæt bounding-box for en ellipse kan kræve
+ikke-heltallige koordinater.  Disse skal rundes ned/op, sådan at
+\texttt{boundingBox} returnerer den mindste kasse med heltallige
+koordinater, der indeholder ellipsen.
+
+Upload en zip-fil med \LaTeX-fil, PDF og .fsx filer.  Deadline er
+28.\ oktober kl. 12.00 middag.
+
+Besvarelserne bliver bedømt på korrekthed, elegance, og på hvor godt
+rapporten beskriver og begrunder designvalgene.
+
+\end{document}

@@ -1,0 +1,404 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Sammenligning af tupler og lister}
+
+\date[2016]{PoP 30092016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}
+\frametitle{Sammenligning af par}
+
+Lighedsrelationen (\texttt{=}) er defineret for par på den oplagte
+måde: \texttt{($a$, $b$) = ($c$, $d$)} netop hvis \texttt{$a$ = $c$}
+og  \texttt{$b$ = $d$}.
+
+\vspace{1ex}
+
+Ulighedsrelationen (\texttt{<}) er lidt mere kompliceret:
+\texttt{($a$, $b$) < ($c$, $d$)} hvis enten \texttt{$a$ < $c$} eller
+\texttt{$a$ = $c$} og \texttt{$b$ < $d$}.  Dette kaldes
+\emph{leksikografisk ordning}.
+
+Eksempler:
+
+\vspace{2ex}
+
+\texttt{
+\begin{tabular}{l@{\quad=\quad}l}
+(2, 2) < (2, 2) & false \\
+(2, 3) < (3, 2) & true \\
+(2, 2) < (2, 4) & true \\
+((2, 2), (2, 3)) < ((2, 2), (2, 4)) & true
+\end{tabular}
+}
+
+\vspace{2ex}
+
+Som altid er \texttt{$x$ <= $y$} hvis enten \texttt{$x$ < $y$} eller
+\texttt{$x$ = $y$}.
+
+Tilsvarende kan \texttt{>}, \texttt{>=} og \texttt{<>} defineres ud
+fra \texttt{<} og \texttt{=}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sammenligning af tupler generelt}
+
+Lighedsrelationen er defineret på den oplagte måde:
+\texttt{($a_1$,\ldots, $a_n$) = ($b_1$,\ldots, $b_n$)} netop hvis
+\texttt{$a_i$ = $b_i$} for alle $i \in \{1,\ldots,\,n\}$.
+
+\vspace{1ex}
+
+Ulighedsrelationen bruger leksikografisk ordning, så
+\texttt{($a_1$,\ldots, $a_n$) = ($b_1$,\ldots, $b_n$)} hvis der findes
+et $i  \in \{1,\ldots,\,n\}$, sådan at \texttt{$a_j$ = $b_j$} for alle
+$j \in \{1,\ldots,\,i-1\}$, og \texttt{$a_i$ < $b_i$}.
+
+Eksempler:
+
+\vspace{2ex}
+
+\texttt{
+\begin{tabular}{l@{\quad=\quad}l}
+(2, 2, 2) < (2, 2, 2) & false \\
+(2, 3, 4) < (2, ,4, 2) & true \\
+(2, 2, 2, 3) < (2, 2, 2, 4) & true
+\end{tabular}
+}
+
+\vspace{2ex}
+
+Bemærk, at \texttt{($a$, $b$, $c$) < ($d$, $e$, $f$)} netop hvis
+\texttt{($a$, ($b$, $c$)) < ($d$, ($e$, $f$))}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sammenligning af lister}
+
+Ved lister skal vi også tage højde for længderne, så:
+
+\vspace{1ex}
+
+\texttt{[$a_1$;\ldots; $a_m$] = [$b_1$;\ldots; $b_n$]} netop hvis
+$m=n$ og $a_i = b_i$ for alle $i \in \{1,\ldots,\, n\}$.
+
+\vspace{1ex}
+
+\texttt{[$a_1$;\ldots; $a_m$] < [$b_1$;\ldots; $b_n$]} netop hvis en
+af følgende to tilfælde gælder:
+
+\begin{enumerate}[~1.]
+\item $m<n$ og $a_i = b_i$ for alle $i \in \{1,\ldots,\, m\}$, eller
+\item der findes et $i \in \{1,\ldots,\,m\}$, sådan at \texttt{$a_j$ =
+  $b_j$} for alle $j \in \{1,\ldots,\,i-1\}$, og \texttt{$a_i$ <
+  $b_i$}.
+\end{enumerate}
+
+Eksempler:
+
+\vspace{1.5ex}
+
+\texttt{
+\begin{tabular}{l@{\quad=\quad}l}
+{}[1; 2; 3] < [1; 2; 3] & false \\
+{}[1; 2; 3] < [1; 2; 3; 0] & true \\
+{}[1; 2; 3] < [1; 2; 4; 0] & true \\
+{}[1; 2; 3] < [1; 2; 2; 0] & false
+\end{tabular}
+}
+
+\vspace{1.5ex}
+
+Bemærk, at strings sammenlignes efter de samme regler som lister.
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sortering af lister (1)}
+
+Selv om vi intuitivt ved, hvad det vil sige at sortere en liste af
+f.eks.\ tal, så er det en god ide at formulere det præcist inden
+kodning af en sorteringsfunktion:
+
+\begin{enumerate}[~1.]
+\item En liste $ys$ er en sorteret udgave af en liste $xs$, hvis $ys$
+  er \emph{sorteret}, og\\
+\item $ys$ er en \emph{permutation} af $xs$.
+\end{enumerate}
+
+Vi kan bruge funktionen \texttt{isSorted} fra i mandags til at definere,
+hvad det vil sige at være sorteret.  Permutation kan defineres ved
+
+
+\begin{description}
+\item[(Indentitet)] En liste er en permutation af sig selv.
+\item[(Ombytning af naboelementer)] Hvis $l = l_1 \texttt{ @ [$a$; $b$] @ } l_2$, så er $l_1
+  \texttt{ @ [$b$; $a$] @ } l_2$ en permutation af $l$.
+\item[(Transitivitet)] Hvis $l_1$ er en permutation af $l_2$, og $l_3$ er en
+  permutation af $l_2$, så er $l_1$ en permutation af $l_3$.
+\end{description}
+
+Vi kan altså finde enhver permutation af en liste ved gentagne gange
+af bytte om på naboelementer.  For eksempel
+
+\texttt{\colorbox{white}{
+[1; 2; 3] $\leadsto$ [2; 1; 3] $\leadsto$ [2; 3; 1] $\leadsto$ [3; 2; 1]
+}}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Sortering af lister (2)}
+
+En strategi for sortering af en liste kan være: Byt om på forkert
+ordnede naboelementer, indtil listen er sorteret.  Ved kun at bytte
+naboelementer, sikrer vi, at resultatet er en permutation, og
+slutbetingelsen sikrer sortering.
+
+En sorteringsfunktion, der følger denne strategi er:
+
+\begin{verbatim}
+let rec swapUnorderedPairs l =
+  match l with
+  | [] -> []
+  | [n] -> [n]
+  | m :: n :: ns ->
+      if m<n then m :: swapUnorderedPairs (n :: ns)
+      else n :: swapUnorderedPairs (m :: ns)
+
+let rec sortList l =
+  if isSorted l then l
+  else sortList (swapUnorderedPairs l)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Virker det?}
+
+Vi ombytter kun nabopar, så vi er sikre på, at vi har en permutation.
+Og vi returnerer først, når listen er sorteret.
+
+\pause
+
+\vspace{2ex}
+Hvad kan så gå galt?
+
+
+
+\pause
+
+\vspace{2ex}
+\textcolor{darkred}{Det kunne tænkes, at vi aldrig når til en sorteret liste!}
+
+
+
+\pause
+
+\vspace{2ex}
+Kan det faktisk ske?
+
+
+
+\pause
+
+\vspace{2ex} \textcolor{darkgreen}{Nej, for vi bringer altid mindst et
+  nyt element på plads i hver iteration.}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tidsforbrug for sortering}
+
+Hvad er tidsforbruget, hvis vi vil sortere en liste, der er i omvendt
+sorteret orden, f.eks.\ \texttt{[5; 4; 3; 2; 1]}?
+
+\pause
+
+\vspace{1ex}
+
+Lad os se på resultatet efter hver iteration i \texttt{sortList}:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{ll}
+& [5; 4; 3; 2; 1] \\
+$\leadsto$ & [4; 3; 2; 1; 5] \\
+$\leadsto$ & [3; 2; 1; 4; 5] \\
+$\leadsto$ & [2; 1; 3; 4; 5] \\
+$\leadsto$ & [1; 2; 3; 4; 5] \\
+\end{tabular}
+}
+
+\pause
+
+\vspace{1ex}
+
+Antallet af iterationer er proportionalt med listens længde, og hver
+iteration tager også tid proportionalt med listens længde, så vi
+bruger kvadratisk tid.
+
+\pause
+
+\vspace{1ex}
+
+\textcolor{darkgreen}{Kan det gøres væsentligt hurtigere?}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Mergesort}
+
+Vi kan bruge følgende sorteringsmetode:
+
+\begin{enumerate}[~1.]
+\item Hvis der er 0 eller 1 element i listen, så er den sorteret.  Ellers:
+\item Del listen op i to (næsten) lige store dellister.
+\item Sorter de to dellister hver for sig.
+\item Flet de to sorterede dellister til en sorteret liste.
+\end{enumerate}
+
+\pause
+
+\vspace{2ex}
+
+Vi kan se på det omtrentlige tidsforbrug for forskellige længder:
+
+\vspace{2ex}
+
+\begin{tabular}{r@{\quad:\quad}l@{ = }rl}
+1 & 1 & 1 \\
+2 & 2 + 2×1 + 2 & 6 \\
+4 & 4 + 2×6 + 4 & 20 \\
+8 & 8 + 2×20 + 8 & 56 \\
+16 & 16 + 2×56 + 16 & 144 \\
+32 & 32 + 2×144 + 32 & 352 \\
+$n$ && ca. $3n×\log(n)$ & $\ll n^2 $
+\end{tabular}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Mergesort i F\#}
+
+{\small
+\begin{verbatim}
+let rec split l xs ys =
+  match l with
+  | [] -> (xs, ys)
+  | n :: ns -> split ns ys (n :: xs)
+
+let rec merge = function
+  | ([], ys) -> ys
+  | (xs, []) -> xs
+  | (x :: xs, y :: ys) ->
+      if x < y then x :: merge (xs, y :: ys)
+      else y :: merge (x :: xs, ys)
+
+let rec sortList = function
+  | [] -> []
+  | [n] -> [n]
+  | l ->
+      let (xs, ys) = split l [] []
+      merge (sortList xs, sortList ys)
+\end{verbatim}
+}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel}
+
+\setlength{\unitlength}{0.011\textwidth}
+
+\begin{picture}(100,70)
+\put(50,65){\makebox(0,0){[5; 1; 7; 2; 0]}}
+
+\put(30,56){\makebox(0,0){[2; 1]}}
+\put(70,56){\makebox(0,0){[0; 7; 5]}}
+
+\put(25,47){\makebox(0,0){[1]}}
+\put(35,47){\makebox(0,0){[2]}}
+
+\put(60,47){\makebox(0,0){[0; 5]}}
+\put(77,47){\makebox(0,0){[7]}}
+
+\put(55,38){\makebox(0,0){[5]}}
+\put(65,38){\makebox(0,0){[0]}}
+
+\put(60,29){\makebox(0,0){[0; 5]}}
+
+\put(30,30){\makebox(0,0){[1; 2]}}
+\put(70,20){\makebox(0,0){[0; 5; 7]}}
+
+\put(50,11){\makebox(0,0){[0; 1; 2; 5; 7]}}
+
+\put(42,63){\vector(-2,-1){8}}
+\put(58,63){\vector(2,-1){8}}
+
+\put(27,54){\vector(-1,-2){2}}
+\put(33,54){\vector(1,-2){2}}
+
+\put(67,54){\vector(-1,-1){4}}
+\put(73,54){\vector(1,-2){2}}
+
+\put(57,45){\vector(-1,-2){2}}
+\put(63,45){\vector(1,-2){2}}
+
+\put(55,36){\vector(1,-2){2}}
+\put(65,36){\vector(-1,-2){2}}
+
+\put(24,44){\vector(1,-3){3}}
+\put(36,44){\vector(-1,-3){3}}
+
+\put(63,27){\vector(1,-1){4}}
+\put(77,44){\vector(-1,-4){5.2}}
+
+\put(32,27){\vector(2,-3){8}}
+\put(66,18){\vector(-2,-1){8}}
+
+\end{picture}
+
+\end{frame}
+
+\end{document}

@@ -1,0 +1,475 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Mønstre, tupler, lister og afprøvning}
+
+\date[2016]{PoP 26092016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Mønstre}
+
+Her er to alternative måder at skrive Fibonaccis funktion:
+
+\begin{verbatim}
+let rec fib n =
+  if n = 0 then 0
+  elif n = 1 then 1
+  else fib (n-1) + fib (n-2)
+\end{verbatim}
+
+\begin{verbatim}
+let rec fib n =
+  match n with
+  | 0 -> 0
+  | 1 -> 1
+  | _ -> fib (n-1) + fib (n-2)
+\end{verbatim}
+
+Mønstre kan gøre kode mere læselig, og når vi kommer til sammensatte
+værdier om lidt, er de nærmest uundværlige.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Par}
+
+Vi kender par fra koordinater: $(2,3)$ kan være et punkt eller en
+vektor i planen. Men par kan også indeholde andet en tal, f.eks:
+
+\vspace{1ex}
+
+
+\texttt{
+\begin{tabular}{r@{\quad:\quad}l}
+(2, 3) & int * int\\
+("hej alle", 127) & string * int\\
+(fib, 3) & (int -> int) * int\\
+((0.1, 0.3), (2, 3)) & (float * float) * (int * int)\\
+\end{tabular}
+}
+
+\vspace{1ex}
+
+Symbolet \texttt{*} svarer til det matematiske symbol ×.
+F.eks.\ svarer typen \texttt{int~*~int} til mængden $\mathsf{I\!N} ×
+\mathsf{I\!N}$.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Programmering med par}
+
+Par bygges på den oplagte måde og komponenter i par hentes som regel
+ved brug af mønstre.  Eksempler:
+
+\begin{verbatim}
+let rotateLeft (x, y) = (-y, x)
+
+let sortPair (x, y) = (min x y, max x y)
+
+let rec gcd (a, b) =
+  if b=0 then a else gcd (b, b % a)
+
+let rec gcd ab =
+  match ab with
+  | (a, 0) -> a
+  | (a, b) -> gcd (b, b % a)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Generelle tupler}
+
+Man kan også sammensætte tre værdier i et tripel, fire værdier i et
+kvadrupel, osv.  Generelt kaldes det \emph{tupler}.  Eksempler:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{r@{\quad:\quad}l}
+(3, 4, 5) & int * int * int\\
+(3, (4, 5)) & int * (int * int) \\
+((3, 4), 5) & (int * int) * int \\
+((), '1', 2, "tre") & unit * char * int * string\\
+\end{tabular}
+}
+
+\vspace{1ex}
+
+Typen \texttt{unit} svarer til en tom tupel.
+
+\vspace{1ex}
+
+Bemærk: \texttt{($a$ * ($b$ * $c$)) $\neq$ ($a$ * $b$ * $c$) $\neq$ (($a$ * $b$) * $c$)}.
+
+\vspace{1ex}
+Eksempelfunktion:
+
+\begin{verbatim}
+let isPythagorean (a, b, c) = a*a + b*b = c*c
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Lister}
+
+Lister er sekvenser af elementer af samme type, men hvor antallet af
+elementer kan variere, ligesom antallet af tegn i en \texttt{string}
+kan variere. Eksempler:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{r@{\quad:\quad}l}
+[3; 4; 5] & int list\\
+{}['h'; 'e'; 'l'; 'l'; 'o'] & char list\\
+{}[true] & bool list \\
+{}[] & 'a list
+\end{tabular}
+}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Indicering i og bygning af lister}
+
+Vi kan bruge dot-notation til at tilgå dele af lister (ligesom
+strings):
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{l@{ = }l}
+  ['a'; 'e'; 'i'; 'o'; 'u'; 'y'].[2] & 'i' \\
+  {}['a'; 'e'; 'i'; 'o'; 'u'; 'y'].[2..4] & ['i'; 'o'; 'u'] \\
+  {}['a'; 'e'; 'i'; 'o'; 'u'; 'y'].[2..14] & \emph{error message}
+\end{tabular}}
+
+\vspace{1ex}
+
+Vi kan sammensætte lister med operatoren \texttt{@}, og vi kan sætte
+elementer foran lister med operatoren \texttt{::}
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{r@{ = }l}
+  ['a'; 'e'] @ ['i'; 'o']  &  ['a'; 'e'; 'i'; 'o'] \\
+  {}[] @ [] & []\\
+  1 :: [2; 3] & [1; 2; 3] \\
+  false :: [] & [false] \\
+  1.2 :: 2.3 :: [] & [1.2; 2.3] \\
+  {}[] :: [] & [[]]
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Mønstre på lister}
+
+Mønstre på lister er af en af formerne:
+
+\vspace{1ex}
+
+\begin{tabular}{l@{\quad}l}
+Mønster & Matcher\\\hline
+\verb|_| & alle lister \\
+\emph{variabel} & alle lister \\
+\texttt{[]} & \texttt{[]} \\
+\texttt{[$p_1$;$\cdots$;\,$p_n$]} & Lister af formen
+\texttt{[$v_1$;$\cdots$;\,$v_n$]}, hvis $p_i$ matcher $v_i$ \\
+$p_1$ \texttt{::} $p_2$ & Lister, hvor første element matcher $p_1$,\\
+& og resten af listen matcher $p_2$.
+\end{tabular}
+
+\vspace{1ex}
+
+Mest almindeligt at bruge mønstrene \texttt{[]} og \texttt{$x$ :: $xs$},
+og nogen gange \texttt{[$x$]} eller  \texttt{$x1$ :: $x2$ :: $xs$}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Funktioner på lister}
+
+Generelt design: Rekursiv funktion med mønstre for \texttt{[]} og
+\texttt{$x$ :: $xs$}.  Eksempler:
+
+\begin{verbatim}
+let rec listSum l =
+  match l with
+  | [] -> 0
+  | x :: xs -> x + listSum xs
+
+let rec isSorted l =
+  match l with
+  | [] -> true
+  | [x] -> true
+  | x1 :: x2 :: xs -> x1 <= x2 && isSorted xs
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Afprøvning}
+
+Selv om \texttt{fsharpi} indlæser et program uden at melde fejl,
+betyder det ikke, at det virker.  Der kan være flere slags problemer:
+
+\begin{itemize}
+\item[1.] Typen af en funktion kan være anderledes end forventet.
+\item[2.] Visse inddata kan give køretidsfejl eller uendelig køretid.
+\item[3.] Visse inddata kan give forkert resultat.
+\end{itemize}
+
+
+
+Derudover kan et program være problematisk af andre årsager:
+
+\begin{itemize}
+\item[4.] Det kan bruge for meget tid eller plads.
+\item[5.] Det kan være svært at vedligeholde.
+\item[6.] et kan være svært at bruge.
+\end{itemize}
+
+
+Vi fokuserer i dag på de første tre problemer.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Forventet funktionalitet}
+
+For at afprøve et program, skal vi have en forventning og, hvad det
+skal kunne.  Denne forventning kan være mere eller mindre præcis.  Jo
+mere præcis forventningen er, og jo mere klart formuleret denne
+forventning er, jo nemmere er det at afprøve, om et program opfylder
+forventningerne.
+
+Lad os prøve at skrive vores forventninger til \texttt{isSorted}:
+
+\begin{enumerate}[~1.]
+\item Typen af \texttt{isSorted} er \texttt{int list -> bool}.
+\item \texttt{isSorted} skal returnere \texttt{true}, hvis dens input
+  er en sorteret liste af heltal.
+\item \texttt{isSorted} skal returnere \texttt{false}, hvis dens input
+  er en liste af heltal der ikke er sorteret.
+\end{enumerate}
+
+Hvor en liste er sorteret, hvis der ikke findes elementer $m$ og $n$,
+sådan at $m$ kommer før $n$ i listen, og $m>n$.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Afprøvning af forventet funktionalitet (1)}
+
+Vi har funktionsdefinitionen
+
+
+\begin{verbatim}
+let rec isSorted l =
+  match l with
+  | [] -> true
+  | [x] -> true
+  | x1 :: x2 :: xs -> x1 <= x2 && isSorted xs
+\end{verbatim}
+
+Vi kan sende den gennem \texttt{fsharpi}, og får
+
+\begin{verbatim}
+val isSorted : l:'a list -> bool when 'a : comparison
+\end{verbatim}
+
+Typen er mere generel end den forventede type, men det er ikke noget
+problem, sålænge den forventede type er en instans af den faktiske
+type.  Vores program opfylder altså første forventning.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Afprøvning af forventet funktionalitet (2)}
+
+Anden forventning er, at \texttt{isSorted} returnerer \texttt{true},
+hvis vi giver den en sorteret liste.  Vi kan finde et antal eksempler
+på sorterede lister, der gerne kommer rundt i specieltilfælde, og kode
+dem som en del af programmet:
+
+{\small
+\begin{verbatim}
+printfn "Test1: %b" (isSorted []) // den tomme liste
+printfn "Test2: %b" (isSorted [7]) // en liste med et element
+printfn "Test3: %b" (isSorted [7;7]) // ens elementer
+printfn "Test4: %b" (isSorted [7;8]) // stigende elementer
+printfn "Test5: %b" (isSorted [1;2;2;7;8]) // længere liste
+\end{verbatim}
+}
+
+Vi får, som forventet, outputtet
+
+{\small
+\begin{verbatim}
+Test1: true
+Test2: true
+Test3: true
+Test4: true
+Test5: true
+\end{verbatim}
+}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Afprøvning af forventet funktionalitet (3)}
+
+Tredje forventning er, at \texttt{isSorted} returnerer \texttt{false},
+hvis vi giver den en ikke-sorteret liste.  Vi kan finde et antal
+eksempler på ikke-sorterede lister, og kode dem, så det giver
+\texttt{true} ved forventet resultat:
+
+{\small
+\begin{verbatim}
+printfn "Test6: %b" (isSorted [8;7] = false)
+printfn "Test7: %b" (isSorted [1; 3; 2] = false)
+printfn "Test8: %b" (isSorted [1;2;2;7;2] = false)
+\end{verbatim}
+}
+
+Vi får nu resultatet
+
+{\small
+\begin{verbatim}
+Test6: true
+Test7: false
+Test8: false
+\end{verbatim}
+}
+
+Test 7 og 8 giver altså et andet resultat end det forventede.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Debugging}
+
+Vi skal nu finde årsagen til problemet.  Det kaldes \emph{debugging}.
+
+Lad os se på vores definition:
+
+\begin{verbatim}
+let rec isSorted l =
+  match l with
+  | [] -> true
+  | [x] -> true
+  | x1 :: x2 :: xs -> x1 <= x2 && isSorted xs
+\end{verbatim}
+
+og prøve at \emph{trace} Test 7:
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{rl}
+& isSorted [1; 3; 2] \\
+$\leadsto$ & 1 <= 3 \&\& isSorted [2] \\
+$\leadsto$ & true \&\& isSorted [2] \\
+$\leadsto$ & true \&\& true \\
+$\leadsto$ & true \\
+\end{tabular}
+}
+
+\vspace{1ex}
+
+Vi kan nu se, at 3 ikke sammenlignes med 2.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Retning af fejlen}
+
+Vi laver en ny version, der sørger for at alle nabopar testes:
+
+\begin{verbatim}
+let rec isSorted l =
+  match l with
+  | [] -> true
+  | [x] -> true
+  | x1 :: x2 :: xs -> x1 <= x2 && isSorted (x2 :: xs)
+\end{verbatim}
+
+Vi får nu følgende output:
+
+{\small
+\begin{verbatim}
+Test1: true
+Test2: true
+Test3: true
+Test4: true
+Test5: true
+Test6: true
+Test7: true
+Test8: true
+\end{verbatim}
+}
+
+Vores afprøvning finder altså ikke flere fejl.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Mere om afprøving}
+
+\begin{itemize}
+\item Afprøvning kan finde fejl, men aldrig vise, at der ikke er nogen
+  fejl.
+\item Afprøvning bør afprøve både almindelige og ualmindelige input.
+\item Forventningerne til programmet bør formuleres inden kodningen,
+  og testtilfælde bør opstilles inden kodning.  Dette kaldes
+  \emph{black-box testing}, da man ikke kender programmet, når
+  testtilfældene opstilles.
+\item Afprøvning bør afprøve alle dele af et program: Alle regler i en
+  match-with, alle grene i en if-elif-else, osv.  Dette kaldes
+  \emph{white-box testing}, da man skal kende programmets struktur.
+\item Gør testudskrifter ensartede, så det er nemt at se, når en test
+  skiller sig ud.
+\end{itemize}
+
+\end{frame}
+
+\end{document}

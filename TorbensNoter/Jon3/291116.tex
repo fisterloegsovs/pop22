@@ -1,0 +1,587 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Moduler}
+
+\date[2016]{PoP 29112016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Hvad er moduler?}
+
+\begin{itemize}
+\item 
+Et modul er an samling af erklæringer (af typer, funktioner, variable,
+osv.), som kan bruges af andre programmer.
+
+\item 
+Vi kender moduler for lister, strings, og andre typer, når vi skriver
+f.eks.~\texttt{List.map}, \texttt{String.concat}, \texttt{Array.map},
+osv.
+
+\item 
+Bemærk, at en funktion som f.eks.\ \texttt{map} findes i flere
+moduler: \texttt{List}, \texttt{String}, \texttt{Option},
+\texttt{Set}, \texttt{Array}, og flere. Ved at præfixe med modulnavnet
+kan vi entydigt bruge flere funktioner med samme navn.  Vi siger, at
+hvert modul har sit eget \emph{namespace}.
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Hvordan man laver et modul}
+
+Et modul har filendelsen \texttt{.fs}, og starter med en linje
+
+\vspace{1ex}
+\texttt{module \emph{filnavn}}
+
+\vspace{1ex}
+Så filen \texttt{MyModule.fs} skal starte med linjen \texttt{module
+  MyModule}.
+
+\vspace{2ex}
+Et modul indeholder erklæringer på samme måde som en \texttt{.fsx}
+fil.
+
+\vspace{1ex}
+Eksempel:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+module MyModule
+
+let rec fib x =
+  if x < 2 then x else fib (x-1) + fib (x-2)
+
+printfn "fib 7 = %d" (fib 7)
+\end{verbatim}
+\renewcommand{\baselinestretch}{1.0}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Brug af egne moduler, variant 1: \texttt{fsharpi}}
+
+Hvis vi bruger kommandoen \texttt{fsharpi MyModule.fs}, får vi
+følgende output:
+
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+F# Interactive for F# 4.0 (Open Source Edition)
+Freely distributed under the Apache 2.0 Open Source License
+
+For help type #help;;
+
+[Loading /home/torbenm/Skrivebord/PoP2016/MyModule.fs]
+fib 7 = 13
+
+namespace FSI_0002
+  val fib : x:int -> int
+
+>
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Modulets kode udføres som  en \texttt{.fsx} fil, bortset fra:
+
+\begin{enumerate}
+\item Man får at vide, at et nyt \emph{namespace} er erklæret.
+
+\item Navne og typer på erklæringerne i modulet udskrives.
+
+\item \texttt{fsharpi} kører ikke færdig, men standser ved et prompt
+  (\texttt{>}).
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Brug af egne moduler, variant 1: \texttt{fsharpi} (fortsat)}
+
+Fra prompten kan vi kalde funktioner fra modulet ved at præfixe med
+modulnavnet, f.eks.
+
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+> MyModule.fib 10;;
+val it : int = 55
+> 
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Alternativt kan man \emph{åbne} modulet og kalde funktionerne uden
+præfix:
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+> open MyModule;;
+> fib 12;;
+val it : int = 144
+> 
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+\textcolor{darkred}{Det anbefales, at man ikke åbner et modul, med mindre man har helt styr
+på, at der ikke er navne i modulet, der overskygger andre navne.}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Brug af egne moduler, variant 2:\\ \texttt{fsharpi} sammen
+  med \texttt{.fsx} fil}
+
+Hvis vi laver en fil \texttt{callFib.fsx} med indholdet
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+printfn "fib 20 = %d" (MyModule.fib 20)
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+kan vi køre kommandoen \texttt{fsharpi MyModule.fs callFib.fsx},
+hvilket giver følgende output:
+
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+fib 7 = 13
+fib 20 = 6765
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+hvorefter \texttt{fsharpi} terminerer.  Bemærk, at typerne af navnene
+i modulet ikke udskrives.
+
+Man kan inde fra \texttt{callFib.fsx} også åbne modulet og kalde
+\texttt{fib} uden præfix.  \textcolor{darkred}{Men lad være med det}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Oversættelse af moduler}
+
+Vi kan oversætte modulet separat fra andre programmer for at lave en
+blibloteksfil: \texttt{fsharpc -a MyModule.fs} producerer filen
+\texttt{MyModule.dll}.
+
+\vspace{1ex}
+Vi kan nu kalde \texttt{fsharpi -r MyModule.dll}.  Dette giver
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+F# Interactive for F# 4.0 (Open Source Edition)
+Freely distributed under the Apache 2.0 Open Source License
+
+For help type #help;;
+
+>
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Kommandoen \texttt{fsharpi -r MyModule.dll callFib.fsx} giver
+
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+fib 20 = 6765
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+
+Bemærk, at \texttt{printfn} kommandoen fra \texttt{MyModule.fs} ikke
+bliver udført, hverken under oversættelse eller kørsel.
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Oversættelse af programmer, der bruger moduler}
+
+Vi kan oversætte et modul sammen med et program:
+
+\vspace{1ex}
+\texttt{fsharpc MyModule.fs callFib.fsx}
+
+\vspace{1ex}
+hvilket giver filen \texttt{callFib.exe}, som ved kørsel med mono
+giver
+
+\vspace{1ex}
+\texttt{fib 20 = 6765}
+
+\vspace{1ex}
+Hvis vi allerede har oversat modulet, kan vi i stedet oversætte med kommandoen
+
+\vspace{1ex}
+\texttt{fsharpc -r MyModule.dll callFib.fsx}
+
+\vspace{1ex} Oversættelsen er nu hurtigere, og det genererede program er
+en smule mindre, men det gør det samme som før, når det udføres med mono.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Signaturer}
+
+En \emph{signatur} (også kaldet \emph{interface}) er en delvis specifikation
+af et modul på samme måde som en type er en delvis specifikation af en værdi.
+
+Ideen er, at brugeren af en modul kan nøjes med at se signaturen og
+ikke behøver at se på implementeringen af modulet.  En  signatur for
+\texttt{MyModule} er en fil \texttt{MyModule.fsi} med indholdet
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+module MyModule
+
+val fib : int -> int
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Vi kan oversætte modulet sammen med dets signatur med kommandoen
+
+\renewcommand{\baselinestretch}{0.82}
+{\small
+\begin{verbatim}
+fsharpc -a MyModule.fsi MyModule.fs
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Bemærk, at signatur og modul skal have samme filnavn (pånær endelsen),
+og at de skal starte med samme linje, der angiver modulets navn (som
+skal være identisk med filnavnet).
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Effekten af at bruge en signatur}
+
+Når et modul oversættes sammen med en signatur, har det to effekter:
+
+\begin{enumerate}
+\item Oversætteren verificerer, at modulet stemmer overens med
+  signaturen, dvs. at alle navne i signaturen findes i modulet, og med
+  samme type.
+\item Navne fra modulet, som ikke er specificeret i signaturen, er
+  skjult, så de ikke kan bruges udenfor modulet.  Dermed kan modulet
+  definere hjælpefunktioner osv, som ikke kan ses udefra, og som
+  derfor kan ændres uden at brugerne af modulet behøver vide det.
+\end{enumerate}
+
+Det anbefales, at man laver en signatur \emph{inden} man skriver
+implementeringen af et modul.  Dokumentationskommentarer skrives som
+regel i signaturen, så man ikke behøver at se i implementeringsfilen.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel: \texttt{MakeBMP.fsi} (ikke \texttt{makeBMP.fsi})}
+
+\renewcommand{\baselinestretch}{0.65}
+{\scriptsize
+\begin{verbatim}
+module MakeBMP
+/// Functions for reading and writing BMP files.
+
+/// <summary> Create BMP file from size and colour function</summary>
+/// <example>
+/// The call <c>makeBMP "gradient" 128 256 (fun (i,j) -> (i+i,j,0))</c>
+/// creates a file <c>gradient.bmp</c> containing a 128×256 pixel image
+/// showing a red/yellow/green gradient.
+/// . . .  (en del udeladt) . . .
+val makeBMP : string -> int -> int -> (int*int -> int*int*int) -> unit
+
+/// <summary> Create BMP file from a colour array</summary>
+/// <example>
+/// The call <c>makeBMParray "something"  colourArray</c>
+/// creates a file <c>something.bmp</c> containing a pixel image
+/// with size and colours as specified in the array.
+/// . . .  (en del udeladt) . . .
+val makeBMParray : string -> (int*int*int) [,] -> unit
+
+/// <summary> Reads a BMP file into a colour array</summary>
+/// <example>
+/// The call <c>readBMParray "something"</c>
+/// reads a file <c>something.bmp</c> containing a pixel image.
+/// . . .  (en del udeladt) . . .
+val readBMParray : string -> (int*int*int) [,]
+
+/// <summary> Reads a BMP file and creates funtion</summary>
+/// . . .  (en del udeladt)
+val readBMP : string -> int*int*(int*int -> (int*int*int))
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel fortsat: \texttt{MakeBMP.fs}}
+
+\renewcommand{\baselinestretch}{0.65}
+{\scriptsize
+\begin{verbatim}
+module MakeBMP  // See MakeBMP.fsi for documentation
+open System
+
+let openOut fname =
+  new IO.BinaryWriter
+        (IO.File.Open (fname + ".bmp", IO.FileMode.Create, IO.FileAccess.Write))
+
+let openIn fname =
+  new IO.BinaryReader
+        (IO.File.Open(fname + ".bmp", IO.FileMode.Open, IO.FileAccess.Read))
+
+let makeBMP fname w h cols =
+ if w<1 || w>8192 || h<1 || h>8192
+ then failwith "Width and height must be between 1 and 8192\n"
+ else
+  let ofile = openOut fname
+  // Masser af kode udeladt
+  ofile.Close()
+
+
+let makeBMParray fname (colsArray : (int*int*int) [,]) =
+  makeBMP fname (Array2D.length1 colsArray) (Array2D.length2 colsArray)
+          (fun (i,j) -> colsArray.[i,j])
+
+let readBMParray fname =
+  let ifile = openIn fname
+  // Masser af kode udeladt
+  ifile.Close();
+  cols
+
+let readBMP fname =
+  let arr = readBMParray fname
+  (Array2D.length1 arr, Array2D.length2 arr, fun (i,j) -> arr.[i,j])
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Typeerklæringer i moduler}
+
+Vi har en implementeringsfil \texttt{Number.fs} med indholdet
+
+\renewcommand{\baselinestretch}{0.7}
+{\footnotesize
+\begin{verbatim}
+module Number
+
+type number = I of int | F of float
+
+let toString x =
+  match x with
+  | I n -> sprintf "%d" n
+  | F a -> sprintf "%g" a
+
+let ofString (s : string) =
+  try I (int s)
+  with _ -> F (float s)
+
+let add x y =
+  match (x, y) with
+  | (I m, I n) -> I (m + n)
+  | (F a, F b) -> F (a + b)
+  | (I m, F b) -> F (float m + b)
+  | (F a, I n) -> F (a + float n)
+
+let times a b =
+  match (a,b ) with
+  | (I m, I n) -> I (m * n)
+  | (I m, F y) -> F (float m * y)
+  | (F x, I n) -> F (x * float n)
+  | (F x, F y) -> F (x * y)
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Typeerklæringer i moduler (fortsat)}
+
+Vi kan lave en tilhørende signaturfil \texttt{Number.fsi} enten som
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+module Number
+
+type number = I of int | F of float
+val toString : number -> string
+val ofString : string -> number
+val add : number -> number -> number
+val times : number -> number -> number
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+eller som
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+module Number
+
+type number
+val toString : number -> string
+val ofString : string -> number
+val add : number -> number -> number
+val times : number -> number -> number
+\end{verbatim}
+}
+\renewcommand{\baselinestretch}{1.0}
+
+Forskellen er, at den anden variant skjuler konstruktorerne \texttt{I}
+og \texttt{F}, så man kun kan bygge værdier af typen \texttt{number} med
+\texttt{ofString}, og se værdierne med \texttt{toString}.
+
+Dermed er \texttt{number} en \emph{abstrakt type}.
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Overloadede operatorer}
+
+Vi har set, at operatorer såsom \texttt{+} og \texttt{*} er defineret
+på flere forskellige typer: \texttt{int}, \texttt{float},
+\texttt{string} (kun \texttt{+}), osv.
+
+\vspace{1ex}
+
+Vi kan også definere vores egne udgaver af overloadede operatorer
+(både eksisterende og nye) ved at bruge moduler.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel på overloadede operatorer}
+
+
+Til filen \texttt{Number.fs} tilføjer vi linjerne
+
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+type number with
+     static member (+) (x,y) = add x y
+     static member ( * ) (x,y) = times x y
+\end{verbatim}
+}
+
+Og i signaturen ændrer vi typeerklæringen til hhv.
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+type number =
+     | I of int | F of float
+     static member (+) : number * number -> number
+     static member ( * ) : number * number -> number
+\end{verbatim}
+}
+
+eller
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+[<Sealed>]
+type number =
+     static member (+) : number * number -> number
+     static member ( * ) : number * number -> number
+\end{verbatim}
+}
+
+Uanset versionen, kan man nu i \texttt{fsharpi} skrive f.eks.
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+Number.toString
+  (Number.ofString "33" +
+         Number.ofString "7" * Number.ofString "33.33")
+\end{verbatim}
+}
+
+\texttt{\footnotesize }
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Opsummering}
+
+Moduler bruges til
+
+\begin{itemize}
+\item Opdeling af programmer i mindre dele med veldefinerede
+  grænseflader (\emph{separation of concerns}).
+\item Biblioteksfunktioner, der bruges af flere programmer.
+\item Separat oversættelse af dele af programmer.
+\item Abstraktion: At skjule implementeringsdetaljer, så de kan
+  ændres uden at andre programmer / dele af programmet påvirkes
+  (\emph{information hiding}).
+\item Definition af overloadede infix-operatorer.
+\end{itemize}
+
+Bemærk: Moduler er ikke klasser/objekter, selv om der er ligheder.
+
+\end{frame}
+
+\end{document}
