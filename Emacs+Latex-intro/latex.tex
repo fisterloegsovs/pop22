@@ -1,12 +1,17 @@
 \documentclass[a4paper]{report}
 
 \usepackage{cmap}
-\usepackage[utf8x]{inputenc}
-\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
 \usepackage[danish]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage[all]{hypcap}
+\usepackage{newunicodechar}
+
+
+\newunicodechar{×}{\ensuremath\times}
 
 \begin{document}
 \title{En superkort introduktion til \LaTeX}
@@ -21,9 +26,10 @@ I kurset ``Programmering og problemløsning'' (PoP) bruger vi
 værktøjerne Emacs og \LaTeX.
 
 Emacs er et tekstredigeringsværktøj, der er egnet til at redigere
-programmer og lignende.  Et andet dokument introducerer Emacs. Ulig f.eks.\ Microsoft Word og Libre Office
-Writer redigerer man med Emacs ``ren'' tekst: Der er ikke formatering
-såsom fed skrift, kursiv, osv.  Til dette bruger vi \LaTeX.
+programmer og lignende.  Et andet dokument introducerer Emacs.  Ulig
+f.eks.\ Microsoft Word og Libre Office Writer redigerer man med Emacs
+``ren'' tekst: Der er ikke formatering såsom fed skrift, kursiv, osv.
+Til dette bruger vi \LaTeX.
 
 \LaTeX\ (som udtales ``lahtek'') er et dokumentformateringsværktøj.
 Det fungerer ligesom HTML ved, at man skriver formateringskoder ind i
@@ -84,6 +90,11 @@ hente udvidelser osv.  Hvis du bruger Ubuntu Softwarecenter, så vælg
 pakkerne \texttt{texlive-full} og \texttt{texlive-lang-all}.  Det
 fylder en del, og det tager en del tid at hente, så sørg for at have
 en god Internetforbindelse.
+
+En alternativ metode til Ubuntu er at følge instruktionerne på
+\url{https://github.com/scottkosty/install-tl-ubuntu} (Quick download
+efterfulgt af \verb|sudo ./install-tl-ubuntu|).  Denne metode skulle
+sikre, at den seneste version af \textsf{TeX Live} installeres.
 
 \paragraph{MacOs X.}
 
@@ -299,8 +310,10 @@ indledningen, som dermed bliver
 \begin{verbatim}
 \documentclass[a4paper]{report}
 
-\usepackage[utf8x]{inputenc}
-\usepackage{latexsym}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
 \usepackage[danish]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -325,17 +338,18 @@ tekster, uden at \LaTeX\ måske fortolker dem som dele af kommandoer:
 Hvis man i sin tekst gerne vil bruge disse tegn, kan man i de fleste
 tilfælde bare sætte et \verb|\| foran, så teksten \verb|\{\$\_\%\}|
 producerer tegnfølgen \{\$\_\%\} i PDF-filen.  Der er dog undtagelser:
-Tegnet $\backslash$~produceres med kommandoen \verb|$\backslash$|,
-tegnet \~{} med kommandoen \verb|\~{}|, tegnet \^{} med kommandoen
-\verb|\^{}|, og tegnene [ og ] kan uden videre skrives, som de er, så
-længe de ikke kommer lige efter et kommandonavn.
+Tegnet \textbackslash{} produceres med kommandoen
+\verb|\textbackslash{}|, tegnet \~{} med kommandoen \verb|\~{}|,
+tegnet \^{} med kommandoen \verb|\^{}|, og tegnene [ og ] kan uden
+videre skrives, som de er, så længe de ikke kommer lige efter et
+kommandonavn.
 
 Hvis man bruger disse tegn til andet end kommandoer, vil man enten få
 fejlmeddelelser, eller man vil få et andet resultat, end det man
 venter.  Specielt vil tegnet \verb|~| i reglen vises som et blanktegn,
-og alle tegn mellem et \verb|%| og næste linjeskift ignoreres af
-\LaTeX.  Dette kan man bruge til at skrive noter om ting, man gerne
-vil skrive ind i dokumentet senere, f.eks.\
+og alle tegn mellem et \%{} og næste linjeskift ignoreres af \LaTeX.
+Dette kan man bruge til at skrive noter om ting, man gerne vil skrive
+ind i dokumentet senere, f.eks.\
 
 {\small
 \begin{verbatim}
@@ -444,8 +458,10 @@ navnet \texttt{simple.tex}, og kør kommandoen
 \begin{verbatim}
 \documentclass{report}
 
-\usepackage[utf8x]{inputenc}
-\usepackage{latexsym}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
 \usepackage[danish]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -665,11 +681,11 @@ afsnit~\ref{supplerendeLatex} for detaljer om, hvordan man bruger
 
 \section{Formler}
 
-\LaTeX\ er særlig god til at skrive matematiske formler.  Vi har ikke
-plads her til at dække alle former for formler, så vi holder os til
-det simple.  En formel kan skrives enten inde i et tekstafsnit eller
-på en linje for sig, hvor den bliver centreret og omgivet af blanke
-linjer.  Se f.eks.\ forskellen på $ax^2+bx+c=0$ og
+\LaTeX\ er specielt god til at skrive matematiske formler.  Vi har
+ikke plads her til at dække alle former for formler, så vi holder os
+til det simple.  En formel kan skrives enten inde i et tekstafsnit
+eller på en linje for sig, hvor den bliver centreret og omgivet af
+blanke linjer.  Se f.eks.\ forskellen på $ax^2+bx+c=0$ og
 
 \[ax^2+bx+c=0\]
 
@@ -712,7 +728,7 @@ afsnit~\ref{supplerendeLatex} for de mere avancerede dele.
 Man kan inkludere billeder i sin tekst med kommandoen
 \verb|\includegraphics|, For eksempel er billedet af Emacs-skærmen i
 Emacs-introduktionen lavet med kommandoen
-\verb|\includegraphics[width=\textwidth]{emacs-welcome.png}|. hvor\newline
+\verb|\includegraphics[width=\textwidth]{emacs-welcome.png}|, hvor\newline
 \texttt{emacs-welcome.png} er en fil, der indeholder billedet i
 billedformatet PNG.  Breddeangivelsen skalerer billedet til bredden af
 teksten, idet \verb|\textwidth| angiver denne bredde.  Man kan også
@@ -745,19 +761,25 @@ udvidelsespakker til den grundlæggende \LaTeX.  De viste pakker gør
 følgende:
 
 \begin{description}
-\item[\texttt{$\backslash$usepackage[utf8x]\{inputenc\}}] tillader
-  danske bogstaver og andre symboler i input.
-\item[\texttt{$\backslash$usepackage\{latexsym\}}] udvider udvalget af
+\item[\texttt{\textbackslash{}usepackage\{cmap\}}] sørger for, at tekst
+  kan klippes fra PDF'en uden, at æ, ø og å og andre mærkelige
+  bogstaver vises forkert.
+\item[\texttt{\textbackslash{}usepackage[T1]\{fontenc\}}] indikerer, at vi
+  bruger PostScript type-1 skrifsnit.
+\item[\texttt{\textbackslash{}usepackage[utf8]\{inputenc\}}] tillader
+  danske bogstaver og andre symboler i input.  Hvis du ikke har den
+  nyeste version af \LaTeX{}, kan du bruge \texttt{utf8x} i stedet.
+\item[\texttt{\textbackslash{}usepackage\{amssymb\}}] udvider udvalget af
   matematiske symboler.
-\item[\texttt{$\backslash$usepackage[danish]\{babel\}}] betyder, at
+\item[\texttt{\textbackslash{}usepackage[danish]\{babel\}}] betyder, at
   visse autogenererede tekster (f.eks. ``Resumé'', ``Indhold'' og
   ``Kapitel'') skrives på dansk, sørger for at ord deles efter
   (tilnærmede) danske regler, skriver datoer (\verb|\today|) på dansk,
   og lignende sprogspecifikke ting.  Findes til de fleste sprog.
-\item[\texttt{$\backslash$usepackage\{graphicx\}}] tillader indsætning
+\item[\texttt{\textbackslash{}usepackage\{graphicx\}}] tillader indsætning
   af billeder med \verb|\includegraphics| kommandoen.
-\item[\texttt{$\backslash$usepackage\{hyperref\}} og 
-\texttt{$\backslash$usepackage[all]\{hypcap\}}] gør krydsreferencer
+\item[\texttt{\textbackslash{}usepackage\{hyperref\}} og 
+\texttt{\textbackslash{}usepackage[all]\{hypcap\}}] gør krydsreferencer
   til links.
 \end{description}
 
@@ -773,11 +795,14 @@ automatisk efter behov.  Nogle brugbare pakker er
 \item[color] bruges til at lave farvet tekst.
 \item[geometry] bruges til at ændre størrelsen af margener, papir,
   osv.
-\item[fontenc] bruges til at indkode skriftsnit.  
-  \verb|\usepackage[T1]{fontenc}| tillader PostScript type-1
-  skriftsnit.
-\item[cmap] Gør teksten i producerede PDF-filer søgbar og kopierbar.
-  Bør komme før \texttt{fontenc} og \texttt{babel} i indledningen.
+\item[newunicodechar] bruges sammen med utf8-pakken til at udvide
+  mængden af unicodetegn, man kan have i input.  f.eks.\ vil
+  kommadoen\newline
+  \verb|\newunicodechar{×}{\ensuremath\times}|\newline tillade brugen
+  af ×-tegnet i input, hvor man ellers skulle skrive \verb|\times| i
+  math mode og \verb|$\times$| i text mode. \verb|\ensuremath| er en
+  kommando, der skriver sit argument i math mode, uanset om man er i
+  math mode eller ej.
 \end{description}
 
 \noindent
@@ -816,9 +841,9 @@ Der er et par småting, men skal være opmærksom på, når man bruger
 
 \begin{itemize}
 \item Blanktegn lige efter en kommando, der ikke har parametre i
-  krølleklammer, ignoreres.  For eksempel vil teksten
-  \verb|\LaTeX styrer!| give resultatet {\LaTeX styrer!}  For at få et
-  blanktegn ind alligevel give kommandoen en tom parameter, altså
+  krølleklammer, ignoreres.  For eksempel vil \verb|\LaTeX styrer!|
+  formatteres til {\LaTeX styrer!}  For at få et blanktegn ind
+  alligevel, kan man give kommandoen en tom parameter, altså
   \verb|\LaTeX{} styrer!|, som giver resultatet {\LaTeX\ styrer!}.
   Det er ikke nødvendigt, hvis kommandoen følges af andet end
   blanktegn eller linjeskift, som f.eks.\ punktum eller komma.
@@ -831,10 +856,10 @@ Der er et par småting, men skal være opmærksom på, når man bruger
   \emph{fejlmeddelelse}, da den netop ikke hindrer produktion af
   output.  Efter beskeden \verb|Overfull \hbox|, angives hvor meget,
   teksten strækker sig ud, i dette tilfælde
-  \verb|(24.74678pt too wide)| samt en angivelse af, hvor i teksten,
+  \verb|(10.22188pt too wide)| samt en angivelse af, hvor i teksten,
   dette forekommer.  Forkortelsen \verb|pt| står for ``punkt''; som er
-  en typografisk måleenhed, der er ca.\ 0.35mm, så 24.74678pt er
-  ca.\ 8.66mm.  I det viste tilfælde hjælper det at sætte \verb|{}|
+  en typografisk måleenhed, der er ca.\ 0.35mm, så 10.22188pt er
+  ca.\ 3.58mm.  I det viste tilfælde hjælper det at sætte \verb|{}|
   efter \verb|\LaTeX|, men i andre tilfælde kan man sætte kommandoen
   \verb|\newline| før det ord, der er for langt.  \LaTeX\ forsøger
   selv at dele ord efter regler for dansk orddeling, men hvis den er i
@@ -848,9 +873,10 @@ Der er et par småting, men skal være opmærksom på, når man bruger
   Man kan også bruge \verb|\-|, hvis \LaTeX\ laver en forkert
   orddeling.  \LaTeX\ bruger et antal tommelfingerregler til
   orddeling, og det går nogle gange galt.  F.eks.\ vil \LaTeX\ dele
-  ordet ``menupunkt'' som ``men-upunkt'', hvilket ikke er særligt
-  kønt.  For at hindre dette, kan man skrive \verb|menu\-punkt|, som
-  fortæller, at ordet kun må deles der.
+  ordet ``menupunkt'' som ``men-upunkt'', hvilket ikke er særligt kønt
+  (og slet ikke korrekt).  For at hindre dette, kan man skrive
+  \verb|menu\-punkt|, som fortæller, at ordet kun må deles der.  Hvis
+  ordet ikke deles, vises bindestregen ikke.
 
   Lad dog være med at bekymre dig om forkert orddeling eller lige
   højrekant indtil du er færdig med at skrive rapporten: Det kan

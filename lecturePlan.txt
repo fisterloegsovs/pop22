@@ -1,0 +1,126 @@
+Programmering og problemløsning
+
+—————————————————————————————————————
+20160923
+22. For og while løkker
+23. Betingede udtryk
+24. Rekursive funktioner
+
+Jeg nåede hertil!
+
+13. Currying
+let mul x y = x*ylet timesTwo = mul 2.0 
+printfn "%g" (mul 5.0 3.0) 
+printfn "%g" (timesTwo 3.0)
+
+25. Gensidigt rekursive funktioner
+
+11. Anonyme funktioner
+let first = fun x y -> x 
+printfn "%d" (first 5 3)
+
+12. Funktioner som argument
+let apply f x y = f x ylet mul = fun a b -> a * b 
+printfn "%d" (apply mul 3 6)
+
+14. Forskel på funktioner og procedure
+15. Brugerdefinerede operatorer
+19. Sideeffekter
+
+—————————————————————————————————————
+20160920
+9. Printf funktionerne, placeholder, 
+
+16. Variable (mutable, <-)
+17. Dynamisk virkefelt
+let testScope x =  let mutable a = 3.0 
+  let f z = a * z  a <- 4.0  f xprintfn "%A" (testScope 2.0)
+
+10. Leksikal scope 
+let testScope x = 
+  let a = 3.0  let f z = a * z 
+  let a = 4.0  f xprintfn "%A" (testScope 2.0)
+
+18. Variable som returværdier (ref, !, :=)
+let x = ref 0 
+printfn "%d" !x 
+x := !x + 1 
+printfn "%d" !x
+
+20. Kommentarer
+21. Kommentarstandarden, xml, html, og C# notation
+
+—————————————————————————————————————
+20160919
+1. værdibinding, letvægtssyntaks, typespecifikation
+2. sekvenser, let p = 2.0 in printfn "%A" p; printfn "%A" (3.0 ** p)
+3. virkefelter: let p = 3 in let p = 4 in printfn " %A" p;
+4. gen-værdibinding, virkefelt på niveau 0, script-fragmenter, 
+5. blokke og virkefelter
+6. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
+7. Generiske funktioner (let second a b = b)
+8. Funktioner, der indeholder værdibindinger og funktionsbindinger
+
+—————————————————————————————————————
+20160916
+1. EBNF - sprog til at definere sprog i. Terminaler, options (valgmuligheder), gentagelser, rekursion.
+2. Char escape sekvenser
+3. Strenge, streng indicering og slicing, verbatim
+4. Bolsk algebra, sandhedstabeller, sammenligningsoperatorer.
+
+—————————————————————————————————————
+20160913
+1. Hvordan lærer man at programmere? Vælg et sprog, lær sproget, øvelse gør mester, brug det i praksis.
+2. Hvordan løser man et problem: Forstå, design, implementer, reflekter
+3. Filendelser: .fsx, fsscript, .exe, .fs, .fsi. Kørsel af fsharp på Windows og OSX, fsharpi, fsharpc+mono, 
+4. Bits, bytes, heltal. Talsystemer, base-sum formel. Binær: division med 2 algoritme. Hexadecimal, oktal.
+5. Flydende tal, tegn
+6. Typer: int, double, char, string, bool
+7. Operatorer: +, -, *, /, %, **. For heltal, flydende kommatal, tegn og strenge
+8. Literal typer, 
+
+—————————————————————————————————————
+20160912
+1. Space landing, matematikken bag, gennemgang af programmet.
+2. Aflevering af 1g
+3. Opgave 2i, kort gennemgang, hjemmeside med beskrivelsen af reglerne
+4. Demonstration af at starte fsharpi i windows og osx inkl. path
+
+—————————————————————————————————————
+20160909
+Terminal+Emacs+Latex
+Torben
+
+—————————————————————————————————————
+20160906
+Scratch
+1. Kamera
+2. Walking med variabel retning
+3. Collect Laptops (deligering af ansvar)
+4. Space landing, demo
+
+Pointer:
+1. Veldefineret tilstand ved start (Walking, første kommandoer bør være at flytte til startsted og start retning)
+2. Delegering og lokale versus globale variable. (Collect …: Skal score være i Laptops eller i Octopus?  Hvem har brug for viden, og hvem kunne have glæde af viden om score?)
+3. Event drevent eller if-then-else loop: Hvad giver det “simpleste” program. Hvilke parametre kan vi bruge til at vurdere simplicitet?
+
+—————————————————————————————————————
+20160905
+Velkommen (Martin, Christina, Jon (kursusansvarlig), instruktorer)
+Hvad skal vi lærer (imperativ-, funktions- og objektorienteret programmering)
+Oversigt over kurset (Canvas, kurser.ku.dk, øvelseshold, lokaler, grupper, scratch, fsharp, opgaver, ugesedler og aflevering)
+God opførsel på forum, chat, forelæsninger, øvelser, grupper
+
+Læs 1g
+
+Imperativ programmering:
+
+Kageopskrift er et program
+Tælleopskrift, timing af 2 måder (sekventielt eller parallelt)
+Scratch:
+1. Hello (sprite, say, mouse, loop)
+2. Count (variables, wait)
+3. Walking (costumes, touching, direction, if-then)
+4. MoveToMouse (clone)
+5. Bat bounce (putting it all together)
+
