@@ -1,0 +1,58 @@
+øv - 1-0-04, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-04, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-04, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-04, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-10, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-10, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-10, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-10, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-14, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-14, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-14, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-14, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-18, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-18, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-18, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-18, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-22, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-22, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-22, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-22, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-26, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-26, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-26, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-26, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-30, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-30, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-30, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-30, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-34, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-34, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-34, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-34, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - 1-0-37, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 1-0-37, Universitetsparken 1-3, DIKU, mandag 45
+øv - 1-0-37, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 1-0-37, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - bib 4-0-17, Universitetsparken 1-3, DIKU, mandag 36-41, 43-44
+øv - 3-1-25, Universitetsparken 1-3, DIKU, mandag 45
+øv - 3-1-25, Universitetsparken 1-3, DIKU, tirsdag 36-41, 43-45
+øv - 3-1-25, Universitetsparken 1-3, DIKU, fredag 36-41, 43-45
+
+øv - A110, Universitetsparken 5, HCØ, mandag 36-41, 43-44
+øv - A110, Universitetsparken 5, HCØ, tirsdag 36-41, 43-45
+Aud 02 i August Krogh bygningen, fredag 36-41, 43-45
+
+øv - A111, Universitetsparken 5, HCØ, mandag 36-41, 43-44
+øv - A111, Universitetsparken 5, HCØ, tirsdag 36-41, 43-45
+Kursussal 1 i Universitetsparken 15, fredag 36-41, 43-45
+ 
