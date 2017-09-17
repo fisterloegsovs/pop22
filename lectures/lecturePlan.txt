@@ -51,7 +51,8 @@ printfn "%d" !x
 21. Kommentarstandarden, xml, html, og C# notation
 
 —————————————————————————————————————
-20160919
+3.1
+
 1. værdibinding, letvægtssyntaks, typespecifikation
 2. sekvenser, let p = 2.0 in printfn "%A" p; printfn "%A" (3.0 ** p)
 3. virkefelter: let p = 3 in let p = 4 in printfn " %A" p;
@@ -62,37 +63,120 @@ printfn "%d" !x
 8. Funktioner, der indeholder værdibindinger og funktionsbindinger
 
 —————————————————————————————————————
-20160916
-1. EBNF - sprog til at definere sprog i. Terminaler, options (valgmuligheder), gentagelser, rekursion.
-2. Char escape sekvenser
-3. Strenge, streng indicering og slicing, verbatim
-4. Bolsk algebra, sandhedstabeller, sammenligningsoperatorer.
+2.3
+
+Operatorer: +, -, *, /, %, **. For heltal, flydende kommatal, tegn og strenge
+3 + 4
+3.0 + 4.0
+3 + 4.0
+5 / 2
+5 % 2
+2 * (5 / 2) + 5 % 2
+2.0 ** 3.0
+pown 2 3
+"hej " + "med " + "dig"
+
+Præcedens: Vis tabel 5.4
+exp 0.0
+exp 1.0
+exp 0.0 + 1.0
+
+Casting og afrunding
+float 3
+int 3.2
+int 3.6
+int (3.2 + 0.5)
+int (3.6 + 0.5)
+int 'a'
+int 'A'
+char 65
+char (int 'c' - int 'a' + int 'A')
+char (int 'c' -int 'a' + int 'A') // unary minus
+
+Unære versus binære operatorer:
+2 - 3
+-3
+- 3
+char (int 'c' + -int 'a' + int 'A')
+
+Strenge, streng indicering og slicing, verbatim
+"abcdefghijkl".[1]
+"abcdefghijkl".[1..4]
+"abcdefghijkl".[..4]
+"abcdefghijkl".[4..]
+"abcdefghijkl".Length
+"abcdefghijkl".[0..11]
+
+Bolsk algebra, sandhedstabeller
+Sand = 1
+Falsk = 0
+a && b // som gange
+a || b // som plus
+not a
+
+Sammenligningsoperatorer.
+3 < 4
+3 > 4
+3 <> 4
+3 = 4
+not (3 = 4)
+not 3 = 4 // funktionspræcedens!
 
 —————————————————————————————————————
-20160913
-1. Hvordan lærer man at programmere? Vælg et sprog, lær sproget, øvelse gør mester, brug det i praksis.
-2. Hvordan løser man et problem: Forstå, design, implementer, reflekter
-3. Filendelser: .fsx, fsscript, .exe, .fs, .fsi. Kørsel af fsharp på Windows og OSX, fsharpi, fsharpc+mono, 
-4. Bits, bytes, heltal. Talsystemer, base-sum formel. Binær: division med 2 algoritme. Hexadecimal, oktal.
-5. Flydende tal, tegn
-6. Typer: int, double, char, string, bool
-7. Operatorer: +, -, *, /, %, **. For heltal, flydende kommatal, tegn og strenge
-8. Literal typer, 
+2.2
+Husk at sige:
+  Aflevering 2i skal skrives i latex for at øve tabeller etc.
+  Der er en fejl i tabel 5.1
+  Emacs Workshop
+
+7. Bits, bytes, heltal. Talsystemer, base-sum formel. Binær: division med 2 algoritme. Hexadecimal, oktal.
+
+10-talsystemet vs. 2-talsystemet (lav tabel med 1 ~ 10^0, 10 ~ 10^1, …)
+Del-med-2 algoritmen
+
+8. Flydende tal, tegn
+Flydende tal. 
+
+ASCII vs. UTF8. Tegn og strenge, escape-sekvenser
+
+Literaler, vis Tabel 5.3 
 
 —————————————————————————————————————
-20160912
-1. Space landing, matematikken bag, gennemgang af programmet.
-2. Aflevering af 1g
-3. Opgave 2i, kort gennemgang, hjemmeside med beskrivelsen af reglerne
-4. Demonstration af at starte fsharpi i windows og osx inkl. path
+2.1
+1. Aflevering af 1g
+2. Opgave 2i, kort gennemgang, hjemmeside med beskrivelsen af reglerne
+3. Demonstration af at starte fsharpi i windows og osx inkl. path
+4. Hvordan lærer man at programmere? Vælg et sprog, lær sproget, øvelse gør mester, brug det i praksis.
+5. Hvordan løser man et problem: Forstå, design, implementer, reflekter
+6. Filendelser: .fsx, fsscript, .exe, .fs, .fsi. Kørsel af fsharp på Windows og OSX, fsharpi, fsharpc+mono, 
+
+Fsharp som lommeregner:
+357
+864
+357+864
+
+Gem og hent værdier:
+let a = 357let b = 864let c = a + bdo printfn "%A" c
+
+";;" i interaktiv modus
+"&&" notation
+
+Typer: 3, 3.0, '3', "3", 3e0, 3.0e0. Vis Tabel 5.1
 
 —————————————————————————————————————
-20160909
-Terminal+Emacs+Latex
-Torben
+1.3
+Terminal:
+Forskel mellem Windows, MacOS, og Linux
+dir/ls, cd, cp/copy, mkdir, rmdir, del/rm, echo
+
+Emacs:
+crtl. vs. meta, menuer, dele vinduer
+
+Latex:
+minimal, simple, advanced.
 
 —————————————————————————————————————
-20160906
+1.2
 Scratch
 1. Kamera
 2. Walking med variabel retning
@@ -105,7 +189,7 @@ Pointer:
 3. Event drevent eller if-then-else loop: Hvad giver det “simpleste” program. Hvilke parametre kan vi bruge til at vurdere simplicitet?
 
 —————————————————————————————————————
-20160905
+1.1
 Velkommen (Martin, Christina, Jon (kursusansvarlig), instruktorer)
 Hvad skal vi lærer (imperativ-, funktions- og objektorienteret programmering)
 Oversigt over kurset (Canvas, kurser.ku.dk, øvelseshold, lokaler, grupper, scratch, fsharp, opgaver, ugesedler og aflevering)

@@ -1,0 +1,97 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 4 - gruppeopgave}
+\author{Jon Sporring}
+\date{25.\ september - 4.\ oktober.\\Afleveringsfrist: onsdag d.\ 4.\ oktober kl. 22:00}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde grupper. Formålet er at arbejde med:
+\begin{itemize}
+\item Moduler og namespaces
+\item Afprøvning
+\end{itemize}
+ 
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+\section*{Øveopgaver}
+\begin{enumerate}[label=4ø.\arabic*,start=0]
+\item Denne opgave handler om opbygning af moduler
+  \begin{enumerate}
+  \item Lav en fil \texttt{Figure.fs}, der indeholder definitionerne af typer og funktioner, I brugte til løsning af øvelsesopgaverne om figurer på ugeseddel 6, mere specifikt typerne \texttt{point}, \texttt{colour} og \texttt{figure} og funktionerne \texttt{colourAt}, \texttt{makePicture}, \texttt{checkFigure}, \texttt{move} og \texttt{boundingBox}.  Tilføj linjen \texttt{module Figure} som første linje i denne fil.
+    \begin{enumerate}
+    \item Kør denne fil ved at skrive \texttt{fsharpi -r makeBMP.dll Figure.fs}.  Bemærk, hvad fsharpi fortæller om de definerede navne.
+      
+    \item Lav fra denne kørsel af fsharpi en definition af en variabel med navn \texttt{o63}, som indeholder figuren fra øveopgave 6.3.  Bemærk, at du skal bruge modulnavnet \texttt{Figure} som præfix, når du bruger konstruktorerne \texttt{Circle}, \texttt{Rectangle} og \texttt{Mix}.
+      
+    \item Åben modulet, og kald \texttt{makePicture} (nu uden præfix) til at lave en 100×150 pixel stor billedfil for figuren \texttt{o63}.
+    \end{enumerate}
+    
+  \item Lav en fil \texttt{Figure.fsi}, der indeholder en signatur til filen \texttt{Figure.fs}.
+    
+    \begin{enumerate}
+    \item Oversæt modulet med kommandoen \texttt{fsharpc -r makeBMP.dll -a Figure.fsi Figure.fs}
+      
+    \item Kør \texttt{fsharpi -r Figure.dll}, gentag definitionen af \texttt{o63} og lav et funktionskald, der finder bounding box til denne.
+    \end{enumerate}
+    
+  \item Udvid modulet fra forrige opgave, så kan vise billedet i et vindue: Kopier billedet ind i et bitmap:
+\begin{verbatim}
+let bitMap = new System.Drawing.Bitmap (width, height)
+\end{verbatim}
+    og vis resultatet med en picturebox control:
+\begin{verbatim}
+let pictureBox = new System.Windows.Forms.PictureBox ()
+\end{verbatim}
+    
+  \end{enumerate}
+\item Denne opgave handler om at definere overloadede operatorer.
+  
+  \begin{enumerate}
+  \item Udvid \texttt{Figure.fsi} og \texttt{Figure.fs} med overloadede definitioner af infixoperatorerne + og * (jvf.\ HR afsnit 7.3 og 7.4) med typerne
+    
+    \texttt{( + ) : figure * figure -> figure}
+    
+    og
+    
+    \texttt{( * ) : (int * int) * figure -> figure}
+
+    hvor \texttt{+} anvender konstruktøren \texttt{Mix} på sine argumenter
+    og \texttt{*} anvender funktionen \texttt{move} på sine argumenter.
+    
+  \item Genoversæt modulet og lav igen opgave ø2(b), men hvor du bruger \texttt{+} i
+    stedet for \texttt{Mix} til at konstruere figuren.  Bemærk, at du ikke
+    skal præfixe \texttt{+} med modulnavnet.
+    
+  \item Lav en ny figur, hvor du bruger både \texttt{+} og \texttt{*}.
+    
+  \end{enumerate}
+\end{enumerate}
+
+\section*{Afleveringsopgaver}
+Afleveringsopgaven omhandler to-dimensionelle vektorer. En to-dimensionel vektor (herefter blot vektor) er et geometrisk objekt som består af en retning og en længde. Typisk repræsenteres vektorer som par af tal $(x,y)$, hvor længden er $\sqrt{x^2+y^2}$ og retningen er $\tan^-1{y/x}$ når $x\neq 0$.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.45\textwidth]{vectorAddition}
+  \caption{Illustration of vector addition in two dimensions.}
+  \label{fig:vectorAddition}
+\end{figure}
+
+\begin{enumerate}[label=4g.\arabic*,start=0]
+\item \dots
+\end{enumerate}
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!4g0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 25/9:] Afslut 3i og start på øvelsesopgaverne fra 4g
+\item[Tirsdag 26/9:] Arbejd med øvelses- og afleveringsopgaverne
+\item[Fredag 29/9]  Arbejd med afleveringsopgaverne
+\end{description}
+
+\end{document}
