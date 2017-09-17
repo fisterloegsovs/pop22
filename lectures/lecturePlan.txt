@@ -53,14 +53,90 @@ printfn "%d" !x
 —————————————————————————————————————
 3.1
 
-1. værdibinding, letvægtssyntaks, typespecifikation
-2. sekvenser, let p = 2.0 in printfn "%A" p; printfn "%A" (3.0 ** p)
-3. virkefelter: let p = 3 in let p = 4 in printfn " %A" p;
-4. gen-værdibinding, virkefelt på niveau 0, script-fragmenter, 
-5. blokke og virkefelter
-6. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
-7. Generiske funktioner (let second a b = b)
-8. Funktioner, der indeholder værdibindinger og funktionsbindinger
+1. værdibinding, letvægtssyntaks
+let name = "World" in do printfn "Hello %A" name
+// Bemærk at bindingsnavne skal starte med et bogstav men kan derudover være næsten alt pånær nøgleord (Tabel 6.1) 
+
+//letvægts
+let name = "World"
+do printfn "Hello %A" name
+
+//letvægts, do er valgfrit
+let name = "World"
+printfn "Hello %A" name
+
+2. sekvenser, 
+let name = "World" in do printfn "Hello %A" name; do printfn "Goodbye %A" name
+
+let name = "World" 
+do printfn "Hello %A" name
+printfn "Goodbye %A" name
+
+2. virkefelter:
+let name = "World" in let name = "Jon" in do printfn "Hello %A" name
+
+// navne kan ikke overskrives i yderste virkefelt
+let name = "World" 
+let name = "Jon"
+do printfn "Hello %A" name
+
+// navne kan god overskrives i dybere virkefelt
+(
+  let name = "World" 
+  let name = "Jon"
+  do printfn "Hello %A" name
+)
+
+// bindinger i dybere virkefelter slettes, når der vendes tilbage
+let greeting = "World" 
+do printfn "%A" greeting
+(
+  let name = "Jon"
+  do printfn " %A" name
+)
+do printfn "%A %A" greeting name
+
+3. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
+
+let greetings (name : string) : string = "Hello " + name
+let str = greetings "Jon"
+do printfn "%A" str
+// Bemærk funktionstype: val greetings : name:string -> string
+
+// Typer bliver infereret i scriptblokke:
+let greetings name = "Hello " + name
+let str = greetings "Jon"
+do printfn "%A" str
+// Bemærk typer kan være partielt specificeret, parenteser er derfor nødvendige, for hvad ville
+//  let greetings name : string
+// betyde?
+
+// Hvilken type har:
+let sum x y = x + y
+// Kan bruges i
+let sum x y = x + y in do printfn "%A + %A = %A" 3 4 (sum 3 4)
+
+// Hvad med
+let sum x y = x + y in do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
+
+// Hvad så med
+let sum x y = x + y 
+do printfn "%A + %A = %A" 3 4 (sum 3 4)
+do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
+
+4. Generiske funktioner
+let second a b = b
+do printfn "second %A %A = %A" 3 4 (second 3 4)
+do printfn "second %A %A = %A" 3.0 4.0 (second 3.0 4.0)
+
+5. Funktioner, der indeholder værdibindinger og funktionsbindinger
+// a * x**2 + b * x + c = 0
+let solution a b c sgn =
+  let discriminant a b c =
+    b ** 2.0 - 2.0 * a * c
+  let d = discriminant a b c
+  (-b + sgn * sqrt d) / (2.0 * a)
+// Bemærk sidste udtryk skal være en værdi
 
 —————————————————————————————————————
 2.3
