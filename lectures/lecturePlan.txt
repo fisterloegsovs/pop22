@@ -1,57 +1,89 @@
 Programmering og problemløsning
 
 —————————————————————————————————————
-20160923
-22. For og while løkker
-23. Betingede udtryk
-24. Rekursive funktioner
+3.3
+1. Tupler
 
-Jeg nåede hertil!
-
-13. Currying
-let mul x y = x*ylet timesTwo = mul 2.0 
-printfn "%g" (mul 5.0 3.0) 
-printfn "%g" (timesTwo 3.0)
-
-25. Gensidigt rekursive funktioner
-
-11. Anonyme funktioner
-let first = fun x y -> x 
-printfn "%d" (first 5 3)
-
-12. Funktioner som argument
-let apply f x y = f x ylet mul = fun a b -> a * b 
-printfn "%d" (apply mul 3 6)
-
-14. Forskel på funktioner og procedure
-15. Brugerdefinerede operatorer
-19. Sideeffekter
-
-—————————————————————————————————————
-20160920
-9. Printf funktionerne, placeholder, 
-
-16. Variable (mutable, <-)
-17. Dynamisk virkefelt
-let testScope x =  let mutable a = 3.0 
-  let f z = a * z  a <- 4.0  f xprintfn "%A" (testScope 2.0)
-
-10. Leksikal scope 
-let testScope x = 
+2. Leksikals versus dynamisk virkefelt
+let leksikalskScope x = 
   let a = 3.0  let f z = a * z 
-  let a = 4.0  f xprintfn "%A" (testScope 2.0)
+  let a = 4.0  f xlet dynamiskScope x =  let mutable a = 3.0 
+  let f z = a * z  a <- 4.0  f xprintfn "%A vs. %A" (leksikalskScope 2.0) (dynamiskScope 2.0)
+// Bemærk: skygningen af a har ingen effekt på funktionen f i leksikalsk scope. Man kigger opad i teksten fra definitionen. I dynamisk scope er det er det, hvornår variablen tilgås.
 
-18. Variable som returværdier (ref, !, :=)
+3. Variable som returværdier (ref, !, :=)
 let x = ref 0 
 printfn "%d" !x 
 x := !x + 1 
 printfn "%d" !x
 
-20. Kommentarer
-21. Kommentarstandarden, xml, html, og C# notation
+4. Anonyme funktioner
+let first = fun x y -> x
+do printfn "%d" (first 5 3)
+
+5. Funktioner som argument
+let apply f x y  = f x y
+let mul = fun a b -> a * b
+do printfn "%d" (apply mul 3 6)
+
+6. Closures
+// inc eksemplet.
+
+—————————————————————————————————————
+3.2
+1. Funktioner, der indeholder værdibindinger og funktionsbindinger
+// a * x**2 + b * x + c = 0
+let solution a b c sgn =
+  let discriminant a b c =
+    b ** 2.0 - 2.0 * a * c
+  let d = discriminant a b c
+  (-b + sgn * sqrt d) / (2.0 * a)
+// Bemærk sidste udtryk skal være en værdi
+
+2. Kommentarer og standard
+(* *) Blokkommentar
+// linjekommentar
+commentExample.fsx
+
+fsharpc --doc:commentExample.xml commentExample.fsx
+mdoc update -o commentExample -i commentExample.xml commentExample.exe
+mdoc export-html -out commentExampleHTML commentExample
+
+3. Funktionssammensætning og piping
+// ~/repositories/fsharpNotes/src/
+functionComposition.fsx
+// Bemærk: En grundlæggende programstruktur: resultatet af en funktion er argument til en anden
+functionPiping.fsx
+// Bemærk: Piping er som rør, der viser, hvordan informationen flyder mellem funktionerne.
+
+4. Særlig funktionsfamilie: printf, placeholder, 
+printfExample.fsx
+// Bemærk: forskellig fortolking og formatering, kontrol over formateringen
+
+let a = 3
+sprintf "a: %d" a
+// Bemærk, returnværdi er en streng, sammenlign med printf
+
+5. Variable (mutable, <-)
+let mutable x = 5 
+printfn "%d" xx <- -3printfn "%d" x
+
+// Forvir ikke <- og =
+let mutable a = 0
+a = 3
+
+6. For og while løkker
+countWhile.fsx // Tællevariabel, betingelse, udtryk
+countWhileLightweight.fsx // indryk angiver udtryk
+countLightweight.fsx // Tællevariabel indbygget
+
+7. Betingede udtryk
+conditionalLightweight.fsx
 
 —————————————————————————————————————
 3.1
+
+0. Læs 3i, spørgsmål? Tællevariabel i 3ø.6a
 
 1. værdibinding, letvægtssyntaks
 let name = "World" in do printfn "Hello %A" name
@@ -70,9 +102,9 @@ let name = "World" in do printfn "Hello %A" name; do printfn "Goodbye %A" name
 
 let name = "World" 
 do printfn "Hello %A" name
-printfn "Goodbye %A" name
+do printfn "Goodbye %A" name
 
-2. virkefelter:
+3. virkefelter:
 let name = "World" in let name = "Jon" in do printfn "Hello %A" name
 
 // navne kan ikke overskrives i yderste virkefelt
@@ -96,7 +128,7 @@ do printfn "%A" greeting
 )
 do printfn "%A %A" greeting name
 
-3. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
+4. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
 
 let greetings (name : string) : string = "Hello " + name
 let str = greetings "Jon"
@@ -123,20 +155,6 @@ let sum x y = x + y in do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
 let sum x y = x + y 
 do printfn "%A + %A = %A" 3 4 (sum 3 4)
 do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
-
-4. Generiske funktioner
-let second a b = b
-do printfn "second %A %A = %A" 3 4 (second 3 4)
-do printfn "second %A %A = %A" 3.0 4.0 (second 3.0 4.0)
-
-5. Funktioner, der indeholder værdibindinger og funktionsbindinger
-// a * x**2 + b * x + c = 0
-let solution a b c sgn =
-  let discriminant a b c =
-    b ** 2.0 - 2.0 * a * c
-  let d = discriminant a b c
-  (-b + sgn * sqrt d) / (2.0 * a)
-// Bemærk sidste udtryk skal være en værdi
 
 —————————————————————————————————————
 2.3
