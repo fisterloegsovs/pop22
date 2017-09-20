@@ -33,11 +33,7 @@ do printfn "%d" (apply mul 3 6)
 3.2
 1. Funktioner, der indeholder værdibindinger og funktionsbindinger
 // a * x**2 + b * x + c = 0
-let solution a b c sgn =
-  let discriminant a b c =
-    b ** 2.0 - 2.0 * a * c
-  let d = discriminant a b c
-  (-b + sgn * sqrt d) / (2.0 * a)
+square.fsx
 // Bemærk sidste udtryk skal være en værdi
 
 2. Kommentarer og standard
