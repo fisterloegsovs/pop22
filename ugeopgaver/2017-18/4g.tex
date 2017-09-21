@@ -10,35 +10,44 @@
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde grupper. Formålet er at arbejde med:
+I denne periode skal I arbejde i grupper. Formålet er at arbejde med:
 \begin{itemize}
 \item Moduler og namespaces
 \item Afprøvning
 \end{itemize}
  
-Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+Opgaverne er delt i øve- og afleveringsopgaver. 
 
 \section*{Øveopgaver}
-Farver repræsenteres ofte som triplen (rød, grøn, blå), hvor hver indgang kaldes en farvekanal eller blot en kanal, og hver kanal er typisk et heltal mellem 0 og 255. Farver kan lægges sammen ved at addere deres kanaler, og farver kan skaleres ved at gange hver kanal med same konstant. Farver, hvor alle kanaler har samme værdi, kaldes gråtoner, og man kan konvertere en farve til gråtone ved at udregne gråtonerværdien som gennemsnittet af de 3 kanaler. Dette kan skrives som:
+En farve repræsenteres ofte som en triple (rød, grøn, blå), hvor hver indgang kaldes en farvekanal eller blot en kanal, og hver kanal er typisk et heltal mellem 0 og 255:
 \begin{align}
-  c_1 &= (r_1, g_1,b_1)
-  \\c_2 &= (r_2, g_2,b_2)
+  c &= (r, g,b)
+\end{align}
+Farver kan lægges sammen ved at addere deres kanaler,
+\begin{align}
+  c_1 + c_2 &= \big(\text{trunc}(r_1+r_2), \text{trunc}(g_1+g_2), \text{trunc}(b_1+b_2)\big),
+  \\c_i &= (r_i, g_i,b_i)
   \\\text{trunc}(v) &=
   \begin{cases}
     0, &v < 0
     \\255, &v > 255
     \\v, &\text{ellers}
   \end{cases}
-  \\a c_1 &= \big(\text{trunc}(a r_1), \text{trunc}(a g_1), \text{trunc}(a b_1)\big)
-  \\c_1 + c_2 &= \big(\text{trunc}(r_1+r_2), \text{trunc}(g_1+g_2), \text{trunc}(b_1+b_2)\big)
-  \\\text{gray}(c_1) &= \frac{r_1+g_1+b_1}{3}
+\end{align}
+og farver kan skaleres ved at gange hver kanal med same konstant.
+\begin{align}
+  a c &= \big(\text{trunc}(a r), \text{trunc}(a g), \text{trunc}(a b)\big)
+\end{align}
+Farver, hvor alle kanaler har samme værdi, $v=r=g=b$, kaldes gråtoner, og man kan konvertere en farve til gråtone ved at udregne gråtonerværdien som gennemsnittet af de 3 kanaler,
+\begin{align}
+  v = \text{gray}(c) &= \frac{r+g+b}{3}
 \end{align}
 \begin{enumerate}[label=4ø.\arabic*,start=0]
 \item Skriv en signaturfil for et modul, som indeholder funktionerne \lstinline{trunc}, \lstinline{scale}, \lstinline{add}, og \lstinline{gray}, ud fra ovenstående matematiske definitioner og ved brug af tupler, hvor muligt.
 \item Skriv en implementation af ovenstående signaturfil og kompiler begge filer til et bibliotek (\filename{dll}-fil).
 \item Skriv en applikation i 2 varianter: 1 som benytter ovenstående bibliotek via \filename{fsharpi} og 1 som benytter det via \filename{fsharpc}.
-\item Lav en fuld afprøvning af jeres bibliotek og ved brug af \filename{fsharpc}.
-\item Udvid biblioteket (både signatur og implementationsfilen) med en funktion, som konvertere en farvetriplet til en gråtonetriplet. Udvid afprøvningen med en passend afprøvning af den nye funktion. Diskut\'{e}r om bibliotek, applikation, og afprøvning er struktureret på en måde, så denne udvidelse har været let, eller om der er uhensigtmæssige afhængigheder, som gør rettelse, vedligeholdelse og udvidelse besværlig og med risiko for fejl.
+\item Lav en White-box afprøvning af jeres bibliotek og ved brug af \filename{fsharpc}.
+\item Udvid biblioteket (både signatur og implementationsfilen) med en funktion, som konverterer en farvetriplet til en gråtonetriplet. Udvid afprøvningen med en passende afprøvning af den nye funktion. Diskut\'{e}r om bibliotek, applikation, og afprøvning er struktureret på en måde, så denne udvidelse har været let, eller om der er uhensigtmæssige afhængigheder, som gør rettelse, vedligeholdelse og udvidelse besværlig og med risiko for fejl.
 \end{enumerate}
 
 \section*{Afleveringsopgaver}
@@ -65,12 +74,12 @@ Addition kan tegnes som vist i \Cref{fig:vectorAddition}.
 \begin{enumerate}[label=4g.\arabic*,start=0]
 \item Skriv et bibliotek \filename{vec2d.fs}, som implementerer følgende signatur fil:
 \fsSignature{vec2d}{vec2d}{A signature file.}{}
-\item Skriv en afprøvning af biblioteket.
+\item Skriv en White-box afprøvning af biblioteket.
 \item Punkter på en cirkel med radius 1 kan beregnes som $(\cos \theta, \sin \theta), \;\theta\in [0,2\pi)$. Betragt det lukkede polygon, som består af $n>1$ punkter på en cirkel, hvor $\theta_i = \frac{2\pi i}{n},\; i = 0..(n-1)$. 
   \begin{enumerate}
   \item Skriv en applikation med en funktion,
   \begin{quote}
-    \lstinline{polyLen : n:float -> float}
+    \lstinline{polyLen : n:int -> float}
   \end{quote}
 som benytter ovenstående bibliotek til at udregne længden af polygonet. Længden udregnes som summen af længden af vektorerne mellem nabopunkter. Applikationen skal desuden udskrive en tabel af længder for et stigende antal $n$ værdier, og resultaterne skal sammenlignes med omkredsen af cirklen med radius $1$. 
 \item Udform en hypotese ud fra tabellen for længden af polygonet når $n\rightarrow\infty$.
