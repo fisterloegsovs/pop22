@@ -2,14 +2,98 @@ Programmering og problemløsning
 
 —————————————————————————————————————
 3.3
-1. Tupler
+0. Husk at gøre reklame for fredagsforedrag
 
-2. Leksikals versus dynamisk virkefelt
-let leksikalskScope x = 
-  let a = 3.0  let f z = a * z 
-  let a = 4.0  f xlet dynamiskScope x =  let mutable a = 3.0 
-  let f z = a * z  a <- 4.0  f xprintfn "%A vs. %A" (leksikalskScope 2.0) (dynamiskScope 2.0)
-// Bemærk: skygningen af a har ingen effekt på funktionen f i leksikalsk scope. Man kigger opad i teksten fra definitionen. I dynamisk scope er det er det, hvornår variablen tilgås.
+///////////////////////////
+1. Betingede udtryk
+// Opgave: lav en funktion som korrekt sætter flertals s m.m.
+conditionalLightweight.fsx
+
+///////////////////////////
+2. Opvarmning og repetition af variable
+// Opgave: byt om på værdierne af x1 og x2
+let mutable x1 = 3
+let mutable x2 = 4
+// Løsning ved temporær værdi
+let t = x1
+x1 <- x2
+x2 <- t
+
+///////////////////////////
+// Tupler
+///////////////////////////
+3. Tupler 
+let x = (3,4)
+do printfn "%A" x
+// Type som produktmængder, her int * int
+// Typer kan blandes
+let y = (3,4,’a’,"hej jon")
+do printfn "%A" y
+// Ingen indekseringsfunktion men
+let y = (3,4,'a',"hej jon")
+let (a, b, c, d) = y
+do printfn "%A" d
+// Par er så hyppige, at de har indbyggede funktioner
+let x = (3,4)
+do printfn "fst x = %A, snd x = %A" (fst x) (snd x)
+
+4. Muterbare tupler og opgave
+let mutable x = (3,4)
+x <- (snd x, fst x)
+do printfn "%A" x
+// Eller mere advanceret
+let y = (3,4,'a',"hej jon")
+let (a, b, c, d) = y
+do printfn "%A" (d, c, b, a)
+
+///////////////////////////
+// Avancerede funktioner
+///////////////////////////
+5. Anonyme funktioner
+let first = fun x y -> x
+do printfn "%d" (first 5 3)
+
+6. Funktioner som argument
+let apply f x y  = f x y
+let mul a b = a * b
+do printfn "%d" (apply mul 3 6)
+// Bemærk at apply tager en funktion og 2 argumenter som argument
+// Andet eksempel: ombyt argumenter
+let rev f x y = f y x
+let sub a b = a - b
+let a = 3
+let b = 5
+do printfn "sub %d %d = %d, rev sub %d %d = %d" a b (sub a b) a b (rev sub a b) 
+
+// Eller ved brug af anonym funktion
+rev (fun x y -> x - y) 3 5
+
+// Eller i dette tilfælde '-' operatorens funktionsækvivalente
+rev (-) 3 5
+
+6. Closures
+// Funktioner er værdier:
+let f x = x * x
+do printfn "%A" f
+
+// Funktioner kan returneres
+let inc () =
+  let dx = 1
+  fun x -> x + dx
+let addOne = inc ()
+printfn "%A" (addOne 2) 
+
+// Funktioner er tripletter (argument, expression, environment)
+//  inc: ((), let dx = 1 in fun x -> x + dx, ())
+functionFirstClass.fsx
+//  mul: ((x, y), (x * y), ())
+//  applyFactor: ((fat, x), let a = fct factor x in string a, (factor -> 2.0))
+
+7. Stak og hob
+// stakken holder lokale værdier og variable, hoben holder globale. Stak-værdier smides væk når funktionen når til enden
+inc.fsx
+
+////////////////////////////////////
 
 3. Variable som returværdier (ref, !, :=)
 let x = ref 0 
@@ -17,17 +101,12 @@ printfn "%d" !x
 x := !x + 1 
 printfn "%d" !x
 
-4. Anonyme funktioner
-let first = fun x y -> x
-do printfn "%d" (first 5 3)
-
-5. Funktioner som argument
-let apply f x y  = f x y
-let mul = fun a b -> a * b
-do printfn "%d" (apply mul 3 6)
-
-6. Closures
-// inc eksemplet.
+2. Leksikals versus dynamisk virkefelt
+let leksikalskScope x = 
+  let a = 3.0  let f z = a * z 
+  let a = 4.0  f xlet dynamiskScope x =  let mutable a = 3.0 
+  let f z = a * z  a <- 4.0  f xprintfn "%A vs. %A" (leksikalskScope 2.0) (dynamiskScope 2.0)
+// Bemærk: skygningen af a har ingen effekt på funktionen f i leksikalsk scope. Man kigger opad i teksten fra definitionen. I dynamisk scope er det er det, hvornår variablen tilgås.
 
 —————————————————————————————————————
 3.2
@@ -72,9 +151,6 @@ a = 3
 countWhile.fsx // Tællevariabel, betingelse, udtryk
 countWhileLightweight.fsx // indryk angiver udtryk
 countLightweight.fsx // Tællevariabel indbygget
-
-7. Betingede udtryk
-conditionalLightweight.fsx
 
 —————————————————————————————————————
 3.1
