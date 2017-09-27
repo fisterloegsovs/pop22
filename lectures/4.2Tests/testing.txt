@@ -1,0 +1,28 @@
+1. White-box testing: dec2bin.fsx
+a. Decide on which units to test
+b. Identify branching points
+c. Produce cases: For each unit, produce an input that tests each branch and not expected output
+d. Write a program that tests each case and check output
+
+Unit     Branch   Condition  Input  Expected-output  Comment
+dec2bin  1        n < 0
+         1a       true       -1     "Illegal value"
+         1b       branch 2                           Fall through
+         2 (n>=0) n = 0      
+         2a       true       0      "0b0"
+         2b       branch 3                           Fall through
+         3 (n>0)  v > 0
+         3a       true       1      "0b1"            Always looping 1 or more times
+         3b       false      1      "0b1"            Identical to 3a
+
+2. Blackbox testing: dec2bin.fsx - kun kendskab til kravspecifikation
+a. Beslut et interface
+b. Find grænsetilfælde
+
+Unit       Case   Expected-output  Comment 
+dec2bin n  n < 0  "Illegal value"  negative tal
+           n = 0  "0b0"            grænsetilfælde
+           n = 1  "0b1"            1 bit
+           n = 2  "0b10"           2 bit
+           n = 10 "0b1010"         stort lige tal (venstre bit sat min ikke højre)
+           n = 11 "0b1011"         stort ulige tal (venstre og højre bit sat)
