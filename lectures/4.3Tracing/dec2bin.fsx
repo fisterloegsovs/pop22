@@ -14,5 +14,5 @@ let dec2bin n =
 
 printfn "%4d -> %s" -1 (dec2bin -1)
 printfn "%4d -> %s" 0 (dec2bin 0)
-for i = 0 to 3 do
+for i = 0 to 1 do
   printfn "%4d -> %s" (pown 10 i) (dec2bin (pown 10 i))

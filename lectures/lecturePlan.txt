@@ -2,26 +2,21 @@ Programmering og problemløsning
 
 —————————————————————————————————————
 4.3
-// Funktioner er tripletter (argument, expression, environment)
-//  inc: ((), let dx = 1 in fun x -> x + dx, ())
+1. Funktioner er tripletter (argument, expression, environment)
 functionFirstClass.fsx
 //  mul: ((x, y), (x * y), ())
-//  applyFactor: ((fat, x), let a = fct factor x in string a, (factor -> 2.0))
+//  applyFactor: ((fct, x), let a = fct factor x; string a, (mul -> ((x, y), (x * y), ()), factor -> 2.0))
 
-7. Stak og hob
+2. Håndkøring
+lexicalScopeTracing.fsx
+// p. 102
+
+dynamicScopeTracing.fsx
+// p. 104
+
 // stakken holder lokale værdier og variable, hoben holder globale. Stak-værdier smides væk når funktionen når til enden
 inc.fsx
-
-// Håndkøring
-dec2bin.fsx
-
-////////////////////////////////////
-2. Leksikals versus dynamisk virkefelt
-let leksikalskScope x = 
-  let a = 3.0  let f z = a * z 
-  let a = 4.0  f xlet dynamiskScope x =  let mutable a = 3.0 
-  let f z = a * z  a <- 4.0  f xprintfn "%A vs. %A" (leksikalskScope 2.0) (dynamiskScope 2.0)
-// Bemærk: skygningen af a har ingen effekt på funktionen f i leksikalsk scope. Man kigger opad i teksten fra definitionen. I dynamisk scope er det er det, hvornår variablen tilgås.
+// incr -> ((), (counter <- counter + 1; counter), (counter -> alpha1))
 
 3. Variable som returværdier (ref, !, :=)
 let x = ref 0 
@@ -29,7 +24,21 @@ printfn "%d" !x
 x := !x + 1 
 printfn "%d" !x
 
+// Referencer giver aliasing
+let a = ref 0
+let b = a
+a := 1
+printfn "%d" !b
 
+// Referencer kan returneres
+let f () =              
+  let x = ref 0
+  x
+let a = f ()
+a := 3
+
+4. Ekstraopgave: håndkør 
+dec2bin.fsx
 
 —————————————————————————————————————
 4.2
