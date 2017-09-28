@@ -2,10 +2,6 @@ Programmering og problemløsning
 
 —————————————————————————————————————
 4.3
-// Håndkøring
-gcd.fsx
-
-
 // Funktioner er tripletter (argument, expression, environment)
 //  inc: ((), let dx = 1 in fun x -> x + dx, ())
 functionFirstClass.fsx
@@ -15,6 +11,9 @@ functionFirstClass.fsx
 7. Stak og hob
 // stakken holder lokale værdier og variable, hoben holder globale. Stak-værdier smides væk når funktionen når til enden
 inc.fsx
+
+// Håndkøring
+dec2bin.fsx
 
 ////////////////////////////////////
 2. Leksikals versus dynamisk virkefelt
