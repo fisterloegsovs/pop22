@@ -1,312 +1,106 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage[utf8x]{inputenc}
-\usepackage{latexsym}
-\usepackage[danish]{babel}
-\usepackage{graphicx,color}
-\usepackage{hyperref}
-\usepackage[all]{hypcap}
-\usepackage{enumerate}
-\usepackage[margin=2.5cm]{geometry}
+\input{setup}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 5 - individuel opgave}
+\author{Jon Sporring}
+\date{2.\ - 11.\ oktober.\\Afleveringsfrist: onsdag d.\ 11.\ oktober kl. 22:00}
 
 \begin{document}
-\title{Programmering og Problemløsning\\
-Datalogisk Institut, Københavns Universitet\\
-Uge(r)seddel 5 -- individuel opgave\\
-Revision 1.1 -- tilføjet tekst markeret med \textcolor{red}{rød}}
-
-\author{Torben Mogensen}
-\date{Deadline 12. oktober}
-
 \maketitle
 
 \noindent
-I denne periode skal I arbejde individuelt.  Formålet er at arbejde
-med lister, mængder, og arrays, og specielt med biblioteksfunktioner,
-der arbejder på disse typer.
+I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i ``Noter, links, software m.m.''$\rightarrow$''Generel information om opgaver''. Formålet er at arbejde med:
+\begin{itemize}
+%\item strenge
+\item lister
+\item arrays
+\end{itemize}
 
-Opgaverne i denne uge er delt i øve- og afleveringsopgaver.
+Opgaverne er delt i øve- og afleveringsopgaver. 
 
-\subsubsection*{Øveopgaverne er:}
-
-\begin{description}
-\item[ø5.1.] Definer en funktion \texttt{reverseApply : 'a -> ('a ->
-  'b) -> 'b}, sådan at \texttt{reverseApply x f} returnerer resultatet
-  af funktionsanvendelsen \texttt{f x}.
-
-\item[ø5.2.]  Forklar forskellen mellem typerne \texttt{int -> (int ->
-  int)} og \texttt{(int -> int) -> int}, og giv et eksempel på en
-  funktion af hver type.
-
-\item[ø5.3.] Brug \texttt{List.filter} til at lave en funktion
-  \texttt{evens : int list -> int list}, der returnerer de lige
-  elementer i en liste.
-
-\item[ø5.4.] Brug \texttt{List.map} og \texttt{reverseApply} (fra
-  opgave ø5.1) til at lave en funktion\newline \texttt{applylist : ('a -> 'b)
-    list -> 'a -> 'b list}, der anvender en liste af funktioner på
-  samme element for at returnere en liste af resultater.
-
-\item[ø5.5.] HR: 5.1.
-
-\item[ø5.6.] En snedig programmør definerer en sorteringsfunktion med
-  definitionen
-
-\texttt{ssort xs = Set.toList (Set.ofList xs)}
-
-For eksempel giver \texttt{ssort [4; 3; 7; 2]} resultatet \texttt{[2;
-    3; 4; 7]}.
-
-Diskuter, om programmøren faktisk er så snedig, som han tror.
-
-\item[ø5.7.] Brug \texttt{Array.init} til at lave en funktion
-  \texttt{squares: int -> int []}, sådan at kaldet
-  \texttt{squares~$n$} returnerer listen af de $n$ første kvadrattal.
-  For eksempel skal \texttt{squares~5} returnere arrayet \texttt{[|1;
-      4; 9; 16; 25|]}.  Hvis \texttt{squares} gives et negativt tal,
-  skal en fejlmeddelelse gives ved hjælp af funktionen
-  \texttt{failwith}.
-
-\item[ø5.8.] Brug \texttt{Array.init} og \texttt{Array.length} til at
-  skrive en funktion \texttt{reverseArray : 'a [] -> 'a []}, der
-  returnerer arrayet med elementerne i omvendt rækkefølge.  For
-  eksempel skal kaldet
-
-\begin{verbatim}
-printfn "%A" (reverseArray [|1..5|])
-\end{verbatim}
-
-udskrive \texttt{[|5; 4; 3; 2; 1|]}.
-
-\item[ø5.9.] Brug en while-løkke og overskrivning af array-elementer
-  til at skrive en funktion \texttt{reverseArrayD : 'a [] -> unit}, som
-  destruktivt opdaterer et array, så elementerne kommer i omvendt
-  rækkefølge.
-
-  Sekvensen
-
+\section*{Øveopgaver}
+\begin{enumerate}[label=5ø.\arabic*,start=0]
+\item Skriv en funktion \lstinline{oneToN : n:int -> int list}, som returnerer listen af heltal \lstinline{[1; 2; ...; n]}.
+\item Skriv en funktion \lstinline{multiplicity: x:int -> xs:int list -> int}, som tæller antallet af gange tallet \lstinline{x} optræder i listen \lstinline{xs}.
+\item Skriv funktionen \lstinline{split: xs:int list -> (xs1: int list) * (xs2: int list)}, som deler listen \lstinline{xs} i 2 og returnerer resultatet som en tuple, hvor alle elementer med lige index er i første element og resten i andet element. F.eks.\ \mbox{\lstinline{split [x0; x1; x2; x3; x4]}} skal returnere \mbox{\lstinline{([x0; x2; x4], [x1; x3;])}}.
+\item \label{item:reverseApply} Definer en funktion \lstinline{reverseApply : 'a -> ('a -> 'b) -> 'b}, sådan at kaldet \mbox{\lstinline{reverseApply x f}} returnerer resultatet af funktionsanvendelsen \lstinline{f x}.
+\item Forklar forskellen mellem typerne \lstinline{int -> (int -> int)} og \lstinline{(int -> int) -> int}, og giv et eksempel på en funktion af hver type.
+\item Brug \lstinline{List.filter} til at lave en funktion \lstinline{evens : int list -> int list}, der returnerer de lige heltal i en liste.
+\item Brug \lstinline{List.map} og \lstinline{reverseApply} (fra Opgave~\ref{item:reverseApply}) til at lave en funktion \lstinline{applylist : ('a -> 'b) list -> 'a -> 'b list}, der anvender en liste af funktioner på samme element for at returnere en liste af resultater.
+\item Opskriv funktionstyperne for \lstinline{List.filter} og \lstinline{List.foldBack}.
+\item En snedig programmør definerer en sorteringsfunktion med definitionen \lstinline{ssort xs = Set.toList (Set.ofList xs)}. For eksempel giver \lstinline{ssort [4; 3; 7; 2]} resultatet \lstinline{[2; 3; 4; 7]}.  Diskut\'{e}r, om programmøren faktisk er så snedig, som han tror.
+\item Brug \lstinline{Array.init} til at lave en funktion \lstinline{squares: int -> int []}, sådan at kaldet \lstinline{squares n} returnerer listen af de $n$ første kvadrattal.  For eksempel skal \lstinline{squares 5} returnere arrayet \lstinline{[|1; 4; 9; 16; 25|]}.
+\item Skriv en funktion\mbox{\lstinline{reverseArray : 'a [] -> 'a []}} ved brug af \lstinline{Array.init} og \lstinline{Array.length}, og som returnerer arrayet med elementerne i omvendt rækkefølge.  For eksempel skal kaldet \lstinline{printfn "%A" (reverseArray [|1..5|])} %
+    udskrive \mbox{\lstinline{[|5; 4; 3; 2; 1|]}}.
+  \item Brug en while-løkke og overskrivning af array-elementer til at skrive en funktion \lstinline{reverseArrayD : 'a [] -> unit}, som destruktivt opdaterer et array, så elementerne kommer i omvendt rækkefølge.  Sekvensen
 \begin{verbatim}
 let aa = [|1..5|]
 reverseArrayD aa
 printfn "%A" aa
 \end{verbatim}
-
-skal altså udskrive \texttt{[|5; 4; 3; 2; 1|]}.
-
-\item[ø5.10.] Brug \texttt{Array2D.init}, \texttt{Array2D.length1} og
-  \texttt{Array2D.length2} til at lave en funktion \texttt{transpose :
-    'a [,] -> 'a [,]} som returnerer det transponerede argument,
-  dvs.\ spejler det over diagonalen.
-
-\end{description}
-
-\subsubsection*{Afleveringsopgaven er:}
-
-
-\begin{description}
-
-\item[i5.1.] Brug funktionerne fra Tabel 5.1 i HR (side 94) til at
-  definere en funktion \texttt{concat : 'a list list -> 'a list}, der
-  sammensætter en liste af lister til en enkelt liste.
-
-F.eks.\ skal \texttt{concat [[2]; [6; 4]; [1]]} give resultatet
-\texttt{[2; 6; 4; 1]}.
-
-\item[i5.2.] Brug funktionerne fra Tabel 5.1 i HR (side 94) til at
-  definere en funktion \texttt{gennemsnit : float list -> float
-    option}, der finder gennemsnittet af en liste af kommatal, såfremt
-  dette er veldefineret, og \texttt{None}, hvis ikke.
-
-\item[i5.3.] Lav en funktion \texttt{arraySort : ('a [] -> 'a []) when
-  'a : comparison}, som givet et array returnerer en sorteret udgave
-  af samme array.  Lav din løsning uden brug af \texttt{<-} operatoren
-  (altså funktionelt).
-
-  For eksempel skal sekvensen
-
-\begin{verbatim}
-let aa = [|1;7;5;2;1|]
-let bb = arraySort aa
-printfn "%A %A" aa bb
-\end{verbatim}
-
-udskrive
-
-\begin{verbatim}
-[|1;7;5;2;1|] [|1;1;2;5;7|]
-\end{verbatim}
-
-\item[i5.4.] Lav en funktion \texttt{arraySortD : ('a [] -> unit) when
-  'a : comparison}, som sorterer et array, sådan at elementerne i det
-  oprindelige array overskrives med nye, sorterede elementer, altså
-  imperativt.
-
-  For eksempel skal sekvensen
-
-\begin{verbatim}
-let aa = [|1;7;5;2;1|]
-arraySortD aa
-printfn "%A" aa
-\end{verbatim}
-
-udskrive
-
-\begin{verbatim}
-[|1;1;2;5;7|]
-\end{verbatim}
-
-
-\end{description}
-
-\noindent
-Afleveringsopgaven skal afleveres som både \LaTeX, den genererede PDF,
-samt en fsx fil med løsningen for hver delopgave, navngivet efter
-opgaven (f.eks.\ \texttt{i5-1.fsx}), som kan køres med fsharpi.  Det
-hele samles i en zip-fil med navnekonventionen
-\texttt{H$n$-\emph{fornavn}.\emph{efternavn}-5i.zip}.
-
-\textcolor{red}{Tilføjet Tekst:} \LaTeX-rapporten skal kort beskrive de
-metoder, er er brugt i sorteringsfunktionerne.
-
-\vspace{1ex}
-
-\hfill God fornøjelse
-
-\newpage
-\section*{Ugens nød 2}
-
-Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
-som interesserede kan løse.  Det er helt frivilligt at lave disse
-opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
-mindre præmie til den bedste løsning, der afleveres i Absalon.
-Opgaverne er individuelle.
-
-\subsection*{Biblioteket \texttt{makeBMP.dll}}
-
-I ``Filer'' på Absalonsiden for kurset kan du finde filen
-\texttt{makeBMP.dll}, som er et bibliotek med funktioner til at læse
-og skrive BMP grafikfiler.  Følgende funktioner er defineret:
-
-\begin{description}
-\item[\texttt{makeBMP.makeBMP : string -> int -> int -> (int*int ->
-    int*int*int) -> unit}]
-
-~
-
-Tager et navn $f$, en bredde $w$, en højde $h$ og en funktion $c$ fra
-punkter til farver, og laver en BMP fil $f$\texttt{.bmp}, med $w×h$
-pixels, hvor farven i punkt $(i,j)$ er defineret ved farven $c(i,j)$.
-
-En farve er et RGB-tripel af tre tal mellem 0 og 255, hvor det første
-tal er den røde komponent, det andet tal er den grønne komponent, og
-det tredje tal er den blå komponent, så gul kan f.eks. defineres med
-triplen (255,255,0) og grå som (100,100,100).
-
-Hvis f.eks. programfilen \texttt{tryBMP.fsx} består af linjen
-
-\begin{verbatim}
-makeBMP.makeBMP "test" 256 256 (fun (x,y) -> (x,y,0))
-\end{verbatim}
-
-\noindent
-så vil kørsel af denne fil med kommandoen \texttt{fsharpi -r
-  makeBMP.dll tryBMP.fsx} producere en fil \texttt{test.bmp} med
-følgende indhold:
-
-\includegraphics{test.png}
-
-
-\item[\texttt{makeBMP.makeBMParray : string -> int -> int ->
-    int*int*int [,] -> unit}]
-
-~
-
-Fungerer ligesom \texttt{makeBMP.makeBMP}, men i stedet for at
-definere farverne med en funktion, defineres det af et $w×h$
-todimensionelt array af farver.
-
-
-\item[\texttt{makeBMP.readBMP : string -> int * int * (int*int ->
-    (int*int*int))}]
-
-~
-
-Tager et navn $f$ og indlæser billedet i filen $f$\texttt{.bmp} og
-returnerer en tripel $(w,\,h\,c)$, hvor $w$ og $h$ er bredde og højde
-af billedet og $c$ er en funktion fra punkter til farver.
-
-\item[\texttt{makeBMP.readBMParray : string -> int * int * (
-    (int*int*int) [,])}]
-
-~
-
-Tager et navn $f$ og indlæser billedet i filen $f$\texttt{.bmp} og
-returnerer en tripel $(w,\,h\,a)$, hvor $w$ og $h$ er bredde og højde
-af billedet og $a$ er et todimensionalt array af farver.
-
-\end{description}
-
-\noindent
-Der er nogle begrænsninger på funktionerne:
-
-\begin{itemize}
-\item $w$ og $h$ må højest være 8192.
-\item Indlæsningsfunktionerne kan ikke læse alle former for BMP
-  filer, men kan håndtere de mest almindelige.
-\end{itemize}
-
-\noindent
-Man kan konvertere forskellige billedeformater til og fra BMP med
-f.eks.\ IrfanView og Gimp.  På Linux kan man endvidere skrive f.eks.
-
-\texttt{convert test.bmp test.png}
-
-\noindent
-for at konvertere fra BMP til PNG.
-
-\subsection*{Opgaven}
-
-Du skal bruge de ovennævnte funktioner til at lave et flot billede.
-Der er følgende begrænsninger:
-
-\begin{enumerate}[~1.]
-
-\item Billedfilen skal navngives
-  \texttt{\emph{FornavnEfternavn}.bmp} (med dit eget navn).
-
-\item Billedet skal være eksakt 512×512 pixels.
-
-\item Programmet, der laver billedet må bestå af højest 20
-  programlinjer, og ingen programlinje må være mere end 80 tegn lang.
-
-Blanke linjer og linjer, der kun indeholder kommentarer, tælles ikke
-som programlinjer i denne optælling.
-
-\item Programmet må ikke bruge mere end to minutter til at køre på
-  Torbens laptop, når det køres med kommandoen
-
-\texttt{fsharpi -r makeBMP.dll \emph{FornavnEfternavn}.fsx}
-
-\item Deadline er 14. oktober kl. 12.00.  Opgaven uploades på den
-  tilhørende opgaveside på Absalon.
+skal altså udskrive \lstinline{[|5; 4; 3; 2; 1|]}.
+\item Brug \lstinline{Array2D.init}, \lstinline{Array2D.length1} og \lstinline{Array2D.length2} til at lave en funktion \lstinline{transpose : 'a [,] -> 'a [,]} som returnerer det transponerede argument, dvs.\ spejler det over diagonalen.
 \end{enumerate}
 
-\noindent
-Programmer, der ikke opfylder kravene, diskvalificeres uanset hvor
-flotte de genererede billeder er.
+\section*{Afleveringsopgaver}
+\begin{enumerate}[label=5i.\arabic*,start=0]
+\item En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne er lige lange. Listen \lstinline{[[1; 2; 3]; [4; 5; 6]]} repræsenterer for eksempel tabellen
+  \begin{quote}
+\[\left [\begin{array}{rrr}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{array}
+\right ]\]
+\end{quote}
+\begin{enumerate}
+\item Lav en funktion \lstinline{isTable : 'a list list -> bool}, der givet en liste af lister afgør, om det er en lovlig ikke-tom tabel, altså om alle listerne har ens længde, og at der er mindst en liste med mindst et element.
+\item Lav en funktion \lstinline{firstColumn : 'a list list -> 'a list}, der tager en liste af lister og returnerer listen af førsteelementer i de indre lister.  F.eks.\ skal \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} returnere listen \lstinline{[1; 4]}.  Hvis en eller flere af listerne er tomme, er \lstinline{firstColumn} udefineret.
+\item Lav en funktion \lstinline{dropFirstColumn : 'a list list -> 'a list list}, der tager en liste af lister og returnerer en liste af lister, hvor førsteelementerne i de indre lister er fjernet.  F.eks.\ skal \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} returnere \lstinline{[[2; 3]; [5; 6]]}.
+\item Lav en funktion \lstinline{transpose : 'a list list -> 'a list list}, der spejler tabellens ingange over diagonalen, så den transponerede tabel til den herover viste tabel er
+  \begin{quote}
+\[\left [\begin{array}{rr}
+1 & 4 \\
+2 & 5 \\
+3 & 6
+\end{array}
+\right ]\]
+\end{quote}
+Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Det kan antages, at argumentet til \lstinline{transpose} er en lovlig tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis funktionen eller virker.  Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Vink: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
+\end{enumerate}
+\item Brug funktionerne opremset i [Kapitel 11, Sporring] til at definere en funktion \lstinline{concat : 'a list list -> 'a list}, der sammensætter en liste af lister til en enkelt liste.  F.eks.\ skal \lstinline{concat [[2]; [6; 4]; [1]]} give resultatet \lstinline{[2; 6; 4; 1]}.
+\item Brug funktionerne fra [Kapitel 11, Sporring]  til at definere en funktion \lstinline{gennemsnit : float list -> float option}, der finder gennemsnittet af en liste af kommatal, såfremt dette er veldefineret, og \lstinline{None}, hvis ikke.
+% \item Lav en funktion \lstinline{arraySort : ('a [] -> 'a []) when 'a : comparison}, som givet et array returnerer en sorteret udgave af samme array.  Lav din løsning uden brug af \lstinline{<-} operatoren (altså funktionelt).  For eksempel skal sekvensen
+% \begin{verbatim}
+% let aa = [|1;7;5;2;1|]
+% let bb = arraySort aa
+% printfn "%A %A" aa bb
+% \end{verbatim}
+% udskrive
+% \begin{verbatim}
+% [|1;7;5;2;1|] [|1;1;2;5;7|]
+% \end{verbatim}
+% \item Lav en funktion \lstinline{arraySortD : ('a [] -> unit) when 'a : comparison}, som sorterer et array, sådan at elementerne i det oprindelige array overskrives med nye, sorterede elementer, altså imperativt.  For eksempel skal sekvensen
+% \begin{verbatim}
+% let aa = [|1;7;5;2;1|]
+% arraySortD aa
+% printfn "%A" aa
+% \end{verbatim}
+% udskrive
+% \begin{verbatim}
+% [|1;1;2;5;7|]
+% \end{verbatim}
+\end{enumerate}
 
-Billederne vurderes 100\% subjektivt af et panel af undervisere og
-instruktorer.  Kriterier er originalitet, æstetik, imponeringsfaktor,
-samt hvor godt, fremgangsmetoden er beskrevet.  Hvis der indlæses
-billeder, vurderes det genererede billede ud fra, hvad det tilfører i
-forhold til de indlæste billeder.
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!5i0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
 
-Der skal uploades både en \LaTeX-fil, der beskriver fremgangsmåden, en
-fil \texttt{\emph{FornavnEfternavn}.fsx}, der indeholder
-programmet, og en BMP fil, der indeholder billedet. Hvis der indlæses
-billeder, skal disse vedlægges.  Det hele samles i en zip-fil
-\texttt{N2-\emph{FornavnEfternavn}.zip}
-
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 2/10:] Afslut 4g og start på øvelsesopgaverne fra 5i
+\item[Tirsdag 3/10:] Arbejd med øvelses- og afleveringsopgaverne
+\item[Fredag 6/10]  Arbejd med afleveringsopgaverne
+\end{description}
 
 \end{document}
 
