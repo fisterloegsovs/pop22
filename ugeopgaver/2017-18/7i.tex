@@ -5,7 +5,7 @@
 \title{Programmering og Problemløsning\\Datalogisk Institut,
   Københavns Universitet\\Arbejdsseddel 7 - individuel opgave}
 \author{Martin Elsman}
-\date{25.\ oktober - 1.\ november.\\Afleveringsfrist: onsdag d.\ 1.\ november kl. 22:00}
+\date{23.\ oktober -- 1.\ november.\\Afleveringsfrist: onsdag d.\ 1.\ november kl. 22:00}
 
 \begin{document}
 \maketitle
@@ -123,17 +123,18 @@ fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
 \begin{enumerate}[label=5i.\arabic*,start=2]
 \item Med udgangspunkt i øvelsesopgave~\ref{sierpinski.ov} skal du i
   denne opgave implementere en GUI-applikation der kan tegne en
-  version af X-fractalen som illustreret til højre.
+  version af X-fractalen som illustreret til højre (eventuelt i en
+  dybde større end 2).
 
-  Dybden for fraktalen skal kunne styres med piletasterne som det er
-  tilfældet med Sierpinski-fraktalen i
-  øvelsesopgave~\ref{sierpinskikeys.ov}.
+  Bemærk at det ikke er et krav at dybden på fraktalen skal kunne
+  styres med piletasterne som det er tilfældet med
+  Sierpinski-fraktalen i øvelsesopgave~\ref{sierpinskikeys.ov}.
 \end{enumerate}
 \end{minipage}\hspace{8mm} \begin{minipage}{0.25\textwidth}
   \includegraphics[width=0.9\textwidth]{xfractal.png}
 \end{minipage}
 
-\begin{enumerate}[label=5i.\arabic*,start=2]
+\begin{enumerate}[label=5i.\arabic*,start=3]
 \item Du skal i de følgende to opgaver arbejde med en funktion til at
   bestemme den såkaldte \emph{Levensthein-distance} mellem to strenge
   $a$ og $b$. Distancen er defineret som det mindste antal
@@ -151,7 +152,7 @@ fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
   Matematisk set kan Levensthein-distancen $\id{leven}(a,b)$, mellem
   to karakterstrenge $a$ og $b$, defineres som
   $\id{lev}_{a,b}(|a|,|b|)$, hvor $|a|$ og $|b|$ henviser til
-  længderne af henholdsvis $a$ og $b$ og hvor funktionen $\id{lev}$ er
+  længderne af henholdsvis $a$ og $b$, og hvor funktionen $\id{lev}$ er
   defineret som følger:\footnote{See
     \url{https://en.wikipedia.org/wiki/Levenshtein_distance}.}
 
@@ -197,12 +198,14 @@ fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
     korrekt også for store input.
 
     Det skal til slut bemærkes at den implementerede løsning benytter
-    sig af $O(|a| \times |b|)$ plads og at der findes løsninger der
-    benytter sig af mindre plads ($O(\mathrm{max}(|a|,|b|))$).
+    sig af $O(|a| \times |b|)$ plads og at der findes effektive
+    løsninger der benytter sig af mindre plads
+    ($O(\mathrm{max}(|a|,|b|))$). Det er ikke et krav at din løsning
+    implementerer en af disse mere pladsbesparende strategier.
 \end{enumerate}
 
 Afleveringsopgaven skal afleveres som et antal \texttt{fsx} tekstfiler
-navngivet efter opgaven, som f.eks. \lstinline!5i0.fsx!. Tekstfilerne
+navngivet efter opgaven, som f.eks. \lstinline!7i0.fsx!. Tekstfilerne
 skal kunne oversættes med \texttt{fsharpc},\footnote{Løsningerne kan
   antage at biblioteket \texttt{ImgUtil.dll} fra forelæsningerne er
   tilgængeligt.} og resultatet skal kunne køres med \texttt{mono}
