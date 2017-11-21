@@ -40,9 +40,9 @@ hvor $\%$ er rest operatoreren (som i F\#).
 \end{enumerate}
 
 \section*{Afleveringsopgaver}
-I denne opgave skal I regne med fortsatte brøker (continued fractions)\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Fortsatte brøker er en liste af heltal, som repræsenterer reelle tal. Listen er endelig for rationelle og uendelig for irrationelle tal. 
+I denne opgave skal I regne med kædebrøker (continued fractions)\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Kædebrøker er lister af heltal, som repræsenterer reelle tal. Listen er endelig for rationelle og uendelig for irrationelle tal. 
 
-En fortsat brøk skrives som:
+En kædebrøk skrives som:
 $x = [q_0; q_1, q_2, \ldots]$, hvilket svarer til tallet,
 \begin{equation}
   x = q_0 + \frac{1}{q_1 + \frac{1}{q_2 + \dots}}.
@@ -54,7 +54,7 @@ F.eks.\ listen $[3;4, 12, 4]$ evaluerer til
   \\&=  3 + \frac{1}{4.081632653}
   \\&=  3.245.
 \end{align}
-Omvendt, for et givet tal $x$ kan den fortsatte brøk $[q_0; q_1, q_2, \ldots]$ udregnes ved følgende algoritme: For $x_0 = x$ og $i \geq 0$ udregn $q_i = \lfloor x_i \rfloor$, $r_i = x_i - q_i$ og $x_{i+1} = 1/r_i$ indtil $r_i = 0$. Nedenfor ses en udregning for tallet $x=3.245$:
+Omvendt, for et givet tal $x$ kan kædebrøken $[q_0; q_1, q_2, \ldots]$ udregnes ved følgende algoritme: For $x_0 = x$ og $i \geq 0$ udregn $q_i = \lfloor x_i \rfloor$, $r_i = x_i - q_i$ og $x_{i+1} = 1/r_i$ indtil $r_i = 0$. Nedenfor ses en udregning for tallet $x=3.245$:
 \begin{center}
   \begin{tabular}{|l|l|l|l|l|}
     \hline
@@ -69,13 +69,13 @@ Omvendt, for et givet tal $x$ kan den fortsatte brøk $[q_0; q_1, q_2, \ldots]$ 
 \end{center}
 Resultatet aflæses i anden søjle: $[3; 4, 12, 4]$.
 
-Fortsatte brøker af heltalsbrøkker $t/n$ er særligt effektive at udregne vha.\ Euclids algoritme for største fællesnævner. Algoritmen i \ref{gcd} regner rekursivt på relationen mellem heltalsdivision og rest: Hvis $a = t \text{ div } n$ er heltalsdivision mellem $t$ og $n$, og $b = t \text{ \% } n$ er resten efter heltalsdivision, så er $t = a n + b$. Man kan nu forestille sig $t$, $n$ og $b$ som en sekvens af heltal $r_i$, hvor
+Kædebrøker af heltalsbrøkker $t/n$ er særligt effektive at udregne vha.\ Euclids algoritme for største fællesnævner. Algoritmen i \ref{gcd} regner rekursivt på relationen mellem heltalsdivision og rest: Hvis $a = t \text{ div } n$ er heltalsdivision mellem $t$ og $n$, og $b = t \text{ \% } n$ er resten efter heltalsdivision, så er $t = a n + b$. Man kan nu forestille sig $t$, $n$ og $b$ som en sekvens af heltal $r_i$, hvor
 \begin{align}
   r_{i-2} &= q_i r_{i-1} + r_i,
   \\r_i &= r_{i-2}\text{ \% }r_{-1}\quad\text{(rest ved heltalsdivision)},
   \\q_i &= r_{i-2}\text{ div }r_{i-1}\quad\text{(heltalsdivision)},
 \end{align}
-Hvis man starter sekvensen med $r_{-2} = t$ og $r_{-1}=n$ og beregninger resten iterativt indtil $r_{i-1}=0$, så vil største fællesnævner mellem $t$ og $n$ være lig $r_{i-2}$, og $[q_0; q_1,\ldots,q_j]$ vil være $t/n$ som fortsat brøk. Til beregning af største fællesnævner regner algoritmen i \ref{gcd} udelukkende på $r_i$ som transformationen $(r_{i-2}, r_{i-1}) \rightarrow (r_{i-1}, r_i)  = (r_{i-1}, r_{i-2}\text{ \% }r_{-1})$ indtil $(r_{i-2}, r_{i-1}) = (r_{i-2},0)$. Tilføjer man beregning af $q_i$ i rekursionen, har man samtidigt beregnet brøkken som fortsat brøk. Nedenfor ses en udregning for brøken 649/200:
+Hvis man starter sekvensen med $r_{-2} = t$ og $r_{-1}=n$ og beregninger resten iterativt indtil $r_{i-1}=0$, så vil største fællesnævner mellem $t$ og $n$ være lig $r_{i-2}$, og $[q_0; q_1,\ldots,q_j]$ vil være $t/n$ som kædebrøk. Til beregning af største fællesnævner regner algoritmen i \ref{gcd} udelukkende på $r_i$ som transformationen $(r_{i-2}, r_{i-1}) \rightarrow (r_{i-1}, r_i)  = (r_{i-1}, r_{i-2}\text{ \% }r_{-1})$ indtil $(r_{i-2}, r_{i-1}) = (r_{i-2},0)$. Tilføjer man beregning af $q_i$ i rekursionen, har man samtidigt beregnet brøkken som kædebrøk. Nedenfor ses en udregning for brøken 649/200:
 \begin{center}
   \begin{tabular}{|r|r|r|r|r|}
     \hline
@@ -89,9 +89,9 @@ Hvis man starter sekvensen med $r_{-2} = t$ og $r_{-1}=n$ og beregninger resten 
     \hline
   \end{tabular}
 \end{center}
-Den fortsatte brøk aflæses som højre søjle: $[3; 4, 12, 4]$.
+Kædebrøkken aflæses som højre søjle: $[3; 4, 12, 4]$.
 
-Omvendt, approksimationen af en fortsat brøk som heltalsbrøken $\frac{t_i}{n_i}, i \geq 0$ fås ved
+Omvendt, approksimationen af en kædebrøk som heltalsbrøken $\frac{t_i}{n_i}, i \geq 0$ fås ved
 \begin{align}
   t_i &= q_it_{i-1}+t_{i-2},
   \\n_i &= q_in_{i-1}+n_{i-2},
@@ -113,22 +113,22 @@ Denne opgave omhandler implementation, dokumentation og afprøvning af de fire o
   \begin{quote}
     \lstinline{cfrac2float : lst:int list -> float}
   \end{quote}
-  som tager en liste af heltal som fortsat brøk og udregner det tilsvarende reelle tal.
+  som tager en liste af heltal som kædebrøk og udregner det tilsvarende reelle tal.
 \item Skriv en rekursiv funktion
   \begin{quote}
     \lstinline{float2cfrac : x:float -> int list}
   \end{quote}
-  som tager et reelt tal og udregner dens repræsentation som fortsat brøk.
+  som tager et reelt tal og udregner dens repræsentation som kædebrøk.
 \item Skriv en rekursiv funktion
   \begin{quote}
     \lstinline{frac2cfrac : t:int -> n:int -> int list}
   \end{quote}
-  som tager tæller og nævner i brøken $t/n$ og udregner dens repræsentation som fortsat brøk udelukkende ved brug af heltalstyper.
+  som tager tæller og nævner i brøken $t/n$ og udregner dens repræsentation som kædebrøk udelukkende ved brug af heltalstyper.
 \item Skriv en rekursiv funktion
   \begin{quote}
     \lstinline{cfrac2frac : lst:int list -> i:int -> int * int}
   \end{quote}
-  som tager en fortsat brøk og et index og returnerer $t_i/n_i$ approximationen som tuplen \lstinline{(ti, ni)}.
+  som tager en kædebrøk og et index og returnerer $t_i/n_i$ approximationen som tuplen \lstinline{(ti, ni)}.
 \item Skriv en white- og black-box test af de ovenstående funktioner.
 \end{enumerate}
 Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!6g0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
