@@ -3,9 +3,9 @@
 \input{setup}
 
 \title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Uge(r)seddel 7 - individuel opgave}
+  Københavns Universitet\\Arbejdsseddel 9 - individuel opgave}
 \author{Jon Sporring}
-\date{28.\ oktober -- 1.\ november.\\Afleveringsfrist: onsdag d. 2. november kl. 22:00}
+\date{27.\ november - 6.\ december.\\Afleveringsfrist: onsdag d.\ 6.\ december kl. 22:00}
 
 \begin{document}
 \maketitle
@@ -18,21 +18,11 @@ I denne periode skal I arbejde individuelt. Regler for individuelle afleveringso
 \item Input fra internettet
 \end{itemize}
 
-Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+Opgaverne er delt i øve- og afleveringsopgaver. 
 
-Øve-opgaverne er:
-\begin{enumerate}[label=7ø.\arabic*,start=0]
-\item implementer fakultetsfunktionen
-  \begin{quote}
-    \mbox{\lstinline!fac : n:int -> int!}
-  \end{quote}
-  således at hvis \lstinline!n! er negativ, så kastes der en undtagelse
-\item implementer fakultetsfunktionen
-  \begin{quote}
-    \mbox{\lstinline!fac : n:int -> int option!}
-  \end{quote}
-  således at hvis \lstinline!n! er negativ, så returneres \lstinline!None!.
-\item Lav en funktion,
+\section*{Øveopgaver}
+\begin{enumerate}[label=9ø.\arabic*,start=0]
+<\item Lav en funktion,
   \begin{quote}
     \mbox{\lstinline!printFile : unit -> unit!}
   \end{quote}
@@ -49,8 +39,8 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver.
   som starter en uendelig dialog med en bruger. Brugeren skal kunne indtaste simple regnestykker på postive heltal, og hvert regnestykke må kun bestå af en enkelt af følgende binære operatorer: \lstinline!+!, \lstinline!-!, \lstinline!*!, \lstinline!/!. Resultatet skal kunne genbruges i den efterfølgende beregning med navnet \lstinline!ans!.
 \end{enumerate}
 
-Afleveringsopgaven er:
-\begin{enumerate}[label=7i.\arabic*,start=0]
+\section*{Afleveringsopgaver}
+\begin{enumerate}[label=9i.\arabic*,start=0]
 \item Der skal laves følgende implementationer af samme funktion
   \begin{quote}
     \mbox{\lstinline!safeIndexIf : arr:'a [] -> i:int -> 'a!}
@@ -76,9 +66,16 @@ Afleveringsopgaven er:
   \end{quote}
   som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
 \end{enumerate}
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!7i0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden. Hvis der er mere end 1 fsx-fil, så skal de samles i en zip-fil. Der skal også laves en kort beskrivelse af løsningen for hver opgave i Latex som afleveres ved siden af zip-filen i pdf format. Begge filer uploades til Absalon.
 
-\flushright God fornøjelse.
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!9i0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 27/11:] Afslut 8g og start på øvelsesopgaverne fra 9i
+\item[Tirsdag 28/11:] Arbejd med øvelses- og afleveringsopgaverne
+\item[Fredag 1/12]  Arbejd med afleveringsopgaverne
+\end{description}
+
 \end{document}
 
 %%% Local Variables:
