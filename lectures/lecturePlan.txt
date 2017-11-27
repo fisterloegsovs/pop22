@@ -37,6 +37,14 @@ let f () =
 let a = f ()
 a := 3
 
+// Referencer kan give sideeffekter
+let inc x =
+  x := !x + 1
+let a = ref 0
+printfn "%d" !a
+inc a
+printfn "%d" !a
+
 4. Ekstraopgave: håndkør 
 dec2bin.fsx
 

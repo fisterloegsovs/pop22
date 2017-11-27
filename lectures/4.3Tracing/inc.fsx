@@ -1,5 +1,6 @@
 let incr = 
-  let mutable counter = 0 
+  let mutable counter = 0
+  counter <- 0
   fun () ->                   
     counter <- counter + 1
     counter
