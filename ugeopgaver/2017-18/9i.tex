@@ -47,10 +47,10 @@ Opgaverne er delt i øve- og afleveringsopgaver.
     \\\mbox{\lstinline!safeIndexTry : arr:'a [] -> i:int -> 'a!}
     \\\mbox{\lstinline!safeIndexOption : arr:'a [] -> i:int -> 'a option!}
   \end{quote}
-  De skal alle returnere værdien i \lstinline!arr! på plads \lstinline!i!, hvis \lstinline!i! er et gyldigt index, og ellers håndterer fejlsituationen.  Fejlsituationerne skal håndteres forskelligt:
+  De skal alle returnere værdien i \lstinline!arr! på plads \lstinline!i!, hvis \lstinline!i! er et gyldigt index, og ellers håndtere fejlsituationen.  Fejlsituationerne skal håndteres forskelligt:
   \begin{itemize}
-  \item \lstinline!safeIndexTry! skal benytte \lstinline!try!-\lstinline!with!, og ved fejltilstand skal \lstinline!failwith! kaldes. 
   \item \lstinline!safeIndexIf! må ikke gøre brug af \lstinline!try!-\lstinline!with! og må ikke kaste en undtagelse. 
+  \item \lstinline!safeIndexTry! skal benytte \lstinline!try!-\lstinline!with!, og ved fejltilstand skal \lstinline!failwith! kaldes. 
   \item \lstinline!safeIndexOption! skal returnere \lstinline!None! i en fejlsituation. 
   \end{itemize}
    Der skal laves en kort afprøvning af alle 3 funktioner, der indebefatter at den indicerede værdi udskrives til skærmen som et heltal og ikke som en option type. Afprøvningen skal også afprøve korrekt håndtering af funktionernes evt.\ kastede undtagelser.  Lav en kort beskrivende sammenligning af metodernes evne til at håndtere fejltilstande.
@@ -59,23 +59,27 @@ Opgaverne er delt i øve- og afleveringsopgaver.
     \lstinline!fileReplace :!
     \\\noindent\lstinline!  filename:string -> needle:string -> replace:string -> unit!
   \end{quote}
-  som erstatter alle forekomster af \lstinline!needle! argumentet med \lstinline!replace! argumentet i filen med navn \lstinline!filename!. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
+  som erstatter alle forekomster af \lstinline!needle! argumentet med \lstinline!replace! argumentet i filen med navn \lstinline!filename!. Løsningen skal som minimum bruge funktionerne \lstinline{System.IO.File.OpenText}, \lstinline{ReadLine} og \lstinline{WriteLine} til at tilgå filerne. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
 \item I html-standarden angives links med \lstinline!<a></a>! tags, f.eks. kunne et link til Googles hjemmeside skrives som \lstinline!<a href="https://google.com">Tryk her for Google</a>!. Der skal laves et program
   \begin{quote}
     \mbox{\lstinline!countLinks : url:string -> int!}
   \end{quote}
-  som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge. Der skal laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
+  som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge.
+
+  Bemærk: Langt de fleste internetsider kræver et gyldigt certifikat for at dit program kan læse siden, og som udgangspunkt har mono ingen certifikater installeret. For at installere et nyttigt sæt certifikater kan du bruge \lstinline[language=console]{mozroots}, som er en del af Mono pakken. På Linux/MacOS gør følgende fra Konsollen:
+  \begin{quote}
+    \lstinline[language=console]{mozroots --import --sync}
+  \end{quote}
+  På Windows gør du følgende (på samme linje)
+  \begin{quote}
+    \lstinline[language=console]{mono "C:\Program Files (x86)\Mono\lib\mono\4.5\mozroots.exe" --import --sync}
+  \end{quote}
+  Ret evt.\ stien, hvis din installation af mozroots ligger et andetsted. Derefter kan du læse de fleste sider uden at blive afvist.
+
+  Til besvarelsen skal der laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
 \end{enumerate}
 
 Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!9i0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal der vedlægges en kort rapport i pdf format kaldet \lstinline{9i.pdf}, som indholder de dele af besvarelsen, som ikke naturligt vil være i en programtekst. Det hele skal samles i en zip fil og uploades på Absalon.
-
-Til øvelserne forventer vi at I arbejder efter følgende skema:
-\begin{description}
-\item[Mandag 27/11:] Afslut 8g og start på øvelsesopgaverne fra 9i
-\item[Tirsdag 28/11:] Arbejd med øvelses- og afleveringsopgaverne
-\item[Fredag 1/12]  Arbejd med afleveringsopgaverne
-\end{description}
-
 \end{document}
 
 %%% Local Variables:
