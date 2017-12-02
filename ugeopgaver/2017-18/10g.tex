@@ -11,7 +11,7 @@
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at arbejde med:
+I denne periode skal I arbejde i grupper. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at arbejde med:
 \begin{itemize}
 \item Classes
 \item Objects
@@ -82,10 +82,10 @@ Test all methods. Create an object instance that you know will not run out of ga
 
 Afleveringsopgaven er:
 \begin{enumerate}[label=10g.\arabic*,start=0]
-\item Du skal implementere en forsimplet udgave af kortspillet Blackjack som vi kalder \sbl. I \sbl spiller man ikke om penge/jetoner men blot om sejr/tab mellem en spiller og dealer.  Reglerne for \sbl er som følger:
+\item Du skal implementere en forsimplet udgave af kortspillet Blackjack som vi kalder \sbl. I \sbl\ spiller man ikke om penge/jetoner men blot om sejr/tab mellem en spiller og dealer.  Reglerne for \sbl er som følger:
   \begin{description}
   \item[Regler]
-    Spillet består af en dealer, 1-5 spillere samt et normalt kortspil (uden jokere). Ved spillets start får dealer og hver spiller tildelt 2 tilfældige kort fra bunken som placeres med billedsiden opad foran spilleren, så alle kan se dem. I \sbl spilles der med åbne kort dvs. alle trukne kort til hver en tid er synlige for alle spillere.  Kortene har værdi som følger:
+    Spillet består af en dealer, 1-5 spillere samt et normalt kortspil (uden jokere). Ved spillets start får dealer og hver spiller tildelt 2 tilfældige kort fra bunken som placeres med billedsiden opad foran spilleren, så alle kan se dem. I \sbl\ spilles der med åbne kort dvs. alle trukne kort til hver en tid er synlige for alle spillere.  Kortene har værdi som følger:
     \begin{enumerate}
     \item Billedkort (knægt, dame og konge) har værdien 10
     \item Es kan antage enten værdien 1 eller 11
@@ -107,13 +107,13 @@ Afleveringsopgaven er:
     \item Summen af spillerens kort-værdier er lavere end, eller lig med dealers sum af kort-værdier
     \item Både spilleren og dealer har SimpleJack (SimpleJack er et Es og et billedkort)
     \end{enumerate}
-    Bemærk at flere spillere altså godt kan vinde på en gang. Et spil \sbl er mellem en spiller og dealer, 
+    Bemærk at flere spillere altså godt kan vinde på en gang. Et spil \sbl\ er mellem en spiller og dealer, 
     så med 5 spillere ved bordet, er det altså 5 separate spil som spilles.
   \item[Implementation]
-    I skal designe og implementere et program som kan simulere \sbl ved brug af klasser. 
+    I skal designe og implementere et program som kan simulere \sbl\ ved brug af klasser. 
     Start med grundigt at overveje hvilke aspekter af spillet
     som giver mening at opdele i klasser. I skal implementere spillet sådan, at en spiller enten kan være en bruger af
-    \sbl programmet, som foretager sine valg og ser kortene på bordet via terminalen, eller en spiller kan være en AI som
+    \sbl\ programmet, som foretager sine valg og ser kortene på bordet via terminalen, eller en spiller kan være en AI som
     skal følge en af følgende strategier:
     \begin{enumerate}
     \item Vælg altid "Hit", medmindre summen af egne kort kan være 17 eller over, ellers vælg "Stand"
@@ -123,8 +123,7 @@ Afleveringsopgaven er:
     Dealer skal følge strategi nummer 1.
     Du skal også lave:
     \begin{itemize}
-    \item En rapport (maks 20 sider)
-    \item Et UML-diagram af din implementation
+    \item En rapport (maks 2 sider)
     \item Unit-tests
     \item Din implementation skal kommenteres jævnfør kommentarstandarden for F\#
     \end{itemize}
