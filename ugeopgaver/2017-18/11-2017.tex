@@ -1,9 +1,10 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
+\newcommand{\sbl}{Simple Jack}
 
 \title{Programmering og ProblemlÃ¸sning\\Datalogisk Institut,
-  KÃ¸benhavns Universitet\\Uge(r)seddel 10 - group opgave}
+  KÃ¸benhavns Universitet\\Uge(r)seddel 11 - group opgave}
 \author{Jon Sporring and Christina Lioma}
 \date{16.\ december -- 20.\ december.\\Afleveringsfrist: onsdag d. 21. december kl. 22:00}
 
@@ -24,91 +25,88 @@ Opgaverne for denne uge er delt i Ã¸ve- og afleveringsopgaver.
 \begin{enumerate}[label=10Ã¸.\arabic*,start=0]
 
 \item Write a \texttt{Person} class with data attributes for a person's name, address, and telephone number. Next, write a class named \texttt{Customer} that is a subclass of the \texttt{Person} class. The \texttt{Customer} class should have a data attribute for a customer number and a Boolean data attribute indicating whether the customer wishes to be on a mailing list. Demonstrate an instance of the \texttt{Customer} class in a simple program.
-
+  
 \item Write an \texttt{Employee} class that keeps data attributes for the following pieces of information: 
-    \begin{itemize}
-    \item Employee name
-    \item Employee number
-\end{itemize}
-Next, write a class named \texttt{ProductionWorker} that is a subclass of the \texttt{Employee} class. The \texttt{ProductionWorker} class should keep data attributes for the following information:
-    \begin{itemize}
-    \item Shift number (an integer, such as 1 or 2)
-    \item Hourly pay rate
-\end{itemize}
-The workday is divided into two shifts: day and night. The shift attribute will hold an integer value representing the shift that the employee works. The day shift is shift 1 and the night shift is shift 2. Write the appropriate methods for each class.
-
-Once you have written the classes, write a program that creates an object of the \texttt{ProductionWorker} class and prompts the user to enter data for each of the object's data attributes. Store the data in the object and then use the object's methods to retrieve it and display it on the screen.
-
+  \begin{itemize}
+  \item Employee name
+  \item Employee number
+  \end{itemize}
+  Next, write a class named \texttt{ProductionWorker} that is a subclass of the \texttt{Employee} class. The \texttt{ProductionWorker} class should keep data attributes for the following information:
+  \begin{itemize}
+  \item Shift number (an integer, such as 1 or 2)
+  \item Hourly pay rate
+  \end{itemize}
+  The workday is divided into two shifts: day and night. The shift attribute will hold an integer value representing the shift that the employee works. The day shift is shift 1 and the night shift is shift 2. Write the appropriate methods for each class.
+  
+  Once you have written the classes, write a program that creates an object of the \texttt{ProductionWorker} class and prompts the user to enter data for each of the object's data attributes. Store the data in the object and then use the object's methods to retrieve it and display it on the screen.
+  
 \item Extend the previous exercise as follows: Let a shift supervisor be a salaried employee who supervises a shift. In addition to salary, the shift supervisor earns a yearly bonus when his or her shift meets production goals. Write a \texttt{ShiftSupervisor} class that is a subclass of the \texttt{Employee} class you created in the previous exercise. The \texttt{ShiftSupervisor} class should keep a data attribute for the annual salary and a data attribute for the annual production bonus that a shift supervisor has earned. Demonstrate the class by writing a program that uses a \texttt{ShiftSupervisor} object.
-
+  
 \item \textbf{(Extra difficult).} Considering that production during night shifts is reduced by 5\% compared to production during day shifts, and that the hourly pay rate during night shifts is double the hourly pay rate during day shifts, compute the best possible worker \& shift allocation over the period of 12 months. You need to think how to measure productivity and salary cost, and then find their best tradeoff in the period of 12 months.
-
+  
 \item Cheetahs, antelopes and wildebeests are among the world's fastest mammals. This exercise asks you to simulate a race between them. You are not asked to simulate their movement on some plane, but only some of the conditions that affect their speed when running a certain distance. 
-
-Produce a UML diagram representing the following.
-
-Your base class is called \texttt{Animal} and has these attributes: 
-\begin{itemize}
-\item The amount of food needed daily (measured in kilograms)
-\item The weight of the animal (measured in kilograms)
-\item The maximum speed of the animal (measured in kilometres per hour)
-\item The current speed of the animal (measured in kilometres per hour)
-\end{itemize}
-The \texttt{Animal} class should have a primary constructor that takes two arguments: the animal's weight and the animal's maximum speed. The \texttt{Animal} class should also have an additional constructor that takes as input only the animal's maximum speed and generates the animal's weight randomly within the range of 70 - 300 kg. The \texttt{Animal} class should have two methods:
-\begin{itemize}
-\item The first method should set the current speed of the animal proportionately to its food intake and maximum speed as follows: if the animal eats 100\% of the amount of food it needs daily, the animal's current speed should be its maximum speed; if the animal eats 50\% of the amount of food it needs daily, the animal's current speed should be 50\% of its maximum speed, and so on.
-\item The second method should set the amount of food needed daily proportionately to the animal's weight as follows: the animal should eat half its own weight in food every day (if the animal weighs 50 kg, it should eat 25kg of food daily).
-\end{itemize}
-
-
-Create a subclass \texttt{Carnivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 8\% of its own weight in food every day.
-
-Create a subclass \texttt{Herbivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 40\% of its own weight in food every day.
-
-Create an instance of \texttt{Carnivore} called \texttt{cheetah} and two instances of \texttt{Herbivore} called \texttt{antelope, wildebeest}. Set their weight and maximum speed to:
-\begin{itemize}
-\item cheetah: 50kg, 114km/hour
-\item antelope: 50kg, 95km/hour
-\item wildebeest: 200kg, 80km/hour
-\end{itemize}
-
-Generate a random percentage between 1 - 100\% (inclusive) separately for each instance. This random percentage represents the amount of food the animal eats with respect to the amount of food it needs daily. E.g., if you generate the random percentage 50\% for the antelope, this means that the antelope will eat 50\% of the amount it should have eaten (as decided by the second method). 
-
-For each instance, display the random percentage you generated, how much food each animal consumed, how much food it should have consumed, and how long it took for the animal to cover 10km. 
-Repeat this 3 times (generating different random percentages each time), and declare winner the animal that was fastest on average all three times. If there is a draw, repeat and recompute until there is a clear winner.
-
-Test all methods. %You should include a UML diagram, comment your code and describe in max. 2 pages (excluding the UML diagram) what your program does and how you have tested the methods. 
-
- \textbf{Optional extra:} repeat the race without passing as input argument the weight of each animal (i.e. letting the additional constructor generate a different random weight for each instance).
- 
- \item Du skal implementere en udvidelse til \sbl som indeholder en omstrukturering af nogle af klasserne, samt indførelse
-af en række nye strategier. Du skal simulere nogle \sbl spil hvor du afprøver forskellige strategier, for at afgøre
-hvilken strategi som lader til at være den bedste. \\ \\
-Implementér super-klassen \texttt{Player}, og klasserne \texttt{Dealer}, \texttt{Human} og \texttt{AI} som nedarver
-fra \texttt{Player.} \texttt{Player} skal indeholde attributter og metoder som implementerer den fælles funktionalitet
-som alle tre typer "spillere" har, f.eks. en metode som vælger "Hit" eller "Stand". \\ \\
-Implementér super-klassen \texttt{Strategy}, samt en klasse for hver af følgende strategier, som alle nedarver fra
-\texttt{Strategy}
-\begin{enumerate}
-\item Vælg altid "Hit", medmindre summen af egne kort kan være 15 eller over, ellers vælg "Stand".
-\item Vælg altid "Hit", medmindre summen af egne kort kan være 17 eller over, ellers vælg "Stand".
-\item Vælg altid "Hit", medmindre summen af egne kort kan være 19 eller over, ellers vælg "Stand".
-\item Vælg tilfældigt mellem "Hit" og "Stand". Hvis "Hit" er valgt, trækkes et kort og der vælges igen tilfældigt mellem
-"Hit" os "Stand" osv.
-\item Følg strategi 2. hvis ét af egne kort er et Es, ellers følg strategi 1.
-\end{enumerate}
-Simulér 3000 spil \sbl med 5 \texttt{AI} spillere som følger de 5 ovenstående strategier.
-Dealer skal følge strategi 2. 
-Konkludér hvilken af strategierne som lader til at være bedst. \\ \\
-Du skal også
-\begin{itemize}
-\item Opdatere dit UML-diagram
-\item Lave Unittests
-\item Kommentere ny kode jævnfør kommentarstandarden for F\#
-\end{itemize}
-
+  
+  Produce a UML diagram representing the following.
+  
+  Your base class is called \texttt{Animal} and has these attributes: 
+  \begin{itemize}
+  \item The amount of food needed daily (measured in kilograms)
+  \item The weight of the animal (measured in kilograms)
+  \item The maximum speed of the animal (measured in kilometres per hour)
+  \item The current speed of the animal (measured in kilometres per hour)
+  \end{itemize}
+  The \texttt{Animal} class should have a primary constructor that takes two arguments: the animal's weight and the animal's maximum speed. The \texttt{Animal} class should also have an additional constructor that takes as input only the animal's maximum speed and generates the animal's weight randomly within the range of 70 - 300 kg. The \texttt{Animal} class should have two methods:
+  \begin{itemize}
+  \item The first method should set the current speed of the animal proportionately to its food intake and maximum speed as follows: if the animal eats 100\% of the amount of food it needs daily, the animal's current speed should be its maximum speed; if the animal eats 50\% of the amount of food it needs daily, the animal's current speed should be 50\% of its maximum speed, and so on.
+  \item The second method should set the amount of food needed daily proportionately to the animal's weight as follows: the animal should eat half its own weight in food every day (if the animal weighs 50 kg, it should eat 25kg of food daily).
+  \end{itemize}
+  
+  
+  Create a subclass \texttt{Carnivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 8\% of its own weight in food every day.
+  
+  Create a subclass \texttt{Herbivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 40\% of its own weight in food every day.
+  
+  Create an instance of \texttt{Carnivore} called \texttt{cheetah} and two instances of \texttt{Herbivore} called \texttt{antelope, wildebeest}. Set their weight and maximum speed to:
+  \begin{itemize}
+  \item cheetah: 50kg, 114km/hour
+  \item antelope: 50kg, 95km/hour
+  \item wildebeest: 200kg, 80km/hour
+  \end{itemize}
+  
+  Generate a random percentage between 1 - 100\% (inclusive) separately for each instance. This random percentage represents the amount of food the animal eats with respect to the amount of food it needs daily. E.g., if you generate the random percentage 50\% for the antelope, this means that the antelope will eat 50\% of the amount it should have eaten (as decided by the second method). 
+  
+  For each instance, display the random percentage you generated, how much food each animal consumed, how much food it should have consumed, and how long it took for the animal to cover 10km. 
+  Repeat this 3 times (generating different random percentages each time), and declare winner the animal that was fastest on average all three times. If there is a draw, repeat and recompute until there is a clear winner.
+  
+  Test all methods. %You should include a UML diagram, comment your code and describe in max. 2 pages (excluding the UML diagram) what your program does and how you have tested the methods. 
+  
+  \textbf{Optional extra:} repeat the race without passing as input argument the weight of each animal (i.e. letting the additional constructor generate a different random weight for each instance).
+  
+\item Du skal implementere en udvidelse til \sbl som indeholder en omstrukturering af nogle af klasserne, samt indfÃ¸relse af en rÃ¦kke nye strategier. Du skal simulere nogle \sbl spil hvor du afprÃ¸ver forskellige strategier, for at afgÃ¸re
+  hvilken strategi som lader til at vÃ¦re den bedste. \\ \\
+  Implement\'{e}r super-klassen \texttt{Player}, og klasserne \texttt{Dealer}, \texttt{Human} og \texttt{AI} som nedarver fra \texttt{Player.} \texttt{Player} skal indeholde attributter og metoder som implementerer den fÃ¦lles funktionalitet
+  som alle tre typer "spillere" har, f.eks. en metode som vÃ¦lger "Hit" eller "Stand". \\ \\
+  Implement\'{e}r super-klassen \texttt{Strategy}, samt en klasse for hver af fÃ¸lgende strategier, som alle nedarver fra \texttt{Strategy}
+  \begin{enumerate}
+  \item VÃ¦lg altid "Hit", medmindre summen af egne kort kan vÃ¦re 15 eller over, ellers vÃ¦lg "Stand".
+  \item VÃ¦lg altid "Hit", medmindre summen af egne kort kan vÃ¦re 17 eller over, ellers vÃ¦lg "Stand".
+  \item VÃ¦lg altid "Hit", medmindre summen af egne kort kan vÃ¦re 19 eller over, ellers vÃ¦lg "Stand".
+  \item VÃ¦lg tilfÃ¦ldigt mellem "Hit" og "Stand". Hvis "Hit" er valgt, trÃ¦kkes et kort og der vÃ¦lges igen tilfÃ¦ldigt mellem
+    "Hit" os "Stand" osv.
+  \item FÃ¸lg strategi 2. hvis \'{e}t af egne kort er et Es, ellers fÃ¸lg strategi 1.
+  \end{enumerate}
+  Simul\'{e}r 3000 spil \sbl med 5 \texttt{AI} spillere som fÃ¸lger de 5 ovenstÃ¥ende strategier.
+  Dealer skal fÃ¸lge strategi 2. 
+  Konklud\'{e}r hvilken af strategierne som lader til at vÃ¦re bedst. \\ \\
+  Du skal ogsÃ¥
+  \begin{itemize}
+  \item Opdatere dit UML-diagram
+  \item Lave Unittests
+  \item Kommentere ny kode jÃ¦vnfÃ¸r kommentarstandarden for F\#
+  \end{itemize}
+  
 \item Produce a UML diagram for each of the above exercises.
-
+  
 \end{enumerate}
 
 Afleveringsopgaven er:
@@ -119,20 +117,20 @@ Afleveringsopgaven er:
   \begin{enumerate}
   \item The habitat updates itself in units of time called clock ticks. During one clock tick, every animal in the island gets an opportunity to do something. 
   \item All animals are given an opportunity to move into an adjacent space, if an empty adjacent space is found. One move per clock tick is allowed.
-  \item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal ? its offspring. The animal?s breed time is then reset to zero. An animal can breed at most once in a clock tick.
+  \item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal and its offspring. The animal's breed time is then reset to zero. An animal can breed at most once in a clock tick.
   \item The predators must eat. They have a fixed starve time. If they cannot find a prey to eat before starve time ticks of the clock, they die.
-  \item When a predator eats, it moves into an adjacent space that is occupied by prey (its meal). The prey is removed and the predator?s starve time is reset to zero. Eating counts as the predator?s move during that clock tick.
-  \item At the end of every clock tick, each animal?s local event clock is updated. All animals? breed times are decremented and all predators? starve times are decremented.
+  \item When a predator eats, it moves into an adjacent space that is occupied by prey (its meal). The prey is removed and the predator's starve time is reset to zero. Eating counts as the predator's move during that clock tick.
+  \item At the end of every clock tick, each animal's local event clock is updated. All animal's breed times are decremented and all predator's starve times are decremented.
   \end{enumerate}
-\end{description}
+\end{enumerate}
 
 \subsection*{Krav til opgavebesvarelsen}
-I skal lave et program, som kan simulere rov- og byttedyrene som beskrevet ovenfor og skrive en lille rapport. Afleveringen skal bestå af en pdf indeholdende rapporten, et katalog med et eller flere fsharp programmer som kan oversættes med Monos fsharpc kommando og derefter køres i mono, og en tekstfil der angiver sekvensen af oversættelseskommandoer nødvendigt for at oversætte jeres program(mer). Kataloget skal zippes og uploades som en enkelt fil. Kravene til programmeringsdelen er:
+I skal lave et program, som kan simulere rov- og byttedyrene som beskrevet ovenfor og skrive en lille rapport. Afleveringen skal bestÃ¥ af en pdf indeholdende rapporten, et katalog med et eller flere fsharp programmer som kan oversÃ¦ttes med Monos fsharpc kommando og derefter kÃ¸res i mono, og en tekstfil der angiver sekvensen af oversÃ¦ttelseskommandoer nÃ¸dvendigt for at oversÃ¦tte jeres program(mer). Kataloget skal zippes og uploades som en enkelt fil. Kravene til programmeringsdelen er:
 \begin{enumerate}
-\item Man skal kunne angive antal af tiks (clock ticks), som simuleringen skal køre, formeringstid (breeding time) for begge racer og udsultningstid for rovdyrene ved programstart.
+\item Man skal kunne angive antal af tiks (clock ticks), som simuleringen skal kÃ¸re, formeringstid (breeding time) for begge racer og udsultningstid for rovdyrene ved programstart.
 \item Antallet af dyr per tik skal gemmes i en fil.
 \item Programmet skal benytte klasser og objekter
-\item Der skal være mindst en (fornuftig) nedarvning
+\item Der skal vÃ¦re mindst en (fornuftig) nedarvning
 \item Programmets klasser skal bla. beskrives ved brug af et UML diagram
 \item Programmet skal kommenteres ved brug af fsharp kommentarstandarden
 \item Programmet skal unit-testes
@@ -141,11 +139,10 @@ Kravene til rapporten er:
 \begin{enumerate}[resume]
 \item Rapporten skal skrives i \LaTeX.
 \item I skal bruge \texttt{rapport.tex} skabelonen
-\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, og Diskussion og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
-\item Rapporten må maximalt være på 10 sider alt inklusivt.
+\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, AfprÃ¸vning, og Diskussion og Konklusion. Som bilag skal I vedlÃ¦gge afsnittene Brugervejledning og Programtekst.
+\item Rapporten mÃ¥ maximalt vÃ¦re pÃ¥ 10 sider alt inklusivt.
 \end{enumerate}
-  
- \end{enumerate}
+ 
 Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!10g0a.fsx!. Tekstfilerne skal kunne oversÃ¦ttes med fsharpc, og resultatet skal kunne kÃ¸res med mono. Funktioner skal dokumenteres ifÃ¸lge dokumentationsstandarden. Hvis der er mere end 1 fsx-fil, sÃ¥ skal de samles i en zip-fil. Der skal ogsÃ¥ laves en kort beskrivelse af lÃ¸sningen for hver opgave i Latex som afleveres ved siden af zip-filen i pdf format. Begge filer uploades til Absalon.
 
 \flushright God fornÃ¸jelse.
