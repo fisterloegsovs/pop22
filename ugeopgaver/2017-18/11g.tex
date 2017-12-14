@@ -2,6 +2,7 @@
 
 \input{setup}
 \newcommand{\sbl}{Simple Jack}
+\newcommand{\chess}{Simple Chess}
 
 \title{Programmering og Problemløsning\\Datalogisk Institut,
   Københavns Universitet\\Uge(r)seddel 11 - group opgave}
@@ -110,41 +111,20 @@ Opgaverne for denne uge er delt i øve- og afleveringsopgaver.
 \end{enumerate}
 
 Afleveringsopgaven er:
-\begin{enumerate}[label=11g.\arabic*,start=0]
-\item We consider a simulation of a natural habitat as two groups of animals interact. One group is the prey, a population of animals that are the food source for the other population of animals, the predators. Both groups have a fixed birthrate. The prey usually procreate faster than the predators, allowing for a growing prey population. But as the population of prey increases, the habitat can support a higher number of predators. This leads to an increasing predator population, and, after some time, a decreasing prey population. Around that time, the predator population grows so large as to reach a critical point, where the number of prey can no longer support the present predator population, and the predator population begins to wane. As the predator population declines, the prey population recovers, and the two populations continue this interaction of growth and decay.
 
-  An actual example of studying predator-prey relationships is the one between wolves and moose on Isle Royale in Lake Superior (http://www.isleroyalewolf.org/). Its population of wolves and moose are isolated on the island. We can simulate this, with the following rules:
-  \begin{enumerate}
-  \item The habitat updates itself in units of time called clock ticks. During one clock tick, every animal in the island gets an opportunity to do something. 
-  \item All animals are given an opportunity to move into an adjacent space, if an empty adjacent space is found. One move per clock tick is allowed.
-  \item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal and its offspring. The animal's breed time is then reset to zero. An animal can breed at most once in a clock tick.
-  \item The predators must eat. They have a fixed starve time. If they cannot find a prey to eat before starve time ticks of the clock, they die.
-  \item When a predator eats, it moves into an adjacent space that is occupied by prey (its meal). The prey is removed and the predator's starve time is reset to zero. Eating counts as the predator's move during that clock tick.
-  \item At the end of every clock tick, each animal's local event clock is updated. All animal's breed times are decremented and all predator's starve times are decremented.
-  \end{enumerate}
+Sporring, ``Learning to program with F\#'', 2017, Chapter~21.4 describes a simplified version of Chess with only Kings and Rooks, and which we here will call \chess, and which is implemented in 3 files: \lstinline{chess.fs}, \lstinline{pieces.fs}, and \lstinline{chessApp.fsx}. In this assignment you are to work with this implementation, and the assignment consists of the following design and programming tasks:
+\begin{enumerate}[label=11g.\arabic*,start=0]
+\item Produce a UML diagram describing the design presented of \chess\ in the book.
+\item The implementation of \lstinline{availableMoves} for the King is flawed, since the method will list a square as available, even though it can be hit by an opponents piece at next turn. Correct \lstinline{availableMoves}, such that threatened squares no longer are part of the list of vacant squares. If as a consequence you update the design w.r.t.\ your UML diagram, then provide an updated UML diagram.
+\item Extend the implementation with a class \lstinline{Player} and two derived classes \lstinline{Human} and \lstinline{Computer}. The derived classes must have a method \lstinline{nextMove}, which returns a legal movement as a codestring or the string ``quit''.  A codestring is a string of the name of two squares separated by a space. E.g., if the white king is placed at a4, and a5 is an available move for the king, then a legal codestring for moving the king to a5 is ``a4 a5''. The player can be either a human or the computer. If the player is human, then the codestring is obtained by a text dialogue with the user. If the player is the computer, then the codestring must be constructed from a random selection of available move of one of its pieces.
+\item Extend the implementation with a class \lstinline{Game}, which includes a method \lstinline{run}, and which allows two players to play a game. The class must be instantiated with two player objects either human or computer, and \lstinline{run} must loop through each turn and ask each player object for their next move, until one of the players quits by typing ``quit''.
+\item Extend \lstinline{Player} with an artificial intelligence (ai), which instead of picking random moves simulate all possible games at least 2 moves ahead, and returns a movement, which is more likely to lead to a win than random guessing.
+\item Make an extended UML diagram showing the final design including all the extending classes.
 \end{enumerate}
 
 \subsection*{Krav til opgavebesvarelsen}
-I skal lave et program, som kan simulere rov- og byttedyrene som beskrevet ovenfor og skrive en lille rapport. Afleveringen skal bestå af en pdf indeholdende rapporten, et katalog med et eller flere fsharp programmer som kan oversættes med Monos fsharpc kommando og derefter køres i mono, og en tekstfil der angiver sekvensen af oversættelseskommandoer nødvendigt for at oversætte jeres program(mer). Kataloget skal zippes og uploades som en enkelt fil. Kravene til programmeringsdelen er:
-\begin{enumerate}
-\item Man skal kunne angive antal af tiks (clock ticks), som simuleringen skal køre, formeringstid (breeding time) for begge racer og udsultningstid for rovdyrene ved programstart.
-\item Antallet af dyr per tik skal gemmes i en fil.
-\item Programmet skal benytte klasser og objekter
-\item Der skal være mindst en (fornuftig) nedarvning
-\item Programmets klasser skal bla. beskrives ved brug af et UML diagram
-\item Programmet skal kommenteres ved brug af fsharp kommentarstandarden
-\item Programmet skal unit-testes
-\end{enumerate}
-Kravene til rapporten er:
-\begin{enumerate}[resume]
-\item Rapporten skal skrives i \LaTeX.
-\item I skal bruge \texttt{rapport.tex} skabelonen
-\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, og Diskussion og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
-\item Rapporten må maximalt være på 10 sider alt inklusivt.
-\end{enumerate}
+You must make a program consisting of one or more F\# files, that extends \chess\ as described above, and you must write a small report. The hand-in must consists of the report on pdf-format, one or more fsharp source files, and a single compiled \lstinline[language=console]{exe} file, which can be run using \lstinline[language=console]{mono} command. The hand-in must also give the list of console commands used to compile the program. Besides the requirements described in the previous section, the program must be documented using the F\# documentation standard, and the program must be tested with both a black- and white-box testing. The report must be written in either English or Danish, typeset using \LaTeX, and as its main parts include the sections Introduction (Introduktion), Problem analysis and design (Problemanalyse og design), Program description (Programbeskrivelse), Testing (Afprøvning), and Discussion and Conclusion (Diskussion og Konklusion) as shown in \texttt{rapport.tex}. As appendix the report must be include a User Guide (Brugervejledning). The report excluding frontpage and appendix should be no larger than 10 pages.
  
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!10g0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden. Hvis der er mere end 1 fsx-fil, så skal de samles i en zip-fil. Der skal også laves en kort beskrivelse af løsningen for hver opgave i Latex som afleveres ved siden af zip-filen i pdf format. Begge filer uploades til Absalon.
-
 \flushright God fornøjelse.
 \end{document}
 
