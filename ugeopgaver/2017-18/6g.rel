@@ -1,0 +1,42 @@
+;; RefTeX parse info file
+;; File: /Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex
+;; User: sporring (Jon Sporring)
+
+(set reftex-docstruct-symbol '(
+
+
+(xr nil "\\\\\\\\\\\\")
+
+(index-tags "idx")
+
+(is-multi t)
+
+(bibview-cache)
+
+(master-dir . "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/")
+
+(label-numbers ("eq:" . 1))
+
+(bof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex")
+
+(bof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex")
+
+(index "idx" "\\expandarg\\IfSubStr{#1}{@}{\\StrBehind{#1}{@}}{#1}}}\\index{#1}}" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex" 3251 "#1" "#1" "#1" "#1" nil)
+
+(index "idx" "\\newcommand{\\idxss}[1]{\\index{#1}}" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex" 3352 "#1" "#1" "#1" "#1" nil)
+
+(eof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex")
+
+(toc "toc" "    * Øveopgaver" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex" nil 2 "*" "\\section*{Øveopgaver}" 472)
+
+("6ø.\\arabic*" "i" "NO MATCH FOR CONTEXT REGEXP" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex" nil)
+
+(toc "toc" "    * Afleveringsopgaver" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex" nil 2 "*" "\\section*{Afleveringsopgaver}" 1912)
+
+("6g.\\arabic*" "i" "NO MATCH FOR CONTEXT REGEXP" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex" nil)
+
+("eq:1" "e" nil "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex" nil "")
+
+(eof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/6g.tex")
+))
+
