@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 4 - gruppeopgave}
+\author{Jon Sporring}
+\date{25.\ september - 4.\ oktober.\\Afleveringsfrist: onsdag d.\ 4.\ oktober kl. 22:00}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde i grupper. Formålet er at arbejde med:
+\begin{itemize}
+\item Moduler og namespaces
+\item Afprøvning
+\end{itemize}
+ 
+Opgaverne er delt i øve- og afleveringsopgaver. 
+
+\section*{Øveopgaver}
+En farve repræsenteres ofte som en triple (rød, grøn, blå), hvor hver indgang kaldes en farvekanal eller blot en kanal, og hver kanal er typisk et heltal mellem 0 og 255:
+\begin{align}
+  c &= (r, g,b)
+\end{align}
+Farver kan lægges sammen ved at addere deres kanaler,
+\begin{align}
+  c_1 + c_2 &= \big(\text{trunc}(r_1+r_2), \text{trunc}(g_1+g_2), \text{trunc}(b_1+b_2)\big),
+  \\c_i &= (r_i, g_i,b_i)
+  \\\text{trunc}(v) &=
+  \begin{cases}
+    0, &v < 0
+    \\255, &v > 255
+    \\v, &\text{ellers}
+  \end{cases}
+\end{align}
+og farver kan skaleres ved at gange hver kanal med samme konstant.
+\begin{align}
+  a c &= \big(\text{trunc}(a r), \text{trunc}(a g), \text{trunc}(a b)\big)
+\end{align}
+Farver, hvor alle kanaler har samme værdi, $v=r=g=b$, kaldes gråtoner, og man kan konvertere en farve til gråtone ved at udregne gråtoneværdien som gennemsnittet af de 3 kanaler,
+\begin{align}
+  v = \text{gray}(c) &= \frac{r+g+b}{3}
+\end{align}
+\begin{enumerate}[label=4ø.\arabic*,start=0]
+\item Skriv en signaturfil for et modul, som indeholder funktionerne \lstinline{trunc}, \lstinline{add}, \lstinline{scale}, og \lstinline{gray}, ud fra ovenstående matematiske definitioner og ved brug af tupler, hvor muligt.
+\item Skriv en implementation af ovenstående signaturfil og kompiler begge filer til et bibliotek (\filename{dll}-fil).
+\item Skriv en applikation i 2 varianter: Een som benytter ovenstående bibliotek via \filename{fsharpi} og een som benytter det via \filename{fsharpc}.
+\item Lav en White-box afprøvning af jeres bibliotek og ved brug af \filename{fsharpc}.
+\item Udvid biblioteket (både signatur og implementationsfilen) med en funktion, som konverterer en farvetriplet til en gråtonetriplet. Udvid afprøvningen med en passende afprøvning af den nye funktion. Diskut\'{e}r om bibliotek, applikation, og afprøvning er struktureret på en måde, så denne udvidelse har været let, eller om der er uhensigtmæssige afhængigheder, som gør rettelse, vedligeholdelse og udvidelse besværlig og med risiko for fejl.
+\end{enumerate}
+
+\section*{Afleveringsopgaver}
+Afleveringsopgaven omhandler to-dimensionelle vektorer. En to-dimensionel vektor (herefter blot vektor) er et geometrisk objekt som består af en retning og en længde. Typisk repræsenteres vektorer som par af tal $\vec v  = (x, y)$, hvor længden og retning findes ved,
+\begin{align}
+  \text{len}(\vec v) &= \sqrt{x^2+y^2}
+  \\\text{ang}(\vec v) &=\text{atan2}(y, x)
+\end{align}
+Vektorens ender kaldes hhv.\ hale og spids, og når halen placeres i $(0, 0)$, så vil spidsen have koordinat $(x, y)$. Vektorer har en række standardoperatorer,
+\begin{align}
+  \vec v_1 &= (x_1, y_1)
+  \\\vec v_2 &= (x_2, y_2)
+  \\a \vec v_1 &= (a x_1, a y_1)
+  \\\vec v_1 + \vec v_2 &= (x_1+x_2, y_1+y_2)
+  \\\vec v_1 \cdot \vec v_2 &= x_1 x_2 +  y_1y_2
+\end{align}
+Addition kan tegnes som vist i \Cref{fig:vectorAddition}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.33\textwidth]{vectorAddition}
+  \caption{Illustration of vector addition in two dimensions.}
+  \label{fig:vectorAddition}
+\end{figure}
+\begin{enumerate}[label=4g.\arabic*,start=0]
+\item Skriv et bibliotek \filename{vec2d.fs}, som implementerer følgende signatur fil:
+\fsSignature{vec2d}{vec2d}{A signature file.}{}
+\item Skriv en White-box afprøvning af biblioteket.
+\item Punkter på en cirkel med radius 1 kan beregnes som $(\cos \theta, \sin \theta), \;\theta\in [0,2\pi)$. Betragt det lukkede polygon, som består af $n>1$ punkter på en cirkel, hvor $\theta_i = \frac{2\pi i}{n},\; i = 0..(n-1)$. 
+  \begin{enumerate}
+  \item Skriv en applikation med en funktion,
+  \begin{quote}
+    \lstinline{polyLen : n:int -> float}
+  \end{quote}
+som benytter ovenstående bibliotek til at udregne længden af polygonet. Længden udregnes som summen af længden af vektorerne mellem nabopunkter. Applikationen skal desuden udskrive en tabel af længder for et stigende antal $n$ værdier, og resultaterne skal sammenlignes med omkredsen af cirklen med radius $1$. 
+\item Udform en hypotese ud fra tabellen for længden af polygonet når $n\rightarrow\infty$.
+  \end{enumerate}
+\item Biblioteket \filename{vec2d} tager udgangspunkt i en repræsentation af vektorer som par (2-tupler). Lav et udkast til en signaturfil for en variant af biblioteket, som ungår tupler helt. Diskut\'{e}r eventuelle udfordringer og større ændringer, som varianten ville kræve både for implementationen og applikationen.
+\end{enumerate}
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!4g0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 25/9:] Afslut 3i og start på øvelsesopgaverne fra 4g
+\item[Tirsdag 26/9:] Arbejd med øvelses- og afleveringsopgaverne
+\item[Fredag 29/9]  Arbejd med afleveringsopgaverne
+\end{description}
+
+\end{document}

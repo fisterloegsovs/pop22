@@ -1,0 +1,89 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 2 - individuel opgave.}
+\author{Jon Sporring}
+\date{11.\ - 19.\ september.\\Afleveringsfrist: onsdag d.\ 19.\ september kl. 22:00}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde individuelt. Formålet er at:
+\begin{itemize}
+\item I laver jeres første F\# program
+\item I kommer til at kende forskellen mellem decimal, binær, hexadecimal, og oktal repræsentation af heltal, samt at kunne konvertere imellem dem.
+\item I kommer til at kunne beskrive simple typer i F\#: \lstinline{int}, \lstinline{float}, \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt konvertering imellem dem.
+\item I kommer til at kunne bruge F\# som en lommeregner.
+\end{itemize}
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. For de individuelle afleveringsopgaver skal I være særlig opmærksomme på, at jeres løsning ikke må udarbejdes i samarbejde med andre. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
+
+Øve-opgaverne er:
+\begin{enumerate}[label=2ø.\arabic*,start=0]
+\item Start en interaktiv F\# session og indtast følgende (efterfulgt af ny linie):
+  \begin{codeNOutput}{: My first F\#.}
+\begin{lstlisting}
+3.14+2.78;;
+\end{lstlisting}
+  \end{codeNOutput}
+  Beskriv (for dig selv), hvad F\# gjorde, og hvis der opstod en fejl, find fejlen og gentag.
+\item Gentag øvelsen ovenfor, men denne gang indtast udtrykket i Emacs og gem det i en fil med suffix \verb|.fsx|. Kør filen med \lstinline[language=console]{fsharpi} og \lstinline[language=console]{fsharpc}+\lstinline[language=console]{mono}. Overvej om resultatet er som forventet, og hvis ikke, forklar hvorfor.
+\item Skriv et udtryk, som konkatenerer strengene \lstinline{"hello"}, \lstinline{" "}, \lstinline{"world"} og afprøv det i F\#.
+\item Prøv følgende udtryk i F\#,
+  \begin{codeNOutput}{: Problematic F\#.}
+\begin{lstlisting}
+3 + 1.0;;
+\end{lstlisting}
+\end{codeNOutput}
+og forklar resultatet. Forbedr evt.\ udtrykket.
+\item Brug papir og blyant til at skriv heltallet $3_{10}$ op på binær form ved at bruge division-med-2 algoritmen. Skriv heltallet $1001_2$ op i 10-talssystemet med gang-med-2 algoritmen. Skriv heltallet $47_{10}$ op på hexadecimal og på oktal form.
+\item Indtast $47_{10}$ på decimal, hexadecimal, oktal, og floating-point form i fsharp, og verificer, at de alle repræsenterer den samme værdi.
+\item Opskriv sandhedstabellen (truth table) for udtrykket $a \text{ or } b \text{ and } c$, hvor $a$, $b$ og $c$ er boolske værdier.
+\item Betragt F\#-udtrykket \lstinline{164uy+230uy}. Forklar hvad \lstinline{"uy"} betyder, udregn udtrykket i F\# og diskut\'{e}r resultatet.
+\item Opskriv et F\#-udtryk for en streng, som indeholder ``abc...æøå'' udelukkende ved brug af unicode escapekoder.
+\item Opskriv et F\#-udtryk, som indicerer det 3.\ element og substrengen fra det 2.\ til 4.\ elemente i strengen ``abcdef''.
+\end{enumerate}
+
+Afleveringsopgaven er:
+\begin{enumerate}[label=2i.\arabic*,start=0]
+\item Udfyld følgende tabel,
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      Decimal & Binær & Hexadecimal & Oktal\\
+      \hline
+              10 &  &  & \\
+      \hline
+              & 10101 &  & \\
+      \hline
+               &  & 3f  & \\
+      \hline
+              &  &  & 77 \\
+      \hline
+    \end{tabular}
+  \end{center}
+således at hver række repræsenterer den samme værdi men opskrevet på 4 forskellige former, og angiv mellemregningerne du brugte, for at udregne konverteringerne.
+\item Betragt F\#-udtrykket \lstinline{"hello\nworld\n"}. Forklar hvad ``\textbackslash n'' betyder, evalu\'{e}r udtrykket i F\# og diskut\'{e}r resultatet.
+\item Opskriv et F\#-udtryk for en streng, som indeholder ``\textbackslash n'' men hvor ``\textbackslash n'' ikke opfattes som en escapekode. Hvor mange forskellige måder kan det gøres på?
+\item Opskriv to F\#-udtryk, som ved brug af indiceringssyntaksen udtrækker 1.\ og 2.\ ord i strengen ``hello world''.
+\end{enumerate}
+Afleveringen skal bestå af en rapport i pdf-format og en zip-fil. Rapporten skal skrives i LaTeX, og zip-filen skal indeholde en mappe, som indeholder to mapper: en med LaTeX koden m.m.\ og en med fsharp koden. Der skal være en fsharp tekstfil per fsharp-opgave, og de skal navngives \verb|2i1.fsx| osv., og de skal kunne oversættes med fsharpc og køres med mono.
+
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 11/9:] Færdiggør 1g
+\item[Tirsdag 12/9:] Arbejd med øvelsesopgaverne
+\item[Fredag 15/9]  Arbejd med afleveringsopgaverne
+\end{description}
+
+
+\flushright God fornøjelse.
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
