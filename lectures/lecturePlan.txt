@@ -447,6 +447,9 @@ minimal, simple, advanced.
 
 —————————————————————————————————————
 1.2
+
+Læs 1g
+
 Scratch
 1. Kamera
 2. Walking med variabel retning
@@ -461,13 +464,22 @@ Pointer:
 —————————————————————————————————————
 1.1
 Velkommen (Martin, Christina, Jon (kursusansvarlig), instruktorer)
+
+Inddeling i studiegrupper
+
 Hvad skal vi lærer (imperativ-, funktions- og objektorienteret programmering)
 Oversigt over kurset (Canvas, kurser.ku.dk, øvelseshold, lokaler, grupper, scratch, fsharp, opgaver, ugesedler og aflevering)
 God opførsel på forum, chat, forelæsninger, øvelser, grupper
 
-Læs 1g
+Læs 0
 
-Imperativ programmering:
+Kommandoprompten (Linux, windows, Macos)
+
+Socrative.com (student login, SPORRING)
+
+LaTeX
+
+Scratch - Imperativ programmering:
 
 Kageopskrift er et program
 Tælleopskrift, timing af 2 måder (sekventielt eller parallelt)
@@ -478,3 +490,4 @@ Scratch:
 4. MoveToMouse (clone)
 5. Bat bounce (putting it all together)
 
+Følg instruktorerne (hold 8 og 11 er byttet)
