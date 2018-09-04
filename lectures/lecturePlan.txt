@@ -435,20 +435,6 @@ Typer: 3, 3.0, '3', "3", 3e0, 3.0e0. Vis Tabel 5.1
 
 —————————————————————————————————————
 1.3
-Terminal:
-Forskel mellem Windows, MacOS, og Linux
-dir/ls, cd, cp/copy, mkdir, rmdir, del/rm, echo
-
-Emacs:
-crtl. vs. meta, menuer, dele vinduer
-
-Latex:
-minimal, simple, advanced.
-
-—————————————————————————————————————
-1.2
-
-Læs 1g
 
 Scratch
 1. Kamera
@@ -460,6 +446,23 @@ Pointer:
 1. Veldefineret tilstand ved start (Walking, første kommandoer bør være at flytte til startsted og start retning)
 2. Delegering og lokale versus globale variable. (Collect …: Skal score være i Laptops eller i Octopus?  Hvem har brug for viden, og hvem kunne have glæde af viden om score?)
 3. Event drevent eller if-then-else loop: Hvad giver det “simpleste” program. Hvilke parametre kan vi bruge til at vurdere simplicitet?
+
+
+—————————————————————————————————————
+1.2
+
+Læs 1g
+
+Imperativt program er som en kageopskrift
+
+Tælleopskrift, timing af 2 måder (sekventielt eller parallelt)
+
+Centrale Scratch elementer:
+Look, Løkke, Værdier Variable
+
+3. Walking (costumes, touching, direction, if-then)
+4. MoveToMouse (clone)
+5. Bat bounce (putting it all together)
 
 —————————————————————————————————————
 1.1
@@ -481,13 +484,8 @@ LaTeX
 
 Scratch - Imperativ programmering:
 
-Kageopskrift er et program
-Tælleopskrift, timing af 2 måder (sekventielt eller parallelt)
 Scratch:
 1. Hello (sprite, say, mouse, loop)
 2. Count (variables, wait)
-3. Walking (costumes, touching, direction, if-then)
-4. MoveToMouse (clone)
-5. Bat bounce (putting it all together)
 
 Følg instruktorerne (hold 8 og 11 er byttet)
