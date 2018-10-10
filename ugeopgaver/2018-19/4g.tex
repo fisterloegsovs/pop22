@@ -45,9 +45,9 @@ Farver, hvor alle kanaler har samme værdi, $v=r=g=b$, kaldes gråtoner, og man 
 \begin{enumerate}[label=4ø.\arabic*,start=0]
 \item Skriv en signaturfil for et modul, som indeholder funktionerne \lstinline{trunc}, \lstinline{add}, \lstinline{scale}, og \lstinline{gray} ud fra ovenstående matematiske definitioner og ved brug af tupler, hvor muligt.
 \item Skriv en implementation af ovenstående signaturfil og kompiler begge filer til et bibliotek (\filename{dll}-fil).
-\item Skriv en applikation i 2 varianter: Een som benytter ovenstående bibliotek via \filename{fsharpi} og een som benytter det via \filename{fsharpc}.
+\item Skriv 2 programmer: Et som benytter ovenstående bibliotek via \filename{fsharpi} og et som benytter det via \filename{fsharpc}.
 \item Lav en White-box afprøvning af jeres bibliotek og ved brug af \filename{fsharpc}.
-\item Udvid biblioteket (både signatur og implementationsfilen) med en funktion, som konverterer en farvetriplet til en gråtonetriplet. Udvid afprøvningen med en passende afprøvning af den nye funktion. Diskut\'{e}r om bibliotek, applikation, og afprøvning er struktureret på en måde, så denne udvidelse har været let, eller om der er uhensigtmæssige afhængigheder, som gør rettelse, vedligeholdelse og udvidelse besværlig og med risiko for fejl.
+\item Udvid biblioteket (både signatur og implementationsfilen) med en funktion, som konverterer en farvetriplet til en gråtonetriplet. Udvid afprøvningen med en passende afprøvning af den nye funktion. Diskut\'{e}r om bibliotek, program, og afprøvning er struktureret på en måde, så denne udvidelse har været let, eller om der er uhensigtmæssige afhængigheder, som gør rettelse, vedligeholdelse og udvidelse besværlig og med risiko for fejl.
 \end{enumerate}
 
 \section*{Afleveringsopgaver}
@@ -77,14 +77,14 @@ Addition kan tegnes som vist i \Cref{fig:vectorAddition}.
 \item Skriv en White-box afprøvning af biblioteket.
 \item Punkter på en cirkel med radius 1 kan beregnes som $(\cos \theta, \sin \theta), \;\theta\in [0,2\pi)$. Betragt det lukkede polygon, som består af $n>1$ punkter på en cirkel, hvor $\theta_i = \frac{2\pi i}{n},\; i = 0..(n-1)$. 
   \begin{enumerate}
-  \item Skriv en applikation med en funktion,
+  \item Skriv et program med en funktion,
   \begin{quote}
     \lstinline{polyLen : n:int -> float}
   \end{quote}
-som benytter ovenstående bibliotek til at udregne længden af polygonet. Længden udregnes som summen af længden af vektorerne mellem nabopunkter. Applikationen skal desuden udskrive en tabel af længder for et stigende antal værdier $n$, og resultaterne skal sammenlignes med omkredsen af cirklen med radius $1$. 
+som benytter ovenstående bibliotek til at udregne længden af polygonet. Længden udregnes som summen af længden af vektorerne mellem nabopunkter. Programmet skal desuden udskrive en tabel af længder for et stigende antal værdier $n$, og resultaterne skal sammenlignes med omkredsen af cirklen med radius $1$. 
 \item Udform en hypotese ud fra tabellen for længden af polygonet når $n\rightarrow\infty$.
   \end{enumerate}
-\item Biblioteket \filename{vec2d} tager udgangspunkt i en repræsentation af vektorer som par (2-tupler). Lav et udkast til en signaturfil for en variant af biblioteket, som ungår tupler helt. Diskut\'{e}r eventuelle udfordringer og større ændringer, som varianten ville kræve både for implementationen og applikationen.
+\item Biblioteket \filename{vec2d} tager udgangspunkt i en repræsentation af vektorer som par (2-tupler). Lav et udkast til en signaturfil for en variant af biblioteket, som ungår tupler helt. Diskut\'{e}r eventuelle udfordringer og større ændringer, som varianten ville kræve både for implementationen og programmet.
 \end{enumerate}
 Afleveringen skal bestå af en zip-fil, som skal indeholde en mappe med fsharp koden. Der skal være en fsharp tekstfil per fsharp-opgave, og de skal navngives \verb|4g0.fsx| osv. De skal kunne oversættes med fsharpc og køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til.
 
