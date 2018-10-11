@@ -1,68 +1,87 @@
+// Initial board, first 7 is player 1's 1-6 and home, second 7 is
+// player 2's
 let board = [|3;3;3;3;3;3;0;3;3;3;3;3;3;0|]
+type player = Player1 | Player2
 
-/// Print the board, user one is bottom row and rightmost home
-let printBoard (board : int []) =
+/// Print the board, player 1 is bottom row and rightmost home
+let printBoard (board : int []) : unit =
   printfn "%6d%3d%3d%3d%3d%3d" board.[12] board.[11] board.[10] board.[9] board.[8] board.[7]
   printfn "%3d%21d" board.[13] board.[6]
   printfn "%6d%3d%3d%3d%3d%3d" board.[0] board.[1] board.[2] board.[3] board.[4] board.[5]
 
-/// Convert from user's coordinates to board's coordinates
-/// Players enters 1-6 corresponding to board index 0-5 or 7-12
-let user2board (player : int) (compartment : int) : int =
-  if player = 1 then compartment - 1 else (compartment - 1 + 7)
+/// Convert from user's coordinates to board's coordinates Players
+/// enters 1-6 corresponding to board index 0-5 or 7-12
+let pit2ind (p : player) (pit : int) : int =
+  if p = Player1 then pit - 1 else (pit - 1 + 7)
 
-/// Convert from board's coordinates to user's coordinates
-/// Board index 0-5 and 7-12 corresponds to user's 1-6
-let board2user (cmp : int) : int =
-  if cmp < 7 then cmp + 1 else (cmp + 1 - 7)
+/// Convert from board's indices to pits (user's coordinates) Board
+/// index 0-5 and 7-12 corresponds to pit 1-6 for player 1 and 2
+/// respectively
+let ind2pit (ind : int) : int =
+  if ind < 7 then ind + 1 else (ind + 1 - 7)
 
-/// True if board coordinate is the players home
-let isHome (player : int) (cmp : int) : bool =
-  if player = 1 && cmp = 6 || player = 2 && cmp = 13 then true else false
+/// True if either side has no beans
+let isGameOver (board : int []) : bool =
+  Array.forall (fun e -> e = 0) board.[0..5] || Array.forall (fun e -> e = 0) board.[7..12]
 
-/// Get the user's coordinate of next move. Selected compartment must be a number between 1-6 and non-empty
-let getMove (cnvt : int -> int) (str : string) : int =
-  let mutable noLegalMove = true
-  let mutable compartment = -1
-  while noLegalMove do
-    printf "%s" str
-    compartment <- int (System.Console.ReadLine ()) |> cnvt
-    noLegalMove <- if (0 <= compartment && compartment <= 5 || 7 <= compartment && compartment <= 12) && board.[compartment] > 0 then false else true
-  compartment
+/// True if board index is the players home
+let isHome (p : player) (ind : int) : bool =
+  if p = Player1 && ind = 6 || p = Player2 && ind = 13 then true else false
 
-/// Distribute beans counter clockwise 
-let distributeBeans (board : int []) (home : int) (cmp : int) : int =
-  printfn "distributeBeans: %d %d" cmp board.[cmp]
-  let capture cmp =
-    printfn "capture: %d %d" cmp board.[cmp]
-    if cmp <> 6 && cmp <> 13 && board.[cmp] = 1 then
-      let oppositePlayer = if cmp < 7 then 2 else 1
-      let opposite = 6 - (board2user cmp) + 1 |> user2board oppositePlayer
-      printfn "capture2: %d %d %d" oppositePlayer (board2user cmp) opposite
+/// Get the index of next move. User must enter a pit number between
+/// 1-6 corresponding to a non-empty board index
+let rec getMove (p : player) (str : string) : int option =
+  printf "%s" str
+  let ind = int (System.Console.ReadLine ()) |> pit2ind p
+  if (0 <= ind && ind <= 5 || 7 <= ind && ind <= 12) && board.[ind] > 0 then
+    Some ind
+  else
+    getMove p str
+
+/// Updates board by distributing beans counter clockwise, capturing
+/// when relevant. Board coordinate of last bean is
+/// returned. Sideeffect warning!
+let distributeNUpdate (board : int []) (ind : int) : int =
+  /// If last bean lands in an empty pit, then the last bean and all
+  /// beans in the opposite pit are captured.
+  let captureNUpdateBoard (board : int []) (home : int) (ind : int) : unit =
+    if ind <> 6 && ind <> 13 && board.[ind] = 1 then
+      let oppositeP = if ind < 7 then Player2 else Player1
+      let opposite = 6 - (ind2pit ind) + 1 |> pit2ind oppositeP
       let n = board.[opposite];
-      board.[opposite] <- 0
-      board.[home] <- board.[home] + n
-    else
-      ()
+      if n > 0 then
+        board.[opposite] <- 0
+        board.[ind] <- 0
+        board.[home] <- board.[home] + n + 1
 
-  let n = board.[cmp]
-  board.[cmp] <- 0  
-  let mutable nextCmp = - 1
+  let home = if ind < 6 then 6 else 13
+  let n = board.[ind]
+  board.[ind] <- 0  
+  let mutable nextInd = - 1
   for i = 1 to n do
-    nextCmp <- (cmp + i) % 14
-    board.[nextCmp] <- board.[nextCmp] + 1
-  capture nextCmp
-  nextCmp
+    nextInd <- (ind + i) % 14
+    board.[nextInd] <- board.[nextInd] + 1
+  captureNUpdateBoard board home nextInd
+  nextInd
 
-while true do
-  for i = 1 to 2 do
+// ////////////////////////////////////////////////////// //
+let mutable p = Player2
+while not (isGameOver board) do
+  p <- if p = Player1 then Player2 else Player1
+  printBoard board
+  let str = sprintf "Player %A's move? " p
+  let mutable ind = getMove p str
+  while (Option.isSome ind) && (distributeNUpdate board ind.Value |> isHome p) && not (isGameOver board) do
     printBoard board
-    let cnvt = user2board i
-    let str = sprintf "Player %d's move? " i
-    let mutable compartment = getMove cnvt str
-    let home = if i = 1 then 7 else 13
-    while (distributeBeans board home compartment |> isHome i) do
-      printBoard board
-      let str = sprintf "Again? "
-      compartment <- getMove cnvt str    
-    
+    let str = sprintf "Again? "
+    ind <- getMove p str
+
+let winnerStr =
+  if board.[6] > board.[13] then
+    "Player 1 wins."
+  elif board.[6] = board.[13] then
+    "It's a tie."
+  else
+    "Player 2 wins."
+
+printfn "Game over: %s" winnerStr
