@@ -5,6 +5,7 @@ type player = Player1 | Player2
 type index = int
 type pit = int
 let initialB : board = [3;3;3;3;3;3;0;3;3;3;3;3;3;0]
+let UNITTEST = false;
 
 /// Print the board, player 1 is bottom row and rightmost home
 let printBoard (b : board) : unit =
@@ -53,15 +54,25 @@ let opposite (i : index) : index option =
   else
     None
 
+/// Return true if i is larger than a and smaller than or equal b cyclicly
+let inCyclicInterval a b i =
+  //                     1 1 1 1
+  // 0 1 2 3 4 5 6 7 8 9 0 1 2 3
+  //       a - - - - b
+  // - - b   a - - - - - - - - -
+  (b < a && a < i) || (b < a && i <= b) || (b > a && a < i && i <= b)
+
 /// (Re)build a board, updating bean counts accordingly
 let rec build (partialB : board) (home : index) (a : index) (n : int) (oppPair : index * int ) (cur : index) : board =
+
   match partialB with
     | e :: rest ->
       let b = cyclicAdd a n
       let newE = 
         if cur = a then 0
         elif cur = b && snd oppPair <> 0 then 0
-        elif cur = home && snd oppPair <> 0 then 1 + (snd oppPair)
+        elif cur = home && snd oppPair <> 0 && (inCyclicInterval a b cur) then e + 2 + (snd oppPair)
+        elif cur = home && snd oppPair <> 0 && not (inCyclicInterval a b cur) then e + 1 + (snd oppPair)
         elif cur = fst oppPair && snd oppPair <> 0 then 0
         elif b < a && a < cur then e + 1
         elif b < a && cur <= b then e + 1
@@ -75,8 +86,8 @@ let rec build (partialB : board) (home : index) (a : index) (n : int) (oppPair :
 let rec distribute (b : board) (i : index) : board =
   let home = if i < 6 then 6 else 13
   let capture =
-    let j = opposite (i+b.[i]) // Index of opposing side of last bean
-    if j.IsSome && (b.[cyclicAdd i b.[i]] = 0) && (b.[j.Value] > 0) then (j.Value, b.[j.Value] + 1)
+    let j = opposite (cyclicAdd i b.[i]) // Index of opposing side of last bean
+    if j.IsSome && (b.[cyclicAdd i b.[i]] = 0) && (b.[j.Value] > 0) then (j.Value, b.[j.Value])
     else (0,0)
   build b home i b.[i] capture 0
 
@@ -108,15 +119,37 @@ let rec play (b : board) (p : player) : board =
       else
         Player1
     play newB nextP
-    
-// ////////////////////////////////////////////////////// //
-let finalB = play initialB Player1
-let winnerStr =
-  if finalB.[6] > finalB.[13] then
-    "Player 1 wins."
-  elif finalB.[6] = finalB.[13] then
-    "It's a tie."
-  else
-    "Player 2 wins."
 
-printfn "Game over: %s" winnerStr
+// ////////////////////////////////////////////////////// //
+if not UNITTEST then
+  let finalB = play initialB Player1
+  let winnerStr =
+    if finalB.[6] > finalB.[13] then
+      "Player 1 wins."
+    elif finalB.[6] = finalB.[13] then
+      "It's a tie."
+    else
+      "Player 2 wins."
+      
+  printfn "Game over: %s" winnerStr
+else
+  let test str b i truth =
+    let newB = distribute b i
+    printfn "%5b: %s" (newB = truth) str
+    
+  test "Initial setup choosing index 0"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  0 [0;4;4;4;3;3;0;3;3;3;3;3;3;0]
+  test "Initial setup choosing index 1"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  1 [3;0;4;4;4;3;0;3;3;3;3;3;3;0]
+  test "Initial setup choosing index 2"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  2 [3;3;0;4;4;4;0;3;3;3;3;3;3;0]
+  test "Initial setup choosing index 3"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  3 [3;3;3;0;4;4;1;3;3;3;3;3;3;0]
+  test "Initial setup choosing index 4"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  4 [3;3;3;3;0;4;1;4;3;3;3;3;3;0]
+  test "Initial setup choosing index 5"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  5 [3;3;3;3;3;0;1;4;4;3;3;3;3;0]
+  test "Initial setup choosing index 7"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  7 [3;3;3;3;3;3;0;0;4;4;4;3;3;0]
+  test "Initial setup choosing index 8"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  8 [3;3;3;3;3;3;0;3;0;4;4;4;3;0]
+  test "Initial setup choosing index 9"  [3;3;3;3;3;3;0;3;3;3;3;3;3;0]  9 [3;3;3;3;3;3;0;3;3;0;4;4;4;0]
+  test "Initial setup choosing index 10" [3;3;3;3;3;3;0;3;3;3;3;3;3;0] 10 [3;3;3;3;3;3;0;3;3;3;0;4;4;1]
+  test "Initial setup choosing index 11" [3;3;3;3;3;3;0;3;3;3;3;3;3;0] 11 [4;3;3;3;3;3;0;3;3;3;3;0;4;1]
+  test "Initial setup choosing index 12" [3;3;3;3;3;3;0;3;3;3;3;3;3;0] 12 [4;4;3;3;3;3;0;3;3;3;3;3;0;1]
+  test "Capture starting player 1 side landing player 1 side" [3;3;3;0;3;3;0;3;3;3;3;3;3;0]   0 [0;4;4;0;3;3;4;3;3;0;3;3;3;0]
+  test "Capture starting player 1 side landing player 2 side" [3;3;3;3;3;3;0;3;0;3;3;3;3;0]   5 [3;3;3;3;0;0;5;4;0;3;3;3;3;0]
+  test "Capture starting player 2 side landing player 2 side" [3;3;3;3;3;3;0;3;3;3;0;3;3;0]   7 [3;3;0;3;3;3;0;0;4;4;0;3;3;4]
+  test "Capture starting player 2 side landing player 1 side" [3;0;3;3;3;3;0;3;3;3;3;3;3;0]  12 [4;0;3;3;3;3;0;3;3;3;3;0;0;5]
