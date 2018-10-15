@@ -1,0 +1,224 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\newcommand{\id}[1]{\ensuremath{\emph{#1}}}
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 7 - individuel opgave}
+\author{Martin Elsman}
+\date{23.\ oktober -- 1.\ november.\\Afleveringsfrist: onsdag d.\ 1.\ november kl. 22:00}
+
+\begin{document}
+\maketitle
+
+\noindent
+I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i ``Noter, links, software m.m.'' $\rightarrow$ ''Generel information om opgaver''. Formålet er at arbejde med:
+\begin{itemize}
+%\item strenge
+\item rekursion
+\item pattern matching
+\end{itemize}
+
+Opgaverne er delt i øve- og afleveringsopgaver.
+
+\section*{Øveopgaver}
+\begin{enumerate}[label=7ø.\arabic*,start=0]
+\item Omskriv funktionen \lstinline{insert}, som benyttes i forbindelse
+  med funktionen \lstinline{isort} (insertion sort) fra forelæsningen,
+  således at den benytter sig af pattern matching på lister.
+\item Omskriv funktionen \texttt{bsort} (bubble sort) fra
+  forelæsningen således at den benytter sig af pattern matching på
+  lister. Funktionen kan passende benytte sig af ``nested pattern
+  matching'' i den forstand at den kan implementeres med et match case
+  der udtrækker de to første elementer af listen samt halen efter
+  disse to elementer.
+\item Opskriv black-box tests for de to sorteringsfunktioner og vær
+  sikker på at grænsetilfældene dækkes (ingen elementer, et element,
+  to elementer, samt flere elementer, sorteret, omvendt sorteret, etc.)
+
+\item\label{sierpinski.ov} Ved at benytte biblioteket \texttt{ImgUtil}, som beskrevet i
+  forelæsningen, er det muligt at tegne simpel liniegrafik samt
+  fraktaler, som f.eks. Sierpinski-fraktalen, der kan tegnes ved at
+  tegne små firkanter bestemt af et rekursivt mønster. Koden for
+  Sierpinski-trekanten er givet som følger:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+open ImgUtil
+
+let rec triangle bmp len (x,y) =
+  if len < 25 then setBox blue (x,y) (x+len,y+len) bmp
+  else let half = len / 2
+       do triangle bmp half (x+half/2,y)
+       do triangle bmp half (x,y+half)
+       do triangle bmp half (x+half,y+half)
+
+do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ignore)
+\end{lstlisting}
+
+Tilpas funktionen således at trekanten tegnes med røde streger samt
+således at den kun tegnes ned til dybde 2 (hint: du skal ændre betingelsen \lstinline{len < 25}).
+
+\item\label{sierpinskikeys.ov} I stedet for at benytte funktionen
+  \lstinline{ImgUtil.runSimpleApp} skal du nu benytte funktionen
+  \lstinline{ImgUtil.runApp}, som giver mulighed for at din løsning
+  kan styres ved brug af tastaturet. Funktionen \lstinline{ImgUtil} har følgende type:
+\begin{footnotesize}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val runApp : string -> int -> int
+          -> (int -> int -> 's -> System.Drawing.Bitmap)
+          -> ('s -> System.Windows.Forms.KeyEventArgs
+                 -> 's option)
+          -> 's -> unit
+\end{lstlisting}
+\end{footnotesize}
+De tre første argumenter til \lstinline{runApp} er vinduets titel (en
+streng) samt vinduets initielle vidde og højde. Funktionen
+\lstinline{runApp} er parametrisk over en brugerdefineret type af tilstande (\lstinline{'s}). Antag at funktionen kaldes som følger:
+\begin{footnotesize}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  runApp title width height draw react init
+\end{lstlisting}
+\end{footnotesize}
+Dette kald vil starte en GUI applikation med titlen \lstinline{title},
+vidden \lstinline{width} og højden \lstinline{height}. Funktionen
+\lstinline{draw}, som brugeren giver som 4.\@ argument kaldes initielt
+når applikationen starter og hver gang vinduets størrelse justeres
+eller ved at funktionen \lstinline{react} er blevet kaldt efter en
+tast er trykket på tastaturet. Funktionen \lstinline{draw} modtager
+også (udover værdier for den aktuelle vidde og højde) en værdi for den
+brugerdefinerede tilstand, som initielt er sat til værdien
+\lstinline{init}. Funktionen skal returnere et bitmap, som for
+eksempel kan konstrueres med funktionen \lstinline{ImgUtil.mk} og
+ændres med andre funktioner i \lstinline{ImgUtil}
+(f.eks. \lstinline{setPixel}).
+
+Funktionen \lstinline{react}, som brugeren giver som 5.\@ argument
+kaldes hver gang brugeren trykker på en tast. Funktionen tager som
+argument en værdi svarende til den nuværende tilstand for
+applikationen samt et argument der kan benyttes til at afgøre hvilken
+tast der blev trykket på.\footnote{Hvis \lstinline{e} har typen
+  \lstinline{System.Windows.Forms.KeyEventArgs} kan betingelsen
+  \lstinline{e.KeyCode = System.Windows.Forms.Keys.Up} benyttes til at
+  afgøre om det var tasten ``Up'' der blev trykket på.} Funktionen kan
+nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
+for denne.
+
+Tilpas applikationen således at dybden af
+fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
+\lstinline{System.Windows.Forms.Keys.Up} og
+\lstinline{System.Windows.Forms.Keys.Down}.
+\end{enumerate}
+
+
+\section*{Afleveringsopgaver}
+\begin{enumerate}[label=8i.\arabic*,start=0]
+\item Omskriv funktionen \lstinline{merge}, som benyttes i forbindelse
+  med funktionen \lstinline{msort} (mergesort) fra forelæsningen,
+  således at den benytter sig af pattern matching på lister.
+\item Opskriv black-box tests for sorteringsfunktionen \lstinline{msort} og vær
+  sikker på at grænsetilfældene dækkes (ingen elementer, et element,
+  to elementer, samt flere elementer, sorteret, omvendt sorteret, etc.)
+\end{enumerate}
+
+\begin{minipage}{0.7\textwidth}
+\begin{enumerate}[label=8i.\arabic*,start=2]
+\item Med udgangspunkt i øvelsesopgave~\ref{sierpinski.ov} skal du i
+  denne opgave implementere en GUI-applikation der kan tegne en
+  version af X-fractalen som illustreret til højre (eventuelt i en
+  dybde større end 2).
+
+  Bemærk at det ikke er et krav at dybden på fraktalen skal kunne
+  styres med piletasterne som det er tilfældet med
+  Sierpinski-fraktalen i øvelsesopgave~\ref{sierpinskikeys.ov}.
+\end{enumerate}
+\end{minipage}\hspace{8mm} \begin{minipage}{0.25\textwidth}
+  \includegraphics[width=0.9\textwidth]{xfractal.png}
+\end{minipage}
+
+\begin{enumerate}[label=8i.\arabic*,start=3]
+\item Du skal i de følgende to opgaver arbejde med en funktion til at
+  bestemme den såkaldte \emph{Levensthein-distance} mellem to strenge
+  $a$ og $b$. Distancen er defineret som det mindste antal
+  editeringer, på karakter-niveau, det er nødvendigt at foretage på
+  strengen $a$ før den resulterende streng er identisk med strengen
+  $b$. Som editeringer forstås (1) sletninger af karakterer, (2)
+  indsættelser af karakterer, og (3) substitution af
+  karakterer.
+
+  Varianter af Levensthein-distancen mellem to strenge kan
+  således benyttes til at identificere om studerende selv har løst
+  deres indleverede opgaver eller om der potentielt set er tale om
+  plagiatkode ;)
+
+  Matematisk set kan Levensthein-distancen $\id{leven}(a,b)$, mellem
+  to karakterstrenge $a$ og $b$, defineres som
+  $\id{lev}_{a,b}(|a|,|b|)$, hvor $|a|$ og $|b|$ henviser til
+  længderne af henholdsvis $a$ og $b$, og hvor funktionen $\id{lev}$ er
+  defineret som følger:\footnote{See
+    \url{https://en.wikipedia.org/wiki/Levenshtein_distance}.}
+
+  \[
+  \id{lev}_{a,b}(i,j) = \left \{ \begin{array}{ll} \mathrm{max}(i,j) & \mathrm{if}~\mathrm{min}(i,j) = 0, \\
+    \mathrm{min} \left \{ \begin{array}{l}\id{lev}_{a,b}(i-1,j)+1 \\
+                                          \id{lev}_{a,b}(i,j-1)+1 \\
+                                          \id{lev}_{a,b}(i-1,j-1)+1_{(a_i\not=b_j)} \end{array} \right . & \mathrm{otherwise}. \end{array} \right .
+  \]
+  hvor $1_{(a_i\not=b_j)}$ henviser til \emph{indikatorfunktionen}, som er $1$ når $a_i\not=b_j$ og $0$ ellers.
+
+  Implement\'{e}r funktionen \id{leven} direkte efter den matematiske
+  definition (ved brug af rekursion) og test korrektheden af funktionen på nogle små
+  strenge, såsom ``house'' og ``horse'' (distance 1) samt ``hi'' og ``hej'' (distance 2).
+
+  \item Den direkte implementerede rekursive funktion er temmelig
+    ineffektiv når strengene $a$ og $b$ er store. F.eks. tager det en
+    del millisekunder at udregne distancen mellem strengene
+    ``dangerous house'' and ``danger horse''. Årsagen til denne
+    ineffektivitet er at en løsning der bygger direkte på den
+    rekursive definition resulterer i en stor mængde genberegninger af
+    resultater der allerede er beregnet.
+
+    For at imødekomme dette problem skal du implementere en såkaldt
+    ``caching mekanisme'' der har til formål at sørge for at en
+    beregning højst foretages en gang.  Løsningen kan passende gøre
+    brug af gensidig rekursion og tage udgangspunkt i løsningen for
+    den direkte rekursive definition (således skal løsningen nu
+    implementeres med to gensidigt rekursive funktioner \lstinline{leven} og \lstinline{leven_cache} forbundet med
+    \lstinline{and}). Som cache skal der benyttes et 2-dimensionelt
+    array af størrelse $|a|\times|b|$ indeholdende heltal (initielt
+    sat til $-1$).
+
+    Funktionen \lstinline{leven_cache}, der skal tage tilsvarende
+    argumenter som \lstinline{leven}, skal nu undersøge om der
+    allerede findes en beregnet værdi i cachen, i hvilket tilfælde
+    denne værdi returneres. Ellers skal funktionen \lstinline{leven}
+    kaldes og cachen opdateres med det beregnede resultat. Endelig er
+    det nødvendigt at funktionen \lstinline{leven} opdateres til nu at
+    kalde funktionen \lstinline{leven_cache} i hver af de rekursive kald.
+
+    Test funktionen på de små strenge og vis at funktionen nu virker
+    korrekt også for store input.
+
+    Det skal til slut bemærkes at den implementerede løsning benytter
+    sig af $O(|a| \times |b|)$ plads og at der findes effektive
+    løsninger der benytter sig af mindre plads
+    ($O(\mathrm{max}(|a|,|b|))$). Det er ikke et krav at din løsning
+    implementerer en af disse mere pladsbesparende strategier.
+\end{enumerate}
+
+Afleveringsopgaven skal afleveres som et antal \texttt{fsx} tekstfiler
+navngivet efter opgaven, som f.eks. \lstinline!8i0.fsx!. Tekstfilerne
+skal kunne oversættes med \texttt{fsharpc},\footnote{Løsningerne kan
+  antage at biblioteket \texttt{ImgUtil.dll} fra forelæsningerne er
+  tilgængeligt.} og resultatet skal kunne køres med \texttt{mono}
+eller eventuelt \texttt{mono32}. Funktioner skal dokumenteres ifølge
+dokumentationsstandarden, og udover selve programteksten skal
+besvarelserne indtastes som kommentarer i de \texttt{fsx}-filer, de
+hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+Til øvelserne forventer vi at I arbejder efter følgende skema:
+\begin{description}
+\item[Mandag 23/10:] Afslut 6g og start på øvelsesopgaverne fra 8i
+\item[Tirsdag 24/10:] Arbejd med øvelses- og afleveringsopgaverne
+\item[Fredag 27/10] Arbejd med afleveringsopgaverne
+\end{description}
+
+\end{document}
