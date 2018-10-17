@@ -1,8 +1,8 @@
 module Awari
 ///  Each player has a set of regular pits and one home pit. A pit holds zero or more beans
-type pit = int
+type pit = // intentionally left empty
 /// A board consists of pits.
-type board = pit list
+type board = // intentionally left empty
 /// A game is played between two players
 type player = Player1 | Player2
 
@@ -24,7 +24,7 @@ type player = Player1 | Player2
 val printBoard : b:board -> unit
 
 /// <summary>
-/// Check wether a pit is the player's home
+/// Check whether a pit is the player's home
 /// </summary>
 /// <param name="b">A board to check</param>
 /// <param name="p">The player, whos home to check</param>

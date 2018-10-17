@@ -1,0 +1,21 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="awariLib" Version="0.0.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>Microsoft.FSharp.Core.FSharpInterfaceDataVersion(2, 0, 0)</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="">
+      <Type Name="Awari" Kind="Class" />
+      <Type Name="Awari+player" Kind="Class" />
+      <Type Name="Awari+player+Tags" Kind="Class" />
+    </Namespace>
+  </Types>
+  <Title>awariLib</Title>
+</Overview>

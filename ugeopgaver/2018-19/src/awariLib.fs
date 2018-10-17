@@ -96,7 +96,7 @@ let rec distribute (b : board) (p : player) (i : pit) : board * player * pit =
   (newB, finalPitsPlayer, finalPit)
   
 let turn (b : board) (p : player) : board =
-  let rec helper (b : board) (p : player) (n : int) : board =
+  let rec repeat (b : board) (p : player) (n : int) : board =
     printBoard b
     let str =
       if n = 0 then
@@ -105,11 +105,12 @@ let turn (b : board) (p : player) : board =
         "Again? "
     let i = getMove b p str
     let (newB, finalPitsPlayer, finalPit) = distribute b p i
-    if not (isHome b finalPitsPlayer finalPit) || (isGameOver b) then
-     newB
+    if not (isHome b finalPitsPlayer finalPit) 
+       || (isGameOver b) then
+      newB
     else
-      helper newB p (n + 1)
-  helper b p 0 
+      repeat newB p (n + 1)
+  repeat b p 0 
 
 let rec play (b : board) (p : player) : board =
   if isGameOver b then
