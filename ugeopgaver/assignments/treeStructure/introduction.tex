@@ -1,0 +1,121 @@
+I de følgende opgaver skal vi arbejde med en træstruktur til at beskrive geometriske
+figurer med farver.  For at gøre det muligt at afprøve jeres opgaver
+skal I gøre brug af det udleverede bibliotek \texttt{img\_util.dll}, der
+blandt andet kan omdanne såkaldte bitmap-arrays til png-filer.  Biblioteket er
+beskrevet i forelæsningerne (i uge 6) og koden for biblioteket ligger
+sammen med forelæsningsplancherne for uge 6.  Her bruger vi
+funktionerne til at konstruere et bitmap-array samt til at gemme
+arrayet som en png-fil:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+// colors
+type color = System.Drawing.Color
+val fromRgb : int * int * int -> color
+// bitmaps
+type bitmap = System.Drawing.Bitmap
+val mk       : int -> int -> bitmap
+val setPixel : color -> int * int -> bitmap -> unit
+
+// save a bitmap as a png file
+val toPngFile : string -> bitmap -> unit
+\end{lstlisting}
+
+Funktionen \lstinline{toPngFile} tager som det første argument navnet
+på den ønskede png-fil (husk extension).  Det andet argument er
+bitmap-arrayet som ønskes konverteret og gemt. Et bitmap-array kan
+konstrueres med funktionen \lstinline{ImgUtil.mk}, der tager som
+argumenter vidden og højden af billedet i antal pixels, samt funktionen
+\lstinline{ImgUtil.setPixel}, der kan bruges til at opdatere bitmap-arrayet
+før det eksporteres til en png-fil. Funktionen \lstinline{ImgUtil.setPixel}
+tager tre argumenter. Det første argument repræsenterer en farve og
+det andet argument repræsenterer et punkt i bitmap-arrayet (dvs.\@ i
+billedet). Det tredie argument repræsenterer det bitmap-array, der
+skal opdateres.  En farve kan nu konstrueres med funktionen
+\lstinline{ImgUtil.fromRgb} der tager en triple af tre tal mellem 0 og
+255 (begge inklusive), der beskriver hhv.\@ den røde, grønne og blå del
+af farven.
+
+Koordinaterne starter med $(0,0)$ i øverste venstre hjørne og
+$(w-1,h-1)$ i nederste højre hjørne, hvis bredde og højde er hhv.\ $w$
+og $h$.  Antag for eksempel at programfilen \texttt{testPNG.fsx}
+indeholder følgende F\# kode:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let bmp = ImgUtil.mk 256 256
+do ImgUtil.setPixel (ImgUtil.fromRgb (255,255,0)) (10,10) bmp
+do ImgUtil.toPngFile "test.png" bmp
+\end{lstlisting}
+
+\noindent
+Det er nu muligt at generere en png-fil med navn \texttt{test.png} ved
+at køre følgende kommando:
+
+\vspace{-4mm}
+\begin{verbatim}
+  fsharpi -r img_util.dll testPNG.fsx
+\end{verbatim}
+\vspace{-4mm}
+
+\noindent
+Den genererede billedfil \texttt{test.png} vil indeholde
+et sort billede med et pixel af gul farve i punktet (10,10).
+
+\noindent
+Bemærk, at alle programmer, der bruger \texttt{ImgUtil} skal køres
+eller oversættes med \texttt{-r img\_util.dll} som en del af
+kommandoen.
+%
+Bemærk endvidere, at \LaTeX\ kan inkludere png-filer med
+kommandoen \texttt{includegraphics}.
+
+\vspace{2ex}
+
+\noindent
+I det følgende vil vi repræsentere geometriske figurer med følgende
+datastruktur:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type point = int * int // a point (x, y) in the plane
+type colour = int * int * int  // (red, green, blue), 0..255
+
+type figure =
+  | Circle of point * int * colour
+     // defined by center, radius, and colour
+  | Rectangle of point * point * colour
+     // defined by corners bottom-left, top-right, and colour
+  | Mix of figure * figure
+     // combine figures with mixed colour at overlap
+\end{lstlisting}
+
+\noindent
+For eksempel kan man lave følgende funktion til at finde farven af en
+figur i et punkt.  Hvis punktet ikke ligger i figuren, returneres
+\texttt{None}, og hvis punktet ligger i figuren, returneres
+\texttt{Some $c$}, hvor $c$ er farven.
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+// finds colour of figure at point
+let rec colourAt (x,y) figure =
+  match figure with
+  | Circle ((cx,cy), r, col) ->
+      if (x-cx)*(x-cx)+(y-cy)*(y-cy) <= r*r
+        // uses Pythagoras' formular to determine
+        // distance to center
+      then Some col else None
+  | Rectangle ((x0,y0), (x1,y1), col) ->
+     if x0<=x && x <= x1 && y0 <= y && y <= y1
+        // within corners
+     then Some col else None
+  | Mix (f1, f2) ->
+      match (colourAt (x,y) f1, colourAt (x,y) f2) with
+      | (None, c) -> c  // no overlap
+      | (c, None) -> c  // no overlap
+      | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
+         // average color
+         Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)
+\end{lstlisting}
+
+\noindent
+Bemærk, at punkter på cirklens omkreds og rektanglens kanter er med i
+figuren.  Farver blandes ved at lægge dem sammen og dele med to, altså
+finde gennemsnitsfarven.

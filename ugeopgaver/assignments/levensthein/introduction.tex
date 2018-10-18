@@ -1,0 +1,29 @@
+Du skal i de følgende to opgaver arbejde med en funktion til at
+  bestemme den såkaldte \emph{Levensthein-distance} mellem to strenge
+  $a$ og $b$. Distancen er defineret som det mindste antal
+  editeringer, på karakter-niveau, det er nødvendigt at foretage på
+  strengen $a$ før den resulterende streng er identisk med strengen
+  $b$. Som editeringer forstås (1) sletninger af karakterer, (2)
+  indsættelser af karakterer, og (3) substitution af
+  karakterer.
+
+  Varianter af Levensthein-distancen mellem to strenge kan
+  således benyttes til at identificere om studerende selv har løst
+  deres indleverede opgaver eller om der potentielt set er tale om
+  plagiatkode ;)
+
+  Matematisk set kan Levensthein-distancen $\id{leven}(a,b)$, mellem
+  to karakterstrenge $a$ og $b$, defineres som
+  $\id{lev}_{a,b}(|a|,|b|)$, hvor $|a|$ og $|b|$ henviser til
+  længderne af henholdsvis $a$ og $b$, og hvor funktionen $\id{lev}$ er
+  defineret som følger:\footnote{See
+    \url{https://en.wikipedia.org/wiki/Levenshtein_distance}.}
+
+  \[
+  \id{lev}_{a,b}(i,j) = \left \{ \begin{array}{ll} \mathrm{max}(i,j) & \mathrm{if}~\mathrm{min}(i,j) = 0, \\
+    \mathrm{min} \left \{ \begin{array}{l}\id{lev}_{a,b}(i-1,j)+1 \\
+                                          \id{lev}_{a,b}(i,j-1)+1 \\
+                                          \id{lev}_{a,b}(i-1,j-1)+1_{(a_i\not=b_j)} \end{array} \right . & \mathrm{otherwise}. \end{array} \right .
+  \]
+  hvor $1_{(a_i\not=b_j)}$ henviser til \emph{indikatorfunktionen}, som er $1$ når $a_i\not=b_j$ og $0$ ellers.
+

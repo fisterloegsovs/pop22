@@ -1,0 +1,9 @@
+Givet typen for ugedage øverst på denne ugeseddel, lav en
+  funktion \texttt{numberToDay : int -> weekday option}, sådan at
+  \texttt{numberToDay $n$} returnerer \texttt{None}, hvis $n$ ikke
+  ligger i intervallet 1\ldots7, og returnerer \texttt{Some $d$}, hvor
+  $d$ er den til $n$ hørende ugedag, hvis $n$ ligger i intervallet
+  1\ldots7.
+
+  Det skulle gerne gælde, at \texttt{numberToDay (dayToNumber $d$)
+    $\leadsto$ Some $d$} for alle ugedage $d$.
