@@ -1,0 +1,13 @@
+Der skal laves følgende implementationer af samme funktion
+  \begin{quote}
+    \mbox{\lstinline!safeIndexIf : arr:'a [] -> i:int -> 'a!}
+    \\\mbox{\lstinline!safeIndexTry : arr:'a [] -> i:int -> 'a!}
+    \\\mbox{\lstinline!safeIndexOption : arr:'a [] -> i:int -> 'a option!}
+  \end{quote}
+  De skal alle returnere værdien i \lstinline!arr! på plads \lstinline!i!, hvis \lstinline!i! er et gyldigt index, og ellers håndtere fejlsituationen.  Fejlsituationerne skal håndteres forskelligt:
+  \begin{itemize}
+  \item \lstinline!safeIndexIf! må ikke gøre brug af \lstinline!try!-\lstinline!with! og må ikke kaste en undtagelse. 
+  \item \lstinline!safeIndexTry! skal benytte \lstinline!try!-\lstinline!with!, og ved fejltilstand skal \lstinline!failwith! kaldes. 
+  \item \lstinline!safeIndexOption! skal returnere \lstinline!None! i en fejlsituation. 
+  \end{itemize}
+   Der skal laves en kort afprøvning af alle 3 funktioner, der indebefatter at den indicerede værdi udskrives til skærmen som et heltal og ikke som en option type. Afprøvningen skal også afprøve korrekt håndtering af funktionernes evt.\ kastede undtagelser.  Lav en kort beskrivende sammenligning af metodernes evne til at håndtere fejltilstande.
