@@ -11,9 +11,9 @@
 
 \newcommand{\id}[1]{\ensuremath{\emph{#1}}}
 \title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel 7 - individuel opgave}
-\author{Martin Elsman}
-\date{23.\ oktober -- 1.\ november.\\Afleveringsfrist: onsdag d.\ 1.\ november kl. 22:00}
+  Københavns Universitet\\Arbejdsseddel 8 - individuel opgave}
+\author{Martin Elsman \& Jon Sporring}
+\date{21.\ november -- 28.\ november.\\Afleveringsfrist: onsdag d.\ 28.\ november kl. 22:00}
 
 \begin{document}
 \maketitle
@@ -22,322 +22,58 @@
 I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i ``Noter, links, software m.m.'' $\rightarrow$ ''Generel information om opgaver''. Formålet er at arbejde med:
 \begin{itemize}
 %\item strenge
-\item rekursion
-\item pattern matching
+\item højereordens funktion
+\item fejl og untagelser
 \end{itemize}
 
 Opgaverne er delt i øve- og afleveringsopgaver.
 
 \section*{Øveopgaver}
-I de følgende opgaver skal vi arbejde med en træstruktur til at beskrive geometriske
-figurer med farver.  For at gøre det muligt at afprøve jeres opgaver
-skal I gøre brug af det udleverede bibliotek \texttt{img\_util.dll}, der
-blandt andet kan omdanne såkaldte bitmap-arrays til png-filer.  Biblioteket er
-beskrevet i forelæsningerne (i uge 6) og koden for biblioteket ligger
-sammen med forelæsningsplancherne for uge 6.  Her bruger vi
-funktionerne til at konstruere et bitmap-array samt til at gemme
-arrayet som en png-fil:
-
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-// colors
-type color = System.Drawing.Color
-val fromRgb : int * int * int -> color
-// bitmaps
-type bitmap = System.Drawing.Bitmap
-val mk       : int -> int -> bitmap
-val setPixel : color -> int * int -> bitmap -> unit
-
-// save a bitmap as a png file
-val toPngFile : string -> bitmap -> unit
-\end{lstlisting}
-
-Funktionen \lstinline{toPngFile} tager som det første argument navnet
-på den ønskede png-fil (husk extension).  Det andet argument er
-bitmap-arrayet som ønskes konverteret og gemt. Et bitmap-array kan
-konstrueres med funktionen \lstinline{ImgUtil.mk}, der tager som
-argumenter vidden og højden af billedet i antal pixels, samt funktionen
-\lstinline{ImgUtil.setPixel}, der kan bruges til at opdatere bitmap-arrayet
-før det eksporteres til en png-fil. Funktionen \lstinline{ImgUtil.setPixel}
-tager tre argumenter. Det første argument repræsenterer en farve og
-det andet argument repræsenterer et punkt i bitmap-arrayet (dvs.\@ i
-billedet). Det tredie argument repræsenterer det bitmap-array, der
-skal opdateres.  En farve kan nu konstrueres med funktionen
-\lstinline{ImgUtil.fromRgb} der tager en triple af tre tal mellem 0 og
-255 (begge inklusive), der beskriver hhv.\@ den røde, grønne og blå del
-af farven.
-
-Koordinaterne starter med $(0,0)$ i øverste venstre hjørne og
-$(w-1,h-1)$ i nederste højre hjørne, hvis bredde og højde er hhv.\ $w$
-og $h$.  Antag for eksempel at programfilen \texttt{testPNG.fsx}
-indeholder følgende F\# kode:
-
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-let bmp = ImgUtil.mk 256 256
-do ImgUtil.setPixel (ImgUtil.fromRgb (255,255,0)) (10,10) bmp
-do ImgUtil.toPngFile "test.png" bmp
-\end{lstlisting}
-
-\noindent
-Det er nu muligt at generere en png-fil med navn \texttt{test.png} ved
-at køre følgende kommando:
-
-\vspace{-4mm}
-\begin{verbatim}
-  fsharpi -r img_util.dll testPNG.fsx
-\end{verbatim}
-\vspace{-4mm}
-
-\noindent
-Den genererede billedfil \texttt{test.png} vil indeholde
-et sort billede med et pixel af gul farve i punktet (10,10).
-
-\noindent
-Bemærk, at alle programmer, der bruger \texttt{ImgUtil} skal køres
-eller oversættes med \texttt{-r img\_util.dll} som en del af
-kommandoen.
-%
-Bemærk endvidere, at \LaTeX\ kan inkludere png-filer med
-kommandoen \texttt{includegraphics}.
-
-\vspace{2ex}
-
-\noindent
-I det følgende vil vi repræsentere geometriske figurer med følgende
-datastruktur:
-
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-type point = int * int // a point (x, y) in the plane
-type colour = int * int * int  // (red, green, blue), 0..255
-
-type figure =
-  | Circle of point * int * colour
-     // defined by center, radius, and colour
-  | Rectangle of point * point * colour
-     // defined by corners bottom-left, top-right, and colour
-  | Mix of figure * figure
-     // combine figures with mixed colour at overlap
-\end{lstlisting}
-
-\noindent
-For eksempel kan man lave følgende funktion til at finde farven af en
-figur i et punkt.  Hvis punktet ikke ligger i figuren, returneres
-\texttt{None}, og hvis punktet ligger i figuren, returneres
-\texttt{Some $c$}, hvor $c$ er farven.
-
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-// finds colour of figure at point
-let rec colourAt (x,y) figure =
-  match figure with
-  | Circle ((cx,cy), r, col) ->
-      if (x-cx)*(x-cx)+(y-cy)*(y-cy) <= r*r
-        // uses Pythagoras' formular to determine
-        // distance to center
-      then Some col else None
-  | Rectangle ((x0,y0), (x1,y1), col) ->
-     if x0<=x && x <= x1 && y0 <= y && y <= y1
-        // within corners
-     then Some col else None
-  | Mix (f1, f2) ->
-      match (colourAt (x,y) f1, colourAt (x,y) f2) with
-      | (None, c) -> c  // no overlap
-      | (c, None) -> c  // no overlap
-      | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
-         // average color
-         Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)
-\end{lstlisting}
-
-\noindent
-Bemærk, at punkter på cirklens omkreds og rektanglens kanter er med i
-figuren.  Farver blandes ved at lægge dem sammen og dele med to, altså
-finde gennemsnitsfarven.
-
-\begin{enumerate}[label=8ø.\arabic*]
-
-\item Lav en figur \texttt{figTest : figure}, der består af en rød cirkel
-  med centrum i (50,50) og radius 45, samt en blå rektangel med
-  hjørnerne (40,40) og (90,110), som illustreret i tegningen nedenfor (hvor vi dog har brugt skravering i stedet for udfyldende farver.)
-  \begin{center}
-    \begin{minipage}{.23\textwidth}
-      \begin{tikzpicture}[domain=0:12,scale=0.25]
-        \draw[very thin,color=gray] (0,0) grid (10,12);
-        \draw[->] (0,12) node[left] {$0$} -- (11,12) node[right] {$x$};
-        \draw[->] (0,12) node[above] {$0$} -- (0,-1) node[below] {$y$};
-        \draw[-] (5,12) node[above] {$50$} -- (5,0);
-        \draw[-] (10,12) node[above] {$100$} -- (10,0);
-        \draw[-] (0,7) node[left] {$50$} -- (10,7);
-        \draw[-] (0,2) node[left] {$100$} -- (10,2);
-        \draw[pattern=north west lines, pattern color=red] (5,7) circle (4.5);
-        \draw[pattern=north east lines, pattern color=blue] (4,1) rectangle (9,8);
-      \end{tikzpicture}
-    \end{minipage}
-  \end{center}
-
-\item Brug \texttt{ImgUtil}-funktionerne og \texttt{colourAt} til at lave en
-  funktion
-
-  \vspace{-4mm}
-\begin{verbatim}
-makePicture : string -> figure -> int -> int
-           -> unit
-\end{verbatim}
-  \vspace{-4mm}
-  
-  \noindent
-  sådan at kaldet \texttt{makePicture \emph{filnavn figur b h}} laver en
-  billedfil ved navn \texttt{\emph{filnavn}.png} med et billede af
-  \texttt{\emph{figur}} med bredde \texttt{\emph{b}} og højde
-  \texttt{\emph{h}}.
-  
-  På punkter, der ingen farve har (jvf.\ \texttt{colourAt}), skal farven
-  være grå (som defineres med RGB-værdien (128,128,128)).
-  
-  Du kan bruge denne funktion til at afprøve dine opgaver.
-
-\item Lav med \texttt{makePicture} en billedfil med navnet
-  \texttt{figTest.png} og størrelse $100\times150$ (bredde 100, højde 150),
-  der viser figuren \texttt{figTest} fra opgave 8ø.2.
-
-  Resultatet skulle gerne ligne figuren nedenfor.
-  \begin{center}
-    \includegraphics[width=0.2\textwidth]{figTest.png}
-  \end{center}
-\item Lav en funktion \texttt{checkFigure : figure -> bool},
-  der undersøger, om en figur er korrekt: At radiusen i cirkler
-  er ikke-negativ, at øverste venstre hjørne i en rektangel faktisk
-  er ovenover og til venstre for det nederste højre hjørne (bredde og
-  højde kan dog godt være 0), og at farvekompenterne ligger mellem 0
-  og 255.
-
-  Vink: Lav en hjælpefunktion \texttt{checkColour : colour -> bool}.
-
-\item Lav en funktion \texttt{move : figure -> int * int ->
-    figure}, der givet en figur og en vektor flytter figuren langs
-  vektoren.
-  
-  Ved at foretage kaldet
-\begin{verbatim}
-makePicture "moveTest" (move figTest (-20,20)) 100 150
-\end{verbatim}
-  shulle der gerne laves en billedfil \texttt{moveTest.png}
-  med indholdet vist nedenfor.
-  \begin{center}
-    \begin{minipage}{.2\textwidth}
-      \includegraphics[width=0.9\textwidth]{moveTest.png}
-    \end{minipage}
-  \end{center}
-\item Lav en funktion \texttt{boundingBox : figure -> point *
-    point}, der givet en figur finder hjørnerne (top-venstre og
-  bund-højre) for den mindste akserette rektangel, der indeholder hele
-  figuren.
-  
-  \texttt{boundingBox figTest} skulle gerne give \texttt{((5, 5), (95,
-    110))}.
+\input{../assignments/polynomials/introduction}
+\begin{enumerate}[label=8ø.\arabic*,start=0]
+\item \input{../assignments/polynomials/poly}
+\item \input{../assignments/polynomials/line}
+\item \input{../assignments/polynomials/theLine}
+\item \input{../assignments/polynomials/LineA0}
 \end{enumerate}
 
+\begin{center}
+\rule{0.5\linewidth}{0.4pt}
+\end{center}
+
+\input{../assignments/integration/introduction}
+\begin{enumerate}[label=8ø.\arabic*,start=4]
+\item \input{../assignments/integration/integrate}
+\item \input{../assignments/integration/analysis}
+\end{enumerate}
+
+\begin{center}
+\rule{0.5\linewidth}{0.4pt}
+\end{center}
+
+\input{../assignments/exceptions/introduction}
+\begin{enumerate}[label=8ø.\arabic*,start=6]
+\item \input{../assignments/exceptions/exception}
+\item \input{../assignments/exceptions/fac}
+\item \input{../assignments/exceptions/fac2}
+\item \input{../assignments/exceptions/facOption}
+\item \input{../assignments/exceptions/logIntOption}
+\item \input{../assignments/exceptions/logFac}
+\item \input{../assignments/exceptions/optionBind}
+\end{enumerate}
 
 \section*{Afleveringsopgaver}
-\begin{enumerate}[label=8i.\arabic*,start=0]
-% \item Omskriv funktionen \lstinline{merge}, som benyttes i forbindelse
-%   med funktionen \lstinline{msort} (mergesort) fra forelæsningen,
-%   således at den benytter sig af pattern matching på lister.
-% \item Opskriv black-box tests for sorteringsfunktionen \lstinline{msort} og vær
-%   sikker på at grænsetilfældene dækkes (ingen elementer, et element,
-%   to elementer, samt flere elementer, sorteret, omvendt sorteret, etc.)
-% \end{enumerate}
-
-% \begin{minipage}{0.7\textwidth}
-% \begin{enumerate}[label=8i.\arabic*,start=2]
-% \item Med udgangspunkt i øvelsesopgave~\ref{sierpinski.ov} skal du i
-%   denne opgave implementere en GUI-applikation der kan tegne en
-%   version af X-fractalen som illustreret til højre (eventuelt i en
-%   dybde større end 2).
-
-%   Bemærk at det ikke er et krav at dybden på fraktalen skal kunne
-%   styres med piletasterne som det er tilfældet med
-%   Sierpinski-fraktalen i øvelsesopgave~\ref{sierpinskikeys.ov}.
-% \end{enumerate}
-% \end{minipage}\hspace{8mm} \begin{minipage}{0.25\textwidth}
-%   \includegraphics[width=0.9\textwidth]{xfractal.png}
-% \end{minipage}
-
-\begin{enumerate}[label=8i.\arabic*,start=3]
-\item Du skal i de følgende to opgaver arbejde med en funktion til at
-  bestemme den såkaldte \emph{Levensthein-distance} mellem to strenge
-  $a$ og $b$. Distancen er defineret som det mindste antal
-  editeringer, på karakter-niveau, det er nødvendigt at foretage på
-  strengen $a$ før den resulterende streng er identisk med strengen
-  $b$. Som editeringer forstås (1) sletninger af karakterer, (2)
-  indsættelser af karakterer, og (3) substitution af
-  karakterer.
-
-  Varianter af Levensthein-distancen mellem to strenge kan
-  således benyttes til at identificere om studerende selv har løst
-  deres indleverede opgaver eller om der potentielt set er tale om
-  plagiatkode ;)
-
-  Matematisk set kan Levensthein-distancen $\id{leven}(a,b)$, mellem
-  to karakterstrenge $a$ og $b$, defineres som
-  $\id{lev}_{a,b}(|a|,|b|)$, hvor $|a|$ og $|b|$ henviser til
-  længderne af henholdsvis $a$ og $b$, og hvor funktionen $\id{lev}$ er
-  defineret som følger:\footnote{See
-    \url{https://en.wikipedia.org/wiki/Levenshtein_distance}.}
-
-  \[
-  \id{lev}_{a,b}(i,j) = \left \{ \begin{array}{ll} \mathrm{max}(i,j) & \mathrm{if}~\mathrm{min}(i,j) = 0, \\
-    \mathrm{min} \left \{ \begin{array}{l}\id{lev}_{a,b}(i-1,j)+1 \\
-                                          \id{lev}_{a,b}(i,j-1)+1 \\
-                                          \id{lev}_{a,b}(i-1,j-1)+1_{(a_i\not=b_j)} \end{array} \right . & \mathrm{otherwise}. \end{array} \right .
-  \]
-  hvor $1_{(a_i\not=b_j)}$ henviser til \emph{indikatorfunktionen}, som er $1$ når $a_i\not=b_j$ og $0$ ellers.
-
-  Implement\'{e}r funktionen \id{leven} direkte efter den matematiske
-  definition (ved brug af rekursion) og test korrektheden af funktionen på nogle små
-  strenge, såsom ``house'' og ``horse'' (distance 1) samt ``hi'' og ``hej'' (distance 2).
-
-  \item Den direkte implementerede rekursive funktion er temmelig
-    ineffektiv når strengene $a$ og $b$ er store. F.eks. tager det en
-    del millisekunder at udregne distancen mellem strengene
-    ``dangerous house'' and ``danger horse''. Årsagen til denne
-    ineffektivitet er at en løsning der bygger direkte på den
-    rekursive definition resulterer i en stor mængde genberegninger af
-    resultater der allerede er beregnet.
-
-    For at imødekomme dette problem skal du implementere en såkaldt
-    ``caching mekanisme'' der har til formål at sørge for at en
-    beregning højst foretages en gang.  Løsningen kan passende gøre
-    brug af gensidig rekursion og tage udgangspunkt i løsningen for
-    den direkte rekursive definition (således skal løsningen nu
-    implementeres med to gensidigt rekursive funktioner \lstinline{leven} og \lstinline{leven_cache} forbundet med
-    \lstinline{and}). Som cache skal der benyttes et 2-dimensionelt
-    array af størrelse $|a|\times|b|$ indeholdende heltal (initielt
-    sat til $-1$).
-
-    Funktionen \lstinline{leven_cache}, der skal tage tilsvarende
-    argumenter som \lstinline{leven}, skal nu undersøge om der
-    allerede findes en beregnet værdi i cachen, i hvilket tilfælde
-    denne værdi returneres. Ellers skal funktionen \lstinline{leven}
-    kaldes og cachen opdateres med det beregnede resultat. Endelig er
-    det nødvendigt at funktionen \lstinline{leven} opdateres til nu at
-    kalde funktionen \lstinline{leven_cache} i hver af de rekursive kald.
-
-    Test funktionen på de små strenge og vis at funktionen nu virker
-    korrekt også for store input.
-
-    Det skal til slut bemærkes at den implementerede løsning benytter
-    sig af $O(|a| \times |b|)$ plads og at der findes effektive
-    løsninger der benytter sig af mindre plads
-    ($O(\mathrm{max}(|a|,|b|))$). Det er ikke et krav at din løsning
-    implementerer en af disse mere pladsbesparende strategier.
+\input{../assignments/treeStructure/introduction}
+\begin{enumerate}[label=8i.\arabic*,start=1]
+\item \input{../assignments/treeStructure/figTest}
+\item \input{../assignments/treeStructure/makePicture}
+\item \input{../assignments/treeStructure/makePicture2}
+\item \input{../assignments/treeStructure/checkFigure}
+\item \input{../assignments/treeStructure/move}
+\item \input{../assignments/treeStructure/boundingBox}
 \end{enumerate}
 
-Afleveringsopgaven skal afleveres som et antal \texttt{fsx} tekstfiler
-navngivet efter opgaven, som f.eks. \lstinline!8i0.fsx!. Tekstfilerne
-skal kunne oversættes med \texttt{fsharpc},\footnote{Løsningerne kan
-  antage at biblioteket \texttt{ImgUtil.dll} fra forelæsningerne er
-  tilgængeligt.} og resultatet skal kunne køres med \texttt{mono}
-eller eventuelt \texttt{mono32}. Funktioner skal dokumenteres ifølge
-dokumentationsstandarden, og udover selve programteksten skal
-besvarelserne indtastes som kommentarer i de \texttt{fsx}-filer, de
-hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+Afleveringsopgaven skal afleveres som et antal \texttt{fsx} tekstfiler navngivet efter opgaven, som f.eks. \lstinline!8i0.fsx!. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de \texttt{fsx}-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
 
 \end{document}
