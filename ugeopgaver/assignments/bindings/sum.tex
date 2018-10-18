@@ -1,0 +1,26 @@
+Betragt følgende sum af heltal,
+  \begin{equation}
+    \sum_{i=1}^n i.
+  \end{equation}
+  Man kan ved induktion vise, at $\sum_{i=1}^n i = \frac{n(n+1)}{2},\, n\geq 0$. Opgaven har følgende delafleveringer:
+  \begin{enumerate}
+  \item \label{sum} Skriv en funktion
+    \begin{quote}
+      \mbox{\lstinline!sum : n:int -> int!}
+    \end{quote}
+    som ud over tælleværdien benytter en lokal variabel \lstinline!s! og en \lstinline!while! løkke til at udregne summen $1 + 2 + \dots + n$.
+    % \item Lav en funktion
+    %   \begin{quote}
+    %     \mbox{\lstinline!recSum : n:int -> int!}
+    %   \end{quote}
+    %   som benytter rekursion og uden brug af variable til at udregne summen $1 + 2 + \dots + n$. Hint: $\sum_{i=1}^n i = n + \sum_{i=1}^{n-1} i$.
+  \item Lav en funktion
+    \begin{quote}
+      \mbox{\lstinline!simpleSum : n:int -> int!}
+    \end{quote}
+    som i stedet benytter formlen $\frac{n(n+1)}{2}$.
+%  \item Lav et program, som skriver en tabel ud på skærmen med 4 kolonner: \lstinline!n!, \lstinline!sum n!, \mbox{\lstinline!recSum n!} og \mbox{\lstinline!simpleSum n!}, og verificer at de 3 funktioner kommer til samme resultat.
+  \item Skriv et program, som beder brugeren indtaste et tal \lstinline!n!, læser det fra tastaturet, og derefter udskriver resultatet af \lstinline!sum n! og \lstinline!simpleSum n!.
+  \item Lav et program, som skriver en tabel ud på skærmen med 3 kolonner: \lstinline!n!, \lstinline!sum n! og \mbox{\lstinline!simpleSum n!}, og et passende antal rækker. Verificer ved hjælp af tabellen at de 2 funktioner beregner til samme resultat.
+  \item Hvad er det største $n$ de 2 versioner kan beregne \lstinline{sum} funktionen korrekt for? Hvordan kan programmet modificeres, så funktionen kan beregnes for større værdier af $n$?
+  \end{enumerate}
