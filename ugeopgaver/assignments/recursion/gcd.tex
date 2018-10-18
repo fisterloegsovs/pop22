@@ -1,0 +1,14 @@
+\label{gcd} Den største fællesnævner mellem 2 heltal, $t$ og $n$, er det største heltal $c$, som går op i både $t$ og $n$ med $0$ til rest. Euclids algoritme\footnote{\url{https://en.wikipedia.org/wiki/Greatest_common_divisor}} finder den største fællesnævner vha.\ rekursion:
+  \begin{align}
+    \text{gcd}(t,0) &= t, \label{gcd:1}
+    \\ \text{gcd}(t,n) &= \text{gcd}(n, t \text{ \% } n), \label{gcd:2}
+  \end{align}
+hvor $\%$ er rest operatoreren (som i F\#). 
+\begin{enumerate}
+\item Implementer Euclids algoritm, som den rekursive funktion
+  \begin{quote}
+    \lstinline{gcd : int -> int -> int}
+  \end{quote}
+\item lav en white- og black-box test af den implementerede algoritme,
+\item Lav en håndkøring af algoritmen for \lstinline{gcd 8 2} og \lstinline{gcd 2 8}.
+\end{enumerate}
