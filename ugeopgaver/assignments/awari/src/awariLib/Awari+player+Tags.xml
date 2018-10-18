@@ -1,0 +1,50 @@
+<Type Name="Awari+player+Tags" FullName="Awari+player+Tags">
+  <TypeSignature Language="C#" Value="public static class Awari.player.Tags" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi abstract sealed Awari/player/Tags extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>awariLib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Player1">
+      <MemberSignature Language="C#" Value="public const int Player1 = 0;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal int32 Player1 = (0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <MemberValue>0</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Player2">
+      <MemberSignature Language="C#" Value="public const int Player2 = 1;" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal int32 Player2 = (1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <MemberValue>1</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
