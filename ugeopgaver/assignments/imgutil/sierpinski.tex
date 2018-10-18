@@ -1,0 +1,20 @@
+\label{sierpinski.ov} Ved at benytte biblioteket \texttt{ImgUtil}, som beskrevet i
+  forelæsningen, er det muligt at tegne simpel liniegrafik samt
+  fraktaler, som f.eks.\ Sierpinski-fraktalen, der kan tegnes ved at
+  tegne små firkanter bestemt af et rekursivt mønster. Koden for
+  Sierpinski-trekanten er givet som følger:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+open ImgUtil
+
+let rec triangle bmp len (x,y) =
+  if len < 25 then setBox blue (x,y) (x+len,y+len) bmp
+  else let half = len / 2
+       do triangle bmp half (x+half/2,y)
+       do triangle bmp half (x,y+half)
+       do triangle bmp half (x+half,y+half)
+
+do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ignore)
+\end{lstlisting}
+
+Tilpas funktionen således at trekanten tegnes med røde streger samt
+således at den kun tegnes ned til dybde 2 (hint: du skal ændre betingelsen \lstinline{len < 25}).
