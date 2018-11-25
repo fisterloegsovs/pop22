@@ -5,7 +5,7 @@
 \title{Programmering og Problemløsning\\Datalogisk Institut,
   Københavns Universitet\\Arbejdsseddel 12 - individuel opgave}
 \author{Jon Sporring}
-\date{12.\ januar - 17.\ januar.\\Afleveringsfrist: onsdag d.\ 17.\ januar kl. 22:00}
+\date{9.\ januar - 16.\ januar.\\Afleveringsfrist: onsdag d.\ 16.\ januar kl. 22:00}
 
 \begin{document}
 \maketitle
@@ -16,43 +16,21 @@ I denne periode skal I arbejde individuelt. Regler for individuelle afleveringso
 \end{itemize}
 
 Opgaverne er delt i øve- og afleveringsopgaver. 
-
 \section*{Øveopgaver}
 \begin{enumerate}[label=12ø.\arabic*,start=0]
-\item Lav et program, som åbner et vindue og skriver teksten ``Hello
-  World'' i vinduet vha.\ en \lstinline{Label}.
-\item Lav et program, som åbner et vindue og vha.\ \lstinline{TextBox} 
-  beder brugeren indtaste sin vægt $m$ i kilogram og højde $h$ i meter, udregner
-  body-mass-index efter formlen $bmi = h/m^2$, og skriver resultatet i
-  vinduet vha.\  \lstinline{Label}.
-\item Lav et program, som beder brugeren om navnet på en input-tekstfil og
-  en output-tekstfil vha.\ \lstinline{OpenFileDialog} og
-  \lstinline{SaveFileDialog}, indlæser inputfilen og gemmer den i omvendt
-  rækkefølge, så sidste bogstav bliver det første og første bliver det sidste.
-\item \label{item:line} Lav et program, der tegner en streg mellem 2 punkter i et
-  vindue.
-\item Opdater \ref{item:line}, således at efter kort tid så slettes
-  den gamle streg, og en ny tegnes tæt på den forrige. Hvert endepunkt
-  skal parametriseres som en vektor $(x,y)$, og det skal følge en ret
-  linje parametriseret ved $(dx, dy)$ og
-  \begin{equation}
-    (x_{i+1}, y_{i+1}) = (x_i,y_i) + \alpha (dx, dy)
-  \end{equation}
-  hvor $\alpha$ er en lille konstant. Hvis et endepunkt $(x_{i+1}, y_{i+1})$ er
-  udenfor vinduets tegn\-bare areal, skal punktet ignoreres og istedet
-  skal der vælges en ny vektor $(dx,dy)$ tilfældigt og et nyt
-  endepunkt skal udregnes.
+\item \input{../assignments/winforms/helloWorld}
+\item \input{../assignments/winforms/textbox}
+\item \input{../assignments/winforms/fileDialogue}
+\item \input{../assignments/winforms/line}
 \end{enumerate}
 
 \section*{Afleveringsopgaver}
 \begin{enumerate}[label=12i.\arabic*,start=0]
-\item Der skal laves en grafisk repræsentation af et analogt ur i WinForms. Uret
-  skal have en urskive, visere for timer, minutter og sekunder og
-  det skal opdateres minimum 1 gang per sekund. Desuden skal uret vise
-  dato og tid på digital form.
+\item \input{../assignments/clock/clock}
 \end{enumerate}
 
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks.\ \filename{12i0.fsx}. Tekstfilerne skal kunne oversættes med \filename{fsharpc}, og resultatet skal kunne køres med \filename{mono32}. Funktioner skal dokumenteres ifølge dokumentationsstandarden.
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!12i0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med \filename{mono32}. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal der vedlægges en kort rapport i pdf format kaldet \lstinline{12i.pdf}, som indholder de dele af besvarelsen, som ikke naturligt vil være i en programtekst. Det hele skal samles i en zip fil og uploades på Absalon.
+
 \end{document}
 
 %%% Local Variables:
