@@ -1,0 +1,37 @@
+Cheetahs, antelopes and wildebeests are among the world's fastest mammals. This exercise asks you to simulate a race between them. You are not asked to simulate their movement on some plane, but only some of the conditions that affect their speed when running a certain distance. 
+  
+  Produce a UML diagram representing the following.
+  
+  Your base class is called \texttt{Animal} and has these attributes: 
+  \begin{itemize}
+  \item The amount of food needed daily (measured in kilograms)
+  \item The weight of the animal (measured in kilograms)
+  \item The maximum speed of the animal (measured in kilometres per hour)
+  \item The current speed of the animal (measured in kilometres per hour)
+  \end{itemize}
+  The \texttt{Animal} class should have a primary constructor that takes two arguments: the animal's weight and the animal's maximum speed. The \texttt{Animal} class should also have an additional constructor that takes as input only the animal's maximum speed and generates the animal's weight randomly within the range of 70 - 300 kg. The \texttt{Animal} class should have two methods:
+  \begin{itemize}
+  \item The first method should set the current speed of the animal proportionately to its food intake and maximum speed as follows: if the animal eats 100\% of the amount of food it needs daily, the animal's current speed should be its maximum speed; if the animal eats 50\% of the amount of food it needs daily, the animal's current speed should be 50\% of its maximum speed, and so on.
+  \item The second method should set the amount of food needed daily proportionately to the animal's weight as follows: the animal should eat half its own weight in food every day (if the animal weighs 50 kg, it should eat 25kg of food daily).
+  \end{itemize}
+  
+  
+  Create a subclass \texttt{Carnivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 8\% of its own weight in food every day.
+  
+  Create a subclass \texttt{Herbivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 40\% of its own weight in food every day.
+  
+  Create an instance of \texttt{Carnivore} called \texttt{cheetah} and two instances of \texttt{Herbivore} called \texttt{antelope, wildebeest}. Set their weight and maximum speed to:
+  \begin{itemize}
+  \item cheetah: 50kg, 114km/hour
+  \item antelope: 50kg, 95km/hour
+  \item wildebeest: 200kg, 80km/hour
+  \end{itemize}
+  
+  Generate a random percentage between 1 - 100\% (inclusive) separately for each instance. This random percentage represents the amount of food the animal eats with respect to the amount of food it needs daily. E.g., if you generate the random percentage 50\% for the antelope, this means that the antelope will eat 50\% of the amount it should have eaten (as decided by the second method). 
+  
+  For each instance, display the random percentage you generated, how much food each animal consumed, how much food it should have consumed, and how long it took for the animal to cover 10km. 
+  Repeat this 3 times (generating different random percentages each time), and declare winner the animal that was fastest on average all three times. If there is a draw, repeat and recompute until there is a clear winner.
+  
+  Test all methods. %You should include a UML diagram, comment your code and describe in max. 2 pages (excluding the UML diagram) what your program does and how you have tested the methods. 
+  
+  \textbf{Optional extra:} repeat the race without passing as input argument the weight of each animal (i.e. letting the additional constructor generate a different random weight for each instance).

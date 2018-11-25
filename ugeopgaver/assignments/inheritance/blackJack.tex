@@ -1,0 +1,22 @@
+Du skal implementere en udvidelse til \sbl som indeholder en omstrukturering af nogle af klasserne, samt indførelse af en række nye strategier. Du skal simulere nogle \sbl spil hvor du afprøver forskellige strategier, for at afgøre
+  hvilken strategi som lader til at være den bedste. \\ \\
+  Implement\'{e}r super-klassen \texttt{Player}, og klasserne \texttt{Dealer}, \texttt{Human} og \texttt{AI} som nedarver fra \texttt{Player.} \texttt{Player} skal indeholde attributter og metoder som implementerer den fælles funktionalitet
+  som alle tre typer "spillere" har, f.eks. en metode som vælger "Hit" eller "Stand". \\ \\
+  Implement\'{e}r super-klassen \texttt{Strategy}, samt en klasse for hver af følgende strategier, som alle nedarver fra \texttt{Strategy}
+  \begin{enumerate}
+  \item Vælg altid "Hit", medmindre summen af egne kort kan være 15 eller over, ellers vælg "Stand".
+  \item Vælg altid "Hit", medmindre summen af egne kort kan være 17 eller over, ellers vælg "Stand".
+  \item Vælg altid "Hit", medmindre summen af egne kort kan være 19 eller over, ellers vælg "Stand".
+  \item Vælg tilfældigt mellem "Hit" og "Stand". Hvis "Hit" er valgt, trækkes et kort og der vælges igen tilfældigt mellem
+    "Hit" os "Stand" osv.
+  \item Følg strategi 2. hvis \'{e}t af egne kort er et Es, ellers følg strategi 1.
+  \end{enumerate}
+  Simul\'{e}r 3000 spil \sbl med 5 \texttt{AI} spillere som følger de 5 ovenstående strategier.
+  Dealer skal følge strategi 2. 
+  Konklud\'{e}r hvilken af strategierne som lader til at være bedst. \\ \\
+  Du skal også
+  \begin{itemize}
+  \item Beskrive designet som et UML-diagram
+  \item Lave Unittests
+  \item Kommentere ny kode jævnfør kommentarstandarden for F\#
+  \end{itemize}

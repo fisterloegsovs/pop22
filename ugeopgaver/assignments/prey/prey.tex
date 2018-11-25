@@ -1,0 +1,27 @@
+In the following, we will build a simulator of a predator-prey relationship in a closed environment using the following rules:
+\begin{enumerate}
+\item The habitat updates itself in units of time called clock ticks. During one clock tick, every ani mal in the island gets an opportunity to do something.
+\item All animals are given an opportunity to move into an adjacent space, if an empty adjacent space is found. One move per clock tick is allowed.
+\item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal – its offspring. The animal’s breed time is then reset to zero. An animal can breed at most once in a clock tick.
+\item The predators must eat. They have a fixed starve time. If they cannot find a prey to eat before starve time ticks of the clock, they die.
+\item When a predator eats, it moves into an adjacent space that is occupied by prey (its meal). The prey is removed and the predator’s starve time is reset to zero. Eating counts as the predator’s move during that clock tick.
+\item At the end of every clock tick, each animal’s local event clock is updated. All animals’ breed times are decremented and all predators’ starve times are decremented.
+\end{enumerate}
+
+Lav et program, som kan simulere rov- og byttedyrene som beskrevet ovenfor og skrive en lille rapport. Kravene til programmeringsdelen er:
+\begin{enumerate}
+\item Man skal kunne angive antal af tiks (clock ticks), som simuleringen skal køre, formeringstid (breeding time) for begge racer og udsultningstid for rovdyrene ved programstart.
+\item Antallet af dyr per tik skal gemmes i en fil.
+\item Programmet skal benytte klasser og objekter
+\item Der skal være mindst en (fornuftig) nedarvning
+\item Programmets klasser skal bla. beskrives ved brug af et UML diagram
+\item Programmet skal kommenteres ved brug af fsharp kommentarstandarden
+\item Programmet skal unit-testes
+\end{enumerate}
+Kravene til rapporten er:
+\begin{enumerate}[resume]
+\item Rapporten skal skrives i \LaTeX.
+\item I skal bruge \texttt{rapport.tex} skabelonen
+\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, og Diskussion og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
+\item Rapporten må maximalt være på 10 sider alt inklusivt.
+\end{enumerate}

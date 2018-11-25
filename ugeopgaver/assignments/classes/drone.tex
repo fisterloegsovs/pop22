@@ -1,0 +1,18 @@
+I en ikke-så-fjern fremtid bliver droner massivt brugt til levering af varer købt på nettet.  Drone-trafikken er blevet så voldsom i dit område, at du er blevet bedt om at skrive et program som kan afgøre om droner flyver ind i hinanden. Antag at alle droner flyver i samme højde og at 2 droner rammer hinanden hvis der på et givent tidspunkt (kun hele minutter) er mindre end 5 meter imellem dem.  Droner flyver med forskellig hastighed (meter/minut) og i forskellige retninger. En drone flyver altid i en lige linje mod sin destination, og når destinationen er nået, lander dronen og kan ikke længere kollidere med andre droner.  Ved oprettelse af et \texttt{Drone} objekt specificeres start positionen, destinationen og hastigheden.  Implementér klassen \texttt{Drone} så den som minimum har attributterne og metoderne:
+    \begin{itemize}
+    \item \texttt{position} (attribut) : Angiver dronens position i (x, y) koordinater.
+    \item \texttt{speed} (attribut) : Angiver distancen som dronen flyver for hvert minut.
+    \item \texttt{destination} (attribut) : Angiver positionen for dronens destination i (x, y) koordinater.
+    \item \texttt{fly} (metode) : Beregner dronens nye position efter et minuts flyvning.
+    \item \texttt{isFinished} (metode) : Afgør om dronen har nået sin destination eller ej.
+    \end{itemize}
+    og klassen \texttt{Airspace} så den som minimum har attributterne og metoderne:
+    \begin{itemize}
+    \item \texttt{drones} (attribut) : En samling droner i luftrummet.
+    \item \texttt{droneDist} (metode) : Beregner afstanden mellem to droner.
+    \item \texttt{flyDrones} (metode) : Lader et minut passere og opdaterer dronernes positioner tilsvarende.
+    \item \texttt{addDrone} (metode) : Tilføjer en ny drone til luftrummet.
+    \item \texttt{willCollide} (metode) : Afgør om der sker en eller flere kollisioner indenfor et specificeret tidsinterval givet
+      i hele minutter.
+    \end{itemize}
+    Test alle metoder i begge klasser. Opret en samling \texttt{Drone} objekter som du ved ikke vil medføre kollisioner, samt en anden samling som du ved vil medføre kollisioner og test om din \texttt{willCollide} metode virker korrekt.

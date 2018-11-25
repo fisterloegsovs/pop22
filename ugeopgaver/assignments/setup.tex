@@ -154,29 +154,30 @@
 % \setcounterref{lstFrom}{dynamicScopeTracing:a1}
 % \setcounterref{lstTo}{dynamicScopeTracing:a2}
 % \lstinputlisting[firstline=\thelstFrom,lastline=\thelstTo,escapechar=|]{\src/dynamicScopeTracing.fsx}
-\usepackage{lstlinebgrd}
-\makeatletter
-%The following sets the box compatible with tcolorbox setup
-\def\lst@linebgrdcolor{\color{black!5!white}}
-\def\lst@linebgrdsep{1em}
-\def\lst@linebackgroundwidth{1em}
-\def\lst@linebackgroundhighlight{\color{codeLineHighlight}}
-\renewcommand{\lst@linebgrd}{%
-  \ifx\lst@linebgrdcolor\empty
-  \else
-    \rlap{
-       \lst@basicstyle\color{black!5!white} % tcolorbox background color
-       \lst@linebgrdcolor{
-          \kern-\dimexpr\lst@linebgrdsep\relax
-          \lst@linebgrdcmd{\lst@linebgrdwidth}{\lst@linebgrdheight}{\lst@linebgrddepth}
-       }
-    }
-  \fi
-}
-% Highlight a range of lines with green. Use \getrefnumber{label} for refs
-\newcommand{\highlightRange}[2]{\ifnum\value{lstnumber}>\numexpr#1-1\ifnum\value{lstnumber}<\numexpr1+#2\lst@linebackgroundhighlight\fi\fi}
-% \highlight conflicts with skak. Just rewriting, wonder what breaks in skak
-\renewcommand{\highlight}[1]{\ifnum\value{lstnumber}=#1\lst@linebackgroundhighlight\fi}
+
+% \usepackage{lstlinebgrd}
+% \makeatletter
+% %The following sets the box compatible with tcolorbox setup
+% \def\lst@linebgrdcolor{\color{black!5!white}}
+% \def\lst@linebgrdsep{1em}
+% \def\lst@linebackgroundwidth{1em}
+% \def\lst@linebackgroundhighlight{\color{codeLineHighlight}}
+% \renewcommand{\lst@linebgrd}{%
+%   \ifx\lst@linebgrdcolor\empty
+%   \else
+%     \rlap{
+%        \lst@basicstyle\color{black!5!white} % tcolorbox background color
+%        \lst@linebgrdcolor{
+%           \kern-\dimexpr\lst@linebgrdsep\relax
+%           \lst@linebgrdcmd{\lst@linebgrdwidth}{\lst@linebgrdheight}{\lst@linebgrddepth}
+%        }
+%     }
+%   \fi
+% }
+% % Highlight a range of lines with green. Use \getrefnumber{label} for refs
+% \newcommand{\highlightRange}[2]{\ifnum\value{lstnumber}>\numexpr#1-1\ifnum\value{lstnumber}<\numexpr1+#2\lst@linebackgroundhighlight\fi\fi}
+% % \highlight conflicts with skak. Just rewriting, wonder what breaks in skak
+% \renewcommand{\highlight}[1]{\ifnum\value{lstnumber}=#1\lst@linebackgroundhighlight\fi}
 
 % To use verbatimwrite to write listing to file, e.g., in conjunction with ebnfs
 \usepackage{moreverb} 
