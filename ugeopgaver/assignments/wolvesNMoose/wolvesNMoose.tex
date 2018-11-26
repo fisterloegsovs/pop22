@@ -1,0 +1,29 @@
+I det følgende skal der simuleres et lukket miljø med ulve og elge. Simuleringen skal benytte følgende regler:
+\begin{enumerate}
+\item Et miljø består af $n\times n$ felter.
+\item Alle levende dyr placeres i et felt, og der kan højst være et dyr per felt. Når et dyr dør, fjernes det fra miljøet. Hvis et dyr fødes, tilføjes det i et tomt felt. Ved simuleringens begyndelse skal der være $u$ ulve og $e$ elge som placeret tilfældigt i tomme felter.
+\item Miljøet opdateres i tidsenheder, som kaldes tiks, og simuleringen udføres $T$ tiks. Indenfor et tik kan dyrene gøre et af følgende: Flytte sig, formere sig, og for ulvenes vedkommende angribe en elg. Kun et dyr handler ad gangen og rækkefølgen er tilfældig.
+\item Dyr kan flytte sig et felt per tik til de af de 8 nabofelter, som er tomme.
+\item Alle dyr har en formeringstid $f$ angivet i antal tiks, og som tæller ned. Når formeringstiden når nul (for et levende dyr), og der er et tomt nabofelt, så fødes der et nyt dyr af samme type ved at det nye dyr tilføres i et tomt nabofelt. Moderdyrets formeringstid sættes til startværdien, hhv.\ $f_{\text{elg}}$ og $f_{\text{ulv}}$.
+\item Ulve har en sulttid $s$ angivet i antal tiks, og som tæller ned. Hvis sulttiden når nul, så dør ulven og fjernes fra miljøet.
+\item Ulve kan angribe og spise elge, hvis der er en elg i et nabofelt. Når en ulv angriber en elg i et nabofelt, så er der chance $p$ for, at elgen dør og ulven spiser. Hvis elgen dør, så fjernes elgen fra miljøet, ulven flytter til elgens felt, og ulvens sulttid sættes til startværdien, $s_{\text{ulv}}$.
+\item Når alle handlinger er afsluttet reduceres alle formerings- og sulttællere for levende dyr med 1.
+\end{enumerate}
+
+Lav et program, som kan simulere dyrene som beskrevet ovenfor og skrive en rapport. Kravene til programmeringsdelen er:
+\begin{enumerate}
+\item Programmet skal implementere klasser for miljø, ulve og elge. Det er ikke et krav at der bruges nedarvning.
+\item Man skal kunne starte simuleringen ved angive parametrene $T$, $n$, $u$, $e$, $f_{\text{elg}}$, $f_{\text{ulv}}$, $s_{\text{ulv}}$ og $p$, som argumenter til det oversatte program fra komandolinjen.
+\item De angivne parametre og tidserien over antallet af dyr per tik skal gemmes i en fil.
+\item Der skal laves et antal eksperimenter, hvor simuleringen køres med forskellige værdier af simuleringens parametre. For hvert eksperiment skal der laves en graf der viser antallet af ulve og elge over tid.
+\item Programmet skal kommenteres ved brug af fsharp kommentarstandarden
+\item Programmet skal unit-testes
+\end{enumerate}
+Kravene til rapporten er:
+\begin{enumerate}[resume]
+\item Rapporten skal skrives i \LaTeX.
+\item I skal bruge \texttt{rapport.tex} skabelonen
+\item Rapporten skal som minimum i hoveddelen indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, Eksperiment og Diskussion og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
+\item Eksperimentafsnittet skal vise tidsseriegraferne og kort diskutere hvert eksperiments udfald.
+\item Rapporten må maximalt være på 10 sider alt inklusivt.
+\end{enumerate}

@@ -1,0 +1,20 @@
+Write a UML diagram for the following:
+
+A class called \texttt{Animal} and has the following attributes (choose names yourself): 
+\begin{itemize}
+\item The amount of food needed daily (measured in kilograms)
+\item The weight of the animal (measured in kilograms)
+\item The maximum speed of the animal (measured in kilometres per hour)
+\item The current speed of the animal (measured in kilometres per hour)
+\end{itemize}
+The \texttt{Animal} class should have two methods (choose appropriate names):
+\begin{itemize}
+\item The first method should set the current speed of the animal proportionately to its food intake and maximum speed as follows: if the animal eats 100\% of the amount of food it needs daily, the animal's current speed should be its maximum speed; if the animal eats 50\% of the amount of food it needs daily, the animal's current speed should be 50\% of its maximum speed, and so on.
+\item The second method should set the amount of food needed daily proportionately to the animal's weight as follows: the animal should eat half its own weight in food every day (if the animal weighs 50 kg, it should eat 25kg of food daily).
+\end{itemize}
+
+A subclass \texttt{Carnivore} that inherits everything from class \texttt{Animal}.
+
+A subclass \texttt{Herbivore} that inherits everything from class \texttt{Animal}, and modifies the second method as follows: the animal should eat 40\% of its own weight in food every day.
+
+A class called \texttt{Game} consisting of one or more instances of \texttt{Carnivore} and \texttt{Herbivore}.

@@ -1,6 +1,6 @@
 In the following, we will build a simulator of a predator-prey relationship in a closed environment using the following rules:
 \begin{enumerate}
-\item The habitat updates itself in units of time called clock ticks. During one clock tick, every ani mal in the island gets an opportunity to do something.
+\item The habitat updates itself in units of time called clock ticks. During one clock tick, every animal in the island gets an opportunity to do something.
 \item All animals are given an opportunity to move into an adjacent space, if an empty adjacent space is found. One move per clock tick is allowed.
 \item Both the predators and prey can reproduce. Each animal is assigned a fixed breed time. If the animal is still alive after breed time ticks of the clock, it will reproduce. The animal does so by finding an unoccupied adjacent space and fills that space with the new animal – its offspring. The animal’s breed time is then reset to zero. An animal can breed at most once in a clock tick.
 \item The predators must eat. They have a fixed starve time. If they cannot find a prey to eat before starve time ticks of the clock, they die.
