@@ -7,10 +7,11 @@ type neighbour = position * symbol
 let mSymbol : symbol = 'm'
 let wSymbol : symbol = 'w'
 let eSymbol : symbol = ' '
+let rnd = System.Random ()
 
 /// An animal is a base class. It has a position and a reproduction counter.
 type animal (symb : symbol, repLen : int) =
-  let mutable _reproduction = repLen
+  let mutable _reproduction = rnd.Next(1,repLen)
   let mutable _pos : position option = None
   let _symbol : symbol = symb
 
@@ -40,8 +41,8 @@ type moose (repLen : int) =
   member this.tick () =
     this.updateReproduction ()
 
-/// A wulf is an animal with a hunger counter
-type wulf (repLen : int, hungLen : int) =
+/// A wolf is an animal with a hunger counter
+type wolf (repLen : int, hungLen : int) =
   inherit animal (wSymbol, repLen)
   let mutable _hunger = hungLen
 
@@ -51,7 +52,7 @@ type wulf (repLen : int, hungLen : int) =
       None
     else // Give birth
       this.resetReproduction ()
-      Some (wulf (repLen, hungLen))
+      Some (wolf (repLen, hungLen))
   member this.hunger = _hunger
   member this.resetHunger () =
     _hunger <- hungLen
@@ -68,32 +69,31 @@ type wulf (repLen : int, hungLen : int) =
 type board =
   {width : int;
    mutable moose : moose list;
-   mutable wulves : wulf list;}
+   mutable wolves : wolf list;}
 
 /// An environment is a chess-like board with all animals and implenting all rules
 type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : int, wolvesRepLen : int, wolvesHungLen : int) =
   let _board : board = {
     width = boardWidth;
     moose = List.init NMooses (fun i -> moose(mooseRepLen));
-    wulves = List.init NWolves (fun i -> wulf(wolvesRepLen, wolvesHungLen));
+    wolves = List.init NWolves (fun i -> wolf(wolvesRepLen, wolvesHungLen));
   }
   
   let draw (b : board) : char [,] =
     let arr = Array2D.create<char> boardWidth boardWidth eSymbol
     for m in b.moose do
       Option.iter (fun p -> arr.[fst p, snd p] <- mSymbol) m.position
-    for w in b.wulves do
+    for w in b.wolves do
       Option.iter (fun p -> arr.[fst p, snd p] <- wSymbol) w.position
     arr
 
   let anyEmptyField (b : board) : position =
     let arr = draw b
-    let rnd = System.Random();
-    let mutable i = rnd.Next (b.width)
-    let mutable j = rnd.Next (b.width)
+    let mutable i = rnd.Next b.width
+    let mutable j = rnd.Next b.width
     while arr.[i,j] <> eSymbol do
-      i <- rnd.Next(b.width)
-      j <- rnd.Next(b.width)
+      i <- rnd.Next b.width
+      j <- rnd.Next b.width
     (i,j)
 
   let neighbours (b : board) (pos : position) : neighbour list =
@@ -115,8 +115,7 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
     if List.isEmpty shortened then
       None
     else
-      let rnd = System.Random()
-      let i = rnd.Next(shortened.Length)
+      let i = rnd.Next shortened.Length
       Some (fst shortened.[i])
 
   let updateMoose (b : board) (m : moose) : (moose option * string option) =
@@ -142,8 +141,7 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
     if List.isEmpty shortened then
       None
     else
-      let rnd = System.Random()
-      let i = rnd.Next(shortened.Length)
+      let i = rnd.Next shortened.Length
       Some (fst shortened.[i])
 
   let findMoose (b : board) (p : position option) : moose =
@@ -153,16 +151,16 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
         | _ -> false
     List.find (fun e -> samePosition p e.position) b.moose // potential exception
         
-  let updateWulf (b : board) (w : wulf) : (wulf option * string option) =
+  let updateWolf (b : board) (w : wolf) : (wolf option * string option) =
     // Side-effect warning! b and w may change
-    // Wulves can move, reproduce, and eat
+    // Wolves can move, reproduce, and eat
     let offspring = w.tick ()
     if w.position.IsSome then
       let neigh = neighbours b w.position.Value
       let newPos = anyEmptyNeighbour neigh
       if offspring.IsSome then // reproduce
         if newPos.IsSome then
-          (Option.map (fun (e : wulf) -> e.position <- newPos; e) offspring, Some "New cub")
+          (Option.map (fun (e : wolf) -> e.position <- newPos; e) offspring, Some "New cub")
         else
           (None, Some "Cub died")
       else // move and possibly eat
@@ -179,39 +177,38 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
     else
       (None,None)
 
-  let rec processLists (mLst : moose list, wLst : wulf list) : unit =
+  let rec processLists (mLst : moose list, wLst : wolf list) : unit =
     let doMoose m =
       let (calf, msg) = updateMoose _board m;
       Option.iter (fun e -> _board.moose <- e :: _board.moose) calf
       Option.iter (fun e -> printfn "%s" e) msg
-    let doWulf w =
-      let (cub, msg) = updateWulf _board w;
-      Option.iter (fun e -> _board.wulves <- e :: _board.wulves) cub
+    let doWolf w =
+      let (cub, msg) = updateWolf _board w;
+      Option.iter (fun e -> _board.wolves <- e :: _board.wolves) cub
       Option.iter (fun e -> printfn "%s" e) msg
     
     match (mLst, wLst) with
       ([], []) -> ()
       | (m::mRest, []) -> doMoose m; processLists (mRest, [])
-      | ([], w::wRest) -> doWulf w; processLists ([], wRest)
+      | ([], w::wRest) -> doWolf w; processLists ([], wRest)
       | (m::mRest, w::wRest) ->
-        let rnd = System.Random ()
-        if rnd.Next(2) > 0 then
+        if rnd.Next 2 > 0 then
           doMoose m; processLists (mRest, wLst)
         else
-          doWulf w; processLists (mLst, wRest)
+          doWolf w; processLists (mLst, wRest)
 
     _board.moose <- List.filter (fun e -> e.position.IsSome) _board.moose
-    _board.wulves <- List.filter (fun e -> e.position.IsSome) _board.wulves
+    _board.wolves <- List.filter (fun e -> e.position.IsSome) _board.wolves
 
   do for m in _board.moose do
        m.position <- Some (anyEmptyField _board)
-  do for w in _board.wulves do
+  do for w in _board.wolves do
        w.position <- Some (anyEmptyField _board)
 
   member this.size = boardWidth*boardWidth
-  member this.count = _board.moose.Length + _board.wulves.Length
+  member this.count = _board.moose.Length + _board.wolves.Length
   member this.board = _board
-  member this.tick () = processLists (_board.moose, _board.wulves)
+  member this.tick () = processLists (_board.moose, _board.wolves)
   override this.ToString () =
     let arr = draw _board
     let mutable ret = "  "
