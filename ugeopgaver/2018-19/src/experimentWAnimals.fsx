@@ -8,8 +8,9 @@ let main args =
   let NWolves = if args.Length < 6 then 2 else int args.[5]
   let wolvesRepLen = if args.Length < 7 then 10 else int args.[6]
   let wolvesHungLen = if args.Length < 8 then 4 else int args.[7]
-
-  let isle = animals.environment(boardWidth, NMooses, mooseRepLen, NWolves, wolvesRepLen, wolvesHungLen)
+  let verbose = false
+  
+  let isle = animals.environment(boardWidth, NMooses, mooseRepLen, NWolves, wolvesRepLen, wolvesHungLen, verbose)
   let file = Option.bind (fun e -> Some (System.IO.File.CreateText e)) filename
 
   for i = 1 to iterations do

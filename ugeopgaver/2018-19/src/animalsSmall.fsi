@@ -33,8 +33,6 @@ type moose =
     /// <summary>Create a moose with symbol 'm'.</summary>
     /// <param name="repLen">The number of ticks until a moose attempts to produce an offspring.</param>
     new : repLen:int -> moose
-    /// Reduce the reproduction counter by a tick. If repLen is 0 then calf is returned and the counter is reset to repLen.
-    member updateReproduction : unit -> moose option
     /// Perform a tick for this moose, i.e., call updateReproduction.
     member tick : unit -> moose option
   end
@@ -47,8 +45,6 @@ type wolf =
     /// <param name="hungLen">The number of ticks since it last ate until a wolf dies.</param>
     new : repLen:int * hungLen:int -> wolf
     /// Reduce the reproduction counter by a tick. If repLen is 0 then a new wolf is returned and the counter is reset to repLen.
-    member updateReproduction : unit -> wolf option
-    /// Get the hunger counter in ticks. Starts as hungLen and is counted down with every tick.
     member hunger : int
     /// Set the hunger counter to hungLen.
     member resetHunger : unit -> unit

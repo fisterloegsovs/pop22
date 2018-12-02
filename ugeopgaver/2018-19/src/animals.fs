@@ -72,7 +72,7 @@ type board =
    mutable wolves : wolf list;}
 
 /// An environment is a chess-like board with all animals and implenting all rules
-type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : int, wolvesRepLen : int, wolvesHungLen : int) =
+type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : int, wolvesRepLen : int, wolvesHungLen : int, verbose : bool) =
   let _board : board = {
     width = boardWidth;
     moose = List.init NMooses (fun i -> moose(mooseRepLen));
@@ -167,7 +167,8 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
         let nearbyMoose = anyMooseNeighbour neigh
         if nearbyMoose.IsSome then // eat
           let m = findMoose b nearbyMoose
-          printfn "Moose eaten"
+          if verbose then
+            printfn "Moose eaten"
           w.position <- m.position
           m.position <- None
           w.resetHunger ()
@@ -181,11 +182,13 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
     let doMoose m =
       let (calf, msg) = updateMoose _board m;
       Option.iter (fun e -> _board.moose <- e :: _board.moose) calf
-      Option.iter (fun e -> printfn "%s" e) msg
+      if verbose then
+        Option.iter (fun e -> printfn "%s" e) msg
     let doWolf w =
       let (cub, msg) = updateWolf _board w;
       Option.iter (fun e -> _board.wolves <- e :: _board.wolves) cub
-      Option.iter (fun e -> printfn "%s" e) msg
+      if verbose then
+        Option.iter (fun e -> printfn "%s" e) msg
     
     match (mLst, wLst) with
       ([], []) -> ()

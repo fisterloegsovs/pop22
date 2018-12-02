@@ -1,6 +1,6 @@
 let m = animals.moose(11);
 let w = animals.wolf(12, 5);
-let isle = animals.environment(10, 6, 5, 3, 5, 6)
+let isle = animals.environment(10, 6, 5, 3, 5, 6, true)
 
 printfn "%A %A" m w
 printfn "%A" isle
