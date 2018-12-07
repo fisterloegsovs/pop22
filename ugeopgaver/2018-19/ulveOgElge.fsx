@@ -6,13 +6,13 @@ type environment (n : int, e : int, fe : int, u : int, fu : int, s : int) as thi
   let mutable wList = List.init u (fun i -> wulf(s, fe, this))
   let mutable wDList : wulf list = [];
   do for m in mList do
-    let (i,j) = this.anyEmptyField ()
-    arr.[i,j] <- 'm'
-    m.position <- Some (i,j)
+       let (i,j) = this.anyEmptyField ()
+       arr.[i,j] <- 'm'
+       m.position <- Some (i,j)
   do for w in wList do
-    let (i,j) = this.anyEmptyField ()
-    arr.[i,j] <- 'u'
-    w.position <- Some (i,j)
+       let (i,j) = this.anyEmptyField ()
+       arr.[i,j] <- 'u'
+       w.position <- Some (i,j)
   member this.size = n
   member this.Item
     with get (i : int, j : int) = arr.[i,j]
@@ -30,10 +30,10 @@ type environment (n : int, e : int, fe : int, u : int, fu : int, s : int) as thi
     List.map getContent delta
   member this.anyEmptyNeighbour pos =
     let neighbours = this.neighbours pos
-    let filter = Option.bind (fun e -> if snd e = ' ' then None else Some e) // Curry
+    let filter = Option.bind (fun e -> if snd e = ' ' then None else Some (fst e)) // Curry
     let shortened = List.choose (filter) neighbours
     if List.isEmpty shortened then None
-    else shortened.[rnd.Next(shortened.Length)]
+    else Some shortened.[rnd.Next(shortened.Length)]
   member this.anyEmptyField () =
     let mutable i = rnd.Next (n-1)+1
     let mutable j = rnd.Next (n-1)+1
@@ -48,21 +48,30 @@ type environment (n : int, e : int, fe : int, u : int, fu : int, s : int) as thi
         ret <- ret + string arr.[i,j] + " "
       ret <- ret + "\n"
     ret + "\n"
-  member this.allAction (mlsrc,mldest,wlsrc,wldest) =
-    let rnd = Random ()
-    if rnd.Next(1) > 0 then // fst list
-      match mlsrc with
-        m::rest -> m.action(); this.allAction (rest,m::mldest,wlsrc,wldest)
-        | _ -> ([],m::mldest,wlsrc,wldest)
-    else
-      match wlsrc with
-        w::rest -> w.action(); this.allAction (mlsrc,mldest,rest,w::wldest)
-        | _ -> (mlsrc,mldest,[],w::wldest)
-
-
+  member this.tick () =
+    let rec processLists (ml : moose list) (wl : wulf list) : unit=
+      match (ml, wl) with
+        ([], []) -> ()
+        | (m::rest, []) -> m.action (); processLists rest []
+        | ([], w::rest) ->  w.action (); processLists [] rest
+        | _ ->
+          let rnd = System.Random ()
+          if rnd.Next(1) > 0 then // fst list
+            ml.Head.action()
+            processLists ml.Tail wl
+          else
+            wl.Head.action();
+            processLists ml wl.Tail
+    processLists mList wList
+    
 and animal (initialReproduction : int, env : environment) =
   let mutable _reproduction = initialReproduction
   let mutable _pos = None
+  let bind2 f pair =
+    match pair with
+      (None, _) -> None
+      | (_, None) -> None
+      | (Some a, Some b) -> f (a, b)
   member this.position
     with get () = _pos
     and set aPos = _pos <- aPos
@@ -72,12 +81,12 @@ and animal (initialReproduction : int, env : environment) =
   member this.resetHunger () =
     _reproduction <- initialReproduction
   member this.move () =
-    let moveit src dest =
-      env.[fst dst, snd dst] = env.[fst src, snd src]
-      env.[fst src, snd src] = ' '
-      dest
+    let moveit (src, dest) =
+      env.[fst dest, snd dest] <- env.[fst src, snd src]
+      env.[fst src, snd src] <- ' '
+      Some dest
     let newPos = Option.bind env.anyEmptyNeighbour _pos
-    _pos <- Option.bind (movit _pos) newPos
+    _pos <- bind2 moveit (_pos, newPos)
 
 and moose (rep : int, env : environment) =
   inherit animal (rep, env)
@@ -104,5 +113,5 @@ let isle = environment(n,e, fe, u, fu, s)
 
 for t = 1 to T do
   printfn "%A" isle
-  isle.allAction ()
+  isle.tick ()
 
