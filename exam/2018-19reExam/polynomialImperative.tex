@@ -1,0 +1,21 @@
+I denne opgave skal du arbejde med polynomier og det imperative programmeringsparadigmet i F\#.
+
+Betragt et $n$'te grads polynomium,
+\begin{equation}
+  \label{eq:1}
+  f(x) = a_0+a_1x+a_2x^2+\ldots+a_nx^n.
+\end{equation}
+Dette polynomium kan repræsenteres som en array af koefficienter. F.eks.\ kan polynomiet $1+3.2x-2x^3$ repræsenteres som følgende F\# array \lstinline{[|1.0; 3.2; 0.0; -2.0|]}.
+
+Løs følgende opgaver:
+\begin{itemize}
+\item Skriv en funktion med type \lstinline{mulByConst : c:float -> p:float [] -> float []}, som ganger polynomiet \lstinline{p} repræsenteret som en array med konstanten \lstinline{c} og returnerer resultatet som et nyt polynomium igen repræsenteret som en array. F.eks., skal \lstinline{mulByConst 3.0 [|1.0; 3.2; 0.0; -2.0|]} returnere \lstinline{[|3.0; 9.6; 0.0; -6.0|]}.
+\item Skriv en funktion med type \lstinline{mulByX : p:float [] -> float []}, som ganger polynomiet \lstinline{p} med \lstinline{x}. F.eks., skal \lstinline{mulByX [|1.0; 3.2; 0.0; -2.0|]} returnere \lstinline{[|0.0; 1.0; 3.2; 0.0; -2.0|]}.
+\item Skriv en funktion med type \lstinline{add : p:float [] -> q:float [] -> float []}, som adderer polynomierne \lstinline{p} og \lstinline{q} med hinanden uden rekursion men vha.\ en eller flere \lstinline{for}-løkker. F.eks., skal \lstinline{add [|1.0; 3.2; 0.0; -2.0|] [|2.0; 1.3|]} returnere \lstinline{[|3.0; 4.5; 0.0; -2.0|]}.
+\item Skriv en funktion med type \lstinline{mul : p:float [] -> q:float [] -> float []}, som ganger polynomierne \lstinline{p} og \lstinline{q} med hinanden vha.\ rekursion. F.eks., skal \lstinline{mul [|1.0; 3.2; 0.0; -2.0|] [|2.0 1.3|]} returnere \lstinline{[|2.0; 7.7; 4.16; -4; -2.6|]}. Løsningen skal gøre brug af ovenstående funktioner og gøre brug af følgende rekursion:
+  \begin{description}
+  \item[Base:] $0 q(x) = 0$,\\
+  \item[Rekursion:] $\left(a_0+a_1x+a_2x^2+\ldots+a_nx^n\right) q(x) = a_0q(x) + x\bigg(\left(a_1+a_2x+\ldots+a_nx^{n-1}\right)q(x)\bigg)$,
+  \end{description}
+  hvor $q(x)$ er et vilkårligt polynomium.
+\end{itemize}
