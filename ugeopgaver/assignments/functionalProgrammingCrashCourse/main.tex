@@ -1,0 +1,72 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\usepackage{import}
+\renewcommand*{\theenumi}{\arabic{subsection}.\arabic{enumi}}
+\renewcommand*{\theenumii}{\theenumi.\arabic{enumii}}
+
+\title{Getting Started}
+
+\author{Jon Sporring}
+
+\begin{document}
+\maketitle
+
+% \section{Lærervejledningn}
+% \input{teacher}
+\section{Introduktion}
+\input{introduction}
+\section{Opgave(r)}
+\subsection{Check installation, get accustomed to interactive and compile mode}
+\subimport*{../myFirstFSharp/}{introduction}
+\begin{enumerate}
+\item \subimport*{../myFirstFSharp/}{add}
+\item \subimport*{../myFirstFSharp/}{compile}
+\item \subimport*{../myFirstFSharp/}{typeError}
+\item \subimport*{../myFirstFSharp/}{uy}
+\item \subimport*{../myFirstFSharp/}{slicing}
+\item \subimport*{../myFirstFSharp/}{slicing2}
+\end{enumerate}
+\subsection{Get accustomed to F\# syntax and precedence}
+\subimport*{../bindings/}{introduction}
+\begin{enumerate}
+\item \subimport*{../bindings/}{printfn}
+\item \subimport*{../bindings/}{regular}
+\item \subimport*{../bindings/}{error}
+\item \subimport*{../bindings/}{function}
+\item \subimport*{../bindings/}{loops}
+\item \subimport*{../bindings/}{table}
+\end{enumerate}
+\subsection{Advanced exercise using modules}
+\subimport*{../vec/}{introduction}
+\begin{enumerate}
+\item \subimport*{../vec/}{vec2d}
+\item \subimport*{../vec/}{test}
+\item \subimport*{../vec/}{polygon}
+\item \subimport*{../vec/}{signature}
+\end{enumerate}
+\subsection{Recursion in F\#}
+\subimport*{../recursion/}{introduction}
+\begin{enumerate}
+\item \subimport*{../recursion/}{fac}
+\item \subimport*{../recursion/}{sum}
+\item \subimport*{../recursion/}{gcd}
+\item \subimport*{../recursion/}{fold}
+\end{enumerate}
+\subsection{Lists and patterns}
+\subimport*{../lister/}{introduction}
+\begin{enumerate}
+\item \subimport*{../lister/}{multiplicity}
+\item \subimport*{../lister/}{reverseApply}
+\item \subimport*{../lister/}{map}
+\item \subimport*{../lister/}{evens}
+\item \subimport*{../lister/}{listOfLists}
+\end{enumerate}
+\subsection{Individual hand-in assigment: Random Text}
+\subimport*{../randomText/}{introduction}
+\begin{enumerate}
+\item \subimport*{../randomText/}{randomText}
+\end{enumerate}
+
+\end{document}
+
