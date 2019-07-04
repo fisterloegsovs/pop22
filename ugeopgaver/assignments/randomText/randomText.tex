@@ -1,0 +1,41 @@
+character histograms of a HCAndersen text, character transition, and
+random text generation using a 1st order Markov model. It should be
+tested using a simple test set and with a complicated test set by
+recalculating the histograms and transitions for the generated text
+and comparing with the original.
+
+
+
+\begin{enumerate}
+\item Write a program, that reads an UTF-8 text from a file as a
+  string, and which has the following type:
+  \begin{quote}
+    \mbox{\lstinline!readText : filename:string -> string!}
+  \end{quote}
+\item Write a program that converts a string, such that all letters
+  are converted to lower case, and which removes all characters except
+  a\ldots z. Is should have the following type:
+  \begin{quote}
+    \mbox{\lstinline!convertText : src:string -> string!}
+  \end{quote}
+\item Write a program that counts occurences of each lower-case letter
+  of the English alphabet in a string and returns a list. The first
+  element of the list should be the count of 'a's, second the count of
+  'b's etc. The function must have the type:
+  \begin{quote}
+    \mbox{\lstinline!histogram : src:string -> character list!}
+  \end{quote}
+\item Write a program that counts occurences of each pairs of lower-case letter
+  of the English alphabet in a string and returns a list of lists. The first
+  list should be the count of 'a' followed by 'a's, 'b's, etc., second
+  list should be the count of 'b' followed by 'a's, 'b's, etc. etc.
+  \begin{quote}
+    \mbox{\lstinline!cooccurence : src:string -> character list list!}
+  \end{quote}
+\end{enumerate}
+Der skal også laves:
+\begin{itemize}
+\item En rapport (maks 2 sider)
+\item Unit-tests
+\item Implementation skal kommenteres jævnfør kommentarstandarden for F\#
+\end{itemize}
