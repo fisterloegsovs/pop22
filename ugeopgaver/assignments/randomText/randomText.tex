@@ -1,41 +1,67 @@
-character histograms of a HCAndersen text, character transition, and
-random text generation using a 1st order Markov model. It should be
-tested using a simple test set and with a complicated test set by
-recalculating the histograms and transitions for the generated text
-and comparing with the original.
-
-
-
 \begin{enumerate}
-\item Write a program, that reads an UTF-8 text from a file as a
-  string, and which has the following type:
+\item The script \lstinline[language=console]{readFile.fsx} reads the
+  content of the text file
+  \lstinline[language=console]{readFile.fsx}. Convert this script into
+  a function which reads the content of any text file and has the
+  following type:
   \begin{quote}
     \mbox{\lstinline!readText : filename:string -> string!}
   \end{quote}
 \item Write a program that converts a string, such that all letters
-  are converted to lower case, and which removes all characters except
-  a\ldots z. Is should have the following type:
+  are converted to lower case, and removes all characters except
+  a\ldots z. It should have the following type:
   \begin{quote}
     \mbox{\lstinline!convertText : src:string -> string!}
   \end{quote}
-\item Write a program that counts occurences of each lower-case letter
+\item Write a program that counts occurrences of each lower-case letter
   of the English alphabet in a string and returns a list. The first
   element of the list should be the count of 'a's, second the count of
   'b's etc. The function must have the type:
   \begin{quote}
-    \mbox{\lstinline!histogram : src:string -> character list!}
+    \mbox{\lstinline!histogram : src:string -> int list!}
   \end{quote}
-\item Write a program that counts occurences of each pairs of lower-case letter
-  of the English alphabet in a string and returns a list of lists. The first
-  list should be the count of 'a' followed by 'a's, 'b's, etc., second
-  list should be the count of 'b' followed by 'a's, 'b's, etc. etc.
+\item The script \lstinline[language=console]{sampleAssignment.fsx}
+  contains the function
   \begin{quote}
-    \mbox{\lstinline!cooccurence : src:string -> character list list!}
+    \mbox{\lstinline!randomString : hist:int list -> len:int -> string!}
   \end{quote}
+  which generates a string of a given length, and contains
+  random characters distributed according to a given histogram. Modify
+  the code to use your histogram function. Further, write a program,
+  which reads the text
+  \lstinline[language=console]{littleClausAndBigClaus.txt} using
+  \lstinline{readText}, converts it using \lstinline{convertText}, and
+  calculates its histogram and generates a new random string using
+  \lstinline{histogram} and \lstinline{randomString}.  Test the
+  quality of your code by comparing the histograms of the two texts.
+\item Write a program that counts occurrences of each pairs of
+  lower-case letter of the English alphabet in a string and returns a
+  list of lists (a table). The first list should be the count of 'a'
+  followed by 'a's, 'b's, etc., second list should be the count of 'b'
+  followed by 'a's, 'b's, etc. etc.
+  \begin{quote}
+    \mbox{\lstinline!cooccurrence : src:string -> int list list!}
+  \end{quote}
+\item Write a program that generates a random string of length
+  \lstinline!len!, whose character pairs are distributed according to
+  a user specified cooccurrence histogram \lstinline!cooc!.  The
+  function must have the type:
+  \begin{quote}
+    \mbox{\lstinline!fstOrderMarkovModel : cooc:int list list -> len:int -> string!}
+  \end{quote}
+  Test your function by generating a random string, whose character
+  pairs are distributed as the converted characters in H.C.\
+  Andersen's fairy tale, ``Little Claus and Big Claus'', calculate the
+  cooccurrence histogram for the random string, and compare this with
+  the original cooccurrence histogram.
 \end{enumerate}
-Der skal også laves:
+You must also write a short report, which 
 \begin{itemize}
-\item En rapport (maks 2 sider)
-\item Unit-tests
-\item Implementation skal kommenteres jævnfør kommentarstandarden for F\#
+\item is no larger than 5 pages;
+\item contains a brief discussion on how your implementation works,
+  and if there are any possible alternative implementations, and in
+  case, why you chose the one, you did;
+\item includes output that demonstrates that your program works as intented.
 \end{itemize}
+The report is to be handed in as a pdf document together with the
+single F\# source code as an fsx file.
