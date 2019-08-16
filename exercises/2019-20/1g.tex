@@ -2,22 +2,63 @@
 
 \input{setup}
 
+\newcounter{exerciseNumber}
+\setcounter{exerciseNumber}{1}
+\newcommand{\typeLetter}{g}
+\newcommand{\period}{3.\ september - 9.\ september}
+\newcommand{\deadline}{søndag d.\ 9.\ september kl. 22:00}
+
+\newcommand{\typeName}{
+  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
+}
+\newcommand{\typeCommand}{
+  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
+}
 \title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel 1 - gruppeopgave}
+  Københavns Universitet\\Arbejdsseddel \theexerciseNumber - \typeName}
 \author{Jon Sporring}
-\date{4.\ september - 10.\ september.\\Afleveringsfrist: onsdag d.\ 12.\ september kl. 22:00}
+\date{\period.\\Afleveringsfrist: \deadline.}
 
 \begin{document}
 \maketitle
+Velkommen til kurset ``Programmering og Problemløsning''.
 
-I denne periode skal I arbejde i grupper, og regler for gruppearbejde er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at:
+Dette er kursets første \emph{arbejdsseddel}. Arbejdssedler indeholder information om opgaver samt diverse praktisk information og perspektivering af pensum. Vi har 16 undervisningsuger, og de fleste sedler vil gælde 1 uge.
+
+Arbejdssedlerne vil beskrive pensum, som gennemgåes til forelæsningerne, øvelsesopgaver, som der vil blive arbejdet med under øvelserne, og afleveringsopgaver, som der også bliver tid til at kigge på til øvelserne. Pensum angives under "`Forelæsnings- og læseplan"' på Absalon og evt.\ tilhørende materiale finder i under Absalonpunktet "`Noter, links, software m.m."'. Ca.\ halvdelen af afleveringsopgaverne bliver individuelle opgaver, alle andre opgaver løses i grupper.
+
+\typeCommand
+Regler for gruppe- og individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
+
+  Formålet er at:
 \begin{itemize}
+\item imperativ programmering gennem Scratch
+\item kommandoterminalen og filstrukturer
+\item en teksteditor
+\item rapportskrivning i LaTeX
 \item lave et spil
 \item lave den første Absalon aflevering
 \end{itemize}
 
-Denne seddels opgaver er alle afleveringsopgaver og er specificeret nedenfor. Husk at processen og resultatet skal dokumenteres til sidst, så det er en god ide at tage udførlige noter undervejs. Opgaven lyder:
-\begin{enumerate}[label=1g.\arabic*,start=0]
+Opgaverne er delt i øve- og afleveringsopgaver.
+\section*{Øveopgaver}
+\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
+\item Install\'{e}r Scratch, Emacs og LaTeX
+\item Start Scratch, og lav et lille program, som flytter katten (eller en anden sprite) rundt på skærmen vha.\ glide-blokken og gentagelse.
+\item Tag et eller flere skærmbilleder af jeres program, mens det kører.
+\item Skriv en kort rapport i Emacs og LaTeX og oversæt det til pdf via kommandoterminalen. Rapporten skal som minimum indeholde:
+  \begin{itemize}
+  \item En titel ved brug af \verb|\maketitle|, 
+  \item en section vha.\ \verb|\section|,
+  \item en eller flere figurer med skærmbillederne fra jeres Scratch program med \verb|\begin{figure}|--\verb|\end{figure}|,
+  \item en henvisning til figuren ved brug af \verb|\label|--\verb|\ref| strukturen.
+  \item de danske bogstaver æ, ø, og å.
+  \end{itemize}
+\end{enumerate}
+
+\section*{Afleveringsopgaver}
+Husk at processen og resultatet skal dokumenteres til sidst, så det er en god ide at tage udførlige noter undervejs. Opgaven lyder:
+\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
 \item \label{1g1} Hvad kan I lave med 10 blokke?\\
   I Figur~\ref{fig:blokke} ser I 10 Scratch blokke.
   \begin{figure}
