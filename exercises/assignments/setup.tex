@@ -471,6 +471,42 @@
 \newcommand{\spec}[1]{\footnote{Spec: \textbf{#1}}}
 \renewcommand{\spec}[1]{}
 
+\usepackage{import}
+
+\newcounter{exerciseNumber}
+
+\newcommand{\handinTextOne}{Afleveringen skal bestå af
+\begin{itemize}\item upload af de uviklede programmer i klassens studio
+på Scratch' hjemmeside, \item en zip-fil og \item en rapport i
+pdf-format.\end{itemize} Rapporten skal dokumentere jeres process og
+beskrive jeres programmer. Den skal skrives i LaTeX med et passende
+antal billeder, illustrationer og henvise til jeres
+programmer. LaTeX koden (\texttt{.tex}) inklusiv billeder skal
+organiseres i en mappe kaldet \texttt{tex}, således at pdf-filen kan
+laves ved kørsel af \texttt{pdflatex} kommandoen i mappen. Mappen skal
+zippes (\texttt{.zip}) og afleveres sammen med den oversatte pdf fil
+(\texttt{.pdf}) som 2 filer i Absalon.}
+
+\newcommand{\handinTextTwo}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil og \item en rapport i
+pdf-format.\end{itemize} Zip-filen skal indeholde mapperne
+\texttt{tex} og \texttt{src} og filen \texttt{README.txt}. Mapperne skal
+indeholde henholdsvis LaTeX koden m.m.\ og fsharp koden. Der skal være
+en fsharp tekstfil per fsharp-opgave, og de skal navngives \texttt{#1}
+osv. Rapporten skal kunne oversættes vha.\ \texttt{pdflatex}
+kommandoen i \texttt{tex}-mappen, og fsharp koden skal kunne
+oversættes med fsharpc og køres med mono i \texttt{src} mappen. Filen
+\texttt{README.txt} skal ganske kort beskrive, hvordan rapporten
+oversættes til pdf og koden køres.}
+
+\newcommand{\handinTextThree}[1]{Afleveringen skal bestå af en
+zip-fil, som skal indeholde en mappe med fsharp koden. Der skal være
+en fsharp tekstfil per fsharp-opgave, og de skal navngives \texttt{#1}
+osv. De skal kunne oversættes med fsharpc og køres med
+mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og
+udover selve programteksten skal besvarelserne indtastes som
+kommentarer i de fsx-filer, de hører til.}
+
 %%% Local Variables:
 %%% TeX-master: "fsharpNotes"
 %%% End:
