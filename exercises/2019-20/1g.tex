@@ -2,11 +2,10 @@
 
 \input{setup}
 
-\newcounter{exerciseNumber}
 \setcounter{exerciseNumber}{1}
 \newcommand{\typeLetter}{g}
-\newcommand{\period}{3.\ september - 9.\ september}
-\newcommand{\deadline}{søndag d.\ 9.\ september kl. 22:00}
+\newcommand{\period}{2.\ september - 8.\ september}
+\newcommand{\deadline}{søndag d.\ 8.\ september kl. 22:00}
 
 \newcommand{\typeName}{
   \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
@@ -14,8 +13,9 @@
 \newcommand{\typeCommand}{
   \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
 }
+
 \title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber - \typeName}
+  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
 \author{Jon Sporring}
 \date{\period.\\Afleveringsfrist: \deadline.}
 
@@ -27,68 +27,41 @@ Dette er kursets første \emph{arbejdsseddel}. Arbejdssedler indeholder informat
 
 Arbejdssedlerne vil beskrive pensum, som gennemgåes til forelæsningerne, øvelsesopgaver, som der vil blive arbejdet med under øvelserne, og afleveringsopgaver, som der også bliver tid til at kigge på til øvelserne. Pensum angives under "`Forelæsnings- og læseplan"' på Absalon og evt.\ tilhørende materiale finder i under Absalonpunktet "`Noter, links, software m.m."'. Ca.\ halvdelen af afleveringsopgaverne bliver individuelle opgaver, alle andre opgaver løses i grupper.
 
-\typeCommand
-Regler for gruppe- og individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
-
-  Formålet er at:
+Formålet med arbejdet beskrevet i denne arbejdsseddel er at:
 \begin{itemize}
-\item imperativ programmering gennem Scratch
-\item kommandoterminalen og filstrukturer
-\item en teksteditor
-\item rapportskrivning i LaTeX
+\item stifte bekendtskab imperativ programmering gennem Scratch
+\item stifte bekendtskab med kommandoterminalen og filstrukturer
+\item stifte bekendtskab med en teksteditor
 \item lave et spil
+\item lave en rapport i LaTeX
 \item lave den første Absalon aflevering
 \end{itemize}
 
-Opgaverne er delt i øve- og afleveringsopgaver.
+Opgaverne er delt i øve- og afleveringsopgaver.%
+%
+\typeCommand%
+%
+For øveopgaverne må I arbejde, som I har lyst, og for gruppeopgaverne
+skal I arbejde i jeres grupper. Regler for gruppe- og individuelle
+afleveringsopgaver er beskrevet i "`Noter, links, software
+m.m."'$\rightarrow$"`Generel information om opgaver"'.
+
 \section*{Øveopgaver}
 \begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item Install\'{e}r Scratch, Emacs og LaTeX
-\item Start Scratch, og lav et lille program, som flytter katten (eller en anden sprite) rundt på skærmen vha.\ glide-blokken og gentagelse.
-\item Tag et eller flere skærmbilleder af jeres program, mens det kører.
-\item Skriv en kort rapport i Emacs og LaTeX og oversæt det til pdf via kommandoterminalen. Rapporten skal som minimum indeholde:
-  \begin{itemize}
-  \item En titel ved brug af \verb|\maketitle|, 
-  \item en section vha.\ \verb|\section|,
-  \item en eller flere figurer med skærmbillederne fra jeres Scratch program med \verb|\begin{figure}|--\verb|\end{figure}|,
-  \item en henvisning til figuren ved brug af \verb|\label|--\verb|\ref| strukturen.
-  \item de danske bogstaver æ, ø, og å.
-  \end{itemize}
+\item \subimport*{../assignments/gettingStarted/}{install}
+\item \subimport*{../assignments/gettingStarted/}{helloWorld}
+\item \subimport*{../assignments/gettingStarted/}{screenShots}
+\item \subimport*{../assignments/gettingStarted/}{report}
 \end{enumerate}
 
 \section*{Afleveringsopgaver}
 Husk at processen og resultatet skal dokumenteres til sidst, så det er en god ide at tage udførlige noter undervejs. Opgaven lyder:
 \begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \label{1g1} Hvad kan I lave med 10 blokke?\\
-  I Figur~\ref{fig:blokke} ser I 10 Scratch blokke.
-  \begin{figure}
-    \centering
-    \includegraphics[height=0.04\paperheight]{glide.png}
-    \includegraphics[height=0.04\paperheight]{go.png}
-    \includegraphics[height=0.04\paperheight]{hide.png}
-    \includegraphics[height=0.04\paperheight]{playSound.png}
-    \includegraphics[height=0.08\paperheight]{repeat.png}
-    \includegraphics[height=0.045\paperheight]{say.png}
-    \includegraphics[height=0.04\paperheight]{setSize.png}
-    \includegraphics[height=0.04\paperheight]{show.png}
-    \includegraphics[height=0.04\paperheight]{wait.png}
-    \includegraphics[height=0.055\paperheight]{when.png}
-    \caption{10 Scratch-blokke}
-    \label{fig:blokke}
-  \end{figure}
-  Jeres opgave er at lave et sjovt program kun ved brug af disse blokke. Hver blok må bruges 0, 1 eller flere gange. Prøv at sammensætte programmet ved at tegne blokkene på papir, og skriv ned, hvad I tror programmet vil gøre. Sæt jer dernæst til computeren, og indtast jeres program. Beskriv, i hvor høj grad programmet gør, som I forventede. Vend dernæst tilbage til designfasen og forbedre evt.\ programmet. Til slut uploades programmet til gruppens rum i Scratch.
-\item \label{1g2} Design et spil\\
-  I skal designe og implementere et spil efter eget valg. Spillet skal
-  \begin{itemize}
-  \item indeholde 2-5 sprites 
-  \item vare ca.\ 1 minut at spille 
-  \item benytte mindst 1 variabel
-  \end{itemize}
-  Det må benytte alle tilgængelige blokke i Scratch og må gerne tage udgangspunkt i Opgave~\ref{1g1} og minde om et spil I kender. Det er ikke vigtigt, at det er et grafisk eller lydmæssigt prangende spil.
-
-  Start med at tale om hvad I kunne tænke jer, spillet skal omhandle. Skitser på papir, hvordan game-playet, skal forløbe. Skitser derefter på papir hvordan det kunne implementeres i Scratch. Indtast programmet på computeren og afprøv, om spillet gør, som I forventer. Vend evt.\ tilbage til designfasen og forbedre spillet.
+\item \subimport*{../assignments/scratch/}{10Blocks}
+\item \subimport*{../assignments/scratch/}{game}
 \end{enumerate}
-Programmerne udviklet i Opgave~\ref{1g1} og~\ref{1g2} skal afleveres ved at dele dem i klassens studio på Scratch' hjemmeside. Processen og programmerne dokumenteres ved at skrive en rapport i LaTeX med et passende antal billeder, illustrationer og henvisning til jeres programmer. LaTeX koden (.tex) inklusiv billeder skal organiseres i en mappe, således at pdf-filen kan laves ved kørsel af \verb|pdflatex| kommandoen i mappen. Mappen skal zippes (.zip) og afleveres sammen med den oversatte pdf fil (.pdf) som 2 filer i Absalon.
+
+\handinTextOne
 
 \flushright God fornøjelse.
 \end{document}
