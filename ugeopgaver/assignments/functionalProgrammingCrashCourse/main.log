@@ -1,10 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.6.28)  7 JUL 2019 10:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.6.28)  12 JUL 2019 09:11
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**\input main.tex
-(./main.tex (/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
+**main
+(./main.tex
+LaTeX2e <2018-12-01>
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
@@ -1566,7 +1567,7 @@ Here is how much of TeX's memory you used:
  33863 multiletter control sequences out of 15000+600000
  70616 words of font info for 129 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,10n,80p,968b,1788s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,10n,80p,957b,1788s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{
 /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texl
@@ -1582,7 +1583,7 @@ nts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/u
 rw/times/utmb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on main.pdf (7 pages, 581838 bytes).
+Output written on main.pdf (7 pages, 581843 bytes).
 PDF statistics:
  241 PDF objects out of 1000 (max. 8388607)
  210 compressed objects within 3 object streams
