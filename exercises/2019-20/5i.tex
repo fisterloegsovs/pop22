@@ -2,63 +2,25 @@
 
 \input{setup}
 
-\setcounter{exerciseNumber}{5}
-\newcommand{\typeLetter}{i}
-\newcommand{\period}{30.\ september - 6.\ oktober}
-\newcommand{\deadline}{søndag d.\ 6.\ oktober kl. 22:00}
+\newcommand{\exerciseNumber}{5}
+\newrobustcmd{\typeLetter}{i}
 
-\newcommand{\typeName}{
-  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
-}
-\newcommand{\typeCommand}{
-  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
-}
-
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
-\author{Jon Sporring}
-\date{\period.\\Afleveringsfrist: \deadline.}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{30.\ september - 6.\ oktober}{søndag d.\ 6.\ oktober kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde med:
-\begin{itemize}
-%\item strenge
-\item lister
-\item arrays
-\end{itemize}
+\learningPurposeTxt{{lister,},{arrays.}}
 
-Opgaverne er delt i øve- og afleveringsopgaver.%
-%
-\typeCommand%
-%
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item \subimport*{../assignments/lister/}{oneToN}
-\item \subimport*{../assignments/lister/}{multiplicity}
-\item \subimport*{../assignments/lister/}{split}
-\item \subimport*{../assignments/lister/}{reverseApply}
-\item \subimport*{../assignments/lister/}{typer}
-\item \subimport*{../assignments/lister/}{evens}
-\item \subimport*{../assignments/lister/}{map}
-\item \subimport*{../assignments/lister/}{filter}
-\item \subimport*{../assignments/lister/}{set}
-\item \subimport*{../assignments/lister/}{array}
-\item \subimport*{../assignments/lister/}{reverseArray}
-\item \subimport*{../assignments/lister/}{reverseArrayD}
-\item \subimport*{../assignments/lister/}{array2d}
-\end{enumerate}
+\trainingExercises{\exerciseNumber  ø}{../assignments/lister/}{}{oneToN,multiplicity,split,reverseApply,typer,evens,map,filter,set,array,reverseArray,reverseArrayD,array2d}
 
-\section*{Afleveringsopgaver}
-\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \subimport*{../assignments/lister/}{tabel}
-\item \subimport*{../assignments/lister/}{listOfLists}
-\item \subimport*{../assignments/lister/}{gennemsnit}
-\end{enumerate}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/lister/}{introduction}{tabel,listOfLists,gennemsnit}
 
-\handinTextTwo{\theexerciseNumber\typeLetter 0.fsx}
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
+
+\flushright God fornøjelse.
 
 \end{document}
 

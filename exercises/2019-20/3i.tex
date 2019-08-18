@@ -2,57 +2,28 @@
 
 \input{setup}
 
-\setcounter{exerciseNumber}{3}
+\newcommand{\exerciseNumber}{3}
 \newcommand{\typeLetter}{i}
-\newcommand{\period}{16.\ september - 22.\ september}
-\newcommand{\deadline}{søndag d.\ 22.\ september kl. 22:00}
 
-\newcommand{\typeName}{
-  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
-}
-\newcommand{\typeCommand}{
-  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
-}
-
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
-\author{Jon Sporring}
-\date{\period.\\Afleveringsfrist: \deadline.}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{16.\ september - 22.\ september}{søndag d.\ 22.\ september kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde med:
-\begin{itemize}
-\item bindinger af værdier og funktioner
-\item mut\'{e}rbare variable
-\item kodedokumentation
-\item betingelser og løkker
-\end{itemize}
+\learningPurposeTxt{
+  {bindinger af værdier og funktioner,},
+  {mut\'{e}rbare variable,},
+  {kodedokumentation,},
+  {betingelser og løkker.}
+}
 
-Opgaverne er delt i øve- og afleveringsopgaver.%
-%
-\typeCommand%
-%
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item \subimport*{../assignments/bindings/}{printfn}
-\item \subimport*{../assignments/bindings/}{regular}
-\item \subimport*{../assignments/bindings/}{error}
-\item \subimport*{../assignments/bindings/}{function}
-\item \subimport*{../assignments/bindings/}{loops}
-\item \subimport*{../assignments/bindings/}{table}
-\item \subimport*{../assignments/bindings/}{fac}
-\end{enumerate}
+\trainingExercises{\exerciseNumber ø}{../assignments/bindings/}{}{printfn,regular,error,function,loops,table,fac}
 
-\section*{Afleveringsopgaver}
-\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \subimport*{../assignments/bindings/}{sum}
-\item \subimport*{../assignments/bindings/}{mulTable}
-\end{enumerate}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/bindings/}{}{sum, mulTable}
 
-\handinTextTwo{\theexerciseNumber\typeLetter 0.fsx}
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
 
 \flushright God fornøjelse.
 \end{document}

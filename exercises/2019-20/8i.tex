@@ -1,79 +1,29 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
-%\usepackage{graphpap}
-%\usepackage{color}
-%\usepackage{hyperref}
-%\usepackage[all]{hypcap}
-%\usepackage{enumerate}
-%\usepackage{tikz}
-\usetikzlibrary{patterns}
 
-\newcommand{\id}[1]{\ensuremath{\emph{#1}}}
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel 8 - individuel opgave}
-\author{Martin Elsman \& Jon Sporring}
-\date{21.\ november -- 28.\ november.\\Afleveringsfrist: onsdag d.\ 28.\ november kl. 22:00}
+\newcommand{\exerciseNumber}{8}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{18.\ november - 24.\ november}{søndag d.\ 24.\ november kl. 22:00}
 
 \begin{document}
 \maketitle
 
-\noindent
-I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i ``Noter, links, software m.m.'' $\rightarrow$ ''Generel information om opgaver''. Formålet er at arbejde med:
-\begin{itemize}
-%\item strenge
-\item højereordens funktioner
-\item fejl og undtagelser
-\end{itemize}
+\learningPurposeTxt{{højereordens funktioner,},{fejl og undtagelser.}}
 
-Opgaverne er delt i øve- og afleveringsopgaver.
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\input{../assignments/polynomials/introduction}
-\begin{enumerate}[label=8ø.\arabic*,start=0]
-\item \input{../assignments/polynomials/poly}
-\item \input{../assignments/polynomials/line}
-\item \input{../assignments/polynomials/theLine}
-\item \input{../assignments/polynomials/LineA0}
-\end{enumerate}
+\trainingExercises{\exerciseNumber  ø}{../assignments/polynomials/}{introduction}{poly, line, theLine, LineA0}
 
-\begin{center}
-\rule{0.5\linewidth}{0.4pt}
-\end{center}
+\continueExercises{\exerciseNumber  ø}{../assignments/integration/}{}{integrate, analysis}
 
-\input{../assignments/integration/introduction}
-\begin{enumerate}[label=8ø.\arabic*,start=4]
-\item \input{../assignments/integration/integrate}
-\item \input{../assignments/integration/analysis}
-\end{enumerate}
+\continueExercises{\exerciseNumber  ø}{../assignments/exceptions/}{}{exception,fac,fac2,facOption,logIntOption,logFac,optionBind}
 
-\begin{center}
-\rule{0.5\linewidth}{0.4pt}
-\end{center}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/treeStructure/}{introduction}{figTest,makePicture,makePicture2,checkFigure,move,boundingBox}
 
-\input{../assignments/exceptions/introduction}
-\begin{enumerate}[label=8ø.\arabic*,start=6]
-\item \input{../assignments/exceptions/exception}
-\item \input{../assignments/exceptions/fac}
-\item \input{../assignments/exceptions/fac2}
-\item \input{../assignments/exceptions/facOption}
-\item \input{../assignments/exceptions/logIntOption}
-\item \input{../assignments/exceptions/logFac}
-\item \input{../assignments/exceptions/optionBind}
-\end{enumerate}
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
 
-\section*{Afleveringsopgaver}
-\input{../assignments/treeStructure/introduction}
-\begin{enumerate}[label=8i.\arabic*,start=0]
-\item \input{../assignments/treeStructure/figTest}
-\item \input{../assignments/treeStructure/makePicture}
-\item \input{../assignments/treeStructure/makePicture2}
-\item \input{../assignments/treeStructure/checkFigure}
-\item \input{../assignments/treeStructure/move}
-\item \input{../assignments/treeStructure/boundingBox}
-\end{enumerate}
-
-
-Afleveringsopgaven skal afleveres som et antal \texttt{fsx} tekstfiler navngivet efter opgaven, som f.eks. \lstinline!8i0.fsx!. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de \texttt{fsx}-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+\flushright God fornøjelse.
 
 \end{document}

@@ -2,56 +2,27 @@
 
 \input{setup}
 
-\setcounter{exerciseNumber}{4}
-\newcommand{\typeLetter}{g}
-\newcommand{\period}{23.\ september - 29.\ september}
-\newcommand{\deadline}{søndag d.\ 29.\ september kl. 22:00}
+\newcommand{\exerciseNumber}{4}
+\newrobustcmd{\typeLetter}{g}
 
-\newcommand{\typeName}{
-  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
-}
-\newcommand{\typeCommand}{
-  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
-}
-
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
-\author{Jon Sporring}
-\date{\period.\\Afleveringsfrist: \deadline.}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{23.\ september - 29.\ september}{søndag d.\ 29.\ september kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde med:
-\begin{itemize}
-\item Moduler og namespaces
-\item Afprøvning
-\end{itemize}
+\learningPurposeTxt{
+  {Moduler og namespaces,},
+  {Afprøvning.}
+}
 
-Opgaverne er delt i øve- og afleveringsopgaver.%
-%
-\typeCommand%
-%
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\subimport*{../assignments/rgb/}{introduction}
-\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item \subimport*{../assignments/rgb/}{module}
-\item \subimport*{../assignments/rgb/}{implementation}
-\item \subimport*{../assignments/rgb/}{application}
-\item \subimport*{../assignments/rgb/}{whitebox}
-\item \subimport*{../assignments/rgb/}{extension}
-\end{enumerate}
+\trainingExercises{\exerciseNumber  ø}{../assignments/modules/}{introduction}{signature,implementation,application,whitebox,extension}
 
-\section*{Afleveringsopgaver}
-\subimport*{../assignments/vec/}{introduction}
-\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \subimport*{../assignments/vec/}{vec2d}
-\item \subimport*{../assignments/vec/}{test}
-\item \subimport*{../assignments/vec/}{polygon}
-\item \subimport*{../assignments/vec/}{signature}
-\end{enumerate}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/vec/}{introduction}{vec2d,test,polygon,signature}
 
-\handinTextTwo{\theexerciseNumber\typeLetter 0.fsx}
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
+
+\flushright God fornøjelse.
 
 \end{document}

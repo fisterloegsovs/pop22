@@ -1,49 +1,29 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
-\newcommand{\chess}{Simple Chess}
 
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Uge(r)seddel 11 - group opgave}
-\author{Jon Sporring and Christina Lioma}
-\date{2.\ januar -- 9.\ januar.\\Afleveringsfrist: onsdag d. 9. januar kl. 22:00}
+\newcommand{\exerciseNumber}{11}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{9.\ december - 22.\ december}{søndag d.\ 22.\ december kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde i grupper. 
-%Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. 
-Formålet er at arbejde med:
-\begin{itemize}
-\item Inheritance
-\item UML diagrams
-\end{itemize}
+\learningPurposeTxt{UML diagrams, Inheritance}
 
-Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgave(r)}
-\begin{enumerate}[label=11ø.\arabic*,start=0]
-\item \input{../assignments/uml/customer}
-\item \input{../assignments/uml/employee}
-\item \input{../assignments/uml/mammals}
-\end{enumerate}
+\trainingExercises{\exerciseNumber ø}{../assignments/inheritance/}{}{customer, employee, mammals}
 
-\section*{Afleveringsopgave(r)}
-\input{../assignments/chess/introduction}
-\begin{enumerate}[label=11g.\arabic*,start=0]
-\item \input{../assignments/chess/kingFlaw}
-\item \input{../assignments/chess/nextMoveVar}
-\item \input{../assignments/chess/run}
-\item \input{../assignments/chess/extendedUML}
-\end{enumerate}
+\continueExercises{\exerciseNumber ø}{../assignments/uml/}{}{customer, employee, mammals}
 
-Afleveringen skal bestå af en zip-fil og en pdf-fil. Zip-filen skal
-indeholde en mappe med fsharp koden. Koden skal kunne oversættes med
-fsharpc og køres med mono. I skal tilføje en README.txt fil, hvor I
-beskriver, hvordan man oversætter og kører programmet. Pdf-filen skal
-indeholde jeres LaTeX rapport oversat til pdf.
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/wolvesNMoose/}{introduction}{wolvesNMoose}
+
+\handinTextThree{\exerciseNumber\typeLetter 0.fsx}
 
 \flushright God fornøjelse.
+
 \end{document}
 
 %%% Local Variables:

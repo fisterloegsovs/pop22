@@ -2,219 +2,127 @@
 
 \input{setup}
 
-%\usepackage{cmap}
-%\usepackage[utf8x]{inputenc}
-%\usepackage{latexsym}
-%\usepackage[danish]{babel}
-%\usepackage{graphicx}
-\usepackage{graphpap}
-%\usepackage{color}
-%\usepackage{hyperref}
-%\usepackage[all]{hypcap}
-%\usepackage{enumerate}
-\usepackage{tikz}
-\usetikzlibrary{patterns}
+\newcommand{\exerciseNumber}{7}
+\newrobustcmd{\typeLetter}{g}
 
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel 7 --- gruppeopgave}
-
-\author{Jon Sporring}
-\date{24.\ oktober -- 21.\ november.\\Afleveringsfrist: onsdag d.\ 21.\ november kl. 22:00}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{21.\ oktober - 10.\ november}{søndag d.\ 10.\ november kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde i grupper.  Formålet er at arbejde med
-sumtyper og endelige træer. Opgaverne er delt i øve- og
-afleveringsopgaver.
-\noindent
-I denne periode skal I arbejde i grupper. Formålet er at arbejde med:
-\begin{itemize}
-%\item strenge
-\item rekursion
-\item pattern matching
-\item sumtyper
-\item endelige træer
-\end{itemize}
+\learningPurposeTxt{{rekursion,},{pattern matching,},{sumtyper,},{endelige træer.}}
 
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
+\trainingExercises{\exerciseNumber  ø}{../assignments/sort/}{}{isort, bsort, blackBoxTestIsortBsort, msort, blackBoxTestMsort}
 
-\begin{enumerate}[label=7ø.\arabic*,start=0]
-\item Omskriv funktionen \lstinline{insert}, som benyttes i forbindelse
-  med funktionen \lstinline{isort} (insertion sort) fra forelæsningen,
-  således at den benytter sig af pattern matching på lister.
-\item Omskriv funktionen \texttt{bsort} (bubble sort) fra
-  forelæsningen således at den benytter sig af pattern matching på
-  lister. Funktionen kan passende benytte sig af ``nested pattern
-  matching'' i den forstand at den kan implementeres med et match case
-  der udtrækker de to første elementer af listen samt halen efter
-  disse to elementer.
-\item Opskriv black-box tests for de to sorteringsfunktioner og vær
-  sikker på at grænsetilfældene dækkes (ingen elementer, et element,
-  to elementer, samt flere elementer, sorteret, omvendt sorteret, etc.)
-\item\label{sierpinski.ov} Ved at benytte biblioteket \texttt{ImgUtil}, som beskrevet i
-  forelæsningen, er det muligt at tegne simpel liniegrafik samt
-  fraktaler, som f.eks.\ Sierpinski-fraktalen, der kan tegnes ved at
-  tegne små firkanter bestemt af et rekursivt mønster. Koden for
-  Sierpinski-trekanten er givet som følger:
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-open ImgUtil
+\continueExercises{\exerciseNumber  ø}{../assignments/weekday/}{}{daytonumber, nextday, numberToDay}
 
-let rec triangle bmp len (x,y) =
-  if len < 25 then setBox blue (x,y) (x+len,y+len) bmp
-  else let half = len / 2
-       do triangle bmp half (x+half/2,y)
-       do triangle bmp half (x,y+half)
-       do triangle bmp half (x+half,y+half)
+\continueExercises{\exerciseNumber  ø}{../assignments/imgutil/}{}{sierpinski, keys, xFractal}
 
-do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ignore)
-\end{lstlisting}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/awari/}{introduction}{awari}
 
-Tilpas funktionen således at trekanten tegnes med røde streger samt
-således at den kun tegnes ned til dybde 2 (hint: du skal ændre betingelsen \lstinline{len < 25}).
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
 
-\item\label{sierpinskikeys.ov} I stedet for at benytte
-  \lstinline{ImgUtil.runSimpleApp} funktionen skal du nu benytte
-  \lstinline{ImgUtil.runApp}, som giver mulighed for at din løsning
-  kan styres ved brug af tastaturet. Funktionen \lstinline{ImgUtil}
-  har følgende type:
-\begin{footnotesize}
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-val runApp : string -> int -> int
-          -> (int -> int -> 's -> System.Drawing.Bitmap)
-          -> ('s -> System.Windows.Forms.KeyEventArgs
-                 -> 's option)
-          -> 's -> unit
-\end{lstlisting}
-\end{footnotesize}
-De tre første argumenter til \lstinline{runApp} er vinduets titel (en
-streng) samt vinduets initielle vidde og højde. Funktionen
-\lstinline{runApp} er parametrisk over en brugerdefineret type af tilstande (\lstinline{'s}). Antag at funktionen kaldes som følger:
-\begin{footnotesize}
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-  runApp title width height draw react init
-\end{lstlisting}
-\end{footnotesize}
-Dette kald vil starte en GUI applikation med titlen \lstinline{title},
-vidden \lstinline{width} og højden \lstinline{height}. Funktionen
-\lstinline{draw}, som brugeren giver som 4.\@ argument kaldes initielt
-når applikationen starter og hver gang vinduets størrelse justeres
-eller ved at funktionen \lstinline{react} er blevet kaldt efter en
-tast er trykket på tastaturet. Funktionen \lstinline{draw} modtager
-også (udover værdier for den aktuelle vidde og højde) en værdi for den
-brugerdefinerede tilstand, som initielt er sat til værdien
-\lstinline{init}. Funktionen skal returnere et bitmap, som for
-eksempel kan konstrueres med funktionen \lstinline{ImgUtil.mk} og
-ændres med andre funktioner i \lstinline{ImgUtil}
-(f.eks. \lstinline{setPixel}).
+\flushright God fornøjelse.
 
-Funktionen \lstinline{react}, som brugeren giver som 5.\@ argument
-kaldes hver gang brugeren trykker på en tast. Funktionen tager som
-argument en værdi svarende til den nuværende tilstand for
-applikationen samt et argument der kan benyttes til at afgøre hvilken
-tast der blev trykket på.\footnote{Hvis \lstinline{e} har typen
-  \lstinline{System.Windows.Forms.KeyEventArgs} kan betingelsen
-  \lstinline{e.KeyCode = System.Windows.Forms.Keys.Up} benyttes til at
-  afgøre om det var tasten ``Up'' der blev trykket på.} Funktionen kan
-nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
-for denne.
+% \section*{Øveopgaver}
+% \begin{enumerate}[label=7ø.\arabic*,start=0]
+% \item\label{sierpinski.ov} Ved at benytte biblioteket \texttt{ImgUtil}, som beskrevet i
+%   forelæsningen, er det muligt at tegne simpel liniegrafik samt
+%   fraktaler, som f.eks.\ Sierpinski-fraktalen, der kan tegnes ved at
+%   tegne små firkanter bestemt af et rekursivt mønster. Koden for
+%   Sierpinski-trekanten er givet som følger:
+% \begin{lstlisting}[numbers=none,frame=none,mathescape]
+% open ImgUtil
 
-Tilpas applikationen således at dybden af
-fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
-\lstinline{System.Windows.Forms.Keys.Up} og
-\lstinline{System.Windows.Forms.Keys.Down}.
-\end{enumerate}
+% let rec triangle bmp len (x,y) =
+%   if len < 25 then setBox blue (x,y) (x+len,y+len) bmp
+%   else let half = len / 2
+%        do triangle bmp half (x+half/2,y)
+%        do triangle bmp half (x,y+half)
+%        do triangle bmp half (x+half,y+half)
 
-\newpage
-\begin{center}
-\rule{0.5\linewidth}{0.4pt}
-\end{center}
-I de næste to opgaver skal følgende sum-type benyttes til at
-repræsentere ugedage:
+% do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ignore)
+% \end{lstlisting}
 
-\begin{lstlisting}[numbers=none,frame=none,mathescape]
-type weekday = Monday | Tuesday | Wednesday | Thursday
-             | Friday | Saturday | Sunday
-\end{lstlisting}
+% Tilpas funktionen således at trekanten tegnes med røde streger samt
+% således at den kun tegnes ned til dybde 2 (hint: du skal ændre betingelsen \lstinline{len < 25}).
 
-\begin{enumerate}[label=7ø.\arabic*,start=5]
-\item Lav en funktion \texttt{dayToNumber : weekday -> int}, der givet
-  en ugedag returnerer et tal, hvor mandag skal give tallet 1, tirsdag
-  tallet 2 osv.
+% \item\label{sierpinskikeys.ov} I stedet for at benytte
+%   \lstinline{ImgUtil.runSimpleApp} funktionen skal du nu benytte
+%   \lstinline{ImgUtil.runApp}, som giver mulighed for at din løsning
+%   kan styres ved brug af tastaturet. Funktionen \lstinline{ImgUtil}
+%   har følgende type:
+% \begin{footnotesize}
+% \begin{lstlisting}[numbers=none,frame=none,mathescape]
+% val runApp : string -> int -> int
+%           -> (int -> int -> 's -> System.Drawing.Bitmap)
+%           -> ('s -> System.Windows.Forms.KeyEventArgs
+%                  -> 's option)
+%           -> 's -> unit
+% \end{lstlisting}
+% \end{footnotesize}
+% De tre første argumenter til \lstinline{runApp} er vinduets titel (en
+% streng) samt vinduets initielle vidde og højde. Funktionen
+% \lstinline{runApp} er parametrisk over en brugerdefineret type af tilstande (\lstinline{'s}). Antag at funktionen kaldes som følger:
+% \begin{footnotesize}
+% \begin{lstlisting}[numbers=none,frame=none,mathescape]
+%   runApp title width height draw react init
+% \end{lstlisting}
+% \end{footnotesize}
+% Dette kald vil starte en GUI applikation med titlen \lstinline{title},
+% vidden \lstinline{width} og højden \lstinline{height}. Funktionen
+% \lstinline{draw}, som brugeren giver som 4.\@ argument kaldes initielt
+% når applikationen starter og hver gang vinduets størrelse justeres
+% eller ved at funktionen \lstinline{react} er blevet kaldt efter en
+% tast er trykket på tastaturet. Funktionen \lstinline{draw} modtager
+% også (udover værdier for den aktuelle vidde og højde) en værdi for den
+% brugerdefinerede tilstand, som initielt er sat til værdien
+% \lstinline{init}. Funktionen skal returnere et bitmap, som for
+% eksempel kan konstrueres med funktionen \lstinline{ImgUtil.mk} og
+% ændres med andre funktioner i \lstinline{ImgUtil}
+% (f.eks. \lstinline{setPixel}).
 
-\item Lav en funktion \texttt{nextDay : weekday -> weekday}, der givet
-  en ugedag returnerer den næste dag, så mandag skal give tirsdag,
-  tirsdag skal give onsdag, osv, og søndag skal give mandag.
-\end{enumerate}
+% Funktionen \lstinline{react}, som brugeren giver som 5.\@ argument
+% kaldes hver gang brugeren trykker på en tast. Funktionen tager som
+% argument en værdi svarende til den nuværende tilstand for
+% applikationen samt et argument der kan benyttes til at afgøre hvilken
+% tast der blev trykket på.\footnote{Hvis \lstinline{e} har typen
+%   \lstinline{System.Windows.Forms.KeyEventArgs} kan betingelsen
+%   \lstinline{e.KeyCode = System.Windows.Forms.Keys.Up} benyttes til at
+%   afgøre om det var tasten ``Up'' der blev trykket på.} Funktionen kan
+% nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
+% for denne.
 
+% Tilpas applikationen således at dybden af
+% fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
+% \lstinline{System.Windows.Forms.Keys.Up} og
+% \lstinline{System.Windows.Forms.Keys.Down}.
+% \end{enumerate}
 
-\section*{Afleveringsopgave}
-I denne opgave skal I programmere spillet Awari, som er en variant af
-Kalaha. Awari er et gammelt spil fra Afrika, som spilles af 2
-spillere, med 7 pinde og 36 bønner. Pindene lægges så der dannes 14
-felter ('pits' på engelsk), hvoraf 2 er hjemmefelter.  Bønnerne
-fordeles ved spillet start med 3 i hvert felt pånær i
-hjemmefelterne. Startopstillingen er illustreret i
-Figur~\ref{fig:awari}.
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.75\textwidth]{awari.pdf}
-  \caption{Udgangsopstillingen for spillet Awari.}
-  \label{fig:awari}
-\end{figure}
+% \newpage
+% \begin{center}
+% \rule{0.5\linewidth}{0.4pt}
+% \end{center}
+% I de næste to opgaver skal følgende sum-type benyttes til at
+% repræsentere ugedage:
 
-Spillerne skiftes til at spille en tur efter følgende regler:
-\begin{itemize}
-\item En tur spilles ved at spilleren tager alle bønnerne i et af
-  spillerens felter 1-6 og placerer dem i de efterfølgende felter
-  inkl. hjemmefelterne en ad gangen og mod uret. F.eks., kan første
-  spiller vælge at tage bønnerne fra felt 4, hvorefter spilleren skal
-  placere en bønne i hver af felterne 5, 6 og hjemmefeltet.
-\item Hvis sidste bønne lægges i spillerens hjemmefelt, får spilleren
-  en tur til.
-\item Hvis sidste bønne lander i et tom felt som ikke er et hjemmefelt, og
-  feltet overfor indeholder bønner, så flyttes sidste bønne til
-  spillerens hjemmefelt, og alle bønnerne overfor fanges og flyttes ligså til
-  hjemmefeltet.
-\item Spillet er slut når en af spillerne ingen bønner har i sine
-  felter 1-6, og vinderen er den spiller, som har flest bønner i sit
-  hjemmefelt.
-\end{itemize}
-Afleveringsopgaven er:
-\begin{enumerate}[label=7g.\arabic*,start=0]
-\item I skal implementere spillet Awari, som kan spilles af 2
-  spillere, og skrive en kort rapport. Kravene til jeres aflevering
-  er:
-  \begin{itemize}
-  \item Koden skal organiseres som bibliotek, en applikation og en
-    test-applikation.
-  \item Biblioteket skal tage udgangspunkt i følgende signatur- og
-    implementationsfiler:
-    \fsSignature{awariLibIncompleteLowComments}{awariLibIncompleteLowComments}{En
-      ikke færdigskrevet signaturfil.}{}
-    \fsImplementation{awariLibIncomplete}{awariLibIncomplete}{En ikke
-      færdigskrevet implementationsfil.}{} En version af signaturfilen
-    med yderligere dokumentation og implementationsfilen findes i
-    Absalon i opgaveområdet for denne opgave.
-  \item Jeres løsning skal benytte funktionsparadigmet såvidt muligt.
-  \item Koden skal dokumenteres vha.\ kommentarstandarden for F\#
-  \item Jeres aflevering skal indeholde en afprøvning efter white-box metoden.
-  \item I skal skrive en kort rapport i LaTeX  på maks.\ 10 sider og
-    som indeholder:
-    \begin{itemize}
-    \item en beskrivelse af jeres design og implementation
-    \item en gennemgang af jeres white-box afprøvning
-    \item kildekoden som appendiks.
-    \end{itemize}
-  \end{itemize}
-\end{enumerate}
+% \begin{lstlisting}[numbers=none,frame=none,mathescape]
+% type weekday = Monday | Tuesday | Wednesday | Thursday
+%              | Friday | Saturday | Sunday
+% \end{lstlisting}
 
-Afleveringen skal bestå af en zip-fil og en pdf-fil. Zip-filen skal
-indeholde en mappe med fsharp koden. Koden skal kunne oversættes med
-fsharpc og køres med mono. I skal tilføje en README.txt fil, hvor I
-beskriver, hvordan man oversætter og kører programmet. Pdf-filen skal
-indeholde jeres LaTeX rapport oversat til pdf.
+% \begin{enumerate}[label=7ø.\arabic*,start=5]
+% \item Lav en funktion \texttt{dayToNumber : weekday -> int}, der givet
+%   en ugedag returnerer et tal, hvor mandag skal give tallet 1, tirsdag
+%   tallet 2 osv.
+
+% \item Lav en funktion \texttt{nextDay : weekday -> weekday}, der givet
+%   en ugedag returnerer den næste dag, så mandag skal give tirsdag,
+%   tirsdag skal give onsdag, osv, og søndag skal give mandag.
+% \end{enumerate}
+
 
 \end{document}
 

@@ -2,41 +2,28 @@
 
 \input{setup}
 
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel 9 - individuel opgave}
-\author{Jon Sporring}
-\date{28.\ november - 5.\ december.\\Afleveringsfrist: onsdag d.\ 5.\ december kl. 22:00}
+\newcommand{\exerciseNumber}{9}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{25.\ november - 1.\ december}{søndag d.\ 1.\ december kl. 22:00}
 
 \begin{document}
 \maketitle
 
-I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at arbejde med:
-\begin{itemize}
-\item Undtagelser (exceptions)
-\item Input og output til skærm og tastatur
-\item Input og output til filer
-\item Input fra internettet
-\end{itemize}
 
-Opgaverne er delt i øve- og afleveringsopgaver. 
+\learningPurposeTxt{{undtagelser (exceptions),},{input og output til skærm og tastatur,},{input og output til filer},{input fra internettet.}}
 
-\section*{Øveopgaver}
-\input{../assignments/io/introduction}
-\begin{enumerate}[label=9ø.\arabic*,start=0]
-\item \input{../assignments/io/printFile}
-\item \input{../assignments/io/fileReplace}
-\item \input{../assignments/io/printWebPage}
-\item \input{../assignments/io/simpleCalc}
-\end{enumerate}
+\learningConditionsTxt{\typeLetter}
 
-\section*{Afleveringsopgaver}
-\begin{enumerate}[label=9i.\arabic*,start=0]
-\item \input{../assignments/exceptions/safeIndex}
-\item \input{../assignments/io/countLinks}
-\item \input{../assignments/io/wordCount}
-\end{enumerate}
+\trainingExercises{\exerciseNumber  ø}{../assignments/io/}{introduction}{printFile, fileReplace, printWebPage, simpleCalc}
 
-Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!9i0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal der vedlægges en kort rapport i pdf format kaldet \lstinline{9i.pdf}, som indholder de dele af besvarelsen, som ikke naturligt vil være i en programtekst. Det hele skal samles i en zip fil og uploades på Absalon.
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/exceptions/}{}{safeIndex}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/io/}{}{countLinks, wordCount}
+
+\handinTextThree{\exerciseNumber\typeLetter 0.fsx}
+
+\flushright God fornøjelse.
+
 \end{document}
 
 %%% Local Variables:
