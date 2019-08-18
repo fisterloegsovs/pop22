@@ -2,66 +2,28 @@
 
 \input{setup}
 
-\setcounter{exerciseNumber}{2}
+\newcommand{\exerciseNumber}{2}
 \newcommand{\typeLetter}{i}
-\newcommand{\period}{9.\ september - 15.\ september}
-\newcommand{\deadline}{søndag d.\ 15.\ september kl. 22:00}
 
-\newcommand{\typeName}{
-  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
-}
-\newcommand{\typeCommand}{
-  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
-}
-
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
-\author{Jon Sporring}
-\date{\period.\\Afleveringsfrist: \deadline.}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{9.\ september - 15.\ september}{søndag d.\ 15.\ september kl. 22:00}
 
 \begin{document}
 \maketitle
 
-Formålet med arbejdet beskrevet i denne arbejdsseddel er at:
-\begin{itemize}
-\item I laver jeres første F\# program
-\item I kommer til at kende forskellen mellem decimal, binær, hexadecimal, og oktal repræsentation af heltal, samt at kunne konvertere imellem dem.
-\item I kommer til at kunne beskrive simple typer i F\#: \lstinline{int}, \lstinline{float}, \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt konvertering imellem dem.
-\item I kommer til at kunne bruge F\# som en lommeregner.
-\end{itemize}
+\learningPurposeTxt{
+ {I laver jeres første F\# program.},
+ {I kommer til at kende forskellen mellem decimal, binær, hexadecimal, og oktal repræsentation af heltal, samt at kunne konvertere imellem dem.},
+ {I kommer til at kunne beskrive simple typer i F\#: \lstinline{int}, \lstinline{float}, \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt konvertering imellem dem.},
+ {I kommer til at kunne bruge F\# som en lommeregner.}
+}
 
-Opgaverne er delt i øve- og afleveringsopgaver.%
-%
-\typeCommand%
-%
-For de individuelle afleveringsopgaver skal I være særlig opmærksomme
-på, at jeres løsning ikke må udarbejdes i samarbejde med andre.
-Regler for individuelle afleveringsopgaver er beskrevet i "`Noter,
-links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item \subimport*{../assignments/myFirstFSharp/}{add}
-\item \subimport*{../assignments/myFirstFSharp/}{compile}
-\item \subimport*{../assignments/myFirstFSharp/}{concat}
-\item \subimport*{../assignments/myFirstFSharp/}{typeError}
-\item \subimport*{../assignments/myFirstFSharp/}{divideBy2ByHand}
-\item \subimport*{../assignments/myFirstFSharp/}{otherBases}
-\item \subimport*{../assignments/myFirstFSharp/}{truthTable}
-\item \subimport*{../assignments/myFirstFSharp/}{uy}
-\item \subimport*{../assignments/myFirstFSharp/}{unicode}
-\item \subimport*{../assignments/myFirstFSharp/}{slicing}
-\end{enumerate}
+\trainingExercises{\exerciseNumber}{../assignments/myFirstFSharp/}{add,compile,concat,typeError,divideBy2ByHand,otherBases,truthTable,uy,unicode,slicing}
 
-\section*{Afleveringsopgaver}
-\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \subimport*{../assignments/myFirstFSharp/}{table}
-\item \subimport*{../assignments/myFirstFSharp/}{backslashN}
-\item \subimport*{../assignments/myFirstFSharp/}{verbatim}
-\item \subimport*{../assignments/myFirstFSharp/}{slicing2}
-\end{enumerate}
+\handInExercises{\exerciseNumber}{\typeLetter}{../assignments/myFirstFSharp/}{table, backslashN, verbatim, slicing2}
 
-\handinTextTwo{\theexerciseNumber\typeLetter 0.fsx}
+\handinTextTwo{\exerciseNumber\typeLetter 0.fsx}
 
 \flushright God fornøjelse.
 \end{document}
