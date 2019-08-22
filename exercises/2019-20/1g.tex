@@ -2,23 +2,10 @@
 
 \input{setup}
 
-\setcounter{exerciseNumber}{1}
+\newcommand{\exerciseNumber}{1}
 \newcommand{\typeLetter}{g}
-\newcommand{\period}{2.\ september - 8.\ september}
-\newcommand{\deadline}{søndag d.\ 8.\ september kl. 22:00}
 
-\newcommand{\typeName}{
-  \ifthenelse{\equal{\typeLetter}{g}}{gruppeopgave}{individuel opgave}
-}
-\newcommand{\typeCommand}{
-  \ifthenelse{\equal{\typeLetter}{g}}{I denne periode skal I arbejde i grupper.}{I denne periode skal I arbejde individuelt.}
-}
-
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet\\Arbejdsseddel \theexerciseNumber\ - \typeName}
-\author{Jon Sporring}
-\date{\period.\\Afleveringsfrist: \deadline.}
-
+\exerciseTitle{\exerciseNumber}{\typeLetter}{2.\ september - 6.\ september}{fredag d.\ 6.\ september kl. 17:00}
 \begin{document}
 \maketitle
 Velkommen til kurset ``Programmering og Problemløsning''.
@@ -27,39 +14,20 @@ Dette er kursets første \emph{arbejdsseddel}. Arbejdssedler indeholder informat
 
 Arbejdssedlerne vil beskrive pensum, som gennemgåes til forelæsningerne, øvelsesopgaver, som der vil blive arbejdet med under øvelserne, og afleveringsopgaver, som der også bliver tid til at kigge på til øvelserne. Pensum angives under "`Forelæsnings- og læseplan"' på Absalon og evt.\ tilhørende materiale finder i under Absalonpunktet "`Noter, links, software m.m."'. Ca.\ halvdelen af afleveringsopgaverne bliver individuelle opgaver, alle andre opgaver løses i grupper.
 
-Formålet med arbejdet beskrevet i denne arbejdsseddel er at:
-\begin{itemize}
-\item stifte bekendtskab imperativ programmering gennem Scratch
-\item stifte bekendtskab med kommandoterminalen og filstrukturer
-\item stifte bekendtskab med en teksteditor
-\item lave et spil
-\item lave en rapport i LaTeX
-\item lave den første Absalon aflevering
-\end{itemize}
+\learningPurposeTxt{
+  {stifte bekendtskab med imperativ programmering gennem Scratch},
+  {stifte bekendtskab med kommandoterminalen og filstrukturer},
+  {stifte bekendtskab med en teksteditor},
+  {lave et spil},
+  {lave en rapport i LaTeX},
+  {lave den første Absalon aflevering},
+}
 
-Opgaverne er delt i øve- og afleveringsopgaver.%
-%
-\typeCommand%
-%
-For øveopgaverne må I arbejde, som I har lyst, og for gruppeopgaverne
-skal I arbejde i jeres grupper. Regler for gruppe- og individuelle
-afleveringsopgaver er beskrevet i "`Noter, links, software
-m.m."'$\rightarrow$"`Generel information om opgaver"'.
+\learningConditionsTxt{\typeLetter}
 
-\section*{Øveopgaver}
-\begin{enumerate}[label=\theexerciseNumber ø.\arabic*,start=0]
-\item \subimport*{../assignments/gettingStarted/}{install}
-\item \subimport*{../assignments/gettingStarted/}{helloWorld}
-\item \subimport*{../assignments/gettingStarted/}{screenShots}
-\item \subimport*{../assignments/gettingStarted/}{report}
-\end{enumerate}
+\trainingExercises{\exerciseNumber ø}{../assignments/gettingStarted/}{}{install, helloWorld, screenShots, report}
 
-\section*{Afleveringsopgaver}
-Husk at processen og resultatet skal dokumenteres til sidst, så det er en god ide at tage udførlige noter undervejs. Opgaven lyder:
-\begin{enumerate}[label=\theexerciseNumber  \typeLetter.\arabic*,start=0]
-\item \subimport*{../assignments/scratch/}{10Blocks}
-\item \subimport*{../assignments/scratch/}{game}
-\end{enumerate}
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/scratch/}{}{10Blocks, game}
 
 \handinTextOne
 
