@@ -422,7 +422,7 @@
 % Draw arrows between elements
 \usepackage{tikz}
 %\usepackage{sphack} % make overlays invisible where stated in text
-\usetikzlibrary{arrows,shapes,calc,decorations.pathreplacing}
+\usetikzlibrary{arrows,shapes,calc,decorations.pathreplacing,patterns}
 \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 \newcommand*{\DrawArrow}[3][]{%
   % #1 = draw options
@@ -462,7 +462,6 @@
 \newcommand{\monoVersion}{5.2.0\xspace}
 \newcommand{\fsharpVersion}{4.1\xspace}
 
-
 % Notes to self
 \newcommand{\jon}[1]{\footnote{Jon: \textbf{#1}}}
 %\renewcommand{\jon}[1]{}
@@ -472,11 +471,79 @@
 \renewcommand{\spec}[1]{}
 
 \usepackage{import}
+\usepackage{etoolbox}
 
-\newcounter{exerciseNumber}
+\newrobustcmd{\typeName}[1]{
+  \expandafter\ifstrequal\expandafter{#1}{g}{gruppeopgave}{individuel opgave}
+} % \expandafter\ifstrequal\expandafter allows for argument to be a command.
+
+\newrobustcmd{\exerciseTitle}[4]{
+\title{Programmering og Problemløsning\\Datalogisk Institut, Københavns Universitet\\Arbejdsseddel #1 - \typeName{#2}}
+\author{Jon Sporring}
+\date{#3.\\Afleveringsfrist: #4.}
+}
+
+\DeclareListParser*{\iterateItemize}{,}
+\newcommand{\listItemize}[1]{%
+\begin{itemize}
+  \iterateItemize{\item}{#1}
+\end{itemize}
+}
+\newrobustcmd{\learningPurposeTxt}[1]{
+Emnerne for denne arbejdsseddel er:
+\listItemize{#1}
+}
+
+\newrobustcmd{\typeCommand}[1]{
+  \expandafter\ifstrequal\expandafter{#1}{g}{I denne periode skal I arbejde i grupper med
+  jeres afleveringsopgaver.}{I
+  denne periode skal I arbejde individuelt med jeres afleveringsopgaver.}
+}
+
+\newrobustcmd{\learningConditionsTxt}[1]{
+Opgaverne er delt i øve- og afleveringsopgaver.%
+%
+\typeCommand{#1}%
+%
+Regler for gruppe- og individuelle afleveringsopgaver er beskrevet i "`Noter,
+links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
+}
+
+\newcommand{\dome}[1]{\item #1}
+\newcommand{\listItemizeInternal}[1]{%
+\begin{itemize}
+\forlistloop{\dome}{#1}
+\end{itemize}
+}
+
+\DeclareListParser*{\iterateImportEnumerate}{,}
+\newcommand{\listImportEnumerate}[3]{%
+\begin{enumerate}[#1]
+  \iterateImportEnumerate{\item \subimport*{#2}}{#3}
+\end{enumerate}
+}
+
+\DeclareListParser*{\iterateEnumerate}{,}
+\newcommand{\listEnumerate}[2]{%
+\begin{enumerate}[#1]
+  \iterateEnumerate{\item }{#2}
+\end{enumerate}
+}
+\newrobustcmd{\exercises}[5]{
+\section*{#1}
+\ifstrempty{#4}{}{\subimport*{#3}{#4}}
+\listImportEnumerate{label=#2.\arabic*,start=0}{#3}{#5}
+}
+\newrobustcmd{\trainingExercises}[4]{\exercises{Øveopgaver}{#1}{#2}{#3}{#4}}
+\newrobustcmd{\handInExercises}[4]{\exercises{Afleveringsopgaver}{#1}{#2}{#3}{#4}}
+
+\newrobustcmd{\continueExercises}[4]{
+\ifstrempty{#3}{}{\subimport*{#2}{#3}}
+\listImportEnumerate{label=#1.\arabic*,resume}{#2}{#4}
+}
 
 \newcommand{\handinTextOne}{Afleveringen skal bestå af
-\begin{itemize}\item upload af de uviklede programmer i klassens studio
+\begin{itemize}\item upload af de udviklede programmer i klassens studio
 på Scratch' hjemmeside, \item en zip-fil og \item en rapport i
 pdf-format.\end{itemize} Rapporten skal dokumentere jeres process og
 beskrive jeres programmer. Den skal skrives i LaTeX med et passende
@@ -488,24 +555,27 @@ zippes (\texttt{.zip}) og afleveres sammen med den oversatte pdf fil
 (\texttt{.pdf}) som 2 filer i Absalon.}
 
 \newcommand{\handinTextTwo}[1]{Afleveringen skal bestå
-af \begin{itemize}\item en zip-fil og \item en rapport i
-pdf-format.\end{itemize} Zip-filen skal indeholde mapperne
-\texttt{tex} og \texttt{src} og filen \texttt{README.txt}. Mapperne skal
-indeholde henholdsvis LaTeX koden m.m.\ og fsharp koden. Der skal være
-en fsharp tekstfil per fsharp-opgave, og de skal navngives \texttt{#1}
-osv. Rapporten skal kunne oversættes vha.\ \texttt{pdflatex}
-kommandoen i \texttt{tex}-mappen, og fsharp koden skal kunne
-oversættes med fsharpc og køres med mono i \texttt{src} mappen. Filen
-\texttt{README.txt} skal ganske kort beskrive, hvordan rapporten
-oversættes til pdf og koden køres.}
-
-\newcommand{\handinTextThree}[1]{Afleveringen skal bestå af en
-zip-fil, som skal indeholde en mappe med fsharp koden. Der skal være
-en fsharp tekstfil per fsharp-opgave, og de skal navngives \texttt{#1}
-osv. De skal kunne oversættes med fsharpc og køres med
+af \begin{itemize}\item en zip-fil\end{itemize} Zip-filen skal
+indeholde en \texttt{src} mappe og filen \texttt{README.txt}. Mappen
+skal indeholde fsharp koden, der skal være en fsharp tekstfil per
+fsharp-opgave, og de skal navngives \texttt{#1} osv. De skal kunne
+oversættes med fsharpc og den oversattte fil skal kunne køres med
 mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og
 udover selve programteksten skal besvarelserne indtastes som
-kommentarer i de fsx-filer, de hører til.}
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan rapporten oversættes til pdf og
+koden køres.  }
+
+\newcommand{\handinTextThree}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil\item en pdf-fil\end{itemize}
+Zip-filen skal indeholde en \texttt{src} mappe og filen
+\texttt{README.txt}.  Mappen skal indeholde fsharp koden, der skal
+være en fsharp tekstfil per fsharp-opgave, og de skal navngives
+\texttt{#1} osv. De skal kunne oversættes med fsharpc og den
+oversattte fil skal kunne køres med mono. Funktioner skal dokumenteres
+ifølge dokumentationsstandarden. Filen \texttt{README.txt} skal ganske
+kort beskrive, hvordan koden oversættes og køres. Pdf-filen skal
+indeholde jeres rapporten oversat fra \LaTeX.}
 
 %%% Local Variables:
 %%% TeX-master: "fsharpNotes"

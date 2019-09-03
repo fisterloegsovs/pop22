@@ -468,7 +468,7 @@ Look, Løkke, Værdier Variable
 1.1
 Velkommen (Martin, Christina, Jon (kursusansvarlig), instruktorer)
 
-Inddeling i studiegrupper
+Inddeling i studiegrupper (Machine Learning og Datavidenskab, Datalogi og Økonomi, Andre)
 
 Hvad skal vi lærer (imperativ-, funktions- og objektorienteret programmering)
 Oversigt over kurset (Canvas, kurser.ku.dk, øvelseshold, lokaler, grupper, scratch, fsharp, opgaver, ugesedler og aflevering)
@@ -476,16 +476,12 @@ God opførsel på forum, chat, forelæsninger, øvelser, grupper
 
 Læs 0
 
-Kommandoprompten (Linux, windows, Macos)
-
-Socrative.com (student login, SPORRING)
-
-LaTeX
-
 Scratch - Imperativ programmering:
 
 Scratch:
 1. Hello (sprite, say, mouse, loop)
 2. Count (variables, wait)
 
-Følg instruktorerne (hold 8 og 11 er byttet)
+Kommandoprompten (Linux, windows, Macos)
+
+LaTeX
