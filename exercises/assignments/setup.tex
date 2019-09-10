@@ -554,16 +554,27 @@ laves ved kørsel af \texttt{pdflatex} kommandoen i mappen. Mappen skal
 zippes (\texttt{.zip}) og afleveres sammen med den oversatte pdf fil
 (\texttt{.pdf}) som 2 filer i Absalon.}
 
+\newcommand{\handinTextOneOne}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil\item en pdf-fil\end{itemize}
+Zip-filen skal indeholde en \texttt{src} mappe, en \texttt{tex} mappe
+og filen \texttt{README.txt}. Mappen \texttt{src} skal indeholde
+fsharp koden, der skal være en fsharp tekstfil per fsharp-opgave, og
+de skal navngives \texttt{#1} osv. De skal kunne oversættes med
+fsharpc, og de oversattte filer skal kunne køres med mono. Mappen
+\texttt{tex} skal indeholde \LaTeX\ koden. Filen \texttt{README.txt} skal ganske
+kort beskrive, hvordan rapporten oversættes til pdf og koden
+oversættes og køres.}
+
 \newcommand{\handinTextTwo}[1]{Afleveringen skal bestå
 af \begin{itemize}\item en zip-fil\end{itemize} Zip-filen skal
 indeholde en \texttt{src} mappe og filen \texttt{README.txt}. Mappen
 skal indeholde fsharp koden, der skal være en fsharp tekstfil per
 fsharp-opgave, og de skal navngives \texttt{#1} osv. De skal kunne
-oversættes med fsharpc og den oversattte fil skal kunne køres med
+oversættes med fsharpc, og de oversattte filer skal kunne køres med
 mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og
 udover selve programteksten skal besvarelserne indtastes som
 kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
-skal ganske kort beskrive, hvordan rapporten oversættes til pdf og
+skal ganske kort beskrive, hvordan rapporten oversættes og
 koden køres.  }
 
 \newcommand{\handinTextThree}[1]{Afleveringen skal bestå
