@@ -9,4 +9,4 @@ let a = 1.0
 let b = 0.0
 let c = -1.0
 let xp = (solution a b c +1.0)
-printfn "0 = %.1fx^2 + %.1fx + %.1f => x_+ = %.1f" a b c xp
+printfn "0 = %fx^2 + %fx + %f => x_+ = %f" a b c xp
