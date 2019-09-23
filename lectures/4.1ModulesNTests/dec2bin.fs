@@ -1,3 +1,5 @@
+module convert
+
 /// Convert a non-negative integer into its
 /// binary form. E.g., dec2bin 3 =  "0b11"
 let dec2bin n =
@@ -12,5 +14,3 @@ let dec2bin n =
       str <- (string (v % 2)) + str
       v <- v / 2
     "0b" + str
-let N = 116
-printfn "%d_10 = %s_2" N (dec2bin N)
