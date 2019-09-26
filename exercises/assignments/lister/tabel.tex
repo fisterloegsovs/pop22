@@ -19,5 +19,5 @@ En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne 
 \end{array}
 \right ]\]
 \end{quote}
-Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Det kan antages, at argumentet til \lstinline{transpose} er en lovlig tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis funktionen eller virker.  Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Vink: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
+Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Det kan antages, at argumentet til \lstinline{transpose} er en lovlig tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis funktionen ellers virker.  Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Vink: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
 \end{enumerate}
