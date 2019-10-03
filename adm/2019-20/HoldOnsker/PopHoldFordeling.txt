@@ -1,0 +1,45 @@
+Datalogi:
+Hold 1: Emma (kickstartere og kvindelige studerende)
+Pernille Horn
+Hold 2: Layla (kickstartere og kvindelige studerende)
+Simon Rotendahl
+Hold 3: Nathalia (kvinder og studerende uden programmeringserfaring)
+Karen Larsen
+Hold 4: Maja (kvinder og studerende uden programmeringserfaring)
+Zi Siang Peter Lim
+Hold 5: Mathias (mænd uden programmeringserfaring + et par kvindelige studerende som forsvinder efter blok 2)
+Ayman Hussein
+Hold 6: Mads (ældre mandlige studerende med programmeringserfaring + et par kvindelige studerende som forsvinder efter blok 2)
+Cami Dalsgaard
+Hold 7: Christoffer (ældre mandlige studerende uden programmeringserfaring)
+Mikkel Sørensen
+Hold 8: Jacob (yngre mandlige studerende uden programmeringserfaring)
+Emillie Burkdal
+Hold 9: Jonas (mandlige studerende med meget programmeringserfaring)
+Mads Thomsen
+Hold 10: Magnus (mandlige studerende med lav programmeringserfaring)
+Casper Frandsen
+
+Datalogi-økonomi
+Hold 11: Ronnie (kickstartere og studerende med programmeringserfaring og kvinder)
+Balder Ivarsen
+Hold 12: Thor (kickstartere og studerende uden programmeringserfaring og kvinder)
+Jan Rolandsen
+
+Machine learning og datavidenskab
+Hold 13: Matilde (kickstartere og kvindelige studerende)
+Troels Korreman Nielsen
+Hold 14: August (mandlige studerende med ingen til nogen programmeringserfaring)
+Mads Larsen
+
+Ældre studerende og ikke dataloger
+Hold 15: Ingen mentor
+Laura Boesen
+
+Floater:
+August Laursen
+
+Hold 7 og 8: Mikkel og Emilie, Aud 6
+Hold 11 og 12: Balder og Jan, Aud 5
+Hold 13 og 14: Troels og Mads, 4-0-17
+
