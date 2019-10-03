@@ -7,10 +7,16 @@ En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne 
 \right ]\]
 \end{quote}
 \begin{enumerate}
-\item Lav en funktion \lstinline{isTable : 'a list list -> bool}, der givet en liste af lister afgør, om det er en lovlig ikke-tom tabel, altså om alle listerne har ens længde, og at der er mindst en liste med mindst et element.
-\item Lav en funktion \lstinline{firstColumn : 'a list list -> 'a list}, der tager en liste af lister og returnerer listen af førsteelementer i de indre lister.  F.eks.\ skal \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} returnere listen \lstinline{[1; 4]}.  Hvis en eller flere af listerne er tomme, er \lstinline{firstColumn} udefineret.
-\item Lav en funktion \lstinline{dropFirstColumn : 'a list list -> 'a list list}, der tager en liste af lister og returnerer en liste af lister, hvor førsteelementerne i de indre lister er fjernet.  F.eks.\ skal \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} returnere \lstinline{[[2; 3]; [5; 6]]}.
-\item Lav en funktion \lstinline{transpose : 'a list list -> 'a list list}, der spejler tabellens ingange over diagonalen, så den transponerede tabel til den herover viste tabel er
+\item Lav en funktion \lstinline{isTable : llst:'a list list -> bool},
+  der givet en liste af lister afgør, om det er en lovlig ikke-tom
+  tabel. For at det er en lovlig ikke-tom tabel, skal der gælde følgende:
+  \begin{itemize}
+  \item Der er mindst en liste med mindst et element.
+  \item Alle lister i tabellen har ens længde.
+  \end{itemize}
+\item Lav en funktion \lstinline{firstColumn : llst:'a list list -> 'a list}, der tager en liste af lister og returnerer listen af førsteelementer i de indre lister.  F.eks.\ skal \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} returnere listen \lstinline{[1; 4]}.  Hvis en eller flere af listerne er tomme, skal funktionen returnere den tomme liste af heltal \lstinline{[] : int list}.
+\item Lav en funktion \lstinline{dropFirstColumn : llst:'a list list -> 'a list list}, der tager en liste af lister og returnerer en liste af lister, hvor førsteelementerne i de indre lister er fjernet.  F.eks.\ skal \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} returnere \lstinline{[[2; 3]; [5; 6]]}.
+\item Lav en funktion \lstinline{transpose : llst:'a list list -> 'a list list}, der spejler tabellens indgange over diagonalen, så den transponerede tabel til den herover viste tabel er
   \begin{quote}
 \[\left [\begin{array}{rr}
 1 & 4 \\
@@ -19,5 +25,10 @@ En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne 
 \end{array}
 \right ]\]
 \end{quote}
-Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Det kan antages, at argumentet til \lstinline{transpose} er en lovlig tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis funktionen ellers virker.  Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Vink: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
+Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså
+returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.
+%Det kan antages, at argumentet til \lstinline{transpose} er en lovlig
+%tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis
+%funktionen ellers virker.
+Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Tip: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
 \end{enumerate}

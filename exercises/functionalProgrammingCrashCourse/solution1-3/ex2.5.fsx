@@ -1,0 +1,9 @@
+let a = 3
+let b = 4
+let f a b x = a * x + b
+printfn "%A * %A + %A = %A" a 0 b (f a b 0)
+printfn "%A * %A + %A = %A" a 1 b (f a b 1)
+printfn "%A * %A + %A = %A" a 2 b (f a b 2)
+printfn "%A * %A + %A = %A" a 3 b (f a b 3)
+printfn "%A * %A + %A = %A" a 4 b (f a b 4)
+printfn "%A * %A + %A = %A" a 5 b (f a b 5)

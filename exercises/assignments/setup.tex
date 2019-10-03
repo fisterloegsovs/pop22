@@ -1,10 +1,12 @@
-% Change font
-\usepackage{mathptmx}
-
 % Character set
 \usepackage{cmap}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc} % ensure that all the characters in characterSets.tex prints
+
+% Change font
+\usepackage{mathptmx}
+% 20190927: fontenc-T1 causes problems with ttfamily, causing
+% lstinline to be incorrectly set!
+%\usepackage[T1]{fontenc} % ensure that all the characters in characterSets.tex prints
 \usepackage{upquote} % \textcent
 \usepackage{pifont} % add \ding, http://ctan.org/pkg/pifont
 
@@ -459,8 +461,8 @@
 %  \immediate\closeout\tempfile
 
 \usepackage{xspace}
-\newcommand{\monoVersion}{5.2.0\xspace}
-\newcommand{\fsharpVersion}{4.1\xspace}
+\newcommand{\monoVersion}{6.0.0\xspace}
+\newcommand{\fsharpVersion}{4.5\xspace}
 
 % Notes to self
 \newcommand{\jon}[1]{\footnote{Jon: \textbf{#1}}}
@@ -532,7 +534,7 @@ links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
 \newrobustcmd{\exercises}[5]{
 \section*{#1}
 \ifstrempty{#4}{}{\subimport*{#3}{#4}}
-\listImportEnumerate{label=#2.\arabic*,start=0}{#3}{#5}
+\listImportEnumerate{label=#2\arabic*,start=0}{#3}{#5}
 }
 \newrobustcmd{\trainingExercises}[4]{\exercises{Øveopgaver}{#1}{#2}{#3}{#4}}
 \newrobustcmd{\handInExercises}[4]{\exercises{Afleveringsopgaver}{#1}{#2}{#3}{#4}}
@@ -592,6 +594,77 @@ indtastes som kommentarer i de fsx-filer, de hører til. Filen
 \texttt{README.txt} skal ganske kort beskrive, hvordan koden
 oversættes og køres.}
 
+\newcommand{\handinTextTwoTwo}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til hver af delopgaverne.  De skal
+kunne oversættes med \lstinline[language=console]{fsharpc}, og de
+oversattte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Udover selve koden skal besvarelser indtastes som
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan koden oversættes og køres.}
+
+%\usepackage{forest}
+\newcommand{\handinTextOneTwo}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe
+\texttt{#1\_<navn>}. I den mappe skal der ligge en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til hver af delopgaverne.
+    % % Figur der viser hvad de studerende skal aflevere,
+    % % aka. 6g0.fsx til 6g4.fsx samt README.txt i src mappen i zipfilen
+    % \begin{figure}[ht]
+    %   \centering
+    % \begin{forest}
+    %   for tree={
+    %     font=\ttfamily,
+    %     grow'=0,
+    %     child anchor=west,
+    %     parent anchor=south,
+    %     anchor=west,
+    %     calign=first,
+    %     edge path={
+    %       \noexpand\path [draw, \forestoption{edge}]
+    %       (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    %     },
+    %     before typesetting nodes={
+    %       if n=1
+    %         {insert before={[,phantom]}}
+    %         {}
+    %     },
+    %     fit=band,
+    %     before computing xy={l=15pt},
+    %   }
+    %   [6g\_gruppe<NR>.zip
+    %     [src
+    %       [6g0.fsx]
+    %       [6g1.fsx]
+    %       [6g2.fsx]
+    %       [6g3.fsx]
+    %       [6g4.fsx]
+    %       [README.txt]
+    %     ]
+    %   ]
+    % \end{forest}
+    %   \caption{Din mappestruktur skal se således ud i zip-filen}
+    %   \label{fig:zip-eksempel}
+    % \end{figure}
+De skal
+kunne oversættes med \lstinline[language=console]{fsharpc}, og de
+oversattte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Udover selve koden skal besvarelser indtastes som
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan koden oversættes og køres.}
+
 \newcommand{\handinTextThree}[1]{Afleveringen skal bestå
 af \begin{itemize}\item en zip-fil\item en pdf-fil\end{itemize}
 Zip-filen skal indeholde en \texttt{src} mappe og filen
@@ -603,6 +676,7 @@ ifølge dokumentationsstandarden. Filen \texttt{README.txt} skal ganske
 kort beskrive, hvordan koden oversættes og køres. Pdf-filen skal
 indeholde jeres rapporten oversat fra \LaTeX.}
 
+\newcommand{\subAssignment}[1]{\textbf{#1}\\[2mm]}
 %%% Local Variables:
 %%% TeX-master: "fsharpNotes"
 %%% End:
