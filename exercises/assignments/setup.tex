@@ -541,7 +541,7 @@ links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
 
 \newrobustcmd{\continueExercises}[4]{
 \ifstrempty{#3}{}{\subimport*{#2}{#3}}
-\listImportEnumerate{label=#1.\arabic*,resume}{#2}{#4}
+\listImportEnumerate{label=#1\arabic*,resume}{#2}{#4}
 }
 
 \newcommand{\handinTextOne}{Afleveringen skal bestå af
@@ -679,7 +679,7 @@ indeholde jeres rapporten oversat fra \LaTeX.}
 \begin{itemize}
   \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}
   (f.eks. \texttt{#1\_jon.zip})
-  \item en pdf-film , der hedder \texttt{#1\_<navn>.pdf}
+  \item en pdf-fil , der hedder \texttt{#1\_<navn>.pdf}
   (f.eks. \texttt{#1\_jon.pdf})
 \end{itemize}
 Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe
@@ -692,7 +692,7 @@ dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
 \texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
 XML-tagsne. Filen \texttt{README.txt} skal ganske kort beskrive,
 hvordan koden oversættes og køres. Pdf-filen skal indeholde jeres
-rapporten oversat fra \LaTeX. }
+rapport oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}
 
 \newcommand{\subAssignment}[1]{\textbf{#1}\\[2mm]}
 %%% Local Variables:

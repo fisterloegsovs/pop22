@@ -25,7 +25,7 @@ vidden \lstinline{width} og højden \lstinline{height}. Funktionen
 \lstinline{draw}, som brugeren giver som 4.\@ argument kaldes initielt
 når applikationen starter og hver gang vinduets størrelse justeres
 eller ved at funktionen \lstinline{react} er blevet kaldt efter en
-tast er trykket på tastaturet. Funktionen \lstinline{draw} modtager
+tast er trykket ned på tastaturet. Funktionen \lstinline{draw} modtager
 også (udover værdier for den aktuelle vidde og højde) en værdi for den
 brugerdefinerede tilstand, som initielt er sat til værdien
 \lstinline{init}. Funktionen skal returnere et bitmap, som for
@@ -35,12 +35,17 @@ eksempel kan konstrueres med funktionen \lstinline{ImgUtil.mk} og
 
 Funktionen \lstinline{react}, som brugeren giver som 5.\@ argument
 kaldes hver gang brugeren trykker på en tast. Funktionen tager som
-argument en værdi svarende til den nuværende tilstand for
-applikationen samt et argument der kan benyttes til at afgøre hvilken
+argument:
+\begin{itemize}
+\item en værdi svarende til den nuværende tilstand for
+applikationen, og
+\item et argument der kan benyttes til at afgøre hvilken
 tast der blev trykket på.\footnote{Hvis \lstinline{e} har typen
   \lstinline{System.Windows.Forms.KeyEventArgs} kan betingelsen
   \lstinline{e.KeyCode = System.Windows.Forms.Keys.Up} benyttes til at
-  afgøre om det var tasten ``Up'' der blev trykket på.} Funktionen kan
+  afgøre om det var tasten ``Up'' der blev trykket på.} 
+\end{itemize}
+Funktionen kan
 nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
 for denne.
 

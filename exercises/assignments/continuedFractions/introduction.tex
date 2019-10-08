@@ -3,7 +3,7 @@ fractions)\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Kæ
 er lister af heltal, som repræsenterer reelle tal. Listen er endelig
 for rationelle tal og uendelig for irrationelle tal. 
 
-\paragraph{Decimaltal til kædebrøk}
+\paragraph{Kædebrøk til decimalbrøk}
 En kædebrøk skrives som:
 $x = [q_0; q_1, q_2, \ldots]$, hvilket svarer til tallet,
 \begin{equation}
@@ -18,7 +18,7 @@ F.eks.\ svarer kædebrøken $[3;4, 12, 4]$ til følgende decimaltal:
 \end{align}
 Altså er $[3;4, 12, 4] = 3.245$.
 
-\paragraph{Kædebrøk til decimaltal}
+\paragraph{Decimaltal til kædebrøk}
 For et givet tal $x$ på decimalform kan dets kædebrøk
 $[q_0; q_1, q_2, \ldots]$ udregnes ved følgende algoritme: Lad
 $x_0 = x$ og $i \geq 0$, udregn
@@ -42,7 +42,7 @@ indtil $r_i = 0$. F.eks.\ for decimaltallet $x=3.245$ beregnes:
 \end{center}
 Resultatet aflæses i anden søjle: $3.245 = [3; 4, 12, 4]$.
 
-\paragraph{Heltalsbrøker til kædebrøker}
+\paragraph{Heltalsbrøk til kædebrøk}
 Kædebrøken for en heltals brøk $t/n$ udregnes ved
 følgende algoritme: Lad $r_{-2} = t$ og $r_{-1}=n$ og $i\geq-2$, udregn
 \begin{align}
@@ -80,7 +80,7 @@ r_{i-2}\text{ \% }r_{-1})$ indtil $(r_{i-2}, r_{i-1}) =
 man samtidigt beregnet brøken som kædebrøk.
 
 
-\paragraph{Kædebrøker til Heltalsbrøker}
+\paragraph{Kædebrøk til Heltalsbrøk(er)}
 En kædebrøk kan approximeres som en heltalsbrøk
 $\frac{t_i}{n_i}, i \geq 0$ ved følgende algorime. Lad
 $t_{-2} = n_{-1} = 0$ og $t_{-1} = n_{-2} =1$, udregn
