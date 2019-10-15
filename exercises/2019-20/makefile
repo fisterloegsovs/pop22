@@ -10,7 +10,7 @@ all: $(PDF)
 4g.pdf: $< $(wildcard ../assignments/modules/*.tex) $(wildcard ../assignments/vec/*.tex) setup.tex
 5i.pdf: $< $(wildcard ../assignments/lister/*.tex) setup.tex
 6g.pdf: $< $(wildcard ../assignments/recursion/*.tex) $(wildcard ../assignments/continuedFractions/*.tex) setup.tex
-7g.pdf: $< $(wildcard ../assignments/sort/*.tex) $(wildcard ../assignments/weekday/*.tex) $(wildcard ../assignments/imgutil/*.tex) $(wildcard ../assignments/randomText/*.tex) $(wildcard ../assignments/randomWords/*.tex) setup.tex
+7g.pdf: $< $(wildcard ../assignments/sort/*.tex) $(wildcard ../assignments/weekday/*.tex) $(wildcard ../assignments/imgutil/*.tex) $(wildcard ../assignments/randomText/*.tex) $(wildcard ../assignments/randomWords/*.tex) setup.tex ../assignments/randomText/treeType.pdf
 8i.pdf: $< $(wildcard ../assignments/polynomials/*.tex) $(wildcard ../assignments/integration/*.tex) $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/treeStructure/*.tex) setup.tex
 9i.pdf: $< $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/io/*.tex) setup.tex
 10i.pdf: $< $(wildcard ../assignments/classes/*.tex) setup.tex

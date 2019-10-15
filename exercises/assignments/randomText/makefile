@@ -1,4 +1,4 @@
 TEX := $(wildcard *.tex)
 
-main.pdf: $(TEX)
+main.pdf: $(TEX) treeType.pdf
 	pdflatex main
