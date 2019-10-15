@@ -17,4 +17,5 @@ do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ign
 \end{lstlisting}
 
 Tilpas funktionen således at trekanten tegnes med røde streger samt
-således at den kun tegnes ned til dybde 2 (hint: du skal ændre betingelsen \lstinline{len < 25}).
+således at den kun tegnes 2 rekursionsniveauer ned. Hint: dette kan
+gøres ved at ændre betingelsen \lstinline{len < 25}.

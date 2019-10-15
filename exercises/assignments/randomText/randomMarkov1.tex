@@ -1,0 +1,15 @@
+The script \lstinline[language=console]{sampleAssignment.fsx} contains
+the function
+\begin{quote}
+  \mbox{\lstinline!randomString : hist:int list -> len:int -> string!}
+\end{quote}
+which generates a string of a given length, and contains random
+characters distributed according to a given histogram. Modify the code
+to use your histogram function from Exercise~\ref{histogram}.
+
+Further, write a program, which reads the text
+\lstinline[language=console]{littleClausAndBigClaus.txt} using
+\lstinline{readText}, converts it using \lstinline{convertText}, and
+calculates its histogram and generates a new random string using
+\lstinline{histogram} and \lstinline{randomString}.  Test the quality
+of your code by comparing the histograms of the two texts.

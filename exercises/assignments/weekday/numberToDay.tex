@@ -1,6 +1,6 @@
-Lav en funktion \lstinline{numberToDay : int -> weekday option}, sådan at
-\lstinline{numberToDay n} returnerer \lstinline{None}, hvis \lstinline!n! ikke
-ligger i intervallet 1\ldots7, og ellers returnerer \lstinline{Some d},
-hvor \lstinline!d! er den til \lstinline!n! hørende ugedag. Det skal gælde, at
-\lstinline{numberToDay (dayToNumber d)} $\leadsto$ \lstinline!Some d! for alle
-ugedage \lstinline!d!.
+Lav en funktion \lstinline{numberToDay : n : int -> weekday option},
+sådan at \lstinline{numberToDay n} returnerer \lstinline{None}, hvis
+\lstinline!n! ikke ligger i intervallet 1\ldots7, og ellers returnerer
+ugedagen \lstinline{Some d}. Det skal gælde, at %
+\lstinline{numberToDay (dayToNumber d)} $\leadsto$ \lstinline!Some d!
+for alle ugedage \lstinline!d!.
