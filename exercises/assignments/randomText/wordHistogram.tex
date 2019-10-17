@@ -14,8 +14,8 @@ An illustration of a value of this type is shown in Figure~\ref{fig:treeType}
 \end{figure}
 Words are to be represented as the sequence of characters from the
 root til a node. The associated integer to each node counts the
-orrucurence of a word ending in that node. Thus, if the count is 0, then
-no words with that end point has occurred. For example, a string with the
+occurrence of a word ending in that node. Thus, if the count is 0, then
+no word with that endpoint has occurred. For example, a string with the
 words ``a abc ba'' should result in the following tree,
 \begin{quote}
   \mbox{\lstinline![Node ('a', 1, [Node ('b', 0, [Node ('c', 1, [])])]);!}\\
@@ -26,4 +26,4 @@ which are words not observed in the string. The function must have the type:
 \begin{quote}
   \mbox{\lstinline!wordHistogram : src:string -> Tree list!}
 \end{quote}
-Write a program which reads the text \lstinline[language=console]{littleClausAndBigClaus.txt}, discard all characters that are not in \lstinline{['a'..'z', 'A'..'Z',' ']}, convert all the remaining characters to lower case, and calculate the occurence of the remaining words as a \lstinline{Tree list} type.
+Write a program which reads the text \lstinline[language=console]{littleClausAndBigClaus.txt}, discard all characters that are not in \lstinline{['a'..'z', 'A'..'Z',' ']}, convert all the remaining characters to lower case and calculate the occurrence of the remaining words as a \lstinline{Tree list} type.
