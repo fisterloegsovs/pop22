@@ -1,14 +1,8 @@
-For a given value of a \lstinline!Tree! type, see
-Exercise~\ref{wordHistogram}, write a function
+\label{randomWords}
+Extend your library with a function
 \begin{quote}
   \mbox{\lstinline!randomWords : wHist:Tree list -> nWords:int -> string!}
 \end{quote}
 which generates a string with \lstinline!nWords! number of words
-randomly selected to match the word distribution in
+randomly selected to match the word-histogram in
 \lstinline!wHist!.
-
-Use the function developed in Exercise~\ref{lowercase} and~\ref{wordHistogram}, and test
-your function by generating a random string, whose words are
-distributed as the converted characters in H.C.\ Andersen's fairy
-tale, ``Little Claus and Big Claus''. Calculate the word histogram for
-the random text, and compare this with \lstinline{wHist}.

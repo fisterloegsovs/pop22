@@ -1,0 +1,29 @@
+\label{diff}
+The function \lstinline{randomString} is not easily tested using
+white- or blackbox testing since it is a random function. Instead
+you are to test its output by the histogram of the characters in the
+string it produces.
+
+Extend your library with the function,
+\begin{quote}
+  \mbox{\lstinline!diff : h1:int list -> h2:int list -> double!}
+\end{quote}
+which compares two histograms as the average sum of squared differences,
+\begin{equation}
+  \text{diff}(h_1,h_2) = \frac{1}{N}\sum_{i=0}^{N-1}\left(h_1(i) - h_2(i)\right)^2
+\end{equation}
+where $h_1$ and $h_2$ are two histograms of $N$ elements.
+
+Extend your test file with a test of \lstinline{randomString} as
+follows:
+\begin{enumerate}
+\item Convert The Story using \lstinline{convertText} and calculate
+  its histogram.
+\item Use this to generate a random text using
+  \lstinline{randomString} with length $N$, where $N$ is the length of
+  the converted The Story.
+\item Calculate the distance between the histograms of The Story and
+  the random texts using \lstinline{diff}.
+\item Set the test as passed if the difference is below some threshold.
+\end{enumerate}
+You must choose a threshold in the above, and you must argue for your choice.

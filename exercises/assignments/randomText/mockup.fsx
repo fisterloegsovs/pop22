@@ -28,6 +28,9 @@ let reverseLookup (monotonic : 'a list) (v : 'a) : int =
 // more than once.
 let rnd = System.Random()
 
+// The remaining functions are specialized to work with the following alphabet
+let alphabet = ['a'..'z']@[' ']
+
 /// <summary> Generate a random character according to a histogram. </summary>
 /// <param name = "hist"> A list of histogram values with count hist.[0] being
 /// the value for 'a', hist.[1] for 'b' etc. </param>
@@ -37,7 +40,7 @@ let randomChar (hist : int list) : char =
   let cumHist = cumSum hist
   let v = rnd.Next(cumHist.[cumHist.Length-1])
   let i = reverseLookup cumHist v
-  'a' + char i
+  alphabet.[i] // Warning, this may cause an index out-of-bound exception
 
 /// <summary> Generate a string of random characters each distributed according
 /// to a histogram. </summary>
@@ -47,7 +50,7 @@ let randomChar (hist : int list) : char =
 /// distribution resembling hist </returns>
 let randomString (hist : int list) (len : int) : string =
   String.init len (fun _ -> string (randomChar hist))
-    
+
 /// <summary> Generate a histogram of the characters 'a'..'z' in a given
 /// string. </summary>
 /// <param name = "str"> Any string consisting of the characters: 'a'..'z' and
@@ -58,17 +61,16 @@ let histogram (str : string) : int list =
   // *****************************************************************
   // Mockup code, replace with code for calculating the histrogram
   // from a string.
-  List.init 26 (fun _ -> 1)
+  List.init alphabet.Length (fun _ -> 1)
   // *****************************************************************
-  
+
 //////////////////////////////////////////////////////////////////////
 // Given a string, calculate its histogram, generate a new random
 // string with a similar histogram, and compare the two.
-//let str = "abcdefghijklmnopqrstuvxyz"
-let str = "abcz"
-printfn "A string: %s" str
+//let str = "abcdefghijklmnopqrstuvxyz "
+let str = "abc z"
+printfn "A string: '%s'" str
 let hist = histogram str
-let alphabet = List.init hist.Length (fun i -> 'a' + char i)
 printfn "A histogram:\n %A" (List.zip alphabet hist)
 
 let ranStr = randomString hist 1000

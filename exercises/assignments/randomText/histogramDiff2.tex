@@ -1,0 +1,29 @@
+\label{diff}
+The function \lstinline{markovChain} is a random function, and
+you are to test its output by the cooccurrences of the characters in
+the string it produces.
+
+Extend your library with the function,
+\begin{quote}
+  \mbox{\lstinline!diff2 : c1:int list list -> c2:int list list -> double!}
+\end{quote}
+which compares two histograms as the average sum of squared differences,
+\begin{equation}
+  \text{diff2}(c_1, c_2) = \frac{1}{N^2}\sum_{i=0}^{N-1}\sum_{j=0}^{N-1}\left(c_1(i,j) - c_2(i,j)\right)^2
+\end{equation}
+where $c_1$ and $c_2$ are two cooccurrence histograms of $N$ elements
+such that $c_1(i,j)$ is the number of times character number $i$ is
+found following character number $j$.
+
+Extend your test file with a test of \lstinline{markovChain}
+as follows:
+\begin{enumerate}
+\item Convert The Story using \lstinline{convertText} and calculate
+  its cooccurrence histogram.
+\item Use this to generate a random text using \lstinline{markovChain}
+  with length $N$, where $N$ is the length of the converted The Story.
+\item Calculate the distance between the cooccurrence histograms of
+  The Story and the random texts using \lstinline{diff2}.
+\item Set the test as passed if the difference is below some threshold.
+\end{enumerate}
+You must choose a threshold in the above, and you must argue for your choice.

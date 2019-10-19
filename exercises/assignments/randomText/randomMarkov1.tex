@@ -1,15 +1,15 @@
-The script \lstinline[language=console]{sampleAssignment.fsx} contains
-the function
+\label{markov1}
+The script \lstinline[language=console]{mockup.fsx} contains a number
+of functions including
 \begin{quote}
   \mbox{\lstinline!randomString : hist:int list -> len:int -> string!}
 \end{quote}
-which generates a string of a given length, and contains random
-characters distributed according to a given histogram. Modify the code
-to use your histogram function from Exercise~\ref{histogram}.
+The function \lstinline{randomString} generates an identically and
+independently distributed string of a given length, where the
+characters are distributed according to a given histogram. The script
+is complete in the sense that it compiles and runs without errors, but
+its \lstinline{histogram} function is a mockup function and does not
+produce the correct histograms.
 
-Further, write a program, which reads the text
-\lstinline[language=console]{littleClausAndBigClaus.txt} using
-\lstinline{readText}, converts it using \lstinline{convertText}, and
-calculates its histogram and generates a new random string using
-\lstinline{histogram} and \lstinline{randomString}.  Test the quality
-of your code by comparing the histograms of the two texts.
+Create the library file \lstinline{textAnalysis.fs} and add the functions
+from \lstinline{mockup.fsx}
