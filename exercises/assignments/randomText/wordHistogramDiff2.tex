@@ -1,0 +1,29 @@
+\label{diff}
+The function \lstinline{wordMarkovChain} is a random function, and
+you are to test its output by the cooccurrences of the words in
+the string it produces.
+
+Extend your library with the function,
+\begin{quote}
+  \mbox{\lstinline!diffw2 : c1:wordCooccurrences -> c2:wordCooccurrences -> double!}
+\end{quote}
+which compares two cooccurrence histograms as the average sum of squared differences,
+\begin{equation}
+  \text{diffw2}(c_1, c_2) = \frac{1}{M^2}\sum_{i=0}^{M-1}\sum_{j=0}^{M-1}\left(c_1(i,j) - c_2(i,j)\right)^2
+\end{equation}
+where $c_1$ and $c_2$ are two cooccurrence histograms of $M$ elements
+such that $c_1(i,j)$ is the number of times word number $i$ is
+found following word number $j$.
+
+Extend your test file with a test of \lstinline{wordMarkovChain}
+as follows:
+\begin{enumerate}
+\item Convert The Story using \lstinline{convertText} and calculate
+  its cooccurrence histogram.
+\item Use this to generate a random text using \lstinline{wordMarkovChain}
+  with length $M$, where $M$ is the length of the converted The Story.
+\item Calculate the distance between the cooccurrence histograms of
+  The Story and the random texts using \lstinline{diffw2}.
+\item Set the test as passed if the difference is below some threshold.
+\end{enumerate}
+You must choose a threshold in the above, and you must argue for your choice.

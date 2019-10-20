@@ -1,0 +1,16 @@
+\label{wordHistogram}
+Extend your library with a function that counts occurrences of each
+word in a string and returns a list. The list must be organized using
+the following type:
+\begin{quote}
+  \mbox{\lstinline! type wordHistogram = (string * int) list!}
+\end{quote}
+For example, a string with the words ``a abc ba ba'' should result in the
+following list,
+\begin{quote}
+  \mbox{\lstinline![("a", 1); ("abc", 1); ("ba",2)]!}
+\end{quote}
+The function must have the type:
+\begin{quote}
+  \mbox{\lstinline!wordHistogram : src:string -> wordHistogram!}
+\end{quote}
