@@ -127,9 +127,24 @@ let compareCooccurrence (left : int list list) (right : int list list) : double 
 type wordHistogram = (string * int) list
 type wordCooccurrences = (string * wordHistogram) list
 
-/// A histogram of words. Return value is a list of pairs of a word and its count in the input text
+/// A histogram of words. Return value is sorted a list of pairs of a word and its count in the input text
 let wordHistogram (str : string) : wordHistogram =
-  str.Split ' ' |> Array.toList |> List.sort |> List.countBy id
+  str.Split ' ' |> Array.toList |> List.countBy id |> List.sortBy snd
+
+/// Take the square difference between word histograms
+let rec diffw (a : wordHistogram) (b : wordHistogram) : int =
+  match (a, b) with
+    | ([], (v, w)::bRst) -> w*w + diffw a bRst
+    | ((p, q)::aRst, []) -> q*q + diffw aRst b
+    | ((p, q)::aRst, (v,w)::bRst) ->
+       if p < v then
+         q*q + diffw aRst b
+       elif p > v then
+         w*w + diffw a bRst
+       else
+         let d = q-w
+         d*d + diffw aRst bRst
+    | _ -> 0
 
 /// Generate a random word according to the histogram of words in wHist
 let randomWord (wHist : wordHistogram) : string =
@@ -158,6 +173,20 @@ let cooccurrenceOfWords (str : string) : wordCooccurrences =
     neighbourOf words w |> List.countBy id
 
   List.map (fun w -> (w, neighbourOfHist words w)) alph
+
+let rec diffw2 (a : wordCooccurrences) (b : wordCooccurrences) : int =
+  match (a, b) with
+    | ([], (v, w)::bRst) -> diffw [] w + diffw2 a bRst
+    | ((p, q)::aRst, []) -> diffw q [] + diffw2 aRst b
+    | ((p, q)::aRst, (v,w)::bRst) ->
+       if p < v then
+         diffw q [] + diffw2 aRst b
+       elif p > v then
+         diffw [] w + diffw2 a bRst
+       else
+         diffw q w + diffw2 aRst bRst
+    | _ -> 0
+    
 
 /// Generate a random sentence with the same cooccurrence statistics as cooc.
 let fstOrderMarkovModelOfWords (cooc: wordCooccurrences) (nWords: int) : string =

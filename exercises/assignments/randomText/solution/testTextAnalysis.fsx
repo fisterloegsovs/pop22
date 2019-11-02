@@ -45,7 +45,15 @@ let wHist = wordHistogram textConv
 printfn "A wordHistogram:\n%A\n" wHist
 let rndWords = randomWords wHist 10
 printfn "Random words:\n%A\n" rndWords
+let newWHist = wordHistogram rndWords
+printfn "Resulting histogram:\n %A" newWHist
+printfn "Sum of squared differences is: %d" (diffw wHist newWHist)
+
 let wCoo = cooccurrenceOfWords textConv
 printfn "Word cooccurrences:\n%A\n" wCoo
-let rndWords1 = fstOrderMarkovModelOfWords wCoo 10
+let nWords = textConv.Split ' ' |> Array.length
+let rndWords1 = fstOrderMarkovModelOfWords wCoo nWords
 printfn "1st order random words:\n%A\n" rndWords1
+let newWCoo = cooccurrenceOfWords rndWords1
+printfn "Resulting histogram:\n %A" newWCoo
+printfn "Sum of squared differences is: %d" (diffw2 wCoo newWCoo)
