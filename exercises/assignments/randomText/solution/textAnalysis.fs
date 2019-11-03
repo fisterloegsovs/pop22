@@ -129,7 +129,7 @@ type wordCooccurrences = (string * wordHistogram) list
 
 /// A histogram of words. Return value is sorted a list of pairs of a word and its count in the input text
 let wordHistogram (str : string) : wordHistogram =
-  str.Split ' ' |> Array.toList |> List.countBy id |> List.sortBy snd
+  str.Split ' ' |> Array.toList |> List.countBy id |> List.sortBy fst
 
 /// Take the square difference between word histograms
 let rec diffw (a : wordHistogram) (b : wordHistogram) : int =
