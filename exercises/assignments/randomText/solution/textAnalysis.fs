@@ -198,3 +198,39 @@ let fstOrderMarkovModelOfWords (cooc: wordCooccurrences) (nWords: int) : string 
     else
       ""
   appendRandomString cooc nWords "once"
+
+let ngram (lst : 'a list) (n : int) : Map<'a list, ('a * int) list> =
+  let rec populate (dict : Map<'a list, 'a list>) (lst : 'a list) (n : int) : Map<'a list, 'a list> =
+    if lst.Length > n then
+      let key = lst.[0..(n-1)]
+      let obs = lst.[n]
+      let obsLst =
+        match dict.TryFind key with
+          Some aLst -> aLst
+          | None -> []
+      populate (dict.Add (key, obs::obsLst)) lst.[1..] n // Add adds or replaces a key-value pair and returns a new dictionary
+    else
+      dict
+  let aMap = populate (Map.empty<'a list, 'a list>) lst n
+  Map.map (fun key lst -> lst |> List.countBy id |> List.sortBy fst) aMap // Sort each of the histograms
+
+let randomElm (hist : ('a * int) list) : 'a =
+  let cumHist = hist |> List.map snd |> cumSum
+  let v = rnd.Next(cumHist.[cumHist.Length-1])
+  let i = reverseLookup cumHist v
+  hist.[i] |> fst
+
+let randomText (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) : 'a list =
+  let rec appendRandomString (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) : 'a list =
+    if len - key.Length > 0 then
+      let hist =
+        match dict.TryFind key with
+          Some aLst -> aLst
+          | None -> def
+      let nextElm = randomElm hist
+      printfn "%A : %A -> %A" key hist nextElm
+      // key is a running window of the last n elements, nextElm is the next and the first in key is removed.
+      key.[0] :: (appendRandomString dict def (key.[1..(key.Length-1)]@[nextElm]) (len - 1))
+    else
+      key
+  appendRandomString dict def key len
