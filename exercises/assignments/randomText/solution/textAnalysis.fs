@@ -220,17 +220,24 @@ let randomElm (hist : ('a * int) list) : 'a =
   let i = reverseLookup cumHist v
   hist.[i] |> fst
 
-let randomText (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) : 'a list =
-  let rec appendRandomString (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) : 'a list =
+let randomText (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) (verbose : bool): 'a list =
+  let rec appendRandomString (dict: Map<'a list, ('a * int) list>) (def: ('a * int) list) (key : 'a list) (len: int) (verbose : bool) : 'a list =
     if len - key.Length > 0 then
       let hist =
-        match dict.TryFind key with
-          Some aLst -> aLst
-          | None -> def
+        if key.IsEmpty then
+          def
+        else
+          match dict.TryFind key with
+            Some aLst -> aLst
+            | None -> def
       let nextElm = randomElm hist
-      printfn "%A : %A -> %A" key hist nextElm
+      if verbose then
+        printfn "%A : %A -> %A" key hist nextElm
+      if key.IsEmpty then
+        nextElm :: (appendRandomString dict def key (len - 1) verbose)
+      else
       // key is a running window of the last n elements, nextElm is the next and the first in key is removed.
-      key.[0] :: (appendRandomString dict def (key.[1..(key.Length-1)]@[nextElm]) (len - 1))
+        key.Head :: (appendRandomString dict def (key.Tail@[nextElm]) (len - 1) verbose)
     else
       key
-  appendRandomString dict def key len
+  appendRandomString dict def key len verbose
