@@ -27,5 +27,5 @@ let main (args : string []) : int =
       printfn "nGram:\n%A" textNGram
     let newText = randomText textNGram hist seed m (verbose > 0) |> List.fold (fun acc elm -> acc+(string elm)) ""
 
-    printfn "%A" newText
+    printfn "%s" newText
     0
