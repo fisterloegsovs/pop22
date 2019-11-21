@@ -1,0 +1,700 @@
+% Character set
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+
+% Change font
+\usepackage{mathptmx}
+% 20190927: fontenc-T1 causes problems with ttfamily, causing
+% lstinline to be incorrectly set!
+%\usepackage[T1]{fontenc} % ensure that all the characters in characterSets.tex prints
+\usepackage{upquote} % \textcent
+\usepackage{pifont} % add \ding, http://ctan.org/pkg/pifont
+
+% % A background text to prevent wide distribution
+% \usepackage{draftwatermark}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{6}
+% \SetWatermarkLightness{.95}
+
+% Page setup
+\usepackage[top=25mm,bottom=20mm,inner=20mm,outer=20mm,marginparsep=3mm,marginparwidth=35mm]{geometry}
+\renewcommand{\floatpagefraction}{.8}%
+
+% paragraph indentation is stupid
+\setlength\parindent{0pt}
+\setlength{\parskip}{1em}
+
+% Globally defined colors
+\usepackage[table,x11names]{xcolor}
+\definecolor{alternateKeywordsColor}{rgb}{0.13,1,0.13}
+\definecolor{keywordsColor}{rgb}{0.13,0.13,1}
+%\definecolor{commentsColor}{rgb}{0,0.5,0}
+\definecolor{commentsColor}{rgb}{0,0.5,0}
+%\definecolor{stringsColor}{rgb}{0.9,0,0}
+\definecolor{stringsColor}{rgb}{0,0,0.5}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{codeLineHighlight}{named}{SlateGray1}
+%\definecolor{codeLineHighlight}{rgb}{0.975,0.975,0.975}
+\definecolor{syntaxColor}{rgb}{0,.45,0}
+
+\definecolor{headerRowColor}{rgb}{0.85,0.85,0.85}
+\definecolor{oddRowColor}{rgb}{0.95,0.95,0.95}
+\definecolor{evenRowColor}{rgb}{1,1,1}
+
+% add check- and crossmarks, http://ctan.org/pkg/pifont
+\newcommand{\cmark}{{\color{green}\ding{51}}}%
+\newcommand{\xmark}{{\color{red}\ding{55}}}%
+
+% Extra math stuff
+\usepackage{amsmath,amssymb}
+
+% Typeset chess
+\usepackage{skak}
+
+% Figures
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% clickable url
+\usepackage{url}
+
+% figures
+\usepackage{subfigure}
+
+% Clickable table of content
+\usepackage[pdfpagelabels]{hyperref}
+%\usepackage{multirow}
+\usepackage{makecell}
+
+% Include label name in ref
+\usepackage[noabbrev,capitalize]{cleveref}
+\newcommand{\creflastconjunction}{, and\nobreakspace~}
+\Crefformat{tcb@cnt@codeNOutput}{Listing~#2#1#3}
+\crefformat{tcb@cnt@codeNOutput}{Listing~#2#1#3}
+\crefrangeformat{tcb@cnt@codeNOutput}{Listing~#3#1#4\nobreakdash--#5#2#6}
+\Crefrangeformat{tcb@cnt@codeNOutput}{Listing~#3#1#4\nobreakdash--#5#2#6}
+\crefmultiformat{tcb@cnt@codeNOutput}{Listing~#2#1#3}{ and~#2#1#3}{, #2#1#3}{\creflastconjunction#2#1#3}
+\Crefmultiformat{tcb@cnt@codeNOutput}{Listing~#2#1#3}{ and~#2#1#3}{, #2#1#3}{\creflastconjunction#2#1#3}
+\crefrangeformat{table}{Table~#3#1#4\nobreakdash--#5#2#6}
+\Crefrangeformat{table}{Table~#3#1#4\nobreakdash--#5#2#6}
+\crefrangeformat{part}{Part~#3#1#4\nobreakdash--#5#2#6}
+\Crefrangeformat{part}{Part~#3#1#4\nobreakdash--#5#2#6}
+\Crefrangeformat{equation}{(#3#1#4)\nobreakdash--(#5#2#6)}
+
+% paragraphs in tables
+\usepackage{tabularx}
+
+% formatting lists
+\usepackage{enumitem}
+%\setlist[description]{leftmargin=0pt,labelindent=0pt,itemindent=0pt}
+%\setlist[description]{itemindent=-\leftmargin}
+
+% latex comment environment
+\usepackage{comment}
+
+% UML
+\usepackage{pgf-umlcd}
+\renewcommand{\umltextcolor}{black} 
+\renewcommand{\umlfillcolor}{black!5!white}
+\renewcommand{\umldrawcolor}{teal}
+
+% List of indices
+\usepackage{xstring}
+\usepackage{makeidx}
+\usepackage{marginfix} % fixes marginpar location problem in 2 -page mode.
+\newcommand{\idxs}[1]{\marginpar{$\cdot$~\parbox[t]{\linewidth}{\raggedright \expandarg\IfSubStr{#1}{@}{\StrBehind{#1}{@}}{#1}}}\index{#1}} % The parbox is too wide, since the line also includes cdot-space
+\newcommand{\idxss}[1]{\index{#1}}
+% Define a new command idx with an optional parameter, which if given is the key to the index
+\makeatletter
+\def\idx{\@ifnextchar[{\@with}{\@without}}
+\def\@with[#1]#2{\emph{#2}\idxs{#1}}
+\def\@without#1{\emph{#1}\idxs{#1}}
+\makeatother
+%\newcommand{\idx}[1]{\emph{#1}\idxs{#1}}
+\newcommand{\keyword}[1]{{\lstinline[language=fsharp]|#1|}}
+\newcommand{\lexeme}[1]{\mbox{``\lstinline[language=fsharp]|#1|''}}
+\makeindex
+
+% display tree like structures
+\usepackage{qtree}
+
+% We frame all listings and problems
+\usepackage{tcolorbox}
+\tcbuselibrary{listings}
+\tcbuselibrary{raster}
+\tcbset{%
+  colframe=teal, %PaleGreen1!45!black,
+  %coltitle=black,
+  fonttitle=\bfseries, 
+  leftrule=3mm,
+  sharp corners=downhill,
+  colback=black!5!white,
+  left=1mm,
+  top=1mm,
+  right=1mm,
+  bottom=1mm,
+  middle=1mm,
+  arc=2mm,
+}
+\newtcolorbox[auto counter]{problem}[1][]{%
+  title=\textbf{Problem~\thetcbcounter},
+  colframe=DeepSkyBlue1, %green!30!blue,
+  #1}
+\newcommand{\src}{src}
+\newtcolorbox[auto counter]{codeNOutput}[2][]{%
+  title=\textbf{Listing~\thetcbcounter#2},
+  #1}
+
+%% lstlisting stuff
+\usepackage{listings} 
+\def\lstfs#1{\mbox{\lstinline{{#1}}}}
+% Get counters from references for firstnumber references in lstinputlisting
+\usepackage{refcount}
+\newcounter{lstFrom}
+\newcounter{lstTo}
+% Example: 
+% \setcounterref{lstFrom}{dynamicScopeTracing:a1}
+% \setcounterref{lstTo}{dynamicScopeTracing:a2}
+% \lstinputlisting[firstline=\thelstFrom,lastline=\thelstTo,escapechar=|]{\src/dynamicScopeTracing.fsx}
+
+% \usepackage{lstlinebgrd}
+% \makeatletter
+% %The following sets the box compatible with tcolorbox setup
+% \def\lst@linebgrdcolor{\color{black!5!white}}
+% \def\lst@linebgrdsep{1em}
+% \def\lst@linebackgroundwidth{1em}
+% \def\lst@linebackgroundhighlight{\color{codeLineHighlight}}
+% \renewcommand{\lst@linebgrd}{%
+%   \ifx\lst@linebgrdcolor\empty
+%   \else
+%     \rlap{
+%        \lst@basicstyle\color{black!5!white} % tcolorbox background color
+%        \lst@linebgrdcolor{
+%           \kern-\dimexpr\lst@linebgrdsep\relax
+%           \lst@linebgrdcmd{\lst@linebgrdwidth}{\lst@linebgrdheight}{\lst@linebgrddepth}
+%        }
+%     }
+%   \fi
+% }
+% % Highlight a range of lines with green. Use \getrefnumber{label} for refs
+% \newcommand{\highlightRange}[2]{\ifnum\value{lstnumber}>\numexpr#1-1\ifnum\value{lstnumber}<\numexpr1+#2\lst@linebackgroundhighlight\fi\fi}
+% % \highlight conflicts with skak. Just rewriting, wonder what breaks in skak
+% \renewcommand{\highlight}[1]{\ifnum\value{lstnumber}=#1\lst@linebackgroundhighlight\fi}
+
+% To use verbatimwrite to write listing to file, e.g., in conjunction with ebnfs
+\usepackage{moreverb} 
+
+\lstdefinelanguage{fsharp}{%
+  keywords={abstract, and, as, assert, base, begin, class, default, delegate, do, done, downcast, downto, elif, else, end, exception, extern, false, finally, for, fun, function, global, if, in, inherit, inline, interface, internal, lazy, let, match, member, module, mutable, namespace, new, null, of, open, or, override, private, public, rec, return, sig, static, struct, then, to, true, try, type, upcast, use, val, void, when, while, with, yield},
+  morekeywords={atomic, break, checked, component, const, constraint, constructor, continue, eager, fixed, fori, functor, include, measure, method, mixin, object, parallel, params, process, protected, pure, recursive, sealed, tailcall, trait, virtual, volatile},
+  otherkeywords={ let!, return!, do!, yield!, use!},
+  keywordstyle=\color{keywordsColor},
+  % sensitive=true,
+  basicstyle=\ttfamily\lst@ifdisplaystyle\small\fi, % make font small for listings but not for lstinline
+  breaklines=true,
+  breakatwhitespace=true
+  showstringspaces=false,
+  morecomment=[l][\color{commentsColor}]{///},
+  morecomment=[l][\color{commentsColor}]{//},
+  morecomment=[n][\color{commentsColor}]{(*}{*)},
+  morecomment=[is][\color{white}]{(*//}{*)},
+  morestring=[b]",
+  literate={`}{\`}1,
+  stringstyle=\color{stringsColor},
+  showspaces=true,
+  numbers=left,
+  numbersep=6pt,
+  numberstyle=\scriptsize\color{white},
+  % aboveskip=0pt, 
+  % belowskip=0pt,
+  % resetmargins=true,
+  % captionpos=b,
+  backgroundcolor=\color{black!5!white},
+}
+
+
+\lstdefinelanguage{syntax}{%
+  classoffset=0,
+  keywords={abstract, and, as, assert, base, begin, class, default, delegate, do, done, downcast, downto, elif, else, end, exception, extern, false, finally, for, fun, function, global, if, in, inherit, inline, interface, internal, lazy, let, match, member, module, mutable, namespace, new, null, of, open, or, override, private, public, rec, return, sig, static, struct, then, to, true, try, type, upcast, use, val, void, when, while, with, yield, atomic, break, checked, component, const, constraint, constructor, continue, eager, fixed, fori, functor, include, measure, method, mixin, object, parallel, params, process, protected, pure, recursive, sealed, tailcall, trait, virtual, volatile, let!, return!, do!, yield!, use!},
+  keywordstyle=\color{keywordsColor},
+  % classoffset=1,
+  % morekeywords={ident, expr, arg, format-string},
+  % keywordstyle=\color{syntaxColor},
+  % classoffset=0,
+  otherkeywords={},
+  basicstyle=\ttfamily\lst@ifdisplaystyle\small\fi, % make font small for listings but not for lstinline
+  breaklines=true,
+  breakatwhitespace=true
+  showstringspaces=false,
+  classoffset=0,
+  morecomment=[l][\color{commentsColor}]{////},
+  literate={`}{\`}1 {\{*}{{{\color{syntaxColor}\{}}}1 {*\}}{{{\color{syntaxColor}\}}}}1 {[*}{{{\color{syntaxColor}[}}}1  {*]}{{{\color{syntaxColor}]}}}1 {|*}{{{\color{syntaxColor}|}}}1, % {etc*}{{{\color{syntaxColor}...}}}3,
+  moredelim  = **[is][\processmydelims]{<*}{*>}, % delete delimiters, typeset keywords. Don't know how to avoid the last...
+  showspaces=true,
+  numbers=left,
+  numbersep=6pt,
+  numberstyle=\scriptsize\color{white},
+  backgroundcolor=\color{black!5!white},
+}
+%Tweek of deliminter and literate: https://tex.stackexchange.com/questions/203263/listings-package-custom-language-delimiter-match-left-side
+\newcommand\processmydelimsend{}
+\newcommand\processmydelims{%
+  \renewcommand\processmydelimsend{\textcolor{syntaxColor}{>}\egroup}%
+  \bgroup\color{syntaxColor}<\aftergroup\processmydelimsend%
+}
+% \makeatletter
+% \newcommand\processhash{%
+%   \ifnum\lst@mode=\lst@Pmode%
+%     \bfseries%
+%   \fi
+%   \#%
+% }
+% \makeatother
+
+
+\lstdefinelanguage{ebnf}{%
+  keywords={},
+  morekeywords={},
+  otherkeywords={},
+  keywordstyle=\color{keywordsColor},
+  % sensitive=true,
+  basicstyle=\fontfamily{pcr}\selectfont\lst@ifdisplaystyle\small\fi, 
+  breaklines=true,
+  breakatwhitespace=true
+  morecomment=[s][\color{commentsColor}]{(*}{*)},
+  morestring=[b]",
+  morestring=[b]',
+  alsoletter={\\},
+  showstringspaces=false,
+  % stringstyle=\color{stringsColor},
+  % aboveskip=0pt, 
+  % belowskip=0pt,
+  % resetmargins=true,
+  % captionpos=b,
+  % backgroundcolor=\color{blue!10!white},
+}
+\lstdefinelanguage{console}{%
+  keywords={},
+  morekeywords={},
+  otherkeywords={},
+  basicstyle=\ttfamily\lst@ifdisplaystyle\small\fi, 
+  breaklines=true,
+  showstringspaces=false,
+  % aboveskip=0pt,
+  % belowskip=0pt,
+  % resetmargins=true,
+  % captionpos=b,
+  % backgroundcolor=\color{green!10!white},
+}
+%\lstset{language=fsharp, frame=single}
+\lstset{language=fsharp,showlines=false}
+\makeatletter
+\def\lst@visiblespace{ }
+\makeatother
+
+% input .fsx and .out listings from \src and display as code and result in same figure
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename without suffix, and label
+% #3 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\fs}[3][]{%
+  listing file={src/#2.fsx},
+  listing and comment,
+  listing options={language=fsharp,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter} {#2.fsx:\\#3},
+  label={#2},
+  comment={\lstinputlisting[language=console]{\src/#2.out}}
+}
+
+% dispaly fsharp code \src
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename
+% #3 = label
+% #4 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\fsharp}[4][]{%
+  listing file={\src/#2},
+  listing only,
+  listing options={language=fsharp,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter} {#2:\\#4},
+  label={#3},
+}
+
+% dispaly console file \src
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename
+% #3 = label
+% #4 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\console}[4][]{%
+  listing file={\src/#2},
+  listing only,
+  listing options={language=console,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter} {#2:\\#4},
+  label={#3},
+}
+
+\newtcbinputlisting[use counter from=codeNOutput]{\fsCode}[4]{%
+  listing file={src/#1.fsx},
+  listing only,
+  listing options={language=fsharp,escapechar=§,#4},
+  title=\textbf{Listing \thetcbcounter} {#1.fsx:\\#3},
+  label={#2},
+}
+
+% dispaly ebnf file, no label
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename
+% #3 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\ebnf}[3][]{%
+  listing file={#2},
+  listing only,
+  colframe=black!50!white,
+  listing options={language=ebnf,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter} {#3},
+}
+
+% dispaly syntax file, no label
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename without suffix, and label
+% #3 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\syntax}[3][]{%
+  listing file={#2},
+  listing only,
+  colframe=black!50!white,
+  listing options={language=syntax,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter} {#3},
+  label={#2}
+}
+
+\newtcbinputlisting[use counter from=codeNOutput]{\fsSignature}[4]{%
+  listing file={src/#1.fsi},
+  listing only,
+  listing options={language=fsharp,escapechar=§,#4},
+  title=\textbf{Listing \thetcbcounter} {#1.fsi:\\#3},
+  label={#2},
+}
+\newtcbinputlisting[use counter from=codeNOutput]{\fsImplementation}[4]{%
+  listing file={src/#1.fs},
+  listing only,
+  listing options={language=fsharp,escapechar=§,#4},
+  title=\textbf{Listing \thetcbcounter} {#1.fs:\\#3},
+  label={#2},
+}
+
+% dispaly output file .out from \src
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename without suffix, and label
+% #3 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\fsOutput}[3][]{%
+  listing file={src/#2.out},
+  listing only,
+  listing options={language=console,escapechar=§,#1},
+  title=\textbf{Listing \thetcbcounter}: {#3},
+  label={#2},
+}
+
+% dispaly output file .out from \src as an element in tabularx
+% #1 = optional further arguments for lstinputlisting
+% #2 = filename without suffix, and label
+% #3 = caption
+\newtcbinputlisting[use counter from=codeNOutput]{\fsOutputTabx}[3][]{%
+  listing file={src/#2.out},
+  listing only,
+  width=\hsize,
+  box align=top,
+  listing options={language=console,escapechar=§,aboveskip=0pt,belowskip=0pt,emptylines=0,#1},
+  title=\textbf{Listing \thetcbcounter}: {#3},
+  label={#2},
+}
+
+\newcommand{\filename}[1]{\lstinline[language=console]{#1}}
+
+% highlighted text snippets
+\newcommand{\advice}[1]{\marginpar{Advice}{\textbf{#1}}}
+\newcommand{\advanced}[1]{\marginpar{Advanced material}\textbf{#1}}
+
+% sometimes we need to include hash sign as arguments
+\begingroup\catcode`\#=12
+\newcommand\hashchar{}%check that is doesn't exist
+\gdef\hashchar{#}
+\endgroup
+
+% Scratch out math, used in test.tex
+\usepackage{cancel}
+%\newcommand{\bcancel}[1]{#1}
+
+% Draw arrows between elements
+\usepackage{tikz}
+%\usepackage{sphack} % make overlays invisible where stated in text
+\usetikzlibrary{arrows,shapes,calc,decorations.pathreplacing,patterns}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\newcommand*{\DrawArrow}[3][]{%
+  % #1 = draw options
+  % #2 = left point
+  % #3 = right point
+  \begin{tikzpicture}[overlay,remember picture]
+    %\draw [-latex, #1,ultra thick,red] ($(#2)+(0.1em,0.5ex)$) to ($(#3)+(0,0.5ex)$);
+    \draw [-latex, #1,ultra thick,red] ($(#2) -(0,0.5ex)$) to ($(#3)+(0,2ex)$);
+  \end{tikzpicture}%
+}%
+\newcommand*{\AddNote}[4]{%
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw [decoration={brace,amplitude=0.5em},decorate,ultra thick,red]
+    ($(#3)!([yshift=1.5ex]#1)!($(#3)-(0,1)$)$) -- ($(#3)!(#2)!($(#3)-(0,1)$)$)
+    node [align=left, text width=0cm, pos=0.5, anchor=west, xshift=.2cm] {#4};
+  \end{tikzpicture}
+}%
+\newcommand{\FrameArea}[2]{%
+  % #1 = top left point
+  % #2 = bottom right point
+  % The overlay is drawn in the margin in order not to screw with
+  % horizontal spacing.
+  %\ifvmode\vspace*{-1.2em}\else\fi%
+  \begin{tikzpicture}[overlay,remember picture]%
+    \draw[red,rounded corners] ([shift={(-2pt,1.9ex)}] #1)  rectangle  ([shift={(2pt,-.9ex)}] #2);%
+  \end{tikzpicture}\noindent % I don't know why this command shift to the right, but this seems to fix it.
+}%
+
+% One can write to a file during compilation with the following
+% low-level code.
+%  \newwrite\tempfile
+%  \immediate\openout\tempfile=list.tex
+%  \immediate\write\tempfile{Text to write to file}
+%  \immediate\closeout\tempfile
+
+\usepackage{xspace}
+\newcommand{\monoVersion}{6.0.0\xspace}
+\newcommand{\fsharpVersion}{4.5\xspace}
+
+% Notes to self
+\newcommand{\jon}[1]{\footnote{Jon: \textbf{#1}}}
+%\renewcommand{\jon}[1]{}
+\newcommand{\mael}[1]{\footnote{Mael: \textbf{#1}}}
+%\renewcommand{\mael}[1]{}
+\newcommand{\spec}[1]{\footnote{Spec: \textbf{#1}}}
+\renewcommand{\spec}[1]{}
+
+\usepackage{import}
+\usepackage{etoolbox}
+
+\newrobustcmd{\typeName}[1]{
+  \expandafter\ifstrequal\expandafter{#1}{g}{gruppeopgave}{individuel opgave}
+} % \expandafter\ifstrequal\expandafter allows for argument to be a command.
+
+\newrobustcmd{\exerciseTitle}[4]{
+\title{Programmering og Problemløsning\\Datalogisk Institut, Københavns Universitet\\Arbejdsseddel #1 - \typeName{#2}}
+\author{Jon Sporring}
+\date{#3.\\Afleveringsfrist: #4.}
+}
+
+\DeclareListParser*{\iterateItemize}{,}
+\newcommand{\listItemize}[1]{%
+\begin{itemize}
+  \iterateItemize{\item}{#1}
+\end{itemize}
+}
+\newrobustcmd{\learningPurposeTxt}[1]{
+Emnerne for denne arbejdsseddel er:
+\listItemize{#1}
+}
+
+\newrobustcmd{\typeCommand}[1]{
+  \expandafter\ifstrequal\expandafter{#1}{g}{I denne periode skal I arbejde i grupper med
+  jeres afleveringsopgaver.}{I
+  denne periode skal I arbejde individuelt med jeres afleveringsopgaver.}
+}
+
+\newrobustcmd{\learningConditionsTxt}[1]{
+Opgaverne er delt i øve- og afleveringsopgaver.%
+%
+\typeCommand{#1}%
+%
+Regler for gruppe- og individuelle afleveringsopgaver er beskrevet i "`Noter,
+links, software m.m."'$\rightarrow$"`Generel information om opgaver"'.
+}
+
+\newcommand{\dome}[1]{\item #1}
+\newcommand{\listItemizeInternal}[1]{%
+\begin{itemize}
+\forlistloop{\dome}{#1}
+\end{itemize}
+}
+
+\DeclareListParser*{\iterateImportEnumerate}{,}
+\newcommand{\listImportEnumerate}[3]{%
+\begin{enumerate}[#1]
+  \iterateImportEnumerate{\item \subimport*{#2}}{#3}
+\end{enumerate}
+}
+
+\DeclareListParser*{\iterateEnumerate}{,}
+\newcommand{\listEnumerate}[2]{%
+\begin{enumerate}[#1]
+  \iterateEnumerate{\item }{#2}
+\end{enumerate}
+}
+\newrobustcmd{\exercises}[5]{
+\section*{#1}
+\ifstrempty{#4}{}{\subimport*{#3}{#4}}
+\listImportEnumerate{label=#2\arabic*,start=0}{#3}{#5}
+}
+\newrobustcmd{\trainingExercises}[4]{\exercises{Øveopgaver}{#1}{#2}{#3}{#4}}
+\newrobustcmd{\handInExercises}[4]{\exercises{Afleveringsopgaver}{#1}{#2}{#3}{#4}}
+
+\newrobustcmd{\continueExercises}[4]{
+\ifstrempty{#3}{}{\subimport*{#2}{#3}}
+\listImportEnumerate{label=#1\arabic*,resume}{#2}{#4}
+}
+
+\newcommand{\handinTextOne}{Afleveringen skal bestå af
+\begin{itemize}\item upload af de udviklede programmer i klassens studio
+på Scratch' hjemmeside, \item en zip-fil og \item en rapport i
+pdf-format.\end{itemize} Rapporten skal dokumentere jeres process og
+beskrive jeres programmer. Den skal skrives i LaTeX med et passende
+antal billeder, illustrationer og henvise til jeres
+programmer. LaTeX koden (\texttt{.tex}) inklusiv billeder skal
+organiseres i en mappe kaldet \texttt{tex}, således at pdf-filen kan
+laves ved kørsel af \texttt{pdflatex} kommandoen i mappen. Mappen skal
+zippes (\texttt{.zip}) og afleveres sammen med den oversatte pdf fil
+(\texttt{.pdf}) som 2 filer i Absalon.}
+
+\newcommand{\handinTextOneOne}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil\item en pdf-fil\end{itemize}
+Zip-filen skal indeholde en \texttt{src} mappe, en \texttt{tex} mappe
+og filen \texttt{README.txt}. Mappen \texttt{src} skal indeholde
+fsharp koden, der skal være en fsharp tekstfil per fsharp-opgave, og
+de skal navngives \texttt{#1} osv. De skal kunne oversættes med
+fsharpc, og de oversattte filer skal kunne køres med mono. Mappen
+\texttt{tex} skal indeholde \LaTeX\ koden. Filen \texttt{README.txt} skal ganske
+kort beskrive, hvordan rapporten oversættes til pdf og koden
+oversættes og køres.}
+
+\newcommand{\handinTextTwo}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil\end{itemize} Zip-filen skal
+indeholde en \texttt{src} mappe og filen \texttt{README.txt}. Mappen
+skal indeholde fsharp koden, der skal være en fsharp tekstfil per
+fsharp-opgave, og de skal navngives \texttt{#1} osv. De skal kunne
+oversættes med fsharpc, og de oversattte filer skal kunne køres med
+mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og
+udover selve programteksten skal besvarelserne indtastes som
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan koden køres.  }
+
+\newcommand{\handinTextTwoOne}[1]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<gruppe>.zip} (f.eks. \texttt{#1\_gruppe4.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<gruppe>.zip} skal indeholde en \texttt{src}
+mappe og filen \texttt{README.txt}.  I \texttt{src} skal der ligge
+præcis 5 filer: \texttt{vec2d.fsi, vec2d.fs, #11.fsx, #12.fsx,
+#13.fsi} svarende til den udleverede fil og de 4 delopgaver.  De skal
+kunne oversættes med fsharpc og de oversattte filer skal kunne køres
+med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden
+som minimum ved brug af \texttt{<summary>}, \texttt{<param>} og
+\texttt{<returns>} XML-tagsne. Udover selve koden skal besvarelser
+indtastes som kommentarer i de fsx-filer, de hører til. Filen
+\texttt{README.txt} skal ganske kort beskrive, hvordan koden
+oversættes og køres.}
+
+\newcommand{\handinTextTwoTwo}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til hver af delopgaverne.  De skal
+kunne oversættes med \lstinline[language=console]{fsharpc}, og de
+oversattte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Udover selve koden skal besvarelser indtastes som
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan koden oversættes og køres.}
+
+%\usepackage{forest}
+\newcommand{\handinTextOneTwo}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe
+\texttt{#1\_<navn>}. I den mappe skal der ligge en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til de relevante delopgaver.
+    % % Figur der viser hvad de studerende skal aflevere,
+    % % aka. 6g0.fsx til 6g4.fsx samt README.txt i src mappen i zipfilen
+    % \begin{figure}[ht]
+    %   \centering
+    % \begin{forest}
+    %   for tree={
+    %     font=\ttfamily,
+    %     grow'=0,
+    %     child anchor=west,
+    %     parent anchor=south,
+    %     anchor=west,
+    %     calign=first,
+    %     edge path={
+    %       \noexpand\path [draw, \forestoption{edge}]
+    %       (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    %     },
+    %     before typesetting nodes={
+    %       if n=1
+    %         {insert before={[,phantom]}}
+    %         {}
+    %     },
+    %     fit=band,
+    %     before computing xy={l=15pt},
+    %   }
+    %   [6g\_gruppe<NR>.zip
+    %     [src
+    %       [6g0.fsx]
+    %       [6g1.fsx]
+    %       [6g2.fsx]
+    %       [6g3.fsx]
+    %       [6g4.fsx]
+    %       [README.txt]
+    %     ]
+    %   ]
+    % \end{forest}
+    %   \caption{Din mappestruktur skal se således ud i zip-filen}
+    %   \label{fig:zip-eksempel}
+    % \end{figure}
+De skal kunne oversættes med \lstinline[language=console]{fsharpc}, og
+de oversattte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Udover selve koden skal besvarelser indtastes som
+kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
+skal ganske kort beskrive, hvordan koden oversættes og køres.}
+
+\newcommand{\handinTextThree}[1]{Afleveringen skal bestå
+af \begin{itemize}\item en zip-fil\item en pdf-fil\end{itemize}
+Zip-filen skal indeholde en \texttt{src} mappe og filen
+\texttt{README.txt}.  Mappen skal indeholde fsharp koden, der skal
+være en fsharp tekstfil per fsharp-opgave, og de skal navngives
+\texttt{#1} osv. De skal kunne oversættes med fsharpc og den
+oversattte fil skal kunne køres med mono. Funktioner skal dokumenteres
+ifølge dokumentationsstandarden. Filen \texttt{README.txt} skal ganske
+kort beskrive, hvordan koden oversættes og køres. Pdf-filen skal
+indeholde jeres rapporten oversat fra \LaTeX.}
+
+\newcommand{\handinTextThreeOne}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}
+  (f.eks. \texttt{#1\_jon.zip})
+  \item en pdf-fil , der hedder \texttt{#1\_<navn>.pdf}
+  (f.eks. \texttt{#1\_jon.pdf})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe
+\texttt{#1\_<navn>}. I den mappe skal der ligge en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til hver af delopgaverne.  De skal
+kunne oversættes med \lstinline[language=console]{fsharpc}, og de
+oversattte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Filen \texttt{README.txt} skal ganske kort beskrive,
+hvordan koden oversættes og køres. Pdf-filen skal indeholde jeres
+rapport oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}
+
+\newcommand{\subAssignment}[1]{\textbf{#1}\\[2mm]}
+%%% Local Variables:
+%%% TeX-master: "fsharpNotes"
+%%% End:

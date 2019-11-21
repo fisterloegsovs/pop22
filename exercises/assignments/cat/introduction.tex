@@ -1,0 +1,17 @@
+\lstinline[language=console]{cat} is a UNIX-program, which concatenates (i.e. joins) files. The program exists on both Linux and macOS.
+
+When passing two text files to \lstinline[language=console]{cat}, e.g. \lstinline[language=console]{a.txt} and \lstinline[language=console]{b.txt}, the program prints the contents of file \lstinline[language=console]{a.txt} followed by the contents of \lstinline[language=console]{b.txt} to the screen.
+  
+UNIX also has an inverse version of \texttt{cat}, \texttt{tac}, which prints the files in reverse order.
+
+For example, if the file \lstinline[language=console]{a.txt} contains the characters \lstinline[language=console]{aaa\nbbb\n} and the file \lstinline[language=console]{b.txt} contains the characters \lstinline[language=console]{ccc\nddd\n}, then
+\begin{quote}
+\lstinline[language=console]{cat a.txt b.txt}
+\end{quote}
+will output \lstinline[language=console]{aaa\nbbb\nccc\nddd\n} to the screen. In contrast,
+\begin{quote}
+\lstinline[language=console]{tac a.txt b.txt}
+\end{quote}
+will output \lstinline[language=console]{ddd\nccc\nbbb\naaa\n} to the screen.
+
+In the following assignments you are to write a (functional) implementation of \lstinline[language=console]{cat} in F\#.

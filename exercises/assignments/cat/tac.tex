@@ -1,0 +1,12 @@
+First write a function,
+\begin{quote}
+  \mbox{\lstinline!tac : filenames:string list -> string!}
+\end{quote}
+which takes a list of files, concatenates them and prints the result
+line by line in reverse order (i.e. the opposite of \lstinline{cat} on a
+line-by-line basis), and returns the result as a string.
+
+Then write a program, \lstinline[language=console]{tac}, which takes a
+list of filenames as command line arguments, calls the \lstinline{tac}
+function with this list and prints the resulting string to the screen
+using \lstinline{printFile} (exercise~\ref{cat:printFile}).
