@@ -1,5 +1,28 @@
-Lav en lommeregner,
-  \begin{quote}
-    \mbox{\lstinline!simpleCalc : unit -> unit!}
-  \end{quote}
-  som starter en uendelig dialog med en bruger. Brugeren skal kunne indtaste simple regnestykker på postive heltal, og hvert regnestykke må kun bestå af en enkelt af følgende binære operatorer: \lstinline!+!, \lstinline!-!, \lstinline!*!, \lstinline!/!. Resultatet skal kunne genbruges i den efterfølgende beregning med navnet \lstinline!ans!.
+Make a calculator program
+\begin{quote}
+  \mbox{\lstinline!simpleCalc : unit -> unit!}
+\end{quote}
+which starts an infinite dialogue with the user. The user must be able to enter
+simple expressions of positive numbers. Each expression must consist
+of a value, one of the binary operators \lstinline!+!, \lstinline!-!,
+\lstinline!*!, \lstinline!/!, and a value. When the user presses
+\lstinline[language=console]!<enter>!, the the expression is evaluated
+and the result is written as \lstinline[language=console]{ans = <result>} with the correct result entered. The input-values can either
+be a positive integer or the string ``ans'', and the string ``ans''
+should be the result of the previous evaluated expression or 0, in
+case this is the first expression typed. As an example, a dialogue
+could be as follows:
+\begin{quote}
+  \mbox{\lstinline!$ simpleCalc!}\\ %$
+  \mbox{\lstinline!>3+5!}\\
+  \mbox{\lstinline!ans=8!}\\
+  \mbox{\lstinline!>ans/2!}\\
+  \mbox{\lstinline!ans=4!}\\
+\end{quote}
+Here we used the character \lstinline{>} to indicate, that the program
+is ready to accept input.
+
+If the input is invalid or the evaluation results in an error, then
+the program should give an error message, and the input should be
+ignored.
+

@@ -1,17 +1,17 @@
-I html-standarden angives links med \lstinline!<a></a>! tags, f.eks. kunne et link til Googles hjemmeside skrives som \lstinline!<a href="https://google.com">Tryk her for Google</a>!. Der skal laves et program
+In the html-standard links are given by the \lstinline!<a></a>! tags. For example, a link to Google's homepage is written as \lstinline[language=console]!<a href="https://google.com">Press to go to Google</a>!.
+
+Make a program
   \begin{quote}
     \mbox{\lstinline!countLinks : url:string -> int!}
   \end{quote}
-  som henter internetsiden angivet med argument \lstinline!url! og som tæller, hvor mange links der er på siden ved at tælle antallet af \lstinline!<a! delstrenge.
+which reads the page given in \lstinline!url! and counts how many links that page has to other pages. You should count by counting the number of \lstinline!<a! substrings.
 
-  Bemærk: Langt de fleste internetsider kræver et gyldigt certifikat for at dit program kan læse siden, og som udgangspunkt har mono ingen certifikater installeret. For at installere et nyttigt sæt certifikater kan du bruge \lstinline[language=console]{mozroots}, som er en del af Mono pakken. På Linux/MacOS gør følgende fra Konsollen:
+Notice, most internet pages requires a valid certificate before they will allow your program to access it. By default, Mono has no certificates installed. One way to install useful certificates is to use \lstinline[language=console]{mozroots}, which is part of the Mono package. On Linux/MacOS you do the following from the console:
   \begin{quote}
     \lstinline[language=console]{mozroots --import --sync}
   \end{quote}
-  På Windows gør du følgende (på samme linje)
+On Windows you type the following (on one line)
   \begin{quote}
     \lstinline[language=console]{mono "C:\Program Files (x86)\Mono\lib\mono\4.5\mozroots.exe" --import --sync}
   \end{quote}
-  Ret evt.\ stien, hvis din installation af mozroots ligger et andetsted. Derefter kan du læse de fleste sider uden at blive afvist.
-
-  Til besvarelsen skal der laves en kort afprøvning, og en kort beskrivelse af løsningen med argumenter for større valg, der er foretaget, for at nå til den givne løsning.
+Note that your installation of \lstinline[language=console]{mozroots} may be in a different path, and you may have to adapt the above path to your installation. After running the above, your program should be able to read most pages without being rejected.
