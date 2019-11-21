@@ -1,4 +1,4 @@
-TEX := $(filter-out setup.tex, $(wildcard *.tex))
+TEX := $(filter-out assignmentSetup.tex, $(filter-out bookSetup.tex, $(filter-out setup.tex, $(wildcard *.tex))))
 PDF = $(patsubst %.tex, %.pdf, $(TEX))
 
 
@@ -12,7 +12,7 @@ all: $(PDF)
 6g.pdf: $< $(wildcard ../assignments/recursion/*.tex) $(wildcard ../assignments/continuedFractions/*.tex) setup.tex
 7g.pdf: $< $(wildcard ../assignments/sort/*.tex) $(wildcard ../assignments/weekday/*.tex) $(wildcard ../assignments/imgutil/*.tex) $(wildcard ../assignments/randomText/*.tex) $(wildcard ../assignments/randomWords/*.tex) setup.tex ../assignments/randomText/treeType.pdf
 8i.pdf: $< $(wildcard ../assignments/polynomials/*.tex) $(wildcard ../assignments/integration/*.tex) $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/treeStructure/*.tex) setup.tex
-9i.pdf: $< $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/io/*.tex) setup.tex
+9i.pdf: $< $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/io/*.tex) $(wildcard ../assignments/web/*.tex) $(wildcard ../assignments/cat/*.tex) assignmentSetup.tex bookSetup.tex
 10i.pdf: $< $(wildcard ../assignments/classes/*.tex) setup.tex
 11g.pdf: $< $(wildcard ../assignments/inheritance/*.tex) $(wildcard ../assignments/uml/*.tex) $(wildcard ../assignments/wolvesNMoose/*.tex) setup.tex
 12g.pdf: $< $(wildcard ../assignments/inheritance/*.tex) $(wildcard ../assignments/chess/*.tex) setup.tex

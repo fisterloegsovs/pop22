@@ -1,26 +1,45 @@
 \documentclass[a4paper,12pt]{article}
 
-\input{setup}
+\input{bookSetup}
+\input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{9}
 \newrobustcmd{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{25.\ november - 29.\ november}{søndag d.\ 29.\ november kl. 17:00}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{25.\ november - 29.\ november}{lørdag d.\ 30.\ november kl. 23.59}
 
 \begin{document}
 \maketitle
 
-
-\learningPurposeTxt{{undtagelser (exceptions),},{input og output til skærm og tastatur,},{input og output til filer},{input fra internettet.}}
+\learningPurposeTxt{{undtagelser (exceptions),},{input fra tastatur og output til skærm,},{input og output til filer,},{input fra internettet.}}
 
 \learningConditionsTxt{\typeLetter}
 
-\trainingExercises{\exerciseNumber  ø}{../assignments/io/}{introduction}{printFile, fileReplace, printWebPage, simpleCalc}
+\trainingExercises{\exerciseNumber ø}{../assignments/io/}{introduction}{commandLineArgs,readKey,readFile,writeFile,filenameDialogue,printFile}
 
-\handInExercises{\exerciseNumber\typeLetter}{../assignments/exceptions/}{}{safeIndex}
-\continueExercises{\exerciseNumber\typeLetter}{../assignments/io/}{}{countLinks, wordCount}
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
 
-\handinTextThree{\exerciseNumber\typeLetter 0.fsx}
+\continueExercises{\exerciseNumber ø}{../assignments/web/}{introduction}{printWebPage}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber ø}{../assignments/io/}{}{,fileReplace,simpleCalc}
+
+\continueExercises{\exerciseNumber ø}{../assignments/exceptions/}{}{safeIndex}
+
+\handInExercises{\exerciseNumber\typeLetter}{../assignments/cat/}{introduction}{readFile,printFile,cat,tac}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/web/}{}{countLinks}
+
+\handinTextThreeTwo{\exerciseNumber\typeLetter}{readNWrite.fs, cat.fsx, tac.fsx, countLinks.fsx}{false}
 
 \flushright God fornøjelse.
 
