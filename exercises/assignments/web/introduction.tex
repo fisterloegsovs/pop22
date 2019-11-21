@@ -1,0 +1,13 @@
+The internet is a great source of information, and many files are
+published as html-files. In the following assignment(s), you are to
+work with html-files on the internet.
+
+Note that most internet pages requires a valid certificate before they will allow your program to access it. By default, Mono has no certificates installed. One way to install useful certificates is to use \lstinline[language=console]{mozroots}, which is part of the Mono package. On Linux/MacOS you do the following from the console:
+  \begin{quote}
+    \lstinline[language=console]{mozroots --import --sync}
+  \end{quote}
+On Windows you type the following (on one line)
+  \begin{quote}
+    \lstinline[language=console]{mono "C:\Program Files (x86)\Mono\lib\mono\4.5\mozroots.exe" --import --sync}
+  \end{quote}
+Note that your installation of \lstinline[language=console]{mozroots} may be in a different path, and you may have to adapt the above path to your installation. After running the above, your program should be able to read most pages without being rejected.
