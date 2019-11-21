@@ -1,13 +1,16 @@
-First write a function,
+First extend the implementation-file \lstinline{readNWrite.fs} with a function,
 \begin{quote}
-  \mbox{\lstinline!cat : filenames:string list -> string!}
+  \mbox{\lstinline!cat : filenames:string list -> string option!}
 \end{quote}
 which takes a list of filenames. The function should use
-\lstinline{readFile} (exercise~\ref{cat:readFile}) to read the
+\lstinline{readFile} (Exercise~\ref{cat:readFile}) to read the
 contents of the files. The contents of the files should be merged into
-a single \lstinline{string}, which the function returns.
+a single \lstinline{string option}, which the function returns. If any of the
+files do not exist, then the function should return \lstinline{None}.
 
 Then write a program, \lstinline[language=console]{cat}, which takes a
-list of filenames as command line arguments, calls the \lstinline{cat}
+list of filenames as command-line arguments, calls the \lstinline{cat}
 function with this list and prints the resulting string to the screen
-using \lstinline{printFile} (exercise~\ref{cat:printFile}).
+using \lstinline{printFile} (Exercise~\ref{cat:printFile}). The
+program must return 0 or 1 depending on whether the operation was
+successful or not.

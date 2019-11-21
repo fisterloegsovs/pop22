@@ -1,13 +1,13 @@
-Der skal laves følgende implementationer af samme funktion
-  \begin{quote}
-    \mbox{\lstinline!safeIndexIf : arr:'a [] -> i:int -> 'a!}
-    \\\mbox{\lstinline!safeIndexTry : arr:'a [] -> i:int -> 'a!}
-    \\\mbox{\lstinline!safeIndexOption : arr:'a [] -> i:int -> 'a option!}
-  \end{quote}
-  De skal alle returnere værdien i \lstinline!arr! på plads \lstinline!i!, hvis \lstinline!i! er et gyldigt index, og ellers håndtere fejlsituationen.  Fejlsituationerne skal håndteres forskelligt:
+Make implementations of the following functions:
+\begin{quote}
+  \mbox{\lstinline!safeIndexIf : arr:'a [] -> i:int -> 'a!}
+  \\\mbox{\lstinline!safeIndexTry : arr:'a [] -> i:int -> 'a!}
+  \\\mbox{\lstinline!safeIndexOption : arr:'a [] -> i:int -> 'a option!}
+\end{quote}
+Each of them must return the value of \lstinline!arr! at index \lstinline!i!, when \lstinline!i! is a valid index, and otherwise handle the error-situation.  The error-situations must be handled in different ways:
   \begin{itemize}
-  \item \lstinline!safeIndexIf! må ikke gøre brug af \lstinline!try!-\lstinline!with! og må ikke kaste en undtagelse. 
-  \item \lstinline!safeIndexTry! skal benytte \lstinline!try!-\lstinline!with!, og ved fejltilstand skal \lstinline!failwith! kaldes. 
-  \item \lstinline!safeIndexOption! skal returnere \lstinline!None! i en fejlsituation. 
+  \item \lstinline!safeIndexIf! must not make use of \lstinline!try!-\lstinline!with! and must not cast an exception.
+  \item \lstinline!safeIndexTry! must use \lstinline!try!-\lstinline!with!, and it must call \lstinline!failwith! when there is an error. 
+  \item \lstinline!safeIndexOption! must return \lstinline!None! in case of an error. 
   \end{itemize}
-   Der skal laves en kort afprøvning af alle 3 funktioner, der indebefatter at den indicerede værdi udskrives til skærmen som et heltal og ikke som en option type. Afprøvningen skal også afprøve korrekt håndtering af funktionernes evt.\ kastede undtagelser.  Lav en kort beskrivende sammenligning af metodernes evne til at håndtere fejltilstande.
+  Make a short test of all 3 functions, by writing the content of an array to the screen (and not as an option type). The tests must also include examples of error situations and must be able to handle possible exceptions casted. In your opinion, is any of the above method superior or inferior in how they handle errors and why?
