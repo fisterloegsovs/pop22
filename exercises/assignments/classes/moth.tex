@@ -1,6 +1,7 @@
-Implementér en klasse \texttt{Moth} som repræsenterer et møl der flyver i en lige linje fra en bestemt position mod et lys således at møllets nye position er halvvejs mellem dets nuværende position og lysets position.  En position er to float tal som angiver x og y koordinater. Møllets indledende position gives ved oprettelse af et \texttt{Moth} objekt vha.\ konstruktoren.  Implementér metoderne:
-  \begin{itemize}
-\item \texttt{moveToLight} som bevæger møllet i retning af et lys med specificeret position som beskrevet ovenfor.
-\item \texttt{getPosition} som returnerer møllets nuværende position.
+Implement a class \lstinline{Moth}, which represents a moth that is attracted to light. The moth and the light live in a 2-dimensional coordinate system with axes $(x,y)$, and the light is placed at $(0,0)$. The moth must have a field for its position in a 2-dimensional coordinate system of floats. Objects of the \lstinline{Moth} class must have the following methods:
+\begin{itemize}
+\item The constructor must accept the initial coordinates of the moth.
+\item \lstinline{moveToLight} which moves the moth in a straight line from its position halfway to the position of the light.
+\item \lstinline{getPosition} which returns the moth's initial position.
 \end{itemize}
-Test alle metoder i \texttt{Moth} klassen.
+Make a white-box test class and test the \lstinline{Moth} class.

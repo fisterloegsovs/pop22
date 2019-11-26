@@ -1,18 +1,18 @@
-Write a class \texttt{Car} that has the following data attributes:
+Write a class \lstinline{Car} that has the following data properties:
   \begin{itemize}
-  \item \texttt{yearOfModel} (attribute) : The car's year model.
-  \item \texttt{make} (atttribute) : The make of the car.
-  \item \texttt{speed} (atttribute) : The car's current speed.
+  \item \lstinline{yearOfModel}: The car's year model.
+  \item \lstinline{make}: The make of the car.
+  \item \lstinline{speed}: The car's current speed.
   \end{itemize}
-  The \texttt{Car} class should have a constructor that accepts the car's year model and make as arguments. Set the car's initial speed to 0.  The \texttt{Car} class should have the following methods:
+  The \lstinline{Car} class should have a constructor that accepts the car's year model and make as arguments. Set the car's initial speed to 0.  The \texttt{Car} class should have the following methods:
   \begin{itemize}
-  \item \texttt{accelerate} (method) : The \texttt{accelerate} method should add 5 to the \texttt{speed} attribute each time it is called.
-  \item \texttt{brake} (method) : The \texttt{brake} method should subtract 5 from the \texttt{speed} attribute each time it is called.
-  \item \texttt{getSpeed} (method) : The \texttt{getSpeed} method should return the current speed.
+  \item \lstinline{accelerate}: The \lstinline{accelerate} method should add 5 to the \texttt{speed} attribute each time it is called.
+  \item \lstinline{brake}: The \lstinline{brake} method should subtract 5 from the \texttt{speed} attribute each time it is called.
+  \item \lstinline{getSpeed}: The \lstinline{getSpeed} method should return the current speed.
   \end{itemize}
-  Design a program that instantiates a \texttt{Car} object, and then calls the \texttt{accelerate} method five times. After each call to the \texttt{accelerate} method, get the current speed of the car and display it. Then call the \texttt{brake} method five times. After each call to the \texttt{brake} method, get the current speed of the car and display it.
+  Design a program that instantiates a \lstinline{Car} object, and then calls the \lstinline{accelerate} method five times. After each call to the \lstinline{accelerate} method, get the current speed of the car and display it. Then call the \lstinline{brake} method five times. After each call to the \lstinline{brake} method, get the current speed of the car and display it.
   
-  Extend class \texttt{Car} with the attributes \texttt{addGas, gasLeft} from exercise \ref{ex:car}, and modify methods \texttt{accelerate, break} so that the amount of gas left is reduced when the car accelerates or breaks. Call \texttt{accelerate, brake} five times, as above, and after each call display both the current speed and the current amount of gas left.
+  Extend class \lstinline{Car} with the attributes \v{addGas, gasLeft} from exercise \ref{ex:car}, and modify methods \lstinline{accelerate, break} so that the amount of gas left is reduced when the car accelerates or breaks. Call \lstinline{accelerate, brake} five times, as above, and after each call display both the current speed and the current amount of gas left.
   
-  Test all methods. Create an object instance that you know will not run out of gas, and another object instance that you know will run out of gas and test that your \texttt{accelerate, brake} methods work properly.
+  Test all methods. Create an object instance that you know will not run out of gas, and another object instance that you know will run out of gas and test that your \lstinline{accelerate, brake} methods work properly.
   
