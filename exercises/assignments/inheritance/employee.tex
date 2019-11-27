@@ -1,19 +1,19 @@
 \begin{enumerate}
-\item Write an \texttt{Employee} class that keeps data attributes for the following pieces of information: 
+\item Write an \texttt{Employee} class that keeps data properties for the following pieces of information: 
   \begin{itemize}
   \item Employee name
   \item Employee number
   \end{itemize}
-  Next, write a class named \texttt{ProductionWorker} that is a subclass of the \texttt{Employee} class. The \texttt{ProductionWorker} class should keep data attributes for the following information:
+  Next, write a class named \texttt{ProductionWorker} that is a subclass of the \texttt{Employee} class. The \texttt{ProductionWorker} class should keep data properties for the following information:
   \begin{itemize}
   \item Shift number (an integer, such as 1 or 2)
   \item Hourly pay rate
   \end{itemize}
-  The workday is divided into two shifts: day and night. The shift attribute will hold an integer value representing the shift that the employee works. The day shift is shift 1 and the night shift is shift 2. Write the appropriate methods for each class.
+  The workday is divided into two shifts: day and night. The shift property will hold an integer value representing the shift that the employee works. The day shift is shift 1 and the night shift is shift 2. Write the appropriate methods for each class.
   
-  Once you have written the classes, write a program that creates an object of the \texttt{ProductionWorker} class and prompts the user to enter data for each of the object's data attributes. Store the data in the object and then use the object's methods to retrieve it and display it on the screen.
+  Once you have written the classes, write a program that creates an object of the \texttt{ProductionWorker} class and prompts the user to enter data for each of the object's data properties. Store the data in the object and then use the object's methods to retrieve it and display it on the screen.
   
-\item Extend the previous exercise as follows: Let a shift supervisor be a salaried employee who supervises a shift. In addition to salary, the shift supervisor earns a yearly bonus when his or her shift meets production goals. Write a \texttt{ShiftSupervisor} class that is a subclass of the \texttt{Employee} class you created in the previous exercise. The \texttt{ShiftSupervisor} class should keep a data attribute for the annual salary and a data attribute for the annual production bonus that a shift supervisor has earned. Demonstrate the class by writing a program that uses a \texttt{ShiftSupervisor} object.
+\item Extend the previous exercise as follows: Let a shift supervisor be a salaried employee who supervises a shift. In addition to salary, the shift supervisor earns a yearly bonus when his or her shift meets production goals. Write a \texttt{ShiftSupervisor} class that is a subclass of the \texttt{Employee} class you created in the previous exercise. The \texttt{ShiftSupervisor} class should keep a data property for the annual salary and a data property for the annual production bonus that a shift supervisor has earned. Demonstrate the class by writing a program that uses a \texttt{ShiftSupervisor} object.
   
 \item \textbf{(Extra difficult).} Considering that production during night shifts is reduced by 5\% compared to production during day shifts, and that the hourly pay rate during night shifts is double the hourly pay rate during day shifts, compute the best possible worker \& shift allocation over the period of 12 months. You need to think how to measure productivity and salary cost, and then find their best tradeoff in the period of 12 months.
 \end{enumerate}
