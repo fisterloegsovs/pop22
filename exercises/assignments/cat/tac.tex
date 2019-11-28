@@ -1,15 +1,7 @@
 First extend the implementation-file \lstinline{readNWrite.fs} with a function,
 \begin{quote}
-  \mbox{\lstinline!tac : filenames:string list -> string!}
+  \mbox{\lstinline!tac : filenames:string list -> string option!}
 \end{quote}
-which takes a list of files, reads their content with
-\lstinline{readFile} (Exercise~\ref{cat:readFile}), concatenates them,
-and returns the result as a string in reverse order line-by-line
-(i.e.\ the opposite of \lstinline{cat} on a line-by-line basis).  If any of the
-files do not exist, then the function should return \lstinline{None}.
+which takes a list of files, reads their content with \lstinline{readFile} (Exercise~\ref{cat:readFile}), reverses the order of each file in a line-by-line manner (i.e.\ the opposite of \lstinline{cat} on a line-by-line basis) and concatenates the result.  If any of the files do not exist, then the function should return \lstinline{None}.
 
-Then write a program, \lstinline[language=console]{tac}, which takes a
-list of filenames as command-line arguments, calls the \lstinline{tac}
-function with this list and prints the resulting string to the screen. The
-program must return 0 or 1 depending on whether the operation was
-successful or not.
+Then write a program, \lstinline[language=console]{tac}, which takes a list of filenames as command-line arguments, calls the \lstinline{tac} function with this list and prints the resulting string to the screen. The program must return 0 or 1 depending on whether the operation was successful or not.

@@ -1,4 +1,4 @@
-In a not-so-distant future will drones be used for delivery of groceries. Imagine that the drone-traffic has become intense in your area and that you have been asked to decide if drones collide. Assume that all drones fly at the same altitude and that drones fly with different speeds measured in meters/minute and in different directions. If 2 drones are less 5 meters from each other, then they collide. When a drone reaches its destination, then it lands and can no longer collide with any drone. Create an implementation file \lstinline{simulate.fs}, and add to it a \lstinline{Drone} class with properties and methods:
+In a not-so-distant future drones will be used for delivery of groceries. Imagine that the drone-traffic has become intense in your area and that you have been asked to decide if drones collide. Assume that all drones fly at the same altitude and that drones fly with different speeds measured in meters/minute and in different directions. If 2 drones are less than 5 meters from each other, then they collide. When a drone reaches its destination, then it lands and can no longer collide with any drone. Create an implementation file \lstinline{simulate.fs}, and add to it a \lstinline{Drone} class with properties and methods:
 \begin{itemize}
 \item The constructor must take start-position, -destination, and -speed.
 \item \lstinline{position} (property): returns the drone's position in $(x, y)$ coordinates.
@@ -10,7 +10,7 @@ In a not-so-distant future will drones be used for delivery of groceries. Imagin
 
 Extend your implementaiton file with a class \lstinline{Airspace}, which contains the drones and as a minimum has the properties and methods:
 \begin{itemize}
-\item \lstinline{drones} (property): The collection of drones.
+\item \lstinline{drones} (property): The collection of drones instances.
 \item \lstinline{droneDist} (method): The distance between two given drones.
 \item \lstinline{flyDrones} (method): Advance the position of all flying drones in the collection by 1 minute.
 \item \lstinline{addDrone} (method): Add a new drone to the collection of drones.
