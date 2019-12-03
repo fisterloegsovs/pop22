@@ -4,6 +4,7 @@ You are to simulate owls and mice in a closed environment. The owls are immortal
 \item Alive animals have a coordinate in the environment, and there can only be one animal per coordinate.
 \item The simulation updates in ticks, and after each tick, all animals perform an action.
 \item The simulation runs for $T$ ticks.
+\item There must initially be $O$ owls and $M$ mice.
 \end{enumerate}
 The possible actions are:
 \begin{enumerate}[resume]
@@ -15,7 +16,7 @@ The possible actions are:
 You are to:
 \begin{enumerate}
 \item use the object-oriented programming paradigm and include inheritance in your solution.
-\item create a program \lstinline[language=console]{simulate.fsx}, which runs the simulation and prints the tick number and the total number of mice after each tick to the textfile \lstinline[language=console]{simulation.txt}. The program must accept the parameters $n$, $T$, and $p$ at the command-line. 
+\item create a program \lstinline[language=console]{simulate.fsx}, which runs the simulation and prints the tick number and the total number of mice after each tick to the textfile \lstinline[language=console]{simulation.txt}. The program must accept the parameters $n$, $T$, $p$, $M$, $O$, at the command-line when the simulation starts.
 \item collect the main classes in an implementation file called \lstinline[language=console]{preditorPrey.fs}, which \lstinline[language=console]{simulate.fsx} links to.
 \item make a white-box test of the implementation file.
 \item find and parameters, where the mice population diminishes to zero quickly, explodes, and is seemingly in balance, and demonstrate this by copying and renaming the textfile \lstinline[language=console]{simulation.txt} to the three corresponding files

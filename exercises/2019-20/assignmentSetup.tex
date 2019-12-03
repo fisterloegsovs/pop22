@@ -217,14 +217,30 @@ XML-tagsne. Filen \texttt{README.txt} skal ganske kort beskrive,
 hvordan koden oversættes og køres. Pdf-filen skal indeholde jeres
 rapport oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}
 
-\newcommand{\handinTextThreeTwo}[3]{%
-  Afleveringen skal bestå af
+% \handinTextThreeTwo{exNumber}{listOfHandInFiles}{reportType}
+% reportType: 0 - none, comments inline; 1 - readme.txt; 2 - Files/LaTeX/opgave.pdf, 3 - Files/LaTeX/report.pdf
+\newcommand{\handinTextThreeTwo}[3]{% 
+  Afleveringen skal bestå af:
   \begin{itemize}
   \item en zip-fil, der hedder \texttt{#1\_<navn>.zip} (f.eks. \texttt{#1\_jon.zip})
-    \expandafter\ifstrequal\expandafter{#3}{true}{\item en pdf-fil , der hedder \texttt{#1\_<navn>.pdf} (f.eks. \texttt{#1\_jon.pdf})}{} %
+    \expandafter\ifnumcomp{#3}{>}{1}{%
+    \item en pdf-fil , der hedder \texttt{#1\_<navn>.pdf} (f.eks. \texttt{#1\_jon.pdf})%
+    }{}%
+%    \expandafter\ifstrequal{true}{\item en pdf-fil , der hedder \texttt{#1\_<navn>.pdf} (f.eks. \texttt{#1\_jon.pdf})}{} %
   \end{itemize}
-  Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe \texttt{#1\_<navn>}. I den mappe skal der ligge en \texttt{src} mappe og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende og kun følgende filer: #2 svarende til hver af delopgaverne.  Programmerne skal kunne oversættes med \lstinline[language=console]{fsharpc}, og de oversattte filer skal kunne køres med mono.  Funktioner skal dokumenteres ifølge dokumentationsstandarden som minimum ved brug af \texttt{<summary>}, \texttt{<param>} og \texttt{<returns>} XML-tagsne. Filen \texttt{README.txt} skal ganske kort beskrive, hvordan koden oversættes og køres. %
-  \expandafter\ifstrequal\expandafter{#3}{true}{Pdf-filen skal indeholde jeres rapport oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}{README.txt filen skal også inkludere et eller nogle få eksempler på kørsler af hvert program, der illustrerer at og hvordan de virker.} %
+  Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe \texttt{#1\_<navn>}. I den mappe skal der ligge en \texttt{src} mappe og filen \texttt{README.txt}.
+
+  I \texttt{src} skal der ligge følgende og kun følgende filer:
+  \begin{itemize}
+    \item #2,
+  \end{itemize}
+  som beskrevet i opgaveteksten.  Programmerne skal kunne oversættes med \lstinline[language=console]{fsharpc}, og de oversattte filer skal kunne køres med mono.  Funktioner skal dokumenteres ifølge dokumentationsstandarden som minimum ved brug af \texttt{<summary>}, \texttt{<param>} og \texttt{<returns>} XML-tagsne. Filen \texttt{README.txt} skal ganske kort beskrive, hvordan koden oversættes og køres.
+  
+  \ifnumequal{#3}{0}{Evt.\ kommentarer i forbindelse med opgavebesvarelsen indsættes i kildekoden.}{} %
+  \ifnumequal{#3}{1}{README.txt filen skal også inkludere et eller flere få eksempler på kørsler af hvert program, der illustrerer at og hvordan de virker.}{} %
+  \ifnumequal{#3}{2}{Pdf-filen skal indeholde jeres rapport ifølge: \begin{itemize}\item\lstinline[language=console]{opgave.pdf}\end{itemize}  guiden og oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}{} %
+  \ifnumequal{#3}{3}{Pdf-filen skal indeholde jeres rapport ifølge: \begin{itemize}\item\lstinline[language=console]{rapport.pdf}\end{itemize} guiden og oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}{} %
+%  \expandafter\ifstrequal\expandafter{#3}{true}{Pdf-filen skal indeholde jeres rapport oversat fra \LaTeX. Husk at pdf-filen skal uploades ved siden af zip-filen på Absalon.}{README.txt filen skal også inkludere et eller nogle få eksempler på kørsler af hvert program, der illustrerer at og hvordan de virker.} %
 }
 
 \newcommand{\subAssignment}[1]{\textbf{#1}\\[2mm]}
