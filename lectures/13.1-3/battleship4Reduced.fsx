@@ -1,3 +1,6 @@
+/// A coordinate type is a row-column pair
+type coordinate = int*int
+
 /// A board is a square set of fields with row-column
 /// coordinates. Ships are placed on the board
 type board() =
@@ -21,3 +24,4 @@ type game() =
   let p2 = player()
   do p1.setOpponent(p2)
   do p2.setOpponent(p1)
+

@@ -1,3 +1,6 @@
+/// A coordinate type is a row-column pair
+type coordinate = int*int
+
 /// A ship can be damaged
 type ship(sz : int) =
   let mutable noHits = 0
@@ -5,13 +8,14 @@ type ship(sz : int) =
   member this.hit = noHits <- noHits + 1
   member this.isSunk = noHits >= sz
   
-/// A field's state may have been shot at and may be occupied by a ship
+/// A field's state may have been shot at and may be occupied by a
+/// ship
 type State = bool * (ship option)
 
 /// A board is a square set of fields with row-column
 /// coordinates. Ships are placed on the board
 type board() =
-  let fields = Array2D.init 10 10 (fun i j -> (false, None) : State)
+  let fields = Array2D.create 10 10 ((false, None) : State)
   member this.rows = Array2D.length1 fields
   member this.cols = Array2D.length2 fields
   member this.setShip (s : ship) (coords : (int*int) list) : bool =
@@ -20,9 +24,6 @@ type board() =
       List.iter (fun (i,j) -> fields.[i,j] <- (fst fields.[i,j], Some s)) coords
     isRoom
 
-// We seed random numbers once
-let rnd = System.Random()
-
 /// A player is a human player, which has 2 boards and
 /// several ships
 type player() =
@@ -30,6 +31,7 @@ type player() =
   let opponents_board = board()
   let mutable opponent = None
   let ships = List.map (fun elm -> ship(elm)) [2;2;3;5]
+  let rnd = System.Random()
   let setShip (s : ship) =
     let mutable success = false
     while not success do
