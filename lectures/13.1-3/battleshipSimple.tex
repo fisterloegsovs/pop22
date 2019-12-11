@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage[school,simplified]{pgf-umlcd}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{class}[text width=5em, text height=1em]{game}{0,0}
+  \end{class}
+  \begin{class}[text width=5em, text height=1em]{player}{0,-2}
+  \end{class}
+  \begin{class}[text width=5em, text height=1em]{board}{-2,-4}
+   \end{class}
+   \begin{class}[text width=5em, text height=1em]{ship}{2,-4}
+   \end{class}
+  \composition{game}{}{}{player}
+  \composition{player}{}{}{board}
+  \composition{player}{}{}{ship}
+  \unidirectionalAssociation{board}{}{}{ship}
+\end{tikzpicture}
+\end{document}

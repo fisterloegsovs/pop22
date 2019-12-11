@@ -17,8 +17,7 @@ type ship(sz : int) =
 /// ship
 type State = bool * (ship option)
 
-/// A board is a square set of fields with row-column
-/// coordinates. Ships are placed on the board
+/// A board is a square set of fields with row-column coordinates.
 type board (rows : int, cols : int) =
   // A board is a 2d array of fields, each with a state of having been
   // shot at or not, and an optional reference to a ship object.
