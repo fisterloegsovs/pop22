@@ -1,0 +1,10 @@
+Association, aggregation, composition eksempler
+Reference versus shallow versus Deep copy
+Inheritance
+Overshadow, overload, override
+Operators
+Finalize
+
+Til 14.2-3
+Reference versus shallow versus Deep copy
+Operators
