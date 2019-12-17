@@ -8,3 +8,5 @@ Finalize
 Til 14.2-3
 Reference versus shallow versus Deep copy
 Operators
+static
+
