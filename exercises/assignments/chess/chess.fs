@@ -1,51 +1,94 @@
-module Chess (*//§\label{chessHeader}§*)
+module Chess
+/// The possible colors of chess pieces
 type Color = White | Black
-type Position = int * int(*//§\label{chessTypeEnd}§*)
-/// An abstract chess piece §\label{chessPieceBegin}§
+
+/// A superset of positions on a board
+type Position = int * int
+
+/// <summary> An abstract chess piece. </summary>
+/// <param name = "col"> The color black or white </param>
 [<AbstractClass>]
 type chessPiece(color : Color) =
   let mutable _position : Position option = None
-  abstract member nameOfType : string // "king", "rook", ...
-  member this.color = color // White, Black
-  member this.position // E.g., (0,0), (3,4), etc.
+
+  /// The type of the chess piece as a string, e.g., "king" or "rook".
+  abstract member nameOfType : string
+
+  /// The color either White or Black
+  member this.color = color
+
+  /// The position as a Position option, e.g., None, Some (0,0), Some
+  /// (3,4).
+  member this.position
     with get() = _position
     and set(pos) = _position <- pos
-  override this.ToString () = // E.g. "K" for white king
+
+  /// Return the first letter of the piece's type usint capital case
+  /// for white pieces and lower case for black pieces. E.g., "K" and
+  /// "k" for white and a black king respectively.
+  override this.ToString () =
     match color with
       White -> (string this.nameOfType.[0]).ToUpper ()
       | Black -> (string this.nameOfType.[0]).ToLower ()
-  /// A list of runs, which is a list of relative movements, e.g.,
-  /// [[(1,0); (2,0);...]; [(-1,0); (-2,0)]...]. Runs must be
-  /// ordered such that the first in a list is closest to the piece
-  /// at hand.      
+
+  /// A maximum list of relative runs, a piece may make regardless of
+  /// its position and the other pieces on the board. For example, a
+  /// rook can move up, down, left, and right, so its list must
+  /// contain 4 runs, and the "up" run must contain 7 positions
+  /// [(-1,0); (-2,0)]...[-7,0]]. Runs must be ordered such that the
+  /// first in a list is closest to the piece at hand.
   abstract member candiateRelativeMoves : Position list list
-  /// Available moves and neighbours ([(1,0); (2,0);...], [p1; p2])
-  member this.availableMoves (board : Board) : (Position list * chessPiece list) =
-    board.getVacantNNeighbours this (*//§\label{chessPieceEnd}§*)
-/// A board §\label{chessBoardBegin}§
-and Board () =
-  let _array = Collections.Array2D.create<chessPiece option> 8 8 None
-  /// Wrap a position as option type
+
+/// A chess board.
+type Board () =
+  let _board = Collections.Array2D.create<chessPiece option> 8 8 None
+
+  /// <summary> Wrap a position as option type. </summary>
+  /// <param name = "pos"> a position </param>
+  /// <returns> Some pos or None if the position is on the board or
+  /// not </returns>
   let validPositionWrap (pos : Position) : Position option =
     let (rank, file) = pos // square coordinate
     if rank < 0 || rank > 7 || file < 0 || file > 7 
     then None
     else Some (rank, file)
-  /// Convert relative coordinates to absolute and remove out
-  /// of board coordinates.
+
+  /// <summary> Converts relative coordinates to absolute and removes
+  /// out of board coordinates. </summary>
+  /// <param name = "pos"> an absolute position </param>
+  /// <param name = "lst"> a list of relative positions </param>
+  /// <returns> A list of absolute and valid positions </returns>
   let relativeToAbsolute (pos : Position) (lst : Position list) : Position list =
-    let addPair (a : int, b : int) (c : int, d : int) : Position = 
-      (a+c,b+d)
+    let addPair (a : Position) (b : Position) : Position = 
+      (fst a + fst b, snd a + snd b)
     // Add origin and delta positions
     List.map (addPair pos) lst
     // Choose absolute positions that are on the board
     |> List.choose validPositionWrap
+
+  /// <summary> Find the tuple of empty squares and first neighbour if any. </summary>
+  /// <param name = "run"> A run of absolute positions </param>
+  /// <returns> A pair of a list of empty neighbouring positions and
+  /// a possible neighbouring piece, which blocks the run. </returns>
+  let getVacantNOccupied (run : Position list) : (Position list * (chessPiece option)) =
+    try
+      // Find index of first non-vacant square of a run
+      let idx = List.findIndex (fun (i, j) -> _board.[i,j].IsSome) run
+      let (i,j) = run.[idx]
+      let piece = _board.[i, j] // The first non-vacant neighbour
+      if idx = 0
+      then ([], piece)
+      else (run.[..(idx-1)], piece)
+    with
+      _ -> (run, None) // outside the board
+
   /// Board is indexed using .[,] notation
   member this.Item
-    with get(a : int, b : int) = _array.[a, b]
-    and set(a : int, b : int) (p : chessPiece option) = 
-      if p.IsSome then p.Value.position <- Some (a,b)  (*//§\label{chessItemSet}§*)
-      _array.[a, b] <- p
+    with get(a : int, b : int) = _board.[a, b]
+    and set(a : int, b : int) (p : chessPiece option) =
+      if p.IsSome then p.Value.position <- Some (a,b)
+      _board.[a, b] <- p
+
   /// Produce string of board for, e.g., the printfn function.
   override this.ToString() =
     let rec boardStr (i : int) (j : int) : string =
@@ -57,8 +100,7 @@ and Board () =
               None -> ""
               | Some p -> p.ToString()
           // print top to bottom row
-          let pieceStr = stripOption _array.[7-i,j]
-          //let pieceStr = sprintf "(%d, %d)" i j
+          let pieceStr = stripOption _board.[7-i,j]
           let lineSep = " " + String.replicate (8*4-1) "-"
           match (i,j) with 
           (0,0) -> 
@@ -71,35 +113,31 @@ and Board () =
             let str = sprintf "| %1s " pieceStr
             str + boardStr i (j+1)
     boardStr 0 0
-  /// Move piece by specifying source and target coordinates
+
+  /// <summary> Move piece from a source to a target position. Any
+  /// piece on the target position is removed. </summary>
+  /// <param name = "source"> The source position </param>
+  /// <param name = "target"> The target position </param>
   member this.move (source : Position) (target : Position) : unit =
     this.[fst target, snd target] <- this.[fst source, snd source]
     this.[fst source, snd source] <- None
-  /// Find the tuple of empty squares and first neighbour if any.
-  member this.getVacantNOccupied (run : Position list) : (Position list * (chessPiece option)) =
-    try
-      // Find index of first non-vacant square of a run
-      let idx = List.findIndex (fun (i, j) -> this.[i,j].IsSome) run
-      let (i,j) = run.[idx]
-      let piece = this.[i, j] // The first non-vacant neighbour
-      if idx = 0
-      then ([], piece)
-      else (run.[..(idx-1)], piece)
-    with
-      _ -> (run, None) // outside the board
-  /// find the list of all empty squares and list of neighbours
-  member this.getVacantNNeighbours (piece : chessPiece) : (Position list * chessPiece list)  =
+
+  /// <summary> Find the list of available empty positions for this
+  /// piece, and the list of possible opponent pieces, which can be
+  /// taken. </summary>
+  /// <param name = "piece"> A chess piece </param>
+  /// <returns> A pair of lists of all available moves and neighbours,
+  /// e.g., ([(1,0); (2,0);...], [p1; p2]) </returns>
+  member this.availableMoves (piece : chessPiece) : (Position list * chessPiece list)  =
     match piece.position with
       None -> 
         ([],[])
       | Some p ->
         let convertNWrap = 
-          (relativeToAbsolute p) >> this.getVacantNOccupied
+          (relativeToAbsolute p) >> getVacantNOccupied
         let vacantPieceLists = List.map convertNWrap piece.candiateRelativeMoves
         // Extract and merge lists of vacant squares
         let vacant = List.collect fst vacantPieceLists
         // Extract and merge lists of first obstruction pieces and filter out own pieces
-        let opponent = 
-          vacantPieceLists
-          |> List.choose snd 
-        (vacant, opponent)(*//§\label{chessBoardEnd}§*)
+        let opponent = List.choose snd vacantPieceLists
+        (vacant, opponent)
