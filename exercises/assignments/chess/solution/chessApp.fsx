@@ -22,3 +22,7 @@ Array.iter (printPiece board) pieces
 board.move (1,1) (3,1) // Moves a piece from (1,1) to (3,1)
 printfn "%A" board
 Array.iter (printPiece board) pieces
+printfn "All White's options:\n%A" (board.allThreatenedPositions White)
+printfn "All Black's options:\n%A" (board.allThreatenedPositions Black)
+
+printfn "ThreatMap:\n%A" (board.threatBoard)
