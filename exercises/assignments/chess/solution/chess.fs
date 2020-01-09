@@ -133,7 +133,6 @@ type board () =
   /// <param name = "source"> The source position </param>
   /// <param name = "target"> The target position </param>
   member this.move (source : Position) (target : Position) : unit =
-    // By mistake, this update was missing in the original code.
     // Update piece' knowledge about it's position
     Option.iter (fun (p : chessPiece) -> p.position <- None) this.[fst target, snd target]
     Option.iter (fun (p : chessPiece) -> p.position <- Some target) this.[fst source, snd source]
