@@ -11,7 +11,6 @@ type king(col : Color) =
   override this.candiateRelativeMoves =
       [[(-1,0)];[(-1,1)];[(0,1)];[(1,1)];
       [(1,0)];[(1,-1)];[(0,-1)];[(-1,-1)]]
-  override this.copy () = king (col) :> chessPiece
 
 /// <summary> A rook is a chessPiece which moves horisontally and vertically. </summary>
 /// <param name = "col"> The color black or white </param>
@@ -37,4 +36,3 @@ type rook(col : Color) =
   override this.candiateRelativeMoves =
     List.map (swap List.map [1..7]) indToRel
   override this.nameOfType = "rook"
-  override this.copy () = rook (col) :> chessPiece

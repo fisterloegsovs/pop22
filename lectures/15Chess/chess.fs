@@ -14,12 +14,6 @@ type chessPiece(color : Color) =
   /// The type of the chess piece as a string, e.g., "king" or "rook".
   abstract member nameOfType : string
 
-  /// Make a deep copy including a copy of an existing pieces. Must be
-  /// implemented in the inheriting class and cast to chessPiece for
-  /// this to work as an abstract member, since the abstract class has
-  /// no knowledge of any future inheritors
-  abstract member copy : unit -> chessPiece
-
   /// The color either White or Black
   member this.color = color
 
@@ -95,14 +89,6 @@ type Board () =
       if p.IsSome then p.Value.position <- Some (a,b)
       _board.[a, b] <- p
 
-  /// Make a deep copy af a board including all the pieces on it
-  member this.copy () =
-    let b = Board ()
-    for i = 0 to 7 do
-      for j = 0 to 7 do
-        b.[i,j] <- Option.bind (fun (p : chessPiece) -> Some (p.copy ())) this.[i,j]
-    b
-        
   /// Produce string of board for, e.g., the printfn function.
   override this.ToString() =
     let rec boardStr (i : int) (j : int) : string =
@@ -133,14 +119,9 @@ type Board () =
   /// <param name = "source"> The source position </param>
   /// <param name = "target"> The target position </param>
   member this.move (source : Position) (target : Position) : unit =
-    // By mistake, this update was missing in the original code.
-    // Update piece' knowledge about it's position
-    Option.iter (fun (p : chessPiece) -> p.position <- None) this.[fst target, snd target]
-    Option.iter (fun (p : chessPiece) -> p.position <- Some target) this.[fst source, snd source]
-    // Update board's pieces
     this.[fst target, snd target] <- this.[fst source, snd source]
     this.[fst source, snd source] <- None
-    
+
   /// <summary> Find the list of available empty positions for this
   /// piece, and the list of possible opponent pieces, which can be
   /// taken. </summary>
@@ -148,15 +129,6 @@ type Board () =
   /// <returns> A pair of lists of all available moves and neighbours,
   /// e.g., ([(1,0); (2,0);...], [p1; p2]) </returns>
   member this.availableMoves (piece : chessPiece) : (Position list * chessPiece list)  =
-    this.availableMovesWLookAHead piece true
-    
-  /// <summary> Find the list of available empty positions for this
-  /// piece, and the list of possible opponent pieces, which can be
-  /// taken. </summary>
-  /// <param name = "piece"> A chess piece </param>
-  /// <returns> A pair of lists of all available moves and neighbours,
-  /// e.g., ([(1,0); (2,0);...], [p1; p2]) </returns>
-  member this.availableMovesWLookAHead (piece : chessPiece) (lookAHead : bool) : (Position list * chessPiece list)  =
     match piece.position with
       None -> 
         ([],[])
@@ -165,51 +137,7 @@ type Board () =
           (relativeToAbsolute p) >> getVacantNOccupied
         let vacantPieceLists = List.map convertNWrap piece.candiateRelativeMoves
         // Extract and merge lists of vacant squares
-        let vacantCandiates = List.collect fst vacantPieceLists
-        // King is not allowed to move to a place, where it is
-        // threatended. To check, we look one move ahead and keep only
-        // the unthreatended
-        let vacant = 
-          if lookAHead && piece.nameOfType = "king" then
-            List.filter (fun pos -> not (this.threatened p pos)) vacantCandiates
-          else
-            vacantCandiates
+        let vacant = List.collect fst vacantPieceLists
         // Extract and merge lists of first obstruction pieces and filter out own pieces
-        let opponentCandidates = List.choose snd vacantPieceLists
-        let opponent = 
-          if lookAHead && piece.nameOfType = "king" then
-            List.filter (fun (q:chessPiece) -> not (this.threatened p q.position.Value)) opponentCandidates
-          else
-            opponentCandidates
+        let opponent = List.choose snd vacantPieceLists
         (vacant, opponent)
-
-  /// <summary> Find the list of empty pieces that a color
-  /// threatens. </summary>
-  /// <param name = "c"> A color to check </param>
-  /// <returns> A distinct list of Positions covered by c. </returns>
-  member this.allThreats (c : Color) =
-    // Recursively consider all positions on the board, and produce a
-    // list of option pairs from this.availableMoves if the color of a
-    // piece matches c.
-    let rec collect (i : int) =
-      if i < 0 then
-        []
-      else
-        let m = i/8
-        let n = i%8
-        let f (elm : chessPiece) = if elm.color = c then Some (this.availableMovesWLookAHead elm false) else None
-        Option.bind f this.[m,n] :: collect (i-1)
-    collect 63 |> List.choose id |> List.collect snd
-
-  /// Lookahead by virtually moving piece p to position pos. Return
-  /// true if opponents piece threatens p in pos
-  member this.threatened ((m,n) : Position) (target : Position) =
-    if this.[m,n].IsNone then
-      true
-    else
-      let tmp = this.copy()
-      let q = tmp.[m,n].Value // its a copy, so we need the twin
-      tmp.move (m,n) target
-      let opponentsColor = if q.color = White then Black else White
-      let lst = tmp.allThreats opponentsColor
-      List.exists (fun elm -> elm = q) lst
