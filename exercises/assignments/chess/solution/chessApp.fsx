@@ -2,11 +2,11 @@ open Chess
 open Pieces
 
 /// Print various information about a piece
-let printPiece (board : Board) (p : chessPiece) : unit =
+let printPiece (board : board) (p : chessPiece) : unit =
   printfn "%A: %A %A" p p.position (board.availableMoves p)
 
 // Create a game
-let board = Board () // Create a board
+let board = board () // Create a board
 // Pieces are kept in an array for easy testing
 let pieces = [|
   king (White) :> chessPiece;

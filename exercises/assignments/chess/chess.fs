@@ -14,6 +14,12 @@ type chessPiece(color : Color) =
   /// The type of the chess piece as a string, e.g., "king" or "rook".
   abstract member nameOfType : string
 
+  /// Make a deep copy including a copy of an existing pieces. Must be
+  /// implemented in the inheriting class and cast to chessPiece for
+  /// this to work as an abstract member, since the abstract class has
+  /// no knowledge of any future inheritors
+  abstract member copy : unit -> chessPiece
+
   /// The color either White or Black
   member this.color = color
 
@@ -40,7 +46,7 @@ type chessPiece(color : Color) =
   abstract member candiateRelativeMoves : Position list list
 
 /// A chess board.
-type Board () =
+type board () =
   let _board = Collections.Array2D.create<chessPiece option> 8 8 None
 
   /// <summary> Wrap a position as option type. </summary>
@@ -89,6 +95,14 @@ type Board () =
       if p.IsSome then p.Value.position <- Some (a,b)
       _board.[a, b] <- p
 
+  /// Make a deep copy af a board including all the pieces on it
+  member this.copy () =
+    let b = board ()
+    for i = 0 to 7 do
+      for j = 0 to 7 do
+        b.[i,j] <- Option.bind (fun (p : chessPiece) -> Some (p.copy ())) this.[i,j]
+    b
+        
   /// Produce string of board for, e.g., the printfn function.
   override this.ToString() =
     let rec boardStr (i : int) (j : int) : string =
@@ -119,12 +133,17 @@ type Board () =
   /// <param name = "source"> The source position </param>
   /// <param name = "target"> The target position </param>
   member this.move (source : Position) (target : Position) : unit =
+    // By mistake, this update was missing in the original code.
+    // Update piece' knowledge about it's position
+    Option.iter (fun (p : chessPiece) -> p.position <- None) this.[fst target, snd target]
+    Option.iter (fun (p : chessPiece) -> p.position <- Some target) this.[fst source, snd source]
+    // Update board's pieces
     this.[fst target, snd target] <- this.[fst source, snd source]
     this.[fst source, snd source] <- None
-
+    
   /// <summary> Find the list of available empty positions for this
-  /// piece, and the list of possible opponent pieces, which can be
-  /// taken. </summary>
+  /// piece, and the list of possible own and opponent pieces, which
+  /// can be protected or taken. </summary>
   /// <param name = "piece"> A chess piece </param>
   /// <returns> A pair of lists of all available moves and neighbours,
   /// e.g., ([(1,0); (2,0);...], [p1; p2]) </returns>

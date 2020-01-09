@@ -46,7 +46,7 @@ type chessPiece(color : Color) =
   abstract member candiateRelativeMoves : Position list list
 
 /// A chess board.
-type Board () =
+type board () =
   let _board = Collections.Array2D.create<chessPiece option> 8 8 None
 
   /// <summary> Wrap a position as option type. </summary>
@@ -97,7 +97,7 @@ type Board () =
 
   /// Make a deep copy af a board including all the pieces on it
   member this.copy () =
-    let b = Board ()
+    let b = board ()
     for i = 0 to 7 do
       for j = 0 to 7 do
         b.[i,j] <- Option.bind (fun (p : chessPiece) -> Some (p.copy ())) this.[i,j]
