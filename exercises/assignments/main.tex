@@ -1,51 +1,82 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{report}
 
 \input{setup}
 \usepackage[final]{pdfpages}
+\usepackage{subfiles}
 
-\title{Programmering og Problemløsning\\Datalogisk Institut,
-  Københavns Universitet}
+\renewcommand*{\labelenumi}{\bfseries \thesection.\arabic*:}
+\newenvironment{assignmentList}[1]{
+  \section{#1}
+%  \subsection{Lærervejledningn}
+%  \input{teacher}
+%  \subsection{Introduktion}
+%  \input{introduction}
+%  \subsection{Opgave(r)}
+  \begin{enumerate}
+}{\end{enumerate}}
 
-\author{Jon Sporring}
+% \renewcommand*{\labelenumi}{\bfseries \thechapter.\arabic*:}
+% \newenvironment{assignmentList}[1]{
+%   \chapter{#1}
+%   \section{Lærervejledningn}
+%   \input{teacher}
+%   \section{Introduktion}
+%   \input{introduction}
+%   \section{Opgave(r)}
+%   \begin{enumerate}
+% }{\end{enumerate}}
+
+
+\title{Learning to Program with F\#\\Exercises\\Department of Computer
+  Science\\University of Copenhagen}
+
+\author{Jon Sporring, Martin Elsman, Torben Mogensen, Christina Lioma}
 
 \begin{document}
 \maketitle
-\includepdf[pages=-]{gettingStarted/main.pdf}
-\includepdf[pages=-]{scratch/main.pdf}
-\includepdf[pages=-]{myFirstFSharp/main.pdf}
-\includepdf[pages=-]{bindings/main.pdf}
-\includepdf[pages=-]{rgb/main.pdf}
-\includepdf[pages=-]{vec/main.pdf}
-\includepdf[pages=-]{modules/main.pdf}
-\includepdf[pages=-]{lister/main.pdf}
-\includepdf[pages=-]{recursion/main.pdf}
-\includepdf[pages=-]{continuedFractions/main.pdf}
-\includepdf[pages=-]{sort/main.pdf}
-\includepdf[pages=-]{randomText/main.pdf}
-\includepdf[pages=-]{imgutil/main.pdf}
-\includepdf[pages=-]{weekday/main.pdf}
-\includepdf[pages=-]{sudoku/main.pdf} % big
-\includepdf[pages=-]{mastermind/main.pdf} % big
-\includepdf[pages=-]{triangles/main.pdf} % big
-\includepdf[pages=-]{awari/main.pdf} % big
-\includepdf[pages=-]{levensthein/main.pdf}
-\includepdf[pages=-]{polynomials/main.pdf}
-\includepdf[pages=-]{integration/main.pdf}
-\includepdf[pages=-]{exceptions/main.pdf}
-\includepdf[pages=-]{treestructure/main.pdf}
-\includepdf[pages=-]{io/main.pdf}
-\includepdf[pages=-]{web/main.pdf}
-\includepdf[pages=-]{cat/main.pdf}
-\includepdf[pages=-]{classes/main.pdf}
-\includepdf[pages=-]{blackJack/main.pdf}
-\includepdf[pages=-]{design/main.pdf}
-\includepdf[pages=-]{inheritance/main.pdf}
-\includepdf[pages=-]{prey/main.pdf}
-\includepdf[pages=-]{wolvesNMoose/main.pdf}
-\includepdf[pages=-]{owlsNMice/main.pdf}
-\includepdf[pages=-]{chess/main.pdf}
-\includepdf[pages=-]{uml/main.pdf}
-\includepdf[pages=-]{winforms/main.pdf}
-\includepdf[pages=-]{clock/main.pdf}
+\tableofcontents
+\newpage
+\chapter{Scratch}
+\subfile{gettingStarted/main}
+\subfile{scratch/main}
+\chapter{F\# Imperative Programming}
+\subfile{myFirstFSharp/main}
+\subfile{bindings/main}
+\subfile{rgb/main}
+\subfile{vec/main}
+\subfile{modules/main}
+\subfile{lister/main}
+\chapter{F\# Functional Programming}
+\subfile{recursion/main}
+\subfile{continuedFractions/main}
+\subfile{sort/main}
+\subfile{randomText/main}
+\subfile{imgutil/main}
+\subfile{weekday/main}
+\subfile{sudoku/main} % big
+\subfile{mastermind/main} % big
+\subfile{triangles/main} % big
+\subfile{awari/main} % big
+\subfile{levensthein/main}
+\subfile{polynomials/main}
+\subfile{integration/main}
+\subfile{exceptions/main}
+\subfile{treestructure/main}
+\subfile{cat/main}
+\chapter{F\# Object-oriented Programming}
+\subfile{classes/main}
+\subfile{blackJack/main}
+\subfile{design/main}
+\subfile{inheritance/main}
+\subfile{prey/main}
+\subfile{wolvesNMoose/main}
+\subfile{owlsNMice/main}
+\subfile{chess/main}
+\subfile{uml/main}
+\chapter{F\# Event-driven Programming}
+\subfile{io/main}
+\subfile{web/main}
+\subfile{winforms/main}
+\subfile{clock/main}
 \end{document}
 

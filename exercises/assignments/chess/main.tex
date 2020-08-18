@@ -1,27 +1,15 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[../main]{subfiles}
 
-\input{setup}
 \newcommand{\chess}{Simple Chess}
-
-\title{\chess}
-
-\author{Jon Sporring}
-
 \begin{document}
 \maketitle
-
-\section{Lærervejledningn}
-\input{teacher}
-\section{Introduktion}
-\input{introduction}
-\section{Opgave(r)}
-\begin{enumerate}
+\begin{assignmentList}{Chess}
 \item \input{uml}
 \item \input{kingFlaw}
 \item \input{nextMove}
 \item \input{run}
 \item \input{ai}
 \item \input{extendedUML}
-\end{enumerate}
+\end{assignmentList}
 
 \end{document}
