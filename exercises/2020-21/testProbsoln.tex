@@ -1,0 +1,16 @@
+\documentclass{report}
+\usepackage[noanswers,usedefaultargs]{probsoln}
+\renewenvironment{solution}{\ignorespaces}{\ignorespacesafterend}
+\begin{document}
+\loadallproblems{testProblem}
+\paragraph{Questions}
+\begin{enumerate}
+  \foreachproblem{\item\thisproblem}
+\end{enumerate}
+\paragraph {Solutions}
+\showanswers
+\onlysolution
+\begin{enumerate}
+  \foreachproblem{\item\thisproblem}
+\end{enumerate}
+\end{document}

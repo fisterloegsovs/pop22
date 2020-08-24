@@ -1,0 +1,53 @@
+% \begin{defproblem}{cosxsqsinx}%
+% \begin{onlyproblem}%
+% Differentiate the following:
+% \begin{textenum}
+% \item $f(x)=2^x$; \item $f(x)=\cot(x)$
+% \end{textenum}
+% \end{onlyproblem}
+% \begin{onlysolution}
+% \begin{enumerate}
+% \item
+% \begin{align*}
+% f(x) &= 2^x = \exp(\ln(x^2)) =\exp(2\ln(x))\\
+% f'(x) &= \exp(2\ln(x))\times \frac{2}{x}\\
+% &= f(x)\frac{2}{x}
+% \end{align*}
+% \item
+% \begin{align*}
+% f(x) &= \cot(x) = (\tan(x))^{-2}\\
+% f'(x) &= -(\tan(x))^{-2}\times\sec^2(x)\\
+% &=-\csc^2x
+% \end{align*}
+
+% Under which of the following functions does $S=\{a_1,a_2\}$
+% become a probability space?
+% \begin{enumerate}
+% \incorrectitem $P(a_1)=\frac{1}{3}$, $P(a_2)=\frac{1}{2}$
+% \correctitem $P(a_1)=\frac{3}{4}$, $P(a_2)=\frac{1}{4}$
+% \correctitem $P(a_1)=1$, $P(a_2)=0$
+% \incorrectitem $P(a_1)=\frac{5}{4}$, $P(a_2)=-\frac{1}{4}$
+% \end{enumerate}
+% \end{enumerate}
+% \end{onlysolution}
+% \end{defproblem}
+
+\begin{defproblem}{diffcos}
+  \begin{onlyproblem}
+    Differentiate $f(x)=\cos(4x)$.
+  \end{onlyproblem}
+  \begin{onlysolution}%
+    \begin{solution}
+      $f'(x) = -4\sin(4x)$
+    \end{solution}
+  \end{onlysolution}
+\end{defproblem}
+
+\newproblem[1][{3}]{diffsin}{%
+  \begin{onlyproblem}
+    Differentiate $f(x) = \sin(#1x)$
+  \end{onlyproblem}
+}%
+{%
+  $f'(x) = #1\cos(#1x)$
+}

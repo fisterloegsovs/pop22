@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage{xparse}
+\ExplSyntaxOn
+
+\NewDocumentCommand{\makeenumerate}{ m }
+ {
+  \begin{enumerate}
+  \clist_map_inline:nn { #1 } { \item \fbox{##1} }
+  \end{enumerate}
+ }
+
+\ExplSyntaxOff
+
+\begin{document}
+
+\makeenumerate{a, b ,c d, ,e }
+
+\end{document}

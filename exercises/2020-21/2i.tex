@@ -1,34 +1,52 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
+\input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{2}
 \newcommand{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{Version 2\\[1cm]9.\ september - 13.\ september}{fredag d.\ 13.\ september kl. 17:00}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ september - 12.\ september}{lørdag d.\ 12.\ september kl. 22:00}
 
 \begin{document}
 \maketitle
 
+\section*{Kom igang med F\#}
+I sidste periode arbejde vi med Scratch, som er et imperativt programmeringssprog. Nu skal vi i gang med F\#, som vil være det sprog, vi vil benytte på resten af kurset. Vi starter med imperativ programmering, og I vil se, at nogle af de elementer, som I stiftede bekenskab med i Scratch også bruges i F\#. Som med \LaTeX\ skal vi bruge en teksteditor og kommandolinjen (terminalen) til at skrive og køre programmer. Der findes også hjælpeværktøj kaldet Integrated Development Environments (IDE), som I vil stifte bekendtskab med senere på jeres uddannelse, og som kan gøre programmering nemmere, men her i starten skal I altså bruge kommandolinjen.
+
 \learningPurposeTxt{
-  {jeres første F\# program,},
-  {decimal, binær, hexadecimal, og oktal repræsentation af heltal, og
-    konvertering imellem dem i hånden,},
-  {simple typer i F\#: \lstinline{int}, \lstinline{float},
-    \lstinline{char}, \lstinline{string}, \lstinline{bool}, samt
-    konvertering imellem dem i F\#,},
-  {F\# som en lommeregner.}
-}
+  {Kende forskel på fortolker og compiler, lave et fortolket og et compilet program,},
+  {Demonstrere evne til at arbejde med strenge inkl. danske bogstaver},
+  {Kende forskellen på forskellige typer, og kunne konvertere heltal mellem decimal, binær, hexadecimal, og oktal form}.
+.}
 
 \learningConditionsTxt{\typeLetter}
 
-\trainingExercises{\exerciseNumber ø}{../assignments/myFirstFSharp/}{}{add,compile,concat,typeError,divideBy2ByHand,otherBases,truthTable,uy,unicode,slicing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\loadallproblems{../assignments/problems}
 
-\handInExercises{\exerciseNumber\typeLetter}{../assignments/myFirstFSharp/}{}{table, backslashN, verbatim, slicing2}
+\section*{Øveopgaver (in English)}
+\exerciseProblem{\exerciseNumber ø}{add,compile}
+\begin{center}
+  \rule{0.7\textwidth}{1pt}
+\end{center}
+\continueExerciseProblem{\exerciseNumber ø}{concat,backslashN,unicode,slicing, verbatim}
+\begin{center}
+  \rule{0.7\textwidth}{1pt}
+\end{center}
+\continueExerciseProblem{\exerciseNumber ø}{typeError,otherBases,uy,divideBy2ByHand} % truthTable
 
+\section*{Afleveringsopgaver (in English)}
+\exerciseProblem{\exerciseNumber\typeLetter}{interpretVsCompile, slicing2, table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
 \handinTextOneOne{\exerciseNumber\typeLetter 0.fsx}
-
 \flushright God fornøjelse.
+
+
+
+
 \end{document}
 
 %%% Local Variables:

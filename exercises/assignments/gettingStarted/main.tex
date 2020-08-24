@@ -1,16 +1,19 @@
 \documentclass[../main]{subfiles}
 \begin{document}
-\maketitle
-\begin{assignmentList}{Getting Started}
-\item \input{install}
-\item \input{installScratch}
-\item \input{helloWorld}
-  
-\item \input{countDown}
-\item \input{countDownWhenPressed}
-\item \input{countDoubles}
-\item \input{screenShots}
-\item \input{report}
-\end{assignmentList}
-
+\loadallproblems{problems}
+%\paragraph{Questions}
+\paragraph{Teacher's guide}
+\input{teacher}
+\paragraph{Introduction}
+\input{introduction}
+\paragraph{Questions}
+\begin{enumerate}
+  \foreachproblem{\item\thisproblem}
+\end{enumerate}
+% \paragraph{Solutions}
+% \showanswers
+% \onlysolution
+% \begin{enumerate} 
+%   \foreachproblem{\item\thisproblem}
+% \end{enumerate}
 \end{document}
