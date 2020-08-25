@@ -4,14 +4,20 @@ Absalon: typisk skema
 
 Mål: at lære at løse problemer vha. et program
 
-Forskellige måder at strukturere sin løsning på (paradigmer): Imperativ, funktioner, objektorienteret.
-
 Absalon: forelæsningsplan
 
 Bog
 
-Eksempler: Fibonacci talrække, relation til gyldne snit, ligninger, programmerne Fib*.fsx, køretider fortolket, forskel på oversat og fortolket
+Forskellige måder at strukturere sin løsning på (paradigmer): 
+ Imperativ, 
+ funktionel, 
+ objektorienteret.
 
-Compile vs. fortolket
-
-Induktionsbeviser.
+Eksempler: 
+ Fibonacci talrække, 
+ relation til gyldne snit, 
+ ligninger, 
+ kommandolinje og teksteditor 
+ programmerne Fib*.fsx, 
+ køretider fortolket, 
+ forskel på oversat og fortolket
