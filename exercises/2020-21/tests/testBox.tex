@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{exsheets}
+
+\lstset{
+frame=single,
+xleftmargin=20pt,
+numbers=left,
+numberstyle=\small,
+tabsize=2,
+breaklines,
+showspaces=false,
+showstringspaces=false,
+language=C,
+basicstyle=\small\ttfamily,
+commentstyle=\itshape\color{gray}}
+
+
+\newsavebox\myboxa
+
+\begin{document}
+
+\begin{lrbox}{\myboxa}\begin{minipage}{\textwidth}
+\begin{lstlisting}[]
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  printf("hello, world\n");
+}
+\end{lstlisting}
+\end{minipage}
+\end{lrbox}
+
+\begin{question}{6}
+Consider the following C program.\par
+\noindent\usebox\myboxa
+\end{question}
+
+\begin{solution}
+Consider the following C program.\par
+\noindent\usebox\myboxa
+\end{solution}
+\printsolutions 
+
+\end{document}

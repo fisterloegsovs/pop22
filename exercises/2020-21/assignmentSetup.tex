@@ -27,7 +27,7 @@ Emnerne for denne arbejdsseddel er:
 }
 
 \newrobustcmd{\learningConditionsTxt}[1]{
-Opgaverne er delt i øve- og afleveringsopgaver. I denne periode skal I
+Opgaverne er opdelt i øve- og afleveringsopgaver. I denne periode skal I
 arbejde %
 \expandafter\ifstrequal\expandafter{#1}{g}{i grupper}{individuelt} %
  med jeres afleveringsopgaver. Regler for gruppe- og individuelle
@@ -41,12 +41,26 @@ arbejde %
 \end{itemize}
 }
 
+%%%%%%%%%%%%%%%%%%%%%5
+% Jon style exercise database
 \DeclareListParser*{\iterateImportEnumerate}{,}
 \newcommand{\listImportEnumerate}[3]{%
-\begin{enumerate}[#1]
-  \iterateImportEnumerate{\item \subimport*{#2}}{#3}
-\end{enumerate}
+  \begin{enumerate}[#1]
+    \iterateImportEnumerate{\item \subimport*{#2}}{#3}
+  \end{enumerate}
 }
+
+\newrobustcmd{\exercises}[4]{
+  \ifstrempty{#3}{}{\subimport*{#2}{#3}}
+  \listImportEnumerate{label=#1\arabic*,start=0}{#2}{#4}
+}
+
+\newrobustcmd{\continueExercises}[4]{
+  \ifstrempty{#3}{}{\subimport*{#2}{#3}}
+  \listImportEnumerate{label=#1\arabic*,resume}{#2}{#4}
+}
+
+%%%%%%%%%%%%%%%%%%%%%5
 
 \DeclareListParser*{\iterateEnumerate}{,}
 \newcommand{\listEnumerate}[2]{%
@@ -54,19 +68,14 @@ arbejde %
   \iterateEnumerate{\item }{#2}
 \end{enumerate}
 }
-\newrobustcmd{\exercises}[5]{
+
+\newrobustcmd{\exercisesWHeader}[5]{
 \section*{#1}
 \ifstrempty{#4}{}{\subimport*{#3}{#4}}
 \listImportEnumerate{label=#2\arabic*,start=0}{#3}{#5}
 }
-\newrobustcmd{\trainingExercises}[4]{\exercises{Øveopgaver}{#1}{#2}{#3}{#4}}
-\newrobustcmd{\handInExercises}[4]{\exercises{Afleveringsopgaver}{#1}{#2}{#3}{#4}}
-
-\newrobustcmd{\continueExercises}[4]{
-\ifstrempty{#3}{}{\subimport*{#2}{#3}}
-\listImportEnumerate{label=#1\arabic*,resume}{#2}{#4}
-}
-
+\newrobustcmd{\trainingExercises}[4]{\exercisesWHeader{Øveopgaver}{#1}{#2}{#3}{#4}}
+\newrobustcmd{\handInExercises}[4]{\exercisesWHeader{Afleveringsopgaver}{#1}{#2}{#3}{#4}}
 
 %%%%%%%%%%%%%%%%%%%%%5
 % for probsoln packages
@@ -86,12 +95,10 @@ arbejde %
 
 
 \newcommand{\handinTextOne}{Afleveringen skal bestå af
-\begin{itemize}\item upload af de udviklede programmer i klassens studio
+\begin{itemize}\item upload af de udviklede programmer i øvelsesholdets studio
 på Scratch' hjemmeside, \item en zip-fil og \item en rapport i
 pdf-format.\end{itemize} Rapporten skal dokumentere jeres process og
-beskrive jeres programmer. Den skal skrives i LaTeX med et passende
-antal billeder, illustrationer og henvise til jeres
-programmer. LaTeX koden (\texttt{.tex}) inklusiv billeder skal
+beskrive jeres programmer. Den skal skrive i \LaTeX, indeholde et passende antal figurer og henvise til jeres programmer (i øvelsesholdets studio på Scratch' hjemmeside). \LaTeX\ koden (\texttt{.tex}) inklusiv billeder skal
 organiseres i en mappe kaldet \texttt{tex}, således at pdf-filen kan
 laves ved kørsel af \texttt{pdflatex} kommandoen i mappen. Mappen skal
 zippes (\texttt{.zip}) og afleveres sammen med den oversatte pdf fil

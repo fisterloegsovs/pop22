@@ -1,6 +1,11 @@
 \documentclass{report}
 \usepackage[noanswers,usedefaultargs]{probsoln}
+\usepackage{listings}
 \renewenvironment{solution}{\ignorespaces}{\ignorespacesafterend}
+\setkeys{probsoln}{fragile}
+
+\newsavebox\myboxa % Needed to box stuff in questions file
+
 \begin{document}
 \loadallproblems{testProblem}
 \paragraph{Questions}
