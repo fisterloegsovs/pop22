@@ -1,0 +1,12 @@
+Consider the following application
+\begin{codeNOutput}{: Application of a Color library.}
+  \begin{lstlisting}
+let v = (1.3, -2.5)
+printfn "Vector %A: (%f, %f)" v (vec2d.len v) (vec2d.ang v)
+let w = (-0.1, 0.5)
+printfn "Vector %A: (%f, %f)" w (vec2d.len w) (vec2d.ang w)
+let s = vec2d.add v w
+printfn "Vector %A: (%f, %f)" s (vec2d.len s) (vec2d.ang s)
+  \end{lstlisting}
+\end{codeNOutput}
+First run the code with \filename{fsharpc}. Then perform a tracing by hand of the above code including the implementation of your library. Did you discover any errors? Do you get the same output?

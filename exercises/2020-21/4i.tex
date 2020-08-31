@@ -1,25 +1,38 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
+\input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{4}
-\newrobustcmd{\typeLetter}{i}
+\newcommand{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{Version 2\\[1cm]23.\ september - 27.\ september}{fredag d.\ 27.\ september kl. 22:00}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{21.\ september - 26.\ september}{lørdag d.\ 26.\ september kl. 22:00}
 
 \begin{document}
 \maketitle
 
+\section*{Organisere kode i moduler og gennemføre en afprøvning}
+Der er (næsten) altid fejl i kode, og retter man en, er der en væsentlig sandsynlighed for at man tilføjer en anden. Fejlfindingsprocessen er derfor en essentiel del af programmering, og i denne periode kigger vi på 3 forskellige metoder: Black-box, hvor man fokuserer på opfyldelse af de ydre krav til en funktion og et program, og som typisk er stillet af en ekstern opgavestiller; White-box, hvor man fokuserer kodens interne opbygning; og håndkøring, hvor man simulerer computerens udførsel af et program. Chancer for fejlfinding og genbrug kan øges, hvis man organiserer sin kode godt. I sidste uge kiggede vi på, hvordan løkker og funktioner kan bruges til kodeorganisation, i denne uge vil vi kigge på, hvordan man samler funktioner i biblioteker (moduler) efter tema, og hvordan man i den forbindelse kan bruge signaturfiler sammen med kommentarer til at skabe et klart overblik over, hvad funktioner i moduler kan uden at man lader sig forvirre eller opsluge af deltajer i funktionernes implementation.
+
 \learningPurposeTxt{
-  {Moduler og namespaces,},
-  {Afprøvning.}
+  {Kunne strukturere kode med moduler,},
+  {Kunne tilføje veldokumenterede signaturfiler til moduler,},
+  {Kunne gennemføre en white- og black-box afprøvning og håndkøring.}
 }
 
 \learningConditionsTxt{\typeLetter}
 
-\trainingExercises{\exerciseNumber  ø}{../assignments/modules/}{introduction}{signature,implementation,application,whitebox,extension}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\subimport{../assignments/modules/}{introduction}
+\exercises{\exerciseNumber ø}{../assignments/modules/}{}{signature,implementation,application,blackbox,whitebox,tracing}%,extension}
 
-\handInExercises{\exerciseNumber\typeLetter}{../assignments/vec/}{introduction}{vec2d,test,polygon,signature}
+\section*{Afleveringsopgaver (in English)}
+\subimport{../assignments/vec/}{introductionEn}
+\exercises{\exerciseNumber i}{../assignments/vec/}{}{vec2dEn,blackbox,whitebox,tracing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
 
 \handinTextTwoTwo{\exerciseNumber\typeLetter}{\texttt{vec2d.fsi, vec2d.fs, \exerciseNumber\typeLetter1.fsx, \exerciseNumber\typeLetter 2.fsx, \exerciseNumber\typeLetter 3.fsi}}
 
