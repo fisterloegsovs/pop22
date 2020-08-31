@@ -1,24 +1,30 @@
-Fakultetsfunktionen kan skrives som,
-  \begin{equation}
-    n! = \prod_{i=1}^n i = 1\cdot 2\cdot \ldots \cdot n
-  \end{equation}
-  \begin{enumerate}
-  \item Skriv en funktion
-    \begin{quote}
-      \mbox{\lstinline!fac : n:int -> int!}
-    \end{quote}
-    som benytter en \lstinline!while! løkke, en tællevariabel og en lokal variabel til at beregne fakultetsfunktionen.
-    % \item Lav en variant
-    %   \begin{quote}
-    %     \mbox{\lstinline!recFac : n:int -> int!}
+Consider the faculty-function,
+\begin{equation}
+  n! = \prod_{i=1}^n i = 1\cdot 2\cdot \ldots \cdot n
+  \label{eq:faculty}
+\end{equation}
+\begin{enumerate}
+\item Write a function
+  \begin{quote}
+    \mbox{\lstinline!fac : n:int -> int!}
+  \end{quote}
+  which uses a \lstinline!while!-loop, a counter variable, and a local
+  variable to calculate the faculty-function as \eqref{eq:faculty}.
+  % \item Lav en variant
+  %   \begin{quote}
+  %     \mbox{\lstinline!recFac : n:int -> int!}
     %   \end{quote}
     %   som benytter rekursion og ingen variable til at beregne fakultetsfunktionen.
     % \item Afprøv begge funktioner ved at lave et program, som laver en tabel med 3 kolonner \lstinline!n!, \mbox{\lstinline!fac n!} og \mbox{\lstinline!recFac n!}, og sikr dig at de 2 funktioner regner rigtigt.
     % \item Hvad er det største $n$, som disse funktioner kan beregne fakultetsfunktionen for, og hvad er begrænsningen?
-  \item Skriv et program, som beder brugeren indtaste et tal \lstinline!n!, læser det fra tastaturet, og derefter udskriver resultatet af \lstinline!fac n!.
-  \item Hvad er det største $n$, som funktionen kan beregne fakultetsfunktionen for, og hvad er begrænsningen? Lav en ny version, 
+  \item Write a program, which asks the user to enter the number
+    \lstinline!n! using the keyboard, and which writes the result of \lstinline!fac n!.
+  \item Make a new version, 
     \begin{quote}
-      \mbox{\lstinline!fac : n:int -> int64!}
+      \mbox{\lstinline!fac64 : n:int -> int64!}
     \end{quote}
-    som benytter \lstinline{int64} istedet for \lstinline{int} til at beregne fakultetsfunktionen. Hvad er nu det største $n$, som funktionen kan beregne fakultetsfunktionen for?
+    which uses \lstinline{int64} instead of \lstinline{int} to
+    calculate the faculty-function. What are the larges values $n$,
+    for which \lstinline{fac} and \lstinline{fac64} respectively can
+    calculate the faculty-function for?
   \end{enumerate}

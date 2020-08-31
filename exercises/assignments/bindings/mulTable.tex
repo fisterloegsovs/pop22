@@ -1,9 +1,27 @@
-Som en variant af Opgave~\ref{multiplicationTable}, skal der arbejdes med funktionen
-  \begin{quote}
-    \mbox{\lstinline!mulTable : n:int -> string!}
-  \end{quote}
-  som tager 1 argument og returnerer en streng indeholdende de første $1\leq n\leq 10$ linjer i multiplikationstabellen inklusiv ny-linje tegn, således at hele tabellen kan udskrives med et enkelt \lstinline!printf "%s"! statement. F.eks.\ skal kald til \mbox{\lstinline!mulTable 3!} returnere
-  \begin{codeNOutput}[label=mulTab]{: Eksempel på brug og output fra \lstinline!mulTable!.}
+Consider multiplication tables of the form,
+\begin{center}
+  \begin{tabular}[c]{r|rrrrrrrrrr}
+    & 1& 2& 3& 4& 5& 6& 7& 8& 9& 10\\\hline
+   1 & 1& 2& 3& 4& 5& 6& 7& 8& 9& 10\\
+   2 & 2& 4& 6& 8& 10& 12& 14& 16& 19& 20\\
+   3 & 3& 6& 9& 12& 15& 18& 21& 24& 27& 30\\
+    $\hdots$&&&&&&&&&&  
+  \end{tabular}
+\end{center}
+where the elements of the top row and left column are multiplied and
+the result is written at their intersection.
+
+In this assignment, you are to work with a function
+\begin{quote}
+  \mbox{\lstinline!mulTable : n:int -> string!}
+\end{quote}
+which takes 1 argument and returns a string containing the first
+$1\leq n\leq 10$ lines in the multiplication table including
+\lstinline{<newline>} characters. The resulting string must be
+printable with a single\lstinline!printf "%s"!%
+statement. For example, the call \mbox{\lstinline!mulTable 3!} must
+return.
+  \begin{codeNOutput}[label=mulTab]{: An example of the output from \lstinline!mulTable!.}
 \begin{lstlisting}
 printf "%s" (mulTable 3);;
        1   2   3   4   5   6   7   8   9  10
@@ -12,18 +30,24 @@ printf "%s" (mulTable 3);;
    3   3   6   9  12  15  18  21  24  27  30
 \end{lstlisting}
 \end{codeNOutput}
-hvor alle indgange i tabellen har samme bredde. Opgaven har følgende del\-afleveringer:
-  \begin{enumerate}
-  \item Lav
-    \begin{quote}
-      \mbox{\lstinline!mulTable : n:int -> string!}
-    \end{quote}
-så den som lokal værdibinding benytter en og kun en streng, der indholder tabellen for $n=10$, og benyt streng-indicering til at udtrække dele af tabellen for $n<10$.  Afprøv \mbox{\lstinline!mulTable n!} for $n= 1, 2, 3, 10$.
-  \item Lav
-    \begin{quote}
-      \mbox{\lstinline!loopMulTable : n:int -> string!}
-    \end{quote}
-så den benytter en lokal streng-variabel, som bliver opbygget dynamisk vha.\ 2 \lstinline!for! løkker og \lstinline!sprintf!.  Afprøv \mbox{\lstinline!loopMulTable n!} for $n= 1, 2, 3, 10$.
+All entries must be padded with spaces such that the rows and columns
+are right-aligned. Consider the following sub-assignments:
+\begin{enumerate}
+\item Make
+  \begin{quote}
+    \mbox{\lstinline!mulTable : n:int -> string!}
+  \end{quote}
+  such that it has one and only one value binding to a string, which
+  is the resulting string for $n=10$, and use indexing to return the
+  relevant tabel for $n\leq 10$.  Test \mbox{\lstinline!mulTable n!}
+  for $n= 1, 2, 3, 10$.  The function should return the empty string
+  for values $n < 1$ and $n>10$.
+\item Make
+  \begin{quote}
+    \mbox{\lstinline!loopMulTable : n:int -> string!}
+  \end{quote}
+  such that it uses a local string variable, which is built
+  dynamically using 2 nested \lstinline!for!-loops and the \lstinline!sprintf!-function.  Test \mbox{\lstinline!loopMulTable n!} for $n= 1, 2, 3, 10$.
 %   \item Lav
 %     \begin{quote}
 %       \mbox{\lstinline!recMulTable : n:int -> string!}
@@ -31,6 +55,13 @@ så den benytter en lokal streng-variabel, som bliver opbygget dynamisk vha.\ 2 
 % som benytter rekursion og uden brug af variable opbygger strengen. Afprøv \mbox{\lstinline!recMulTable n!} for $n= 1, 2, 3, 10$.
   % \item Lav et program, som benytter sammenligningsoperatoren for strenge \lstinline!=!, og som skriver en tabel ud på skærmen med 3 kolonner: \lstinline!n!, og resultatet af sammenligningen af \mbox{\lstinline!mulTable n!} med hhv.\ \mbox{\lstinline!loopMulTable n!} og \mbox{\lstinline!recMulTable n!} som \lstinline!true! eller \lstinline!false!.
   % \item Forklar forskellen mellem at benytte \lstinline!printf "%s"! og \lstinline!printf "%A"! til at printe resultatet af \lstinline!mulTab!.
-  \item Lav et program, som benytter sammenligningsoperatoren for strenge \lexeme{=}, og som skriver en tabel ud på skærmen med 2 kolonner: \lstinline!n!, og resultatet af sammenligningen af \mbox{\lstinline!mulTable n!} med \mbox{\lstinline!loopMulTable n!} som \lstinline!true! eller \lstinline!false!.
-  \item Forklar forskellen mellem at benytte \lstinline!printf "%s"! og \lstinline!printf "%A"! til at printe resultatet af \lstinline!mulTable!.
+  \item Make a program, which uses the comparison operator for
+    strings, \lexeme{=}, and write a table to the screen with 2
+    columns: \lstinline!n!, and the result of comparing the output of
+    \mbox{\lstinline!mulTable n!} with \mbox{\lstinline!loopMulTable
+      n!} as \lstinline!true! or \lstinline!false!, depending on
+    whether the output is identical or not.
+  \item Use \lstinline!printf "%s"!%
+    and \lstinline!printf "%A"!%
+    to print the result of \lstinline!mulTable!, and explain the difference.
   \end{enumerate}

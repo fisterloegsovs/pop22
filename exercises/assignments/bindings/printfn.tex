@@ -1,5 +1,5 @@
-Indtast følgende program i en tekstfil, oversæt og kør programmet 
-  \begin{codeNOutput}[label=linear]{: Værdibindinger.}
+Enter the following program in a text file, compile, and execute the program:
+  \begin{codeNOutput}[label=linear]{: Value bindings.}
 \begin{lstlisting}
 let a = 3
 let b = 4
@@ -7,4 +7,8 @@ let x = 5
 printfn "%A * %A + %A = %A" a x b (a * x + b)
 \end{lstlisting}
 \end{codeNOutput}
-Forklar hvad parentesen i kaldet af \lstinline!printfn! funktionen gør godt for. Tilføj en linje i programmet, som udregner udtrykket $ax+b$ og binder resultatet til \lstinline!y!, og modificer kaldet til \lstinline!printfn! så det benytter denne nye binding. Er det stadig nødvendigt at bruge parentes?
+Explain why the the parenthesis in the call to \lstinline!printfn! is
+necessary. Add a line, which calculates the expression $ax+b$ and
+binds the result to the name \lstinline!y!. Modify the call to
+\lstinline!printfn!, such that it uses this new name. Is it still
+necessary to use parentheses?
