@@ -1,23 +1,34 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
+\input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{5}
 \newrobustcmd{\typeLetter}{g}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{30.\ september - 4.\ oktober}{lørdag d.\ 5.\ oktober kl. 23:59}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{28.\ september - 3.\ oktober}{lørdag d.\ 3.\ oktober kl. 22:00}
 
 \begin{document}
 \maketitle
+Some introductory text \dots
 
-\learningPurposeTxt{{lister,},{arrays.}}
+\learningPurposeTxt{
+  {lister,},
+  {arrays,},
+  {\dots.}
+}
 
 \learningConditionsTxt{\typeLetter}
 
-\trainingExercises{\exerciseNumber  ø}{../assignments/lister/}{}{oneToN,multiplicity,split,reverseApply,typer,evens,map,filter,array,reverseArray,reverseArrayD,array2d}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber  ø}{../assignments/lister/}{}{oneToN,multiplicity,split,reverseApply,typer,evens,map,filter,array,reverseArray,reverseArrayD,array2d}
 
-\handInExercises{\exerciseNumber\typeLetter}{../assignments/lister/}{introduction}{tabel,listOfLists}
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/lister/}{introduction}{tabel,listOfLists}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
 \handinTextTwoTwo{\exerciseNumber\typeLetter}{\texttt{\exerciseNumber\typeLetter 0.fsx, \exerciseNumber\typeLetter 1.fsx} og \texttt{\exerciseNumber\typeLetter 2.fsx}}
 
 \flushright God fornøjelse.

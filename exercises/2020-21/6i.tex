@@ -1,23 +1,30 @@
 \documentclass[a4paper,12pt]{article}
 
 \input{setup}
+\input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{6}
 \newrobustcmd{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ oktober - 11.\ oktober}{lørdag d.\ 12.\ oktober kl. 23:59}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{5.\ oktober - 10.\ oktober}{lørdag d.\ 10.\ oktober kl. 22:00}
 
 \begin{document}
 \maketitle
+Some introductory text \dots
 
 \learningPurposeTxt{{rekursion.}}
 
 \learningConditionsTxt{\typeLetter}
 
-\trainingExercises{\exerciseNumber  ø}{../assignments/recursion/}{}{fac,sum,sumList,gcd,fold,analyze}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber  ø}{../assignments/recursion/}{}{fac,sum,sumList,gcd,fold,analyze}
 
-\handInExercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,frac2cfrac,cfrac2frac,test}
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,frac2cfrac,cfrac2frac,test}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
 \handinTextOneTwo{\exerciseNumber\typeLetter}{\texttt{continuedFraction.fsi,
     continuedFraction.fs} og \texttt{\exerciseNumber\typeLetter 4.fsx}}
 
