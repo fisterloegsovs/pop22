@@ -174,7 +174,26 @@ dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
 \texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
 XML-tagsne. Udover selve koden skal besvarelser indtastes som
 kommentarer i de fsx-filer, de hører til. Filen \texttt{README.txt}
-skal ganske kort beskrive, hvordan koden oversættes og køres.}
+skal ganske kort beskrive, hvordan koden oversættes og køres, og
+evtuelle Black-box, White-box og håndkøringsresultater når relevant.}
+
+\newcommand{\handinTextTwoThree}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en \texttt{src} mappe
+og filen \texttt{README.txt}.  I \texttt{src} skal der ligge følgende
+og kun følgende filer: #2 svarende til hver af delopgaverne.  De skal
+kunne oversættes med \lstinline[language=console]{fsharpc}, og de
+oversatte filer skal kunne køres med mono.  Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Udover selve koden skal besvarelser indtastes som
+kommentarer i de fsx-filer, de hører til. Filen README.txt skal
+indeholde:\begin{itemize}
+\item En kort beskrivelse af hvordan koden oversættes og køres.
+\item En beskrivelse af resultaterne for hhv. Black- og White-box test og kommentere evt. fejlede test.
+\item Besvarelse på opg. 4i3, inkl. håndkøringstabel.\end{itemize}}
 
 %\usepackage{forest}
 \newcommand{\handinTextOneTwo}[2]{Afleveringen skal bestå af
