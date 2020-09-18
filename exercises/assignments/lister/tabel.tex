@@ -1,4 +1,4 @@
-En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne er lige lange. Listen \lstinline{[[1; 2; 3]; [4; 5; 6]]} repræsenterer for eksempel tabellen
+A table can be represented as a non-empty list of equally long lists, for example, the list \lstinline{[[1; 2; 3]; [4; 5; 6]]} represents the table:
   \begin{quote}
 \[\left [\begin{array}{rrr}
 1 & 2 & 3 \\
@@ -7,28 +7,13 @@ En tabel kan repræsenteres som en ikke tom liste af lister, hvor alle listerne 
 \right ]\]
 \end{quote}
 \begin{enumerate}
-\item Lav en funktion \lstinline{isTable : llst:'a list list -> bool},
-  der givet en liste af lister afgør, om det er en lovlig ikke-tom
-  tabel. For at det er en lovlig ikke-tom tabel, skal der gælde følgende:
+\item Make a function \lstinline{isTable : llst:'a list list -> bool}, which determines whether \lstinline{llst} is a legal non-empty list, i.e., that
   \begin{itemize}
-  \item Der er mindst en liste med mindst et element.
-  \item Alle lister i tabellen har ens længde.
+  \item there is at least one element, and
+  \item all lists in the outer list has equal length.
   \end{itemize}
-\item Lav en funktion \lstinline{firstColumn : llst:'a list list -> 'a list}, der tager en liste af lister og returnerer listen af førsteelementer i de indre lister.  F.eks.\ skal \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} returnere listen \lstinline{[1; 4]}.  Hvis en eller flere af listerne er tomme, skal funktionen returnere den tomme liste af heltal \lstinline{[] : int list}.
-\item Lav en funktion \lstinline{dropFirstColumn : llst:'a list list -> 'a list list}, der tager en liste af lister og returnerer en liste af lister, hvor førsteelementerne i de indre lister er fjernet.  F.eks.\ skal \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} returnere \lstinline{[[2; 3]; [5; 6]]}.
-\item Lav en funktion \lstinline{transpose : llst:'a list list -> 'a list list}, der spejler tabellens indgange over diagonalen, så den transponerede tabel til den herover viste tabel er
-  \begin{quote}
-\[\left [\begin{array}{rr}
-1 & 4 \\
-2 & 5 \\
-3 & 6
-\end{array}
-\right ]\]
-\end{quote}
-Kaldet \lstinline{transpose [[1; 2; 3]; [4; 5; 6]]} skal altså
-returnere \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.
-%Det kan antages, at argumentet til \lstinline{transpose} er en lovlig
-%tabel, så advarsler om ufuldstændige mønstre er acceptable -- hvis
-%funktionen ellers virker.
-Bemærk, at \lstinline{transpose (transpose t) = t}, hvis \lstinline{t} er en tabel.  Tip: Brug funktionerne \lstinline{firstColumn} og \lstinline{dropFirstColumn}.
+\item Make a function \lstinline{firstColumn : llst:'a list list -> 'a list} which takes a list of lists and returns the list of first elements in the inner lists.  For example, \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[1; 4]}.  If any of the lists are empty, then the function must return the empty list of integers\lstinline{[] : int list}.
+\item Make a function \lstinline{dropFirstColumn : llst:'a list list -> 'a list list} which takes a list of lists and returns the list of lists where the first element in each inner list is removed. For example, \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[[2; 3]; [5; 6]]}. Ensure that your function fails gracefully, if there is no first elements to be removed.
+\item \label{listTranspose}Make a function \lstinline{transposeLstLst : llst:'a list list -> 'a list list} which transposes a table implemented as a list of lists, that is, an element that previously was at \lstinline{a.[i,j]} should afterwards be at \lstinline{a.[j,i]}. For example, \lstinline{transposeLstLst [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Ensure that your function fails gracefully. Note that \lstinline{transposeLstLst (transpose t) = t} when \lstinline{t} is a table as list of lists. Hint: the functions \lstinline{firstColumn} and \lstinline{dropFirstColumn} may be useful.
+\item Make a whitebox test of the above functions.
 \end{enumerate}
