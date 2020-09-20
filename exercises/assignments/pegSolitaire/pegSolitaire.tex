@@ -1,20 +1,158 @@
-Design og implement\'{e}r et program som kan simulere Simple Jack ved
-brug af klasser.  Start med grundigt at overveje hvilke aspekter af
-spillet som giver mening at opdele i klasser. Spillet skal
-implementere således, at en spiller enten kan være en bruger af Simple
-Jack programmet, som foretager sine valg og ser kortene på bordet via terminalen, eller en spiller kan være en AI som skal følge en af følgende strategier:
-\begin{enumerate}
-\item Vælg altid "Hit", medmindre summen af egne kort kan være 17 eller over, ellers vælg "Stand"
-\item Vælg tilfældigt mellem "Hit" og "Stand". Hvis "Hit" vælges trækkes et kort og der vælges igen tilfældigt mellem "Hit" og "Stand" osv.
-\end{enumerate}
-Dealer skal følge strategi nummer 1.  Der skal også laves:
-\begin{itemize}
-\item En rapport (maks 2 sider)
-\item Unit-tests
-\item Implementation skal kommenteres jævnfør kommentarstandarden for F\#
-\end{itemize}
-Hint: Man kan generere tilfældige tal indenfor et interval (f.eks. fra og med 1 til og med 100) ved brug af følgende kode:
-\begin{lstlisting}[frame=none]
-  let gen = System.Random()
-  let ran_int = gen.Next(1, 101)
+\input{introduction.tex}
+
+I denne opgave skal der arbejdes mod at få computeren til at finde en
+løsning til den engelske version af Peg Solitaire. En løsning vil
+bestå i at computeren udskriver de træk der skal flyttes. Opgave er
+delt over tre dele. I den første delopgave arbejdes der mod at
+implementere et modul til at repræsentere en brætkonstellation samt
+operationer til at foretage flytninger og derved danne nye
+brætkonstellationer. I den anden delopgave skal der arbejdes mod at
+gøre det muligt for en spiller at spille spillet ved brug
+af \texttt{fsharpi} og computeren skal tillade at der foretages træk
+og den nye brætkonstellation udskrives. I den tredie delopgave skal
+der skrives en algoritme der returnerer en liste af træk der
+efterlader en enkelt pind i midten af brættet.
+
+\subsection*{Del 1: Modulet \lstinline{Board}}
+\begin{minipage}{.65\textwidth}
+Hvert hul i brættet er identificeret med en position $(r,c)$, hvor $r$
+er rækken for hullet (se billedet til højre) og $c$ er kolonnen hullet
+optræder i. Således er positionen for den tomme plads i midten
+$(4,4)$.
+
+I det følgende skal vi benytte os af 64-bit heltal til at indeholde en
+komplet brætkonstellation (vi gør kun brug af de 49 mindstbetydende
+bit). Denne designbeslutning gør det muligt for os, ved brug af meget
+lidt plads, at repræsentere mange tusinder forskellige
+brætkonstellationer samtidig.
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\[
+\begin{array}{r|c|c|c|c|c|c|c}
+  & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+0 & & & \bullet & \bullet & \bullet & & \\ \hline
+1 & & & \bullet & \bullet & \bullet & & \\ \hline
+2 & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet \\ \hline
+3 & \bullet & \bullet & \bullet &  & \bullet & \bullet & \bullet \\ \hline
+4 & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet \\ \hline
+5 & & & \bullet & \bullet & \bullet & & \\ \hline
+6 & & & \bullet & \bullet & \bullet & &
+\end{array}
+\]
+\end{minipage}
+
+I F\# kan et bræt således repræsenteres ved brug af typen \lstinline{uint64}:
+\begin{lstlisting}
+  type b = uint64
 \end{lstlisting}
+
+I den første del af opgaven ønskes der implementeret en række
+funktioner til at operere på brætkonstellationer. Funktionerne ønskes
+implementeret i et modul \lstinline{Board}, som vil kunne bruges både
+af en rigtig spiller til at spille spillet og af et modul der har til
+hensigt at finde en løsning til spillet.
+
+Modulet \lstinline{Board} skal indeholde følgende typer og funktioner:
+\begin{lstlisting}
+  type b                               // board type
+  type pos = int*int                   // position type
+  type dir = Up | Down | Left | Right  // move direction
+  type mv = pos * dir                  // move
+
+  val init     : unit -> b             // initial board
+  val valid    : pos -> bool           // is the position valid?
+  val peg      : b -> pos -> bool      // true if pos valid and
+                                       //  hole contains a peg
+  val mv       : b -> mv -> b option   // returns new board
+  val pegcount : b -> int              // number of pegs
+  val pr       : b -> string           // string representation
+\end{lstlisting}
+
+Her følger nogle gode råd til hvordan ovenstående modul implementeres:
+\begin{itemize}
+
+\item Start med at implementere to hjælpefunktioner \lstinline{seti} og \lstinline{geti}
+til henholdsvis at sætte en givet bit i en \lstinline{uint64}-værdi
+samt at undersøge om en givet bit er sat (hertil skal I benytte et
+udvalg af bit-operationer,
+inklusiv \lstinline{|||}, \lstinline{&&&}, \lstinline{~~~}, \lstinline{>>>}
+og \lstinline{<<<}).
+
+\item Implementér en hjælpefunktion \lstinline{posi} til at omdanne en
+position (row-column pair) til et bit-index i brætrepræsentationen.
+
+\item Funktionen \lstinline{valid} skal returnere \lstinline{false} hvis positionen ikke repræsenterer en hul-position i et tomt bræt.
+%% \item Implementér funktionen \lstinline{peg} til at undersøge om en
+%% pind er sat i et bræthul samt funktionen
+%% \item Implementér derefter funktionen \lstinline{pr} således at I kan undersøge om de to ovenstående funktioner virker korrekt.
+\item Implementér en funktion \lstinline{neighbor} af type \lstinline{pos -> dir -> pos option}, som, givet en valid position og en retning, returnerer en valid naboposition, hvis en sådan findes i den specificerede retning, eller værdien \lstinline{None}. Således skal et kald \lstinline{neighbor(2,5)Right} returnere værdien \lstinline{None} og et kald \lstinline{neighbor(3,5)Right} skal returnere værdien \lstinline{Some(3,6)}.
+\item Funktionen \lstinline{mv} kan nu implementeres ved brug af funktionerne \lstinline{peg}, \lstinline{neighbor}, \lstinline{seti} og \lstinline{posi}.
+\end{itemize}
+
+I rapporten skal I beskrive jeres designovervejelser og demonstrere at
+jeres implementation fungerer som forventet (skriv unit-tests for de
+implementerede funktioner).
+
+\subsection*{Del 2: Modulet \lstinline{Game}}
+
+Implementér et modul \lstinline{Game} med følgende funktionalitet:
+\begin{lstlisting}
+  val start : unit -> unit
+  val mv    : Board.mv -> unit
+\end{lstlisting}
+
+Modulet skal indeholde en reference til en ``nuværende''
+brætkonstellation. Funktionen \lstinline{start} skal sætte den
+nuværende brætkonstellation til det initielle bræt og udskrive
+brættet. Funktionen \lstinline{mv} skal foretage en flytning (hvis det
+er lovligt) og udskrive den nye brætkonstellation.
+
+I rapporten skal I demonstrere brugen af modulet \lstinline{Game}
+i \texttt{fsharpi}.
+
+\subsection*{Del 3: Modulet \lstinline{Solve}}
+
+I denne delopgave skal der skrives en funktion \lstinline{solve}, som
+foretager en udtømmende søgning efter en række træk som vil efterlade
+brættet i en konstellation med kun en pind, placeret i midten af
+brættet. Funktionen kan passende have følgende type:
+\begin{lstlisting}
+  type state = Board.b * Board.mv list
+  val solve : state -> Board.mv -> state option
+\end{lstlisting}
+
+Her består en tilstand af ``den nuværende brætkonstellation'' samt en
+liste af de træk der leder frem til denne konstellation (med det seneste træk forekommende først i listen).
+
+For at implementere funktionen er det nyttigt først at implementere nogle
+hjælpefunktioner:
+
+\begin{enumerate}
+\item Skriv en funktion \lstinline{nextdir} af type \lstinline{dir -> dir option},
+som ``roterer'' en retningsværdi således at \lstinline{Up}
+bliver til \lstinline{Some Right}, \lstinline{Right} bliver
+til \lstinline{Some Down}, \lstinline{Down} bliver til \lstinline{Some Left}
+og \lstinline{Left} bliver til \lstinline{None}.
+
+\item Skriv en funktion \lstinline{nextpos} af type \lstinline{pos -> pos option},
+som returnerer den næste position på et $7 \times 7$ hullers
+bræt (row-major). Således skal et kald \lstinline{nextpos(2,5)}
+returnere værdien \lstinline{Some(2,6)} og et
+kald \lstinline{nextpos(1,6)} skal returnere
+værdien \lstinline{Some(2,0)}.
+
+\item Skriv en funktion \lstinline{nextmv} af type \lstinline{mv -> mv option}, som passende benytter sig af de to ovenfor specificerede funktioner. Funktionen skal give mulighed for at iterere gennem alle mulige flytninger, startende med flytningen \lstinline{((0,0),Up)}. Bemærk at funktionen skal operere uden hensyn til en konkret brætkonstellation og at funktionen ikke skal tage højde for de præcise forekomster af huller i brættet (flytningerne kan senere filtreres blandt andet ved brug af funktionen \lstinline{valid}).
+%
+Således skal et kald \lstinline{nextmv((1,2),Down)} returnere værdien \lstinline{Some((1,2),Left)}, et kald \lstinline{nextmv((1,6),Left)} skal returnere værdien \lstinline{Some((2,0),Up)} og kaldet \lstinline{nextmv((6,6),Left)} skal returnere værdien \lstinline{None}.
+\end{enumerate}
+
+I rapporten skal I vise koden for jeres implementation af den
+rekursive funktion \lstinline{solve} og argumentere for at den finder
+en løsning til brætspillet, såfremt en sådan findes. Skriv også kode
+til at udskrive de fundne træk og vis i rapporten at jeres
+implementation finder en løsning til spillet i form af en liste af
+træk.
+
+Rapporten skal også indeholde en beskrivelse af implementationens
+begrænsninger samt en reflektion over hvordan implementationen kan
+generaliseres til at finde løsninger til andre brætspecifikationer.

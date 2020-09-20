@@ -10,12 +10,12 @@ module Board =
   type pos = int * int
   type dir = Up | Down | Left | Right
 
-  let set (w:uint64) (i:int) (b:bool) : uint64 =
+  let seti (w:uint64) (i:int) (b:bool) : uint64 =
     let w1 = 1UL <<< i
     in if b then w ||| w1
        else w &&& (~~~ w1)
 
-  let get (w:uint64) (i:int) : bool =
+  let geti (w:uint64) (i:int) : bool =
     1UL &&& (w >>> i) = 1UL
 
   //
@@ -39,7 +39,7 @@ module Board =
 
   let posi ((r,c):pos) : int = r*7+c
 
-  let peg (t:t) (p:pos) : bool = get t (posi p)
+  let peg (t:t) (p:pos) : bool = geti t (posi p)
 
   let neighbor ((r,c):pos) (d:dir) : pos option =
     let p = match d with Up -> (r-1,c)
@@ -56,16 +56,16 @@ module Board =
             match neighbor p' d with
               Some p'' ->
                 if peg t p'' then None
-                else let t1 = set t (posi p) false
-                     let t2 = set t1 (posi p') false
-                     let t3 = set t2 (posi p'') true
+                else let t1 = seti t (posi p) false
+                     let t2 = seti t1 (posi p') false
+                     let t3 = seti t2 (posi p'') true
                      in Some t3
             | None -> None
           else None
       | None -> None
     else None
 
-  let sets ps = List.fold (fun t p -> set t (posi p) true) 0UL ps
+  let sets ps = List.fold (fun t p -> seti t (posi p) true) 0UL ps
 
   let init () : t =
     sets [            (0,2);(0,3);(0,4);
@@ -81,7 +81,7 @@ module Board =
       List.fold (fun acc r ->
                    let line =
                      List.fold (fun acc c ->
-                                  if get t (posi (r,c)) then acc+" *" else acc+"  ")
+                                  if geti t (posi (r,c)) then acc+" *" else acc+"  ")
                                "" [0;1;2;3;4;5;6]
                    in line::acc) [] [0;1;2;3;4;5;6]
     in String.concat "\n" (List.rev lines)
@@ -93,7 +93,7 @@ module Board =
                 (if b &&& 1UL = 1UL then a+1 else a)
     in iter b 49 0
 
-  let pegcenter : t = set 0UL (posi (3,3)) true
+  let pegcenter : t = seti 0UL (posi (3,3)) true
 
 // The Main module
 module Main =
@@ -126,16 +126,16 @@ module Main =
 
   type s = B.t * move list
 
-  let rec find P (b,mvs) ((p,d):move) : s option =
+  let rec solve P (b,mvs) ((p,d):move) : s option =
     let maybenext () =
       match nextmv (p,d) with
-          Some (p,d) -> find P (b,mvs) (p,d)
+          Some (p,d) -> solve P (b,mvs) (p,d)
         | None -> None
     in match B.mv b p d with
            None -> maybenext()
          | Some b' ->
-           if P b' then Some (b',List.rev((p,d)::mvs))
-           else match find P (b',(p,d)::mvs) mv0 with
+           if P b' then Some (b',(p,d)::mvs)
+           else match solve P (b',(p,d)::mvs) mv0 with
                     Some s -> Some s
                   | None -> maybenext()
 
@@ -156,8 +156,8 @@ module Main =
     let P b = b = B.pegcenter
     let b = B.init()
     let () = show b
-    in match find P (b,[]) mv0 with
-           Some (b,mvs) -> (show_mvs mvs; show b)
+    in match solve P (b,[]) mv0 with
+           Some (b,mvs) -> (show_mvs (List.rev mvs); show b)
          | None -> printfn "** No solutions..."
 
 let it = Main.run()
