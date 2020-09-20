@@ -2,23 +2,23 @@
 
 I denne opgave skal der arbejdes mod at få computeren til at finde en
 løsning til den engelske version af Peg Solitaire. En løsning vil
-bestå i at computeren udskriver de træk der skal flyttes. Opgave er
-delt over tre dele. I den første delopgave arbejdes der mod at
+bestå i at computeren udskriver de træk der skal flyttes. Opgaven er
+delt i tre dele. I den første delopgave arbejdes der mod at
 implementere et modul til at repræsentere en brætkonstellation samt
 operationer til at foretage flytninger og derved danne nye
 brætkonstellationer. I den anden delopgave skal der arbejdes mod at
 gøre det muligt for en spiller at spille spillet ved brug
-af \texttt{fsharpi} og computeren skal tillade at der foretages træk
-og den nye brætkonstellation udskrives. I den tredie delopgave skal
-der skrives en algoritme der returnerer en liste af træk der
+af \texttt{fsharpi} således at computeren tillader at der foretages træk
+hvorefter den nye brætkonstellation udskrives. I den tredie delopgave skal
+der skrives en algoritme, som returnerer en liste af træk, der
 efterlader en enkelt pind i midten af brættet.
 
 \subsection*{Del 1: Modulet \lstinline{Board}}
 \begin{minipage}{.65\textwidth}
-Hvert hul i brættet er identificeret med en position $(r,c)$, hvor $r$
+Hvert hul i brættet er identificeret ved en position $(r,c)$, hvor $r$
 er rækken for hullet (se billedet til højre) og $c$ er kolonnen hullet
 optræder i. Således er positionen for den tomme plads i midten
-$(4,4)$.
+$(3,3)$.
 
 I det følgende skal vi benytte os af 64-bit heltal til at indeholde en
 komplet brætkonstellation (vi gør kun brug af de 49 mindstbetydende
