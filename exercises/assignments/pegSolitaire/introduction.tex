@@ -1,21 +1,15 @@
-Simple Jack er en forsimplet udgave af kortspillet Blackjack. I Simple Jack spiller man ikke om penge/jetoner men blot om sejr/tab mellem en spiller og dealer.  Reglerne for Simple Jack er som følger:
+Peg Solitaire er et spil hvor en person skal forsøge at fjerne pinde i
+et bræt med huller ved at foretage en række træk indtil der kun er en
+pind tilbage på brættet. I hvert træk kan en pind fjernes ved at en
+nabopind flyttes over pinden til et ledigt hul. For hvert træk
+efterlades brættet med en pind færre.
 
-Spillet består af en dealer, 1-5 spillere samt et normalt kortspil (uden jokere). Ved spillets start får dealer og hver spiller tildelt 2 tilfældige kort fra bunken som placeres med billedsiden opad foran spilleren, så alle kan se dem. I Simple Jack spilles der med åbne kort dvs. alle trukne kort til hver en tid er synlige for alle spillere.  Kortene har værdi som følger:
-\begin{enumerate}
-\item Billedkort (knægt, dame og konge) har værdien 10
-\item Es kan antage enten værdien 1 eller 11
-\item Resten af kortene har den påtrykte værdi
-\end{enumerate}
-For hver spiller gælder spillet om at ende med en korthånd hvis sum af værdier er højere en dealers sum af værdier,  uden at summen overstiger 21, i hvilket tilfælde spilleren er "bust". Spillerne får nu en tur hver, hvor de skal udføre en af følgende handlinger:
-\begin{enumerate}
-\item "Stand": Spilleren/dealeren vælger ikke at modtage kort og turen går videre.
-\item "Hit": Spilleren/dealeren vælger at modtage kort fra bunken et ad gangen indtil han/hun vælger at stoppe og turen går videre.
-\end{enumerate}
-Det er dealers tur til sidst efter alle andre spillere har haft deres tur. Når dealer har haft sin tur afsluttes spillet. Ved spillets afslutning afgøres udfaldet på følgende måde: En spiller vinder hvis ingen af følgende tilfælde gør sig gældende:
-\begin{enumerate}
-\item Spilleren er "bust"
-\item Summen af spillerens kort-værdier er lavere end, eller lig med dealers sum af kort-værdier
-\item Både spilleren og dealer har SimpleJack (SimpleJack er et Es og et billedkort)
-\end{enumerate}
-Bemærk at flere spillere altså godt kan vinde på en gang. Et spil Simple Jack er mellem en spiller og dealer, 
-så med 5 spillere ved bordet, er det altså 5 separate spil som spilles.
+\begin{minipage}{.75\textwidth}
+I den klassiske engelske version af spillet Peg Solitaire består
+brættet af 33 huller, som til at starte med er fyldt med 32 pinde; det
+midterste hul i brættet er ikke udfyldt og opgaven består i at det
+netop er det midterste hul, der til slut skal indeholde en pind.
+\end{minipage}
+\begin{minipage}{.2\textwidth}
+  \includegraphics[width=3cm]{solitaire.png}
+\end{minipage}
