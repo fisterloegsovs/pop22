@@ -10,9 +10,21 @@
 
 \begin{document}
 \maketitle
-Some introductory text \dots
+Løkker i funktionsprogrammering foretages ofte ved rekursive kald, som
+er et kald af en funktion til funktionen selv, som f.eks.\ fibonacci
+talrækken, $f(1)=f(2)=1, f(i) \stackrel{i>2}{=}
+f(i-1)+f(i-2)$. Rekursion er et kraftigt værktøj til løsning af en
+række problemer bla.\ ved behandling af lister, og kan kædes direkte
+sammen med induktionsbeviser til at bevise kodes korrekthed. Det er
+også en tankegang, som det tager tid at tilegne sig, og derfor bruger
+vi denne periode på udelukkende at arbejde med rekursive funktioner.
 
-\learningPurposeTxt{{rekursion.}}
+
+\learningPurposeTxt{
+  {Skrive en rekursiv funktion og forklare forskellen på alm.\ og halerekurssion,},
+  {Gemmenløbe en liste imperativt og rekursivt med patterns, og forklare fordele og ulemper ved de 2 tilgange},
+  {Løse et problem vha.\ rekurssion},
+  {Skrive sorteringsfunktioner, som bruger patterns til behandling af simple typer og lister}}
 
 \learningConditionsTxt{\typeLetter}
 
@@ -21,7 +33,7 @@ Some introductory text \dots
 \exercises{\exerciseNumber  ø}{../assignments/recursion/}{}{fac,sum,sumList,gcd,fold,analyze}
 
 \section*{Afleveringsopgaver (in English)}
-\exercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,frac2cfrac,cfrac2frac,test}
+\exercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,test}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Krav til afleveringen}
