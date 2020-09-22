@@ -9,6 +9,7 @@ module Board =
   type t = uint64
   type pos = int * int
   type dir = Up | Down | Left | Right
+  type mv = pos * dir
 
   let seti (w:uint64) (i:int) (b:bool) : uint64 =
     let w1 = 1UL <<< i
@@ -48,7 +49,7 @@ module Board =
                        | Right -> (r,c+1)
     in if valid p then Some p else None
 
-  let mv (t:t) (p:pos) (d:dir) : t option =
+  let mv (t:t) ((p,d):mv) : t option =
     if peg t p then
       match neighbor p d with
         Some p' ->
@@ -76,7 +77,7 @@ module Board =
                       (5,2);(5,3);(5,4);
                       (6,2);(6,3);(6,4)             ]
 
-  let pr (t:t) : string =
+  let print (t:t) : string =
     let lines =
       List.fold (fun acc r ->
                    let line =
@@ -100,16 +101,14 @@ module Main =
 
   module B = Board
 
-  let move b p d =
-    match B.mv b p d with
+  let move b (p,d) =
+    match B.mv b (p,d) with
         Some b -> b
       | None -> failwith "illegal move"
 
-  let show b = printfn "%s" (B.pr b)
+  let show b = printfn "%s" (B.print b)
 
-  type move = B.pos * B.dir
-
-  let mv0 : move = ((0,0), B.Right)
+  let mv0 : B.mv = ((0,0), B.Right)
 
   let nextd (d:B.dir) : B.dir option =
     match d with B.Right -> Some B.Down
@@ -124,14 +123,14 @@ module Main =
                 else if r < 6 then Some ((r+1,0),B.Right)
                 else None
 
-  type s = B.t * move list
+  type s = B.t * B.mv list
 
-  let rec solve P (b,mvs) ((p,d):move) : s option =
+  let rec solve P (b,mvs) ((p,d):B.mv) : s option =
     let maybenext () =
       match nextmv (p,d) with
           Some (p,d) -> solve P (b,mvs) (p,d)
         | None -> None
-    in match B.mv b p d with
+    in match B.mv b (p,d) with
            None -> maybenext()
          | Some b' ->
            if P b' then Some (b',(p,d)::mvs)
