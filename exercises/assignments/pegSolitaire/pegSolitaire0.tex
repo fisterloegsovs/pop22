@@ -1,0 +1,64 @@
+\textbf{Modulet \texttt{Board}}.
+
+\begin{minipage}{0.65\linewidth}
+Hvert hul i brættet er identificeret ved en position $(r,c)$, hvor $r$ er rækken for hullet (se billedet til højre) og $c$ er kolonnen hullet optræder i. Således er positionen for den tomme plads i midten $(3,3)$.
+
+I det følgende skal vi benytte os af 64-bit heltal til at indeholde en komplet brætkonstellation (vi gør kun brug af de 49 mindstbetydende bit).
+%Denne designbeslutning gør det muligt for os, ved brug af meget lidt plads, at repræsentere mange tusinder forskellige brætkonstellationer samtidig.
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\linewidth}
+    \[
+      \begin{array}{r|c|c|c|c|c|c|c}
+        & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+        0 & & & \bullet & \bullet & \bullet & & \\ \hline
+        1 & & & \bullet & \bullet & \bullet & & \\ \hline
+        2 & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet \\ \hline
+        3 & \bullet & \bullet & \bullet &  & \bullet & \bullet & \bullet \\ \hline
+        4 & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet & \bullet \\ \hline
+        5 & & & \bullet & \bullet & \bullet & & \\ \hline
+        6 & & & \bullet & \bullet & \bullet & &
+      \end{array}
+    \]
+\end{minipage}
+
+I F\# kan et bræt således repræsenteres ved brug af
+typen \lstinline{uint64}, der repræsenterer (unsigned) 64-bit heltal:
+\begin{lstlisting}
+  type b = uint64
+\end{lstlisting}
+
+I den første del af opgaven ønskes der implementeret en række funktioner til at operere på brætkonstellationer. Funktionerne ønskes implementeret i et modul \lstinline{Board}, som vil kunne bruges både af en rigtig spiller til at spille spillet og af et modul der har til hensigt at finde en løsning til spillet.
+
+Modulet \lstinline{Board} skal indeholde følgende typer og funktioner:
+\begin{lstlisting}
+  type b                              // board type
+  type pos = int * int                // position type
+  type dir = Up | Down | Left | Right // move direction
+  type mv = pos * dir                 // move
+
+  val init     : unit -> b            // initial board
+  val valid    : pos -> bool          // is the position valid?
+  val peg      : b -> pos -> bool     // true if pos valid and
+                                      //  hole contains a peg
+  val mv       : b -> mv -> b option  // returns new board
+  val pegcount : b -> int             // number of pegs
+  val print    : b -> string          // string representation
+\end{lstlisting}
+
+Her følger nogle gode råd til hvordan ovenstående modul implementeres:
+\begin{itemize}
+
+\item Start med at implementere to hjælpefunktioner \lstinline{seti} og \lstinline{geti} til henholdsvis at sætte en givet bit i en \lstinline{uint64}-værdi samt at undersøge om en givet bit er sat (hertil skal I benytte et udvalg af bit-operationer, inklusiv \lstinline{|||}, \lstinline{&&&}, \lstinline{~~~}, \lstinline{>>>} og \lstinline{<<<}).
+
+\item Implementér en hjælpefunktion \lstinline{posi} til at omdanne en position (row-column pair) til et bit-index i brætrepræsentationen.
+
+\item Funktionen \lstinline{valid} skal returnere \lstinline{false} hvis positionen ikke repræsenterer en hul-position i et tomt bræt.
+%% \item Implementér funktionen \lstinline{peg} til at undersøge om en
+%% pind er sat i et bræthul samt funktionen
+%% \item Implementér derefter funktionen \lstinline{print} således at I kan undersøge om de to ovenstående funktioner virker korrekt.
+\item Implementér en funktion \lstinline{neighbor} af type \lstinline{pos -> dir -> pos option}, som, givet en valid position og en retning, returnerer en valid naboposition, hvis en sådan findes i den specificerede retning, eller værdien \lstinline{None}. Et kald \lstinline{neighbor(2,5)Right} skal returnere værdien \lstinline{None} og et kald \lstinline{neighbor(3,5)Right} skal returnere værdien \lstinline{Some(3,6)}.
+\item Funktionen \lstinline{mv} kan nu implementeres ved brug af funktionerne \lstinline{peg}, \lstinline{neighbor}, \lstinline{seti} og \lstinline{posi}.
+\item For at implementere funktionen \lstinline{print} kan der benyttes to nestede rekursive funktioner (eller to nestede for-løkker), som hver itererer over henholdsvis rækkerne og kolonnerne på brættet.
+\end{itemize}
+
+I rapporten skal I beskrive jeres designovervejelser og demonstrere at jeres implementation fungerer som forventet (skriv unit-tests for de implementerede funktioner).
