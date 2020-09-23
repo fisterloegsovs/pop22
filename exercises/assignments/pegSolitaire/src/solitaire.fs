@@ -78,14 +78,13 @@ module Board =
                       (6,2);(6,3);(6,4)             ]
 
   let print (t:t) : string =
-    let lines =
-      List.fold (fun acc r ->
-                   let line =
-                     List.fold (fun acc c ->
-                                  if geti t (posi (r,c)) then acc+" *" else acc+"  ")
-                               "" [0;1;2;3;4;5;6]
-                   in line::acc) [] [0;1;2;3;4;5;6]
-    in String.concat "\n" (List.rev lines)
+      List.init 7 (fun r ->
+                     List.init 7 (fun c ->
+                                    if geti t (posi (r,c)) then " *"
+                                    else if valid (r,c) then " o"
+                                    else "  ")
+                     |> String.concat "")
+      |> String.concat "\n"
 
   let pegcount (b:t) : int =
     let rec iter b i a =

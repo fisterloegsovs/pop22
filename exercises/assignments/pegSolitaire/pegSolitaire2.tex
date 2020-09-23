@@ -1,0 +1,39 @@
+\textbf{Modulet \texttt{Solve}}.
+
+I denne delopgave skal der skrives en funktion \lstinline{solve}, som foretager en udtømmende søgning efter en række træk som vil efterlade brættet i en konstellation med kun en pind, placeret i midten af brættet. Funktionen kan passende have følgende type:
+\begin{lstlisting}
+  type state = Board.b * Board.mv list
+  val solve : state -> Board.mv -> state option
+\end{lstlisting}
+
+Her består en tilstand af ``den nuværende brætkonstellation'' samt en
+liste af de træk der leder frem til denne konstellation (med det
+seneste træk forekommende først i listen). Funktionen tager yderligere
+et træk som argument. Ved at det gøres muligt at iterere gennem alle
+mulige træk (for hver konstellation), fra det første
+træk \lstinline{((0,0),Right)} til det sidste
+træk \lstinline{((6,6),Up)}, kan vi sikre at alle træk
+prøves. Funktionen skal benytte sig af rekursion til at foretage den
+(muligvis) udtømmende søgning. Givet en vilkårlig brætkonstellation
+samt en kandidat til et træk kan funktionen \lstinline{solve}
+undersøge om trækket vil efterlade brættet i en ny konstellation eller
+om trækket ikke er gyldigt. Afhængigt af udfaldet kan det enten
+undersøges (ved eventuelt rekursivt at kalde \lstinline{solve}) om den nye
+brætkonstellation har (eller er) en løsning eller om vi har bedre held med det
+næste træk i trækordningen (hvis et sådan træk findes).
+
+For at implementere funktionen er det nyttigt først at implementere nogle hjælpefunktioner:
+
+\begin{enumerate}
+\item Skriv en funktion \lstinline{nextdir} af type \lstinline{dir -> dir option}, som ``roterer'' en retningsværdi således at \lstinline{Up} bliver til \lstinline{Some Right}, \lstinline{Right} bliver til \lstinline{Some Down}, \lstinline{Down} bliver til \lstinline{Some Left} og \lstinline{Left} bliver til \lstinline{None}.
+
+\item Skriv en funktion \lstinline{nextpos} af type \lstinline{pos -> pos option}, som returnerer den næste position på et $7 \times 7$ hullers bræt (row-major). Et kald \lstinline{nextpos(2,5)} skal returnere værdien \lstinline{Some(2,6)} og et kald \lstinline{nextpos(1,6)} skal returnere værdien \lstinline{Some(2,0)}.
+
+\item Skriv en funktion \lstinline{nextmv} af type \lstinline{mv -> mv option}, som passende benytter sig af de to ovenfor specificerede funktioner. Funktionen skal give mulighed for at iterere gennem alle mulige flytninger, startende med flytningen \lstinline{((0,0),Up)}. Bemærk at funktionen skal operere uden hensyn til en konkret brætkonstellation og at funktionen ikke skal tage højde for de præcise forekomster af huller i brættet (flytningerne kan senere filtreres blandt andet ved brug af funktionen \lstinline{valid}).
+%
+Således skal et kald \lstinline{nextmv((1,2),Down)} returnere værdien \lstinline{Some((1,2),Left)}, et kald \lstinline{nextmv((1,6),Left)} skal returnere værdien \lstinline{Some((2,0),Up)}. Endelig skal kaldet \lstinline{nextmv((6,6),Left)} returnere værdien \lstinline{None}.
+\end{enumerate}
+
+I rapporten skal I vise koden for jeres implementation af den rekursive funktion \lstinline{solve} og argumentere for at den finder en løsning til brætspillet, såfremt en sådan findes. Skriv også kode til at udskrive de fundne træk og vis i rapporten at jeres implementation finder en løsning til spillet i form af en liste af træk.
+
+Rapporten skal også indeholde en beskrivelse af implementationens begrænsninger samt en reflektion over hvordan implementationen kan generaliseres til at finde løsninger til andre brætspecifikationer.
