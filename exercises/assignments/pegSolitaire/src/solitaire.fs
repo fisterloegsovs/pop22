@@ -80,7 +80,9 @@ module Board =
   let print (t:t) : string =
       List.init 7 (fun r ->
                      List.init 7 (fun c ->
-                                    if geti t (posi (r,c)) then " *" else "  ")
+                                    if geti t (posi (r,c)) then " *"
+                                    else if valid (r,c) then " o"
+                                    else "  ")
                      |> String.concat "")
       |> String.concat "\n"
 
