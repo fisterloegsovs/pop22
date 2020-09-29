@@ -1,17 +1,11 @@
-In this assignment, you will work with continued
-fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Continued
-fractions are lists of integers which represents real numbers. The
-list is finite for rational numbers and infinte for irrational numbers. 
+In this assignment, you will work with continued fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Continued fractions are lists of integers that represents real numbers. The list is finite for rational numbers and infinte for irrational numbers.
 
 \paragraph{Continued fractions to decimal numbers}
-A continued fraction is written as $x = [q_0; q_1, q_2, \ldots]$
-and the corresponding decimal number is found by the following
-recursive algorithm:
+A continued fraction is written as $x = [q_0; q_1, q_2, \ldots]$ and the corresponding decimal number is found by the following recursive algorithm:
 \begin{equation}
   x = q_0 + \frac{1}{q_1 + \frac{1}{q_2 + \dots}}.
 \end{equation}
-The series of fraction continues as long as there are elements in the
-continued fraction.
+The series of fraction continues as long as there are elements in the continued fraction.
 
 For example, $[3;4, 12, 4] = 3.245$, since:
 \begin{align}
@@ -22,8 +16,7 @@ For example, $[3;4, 12, 4] = 3.245$, since:
 \end{align}
 
 \paragraph{Decimal numbers to continued fractions}
-For a given number $x$ on decimal form, its continued fraction
-$[q_0; q_1, q_2, \ldots]$ can be found using the following algorithm:
+For a given number $x$ on decimal form, its continued fraction $[q_0; q_1, q_2, \ldots]$ can be found using the following algorithm:
 
 Let $x_0 = x$ and $i \geq 0$, and calculate
 \begin{align}
@@ -31,8 +24,7 @@ q_i &= \lfloor x_i \rfloor\\
 r_i &= x_i - q_i\\
 x_{i+1} &= 1/r_i\\
 \end{align}
-recursively until $r_i = 0$. The continued fraction is then the
-sequences of $q_i$.
+recursively until $r_i = 0$. The continued fraction is then the sequences of $q_i$.
 
 For example, if $x=3.245$ then
 \begin{center}
