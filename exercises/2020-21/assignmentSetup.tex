@@ -5,9 +5,9 @@
   \expandafter\ifstrequal\expandafter{#1}{g}{gruppeopgave}{individuel opgave}
 } % \expandafter\ifstrequal\expandafter allows for argument to be a command.
 
-\newrobustcmd{\exerciseTitle}[4]{
+\newrobustcmd{\exerciseTitle}[5]{
 \title{Programmering og Problemløsning\\Datalogisk Institut, Københavns Universitet\\Arbejdsseddel #1 - \typeName{#2}}
-\author{Jon Sporring}
+\author{#5}
 \date{#3.\\Afleveringsfrist: #4.}
 }
 
