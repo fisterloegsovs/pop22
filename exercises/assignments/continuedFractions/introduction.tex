@@ -1,11 +1,14 @@
-In this assignment, you will work with continued fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Continued fractions are lists of integers that represents real numbers. The list is finite for rational numbers and infinte for irrational numbers.
+In this assignment, you will work with continued
+fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Continued
+fractions are lists of integers that represent real numbers. The list
+is finite for rational numbers and infinite for irrational numbers.
 
 \paragraph{Continued fractions to decimal numbers}
 A continued fraction is written as $x = [q_0; q_1, q_2, \ldots]$ and the corresponding decimal number is found by the following recursive algorithm:
 \begin{equation}
   x = q_0 + \frac{1}{q_1 + \frac{1}{q_2 + \dots}}.
 \end{equation}
-The series of fraction continues as long as there are elements in the continued fraction.
+The series of fractions continues as long as there are elements in the continued fraction.
 
 For example, $[3;4, 12, 4] = 3.245$, since:
 \begin{align}
@@ -97,5 +100,3 @@ and hence, the continued fraction is in the third column as $3.245 = [3; 4, 12, 
 % \end{align}
 % Altså kan kædebrøkken $[3;4, 12, 4]$ approximeres som heltalsbrøkkerne
 % $3/1$, $13/4$, $159/49$ og $649/200$ med gradvist stigende nøjagtighed.
-
-
