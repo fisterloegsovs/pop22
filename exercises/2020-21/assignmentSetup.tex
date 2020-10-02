@@ -196,6 +196,22 @@ indeholde:\begin{itemize}
 \item Besvarelse på opg. 4i3, inkl. håndkøringstabel.\end{itemize}}
 
 %\usepackage{forest}
+\newcommand{\handinTextOneThree}[2]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
+\end{itemize}
+Zip-filen \texttt{#1\_<navn>.zip} skal indeholde en og kun en mappe
+som hedder \texttt{#1<navn>}.  I den mappe skal der ligge en
+\texttt{src} mappe og filen \texttt{README.txt}.  I \texttt{src} skal
+der ligge følgende og kun følgende filer: #2 svarende til de relevante
+delopgaver. De skal kunne oversættes med
+\lstinline[language=console]{fsharpc}, og de oversatte filer skal
+kunne køres med \lstinline[language=console]{mono}. Funktioner skal
+dokumenteres ifølge dokumentationsstandarden som minimum ved brug af
+\texttt{<summary>}, \texttt{<param>} og \texttt{<returns>}
+XML-tagsne. Filen README.txt skal ganske kort beskrive, hvordan koden
+oversættes og køres.}
+
 \newcommand{\handinTextOneTwo}[2]{Afleveringen skal bestå af
 \begin{itemize}
   \item en zip-fil, der hedder \texttt{#1\_<navn>.zip}  (f.eks. \texttt{#1\_jon.zip})
