@@ -56,9 +56,11 @@ Her følger nogle gode råd til hvordan ovenstående modul implementeres:
 %% \item Implementér funktionen \lstinline{peg} til at undersøge om en
 %% pind er sat i et bræthul samt funktionen
 %% \item Implementér derefter funktionen \lstinline{print} således at I kan undersøge om de to ovenstående funktioner virker korrekt.
-\item Implementér en funktion \lstinline{neighbor} af type \lstinline{pos -> dir -> pos option}, som, givet en valid position og en retning, returnerer en valid naboposition, hvis en sådan findes i den specificerede retning, eller værdien \lstinline{None}. Et kald \lstinline{neighbor(2,5)Right} skal returnere værdien \lstinline{None} og et kald \lstinline{neighbor(3,5)Right} skal returnere værdien \lstinline{Some(3,6)}.
-\item Funktionen \lstinline{mv} kan nu implementeres ved brug af funktionerne \lstinline{peg}, \lstinline{neighbor}, \lstinline{seti} og \lstinline{posi}.
+\item Implementér en funktion \lstinline{neighbor} af type \lstinline{pos -> dir -> pos option}, som, givet en valid position og en retning, returnerer en valid naboposition, hvis en sådan findes i den specificerede retning, eller værdien \lstinline{None}. Et kald \lstinline{neighbor(1,4)Right} skal returnere værdien \lstinline{None} og et kald \lstinline{neighbor(2,4)Right} skal returnere værdien \lstinline{Some(2,5)}.
+\item Funktionen \lstinline{mv} kan nu implementeres ved brug af funktionerne \lstinline{peg}, \lstinline{neighbor}, \lstinline{seti} og \lstinline{posi}. Funktionen skal, givet en brætkonstellation \lstinline{b} og et træk \lstinline{(p,d)} returnere værdien \lstinline{Some b'}, hvis (1) \lstinline{p} er en position indeholdende en pind ifølge brætkonstellationen \lstinline{b}, (3) \lstinline{(p,d)} er et lovligt træk og (3) brættet \lstinline{b'} er den konstellation, der fremkommer ved trækket \lstinline{(p,d)}. Ellers skal funktionen returnere værdien \lstinline{None}.
 \item For at implementere funktionen \lstinline{print} kan der benyttes to nestede rekursive funktioner (eller to nestede for-løkker), som hver itererer over henholdsvis rækkerne og kolonnerne på brættet.
 \end{itemize}
 
-I rapporten skal I beskrive jeres designovervejelser og demonstrere at jeres implementation fungerer som forventet (skriv unit-tests for de implementerede funktioner).
+I rapporten skal I beskrive jeres designovervejelser og demonstrere at
+jeres implementation fungerer som forventet (skriv unit-tests for de
+implementerede funktioner).
