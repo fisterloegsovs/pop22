@@ -6,9 +6,8 @@
 \begin{footnotesize}
 \begin{lstlisting}[numbers=none,frame=none,mathescape]
 val runApp : string -> int -> int
-          -> (int -> int -> 's -> System.Drawing.Bitmap)
-          -> ('s -> System.Windows.Forms.KeyEventArgs
-                 -> 's option)
+          -> (int -> int -> 's -> canvas)
+          -> ('s -> Key -> 's option)
           -> 's -> unit
 \end{lstlisting}
 \end{footnotesize}
@@ -28,7 +27,7 @@ eller ved at funktionen \lstinline{react} er blevet kaldt efter en
 tast er trykket ned på tastaturet. Funktionen \lstinline{draw} modtager
 også (udover værdier for den aktuelle vidde og højde) en værdi for den
 brugerdefinerede tilstand, som initielt er sat til værdien
-\lstinline{init}. Funktionen skal returnere et bitmap, som for
+\lstinline{init}. Funktionen skal returnere et canvas, som for
 eksempel kan konstrueres med funktionen \lstinline{ImgUtil.mk} og
 ændres med andre funktioner i \lstinline{ImgUtil}
 (f.eks. \lstinline{setPixel}).
@@ -40,16 +39,15 @@ argument:
 \item en værdi svarende til den nuværende tilstand for
 applikationen, og
 \item et argument der kan benyttes til at afgøre hvilken
-tast der blev trykket på.\footnote{Hvis \lstinline{e} har typen
-  \lstinline{System.Windows.Forms.KeyEventArgs} kan betingelsen
-  \lstinline{e.KeyCode = System.Windows.Forms.Keys.Up} benyttes til at
-  afgøre om det var tasten ``Up'' der blev trykket på.} 
+tast der blev trykket på.\footnote{Hvis \lstinline{k} har typen
+  \lstinline{Gdk.Key} kan betingelsen
+  \lstinline{k = Gdk.Key.d} benyttes til at
+  afgøre om det var tasten ``d'' der blev trykket på.}
 \end{itemize}
 Funktionen kan
 nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
-for denne.
+for tilstanden.
 
-Tilpas applikationen således at dybden af
-fraktalen kan styres ved brug af piletasterne, repræsenteret ved værdierne
-\lstinline{System.Windows.Forms.Keys.Up} og
-\lstinline{System.Windows.Forms.Keys.Down}.
+Tilpas applikationen således at dybden af fraktalen kan styres ved
+brug af piletasterne, repræsenteret ved værdierne
+\lstinline{Gdk.Key.u} og \lstinline{Gdk.Key.d}.

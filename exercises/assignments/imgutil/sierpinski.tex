@@ -6,14 +6,16 @@
 \begin{lstlisting}[numbers=none,frame=none,mathescape]
 open ImgUtil
 
-let rec triangle bmp len (x,y) =
-  if len < 25 then setBox blue (x,y) (x+len,y+len) bmp
+let rec triangle C len (x,y) =
+  if len < 25 then setBox blue (x,y) (x+len,y+len) C
   else let half = len / 2
-       do triangle bmp half (x+half/2,y)
-       do triangle bmp half (x,y+half)
-       do triangle bmp half (x+half,y+half)
+       do triangle C half (x+half/2,y)
+       do triangle C half (x,y+half)
+       do triangle C half (x+half,y+half)
 
-do runSimpleApp "Sierpinski" 600 600 (fun bmp -> triangle bmp 512 (30,30) |> ignore)
+do runSimpleApp "Sierpinski" 600 600 (fun w h ->
+                                        let C = mk w h
+                                        in (triangle C 512 (30,30); C))
 \end{lstlisting}
 
 Tilpas funktionen således at trekanten tegnes med røde streger samt
