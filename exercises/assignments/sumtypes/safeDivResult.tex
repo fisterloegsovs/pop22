@@ -1,0 +1,8 @@
+Consider the parametric type \lstinline{result}, defined as follows:
+\begin{lstlisting}
+type ('a,'b) result = Ok of 'a | Err of 'b
+\end{lstlisting}
+
+Implement a function \lstinline{safeDivResult : int -> int -> (int,string) result} that takes two integers $a$ and $b$ as arguments and returns
+\lstinline{Err "Divide by zero"} if $b$ is 0 and the value
+\lstinline[mathescape]{Ok($a/b$)}, otherwise.

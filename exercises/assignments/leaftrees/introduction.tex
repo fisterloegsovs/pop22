@@ -1,0 +1,6 @@
+In the following exercises, we shall investigate the following recursive type definition for trees:
+\begin{lstlisting}
+type 'a tree = Leaf of 'a | Tree of 'a tree * 'a tree
+\end{lstlisting}
+
+The tree type is generic in the type of information that can be installed in \lstinline{Leaf} nodes.

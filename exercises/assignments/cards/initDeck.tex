@@ -1,0 +1,17 @@
+Using recursion and pattern matching, write a
+function \lstinline{initDeck : unit -> card list} that returns a full
+deck of cards. Check that the call \lstinline{initDeck()} returns a
+list of length 52. \textbf{Hint:} Implement a recursive helper
+function that takes a card $c$ as argument and uses pattern matching
+on the result of calling \lstinline{succCard} on $c$. Use the
+card \lstinline{(Two,Hearts)} in the initial call to your helper
+function.
+
+
+% let initDeck() =
+%   let rec run c =
+%         c :: (match succCard c with
+%                   | Some c' -> run c'
+%                   | None -> [])
+%   in run (Two,Hearts)
+%

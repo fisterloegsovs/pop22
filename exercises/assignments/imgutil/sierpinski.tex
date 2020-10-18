@@ -1,8 +1,9 @@
-\label{sierpinski.ov} Ved at benytte biblioteket \texttt{ImgUtil}, som beskrevet i
-  forelæsningen, er det muligt at tegne simpel liniegrafik samt
-  fraktaler, som f.eks.\ Sierpinski-fraktalen, der kan tegnes ved at
-  tegne små firkanter bestemt af et rekursivt mønster. Koden for
-  Sierpinski-trekanten er givet som følger:
+
+\label{sierpinski.ov}
+Vi skal nu benytte biblioteket \texttt{ImgUtil} til at tegne
+Sierpinski-fraktalen, der kan tegnes ved at tegne små firkanter
+bestemt af et rekursivt mønster. Koden for Sierpinski-trekanten er
+givet som følger:
 \begin{lstlisting}[numbers=none,frame=none,mathescape]
 open ImgUtil
 
@@ -13,11 +14,15 @@ let rec triangle C len (x,y) =
        do triangle C half (x,y+half)
        do triangle C half (x+half,y+half)
 
-do runSimpleApp "Sierpinski" 600 600 (fun w h ->
-                                        let C = mk w h
-                                        in (triangle C 512 (30,30); C))
+do runSimpleApp "Sierpinski" 600 600
+                (fun w h ->
+                   let C = mk w h
+                   in (triangle C 512 (30,30); C))
 \end{lstlisting}
 
 Tilpas funktionen således at trekanten tegnes med røde streger samt
-således at den kun tegnes 2 rekursionsniveauer ned. Hint: dette kan
-gøres ved at ændre betingelsen \lstinline{len < 25}.
+således at den kun tegnes 2 rekursionsniveauer ned. \textbf{Hint:} dette kan
+gøres ved at ændre betingelsen \lstinline{len < 25}. Til at starte med
+kaldes funktionen \lstinline{triangle} med \lstinline{len=512}, på
+næste niveau kaldes \lstinline{triangle} med \lstinline{len=256}, og
+så fremdeles.

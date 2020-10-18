@@ -1,6 +1,6 @@
 \label{sierpinskikeys.ov} I stedet for at benytte
-  \lstinline{ImgUtil.runSimpleApp} funktionen skal du nu benytte
-  \lstinline{ImgUtil.runApp}, som giver mulighed for at din løsning
+  funktionen \lstinline{ImgUtil.runSimpleApp} er det nu meningen at du skal benytte
+  funktionen \lstinline{ImgUtil.runApp}, som giver mulighed for at din løsning
   kan styres ved brug af tastaturet. Funktionen \lstinline{ImgUtil}
   har følgende type:
 \begin{footnotesize}
@@ -16,7 +16,7 @@ streng) samt vinduets initielle vidde og højde. Funktionen
 \lstinline{runApp} er parametrisk over en brugerdefineret type af tilstande (\lstinline{'s}). Antag at funktionen kaldes som følger:
 \begin{footnotesize}
 \begin{lstlisting}[numbers=none,frame=none,mathescape]
-  runApp title width height draw react init
+do runApp title width height draw react init
 \end{lstlisting}
 \end{footnotesize}
 Dette kald vil starte en GUI applikation med titlen \lstinline{title},
@@ -42,7 +42,7 @@ applikationen, og
 tast der blev trykket på.\footnote{Hvis \lstinline{k} har typen
   \lstinline{Gdk.Key} kan betingelsen
   \lstinline{k = Gdk.Key.d} benyttes til at
-  afgøre om det var tasten ``d'' der blev trykket på.}
+  afgøre om det var tasten ``d'' der blev trykket på. Desværre er det ikke muligt med den nuværende version af \lstinline{ImgUtil} at reagere på tryk på piletasterne.}
 \end{itemize}
 Funktionen kan
 nu (eventuelt) ændre på dens tilstand ved at returnere en ændret værdi
