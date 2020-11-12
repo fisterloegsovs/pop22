@@ -41,10 +41,11 @@ skal opdateres.  En farve kan nu konstrueres med funktionen
 255 (begge inklusive), der beskriver hhv.\@ den røde, grønne og blå del
 af farven.
 
-Koordinatsystemet har nulpunkt $(0,0)$ i øverste venstre hjørne og punktet
-$(w-1,h-1)$ optræder i nederste højre hjørne, hvis bredde og højde er henholdsvis $w$
-og $h$.  Antag for eksempel at programfilen \texttt{testPNG.fsx}
-indeholder følgende F\# kode:
+Koordinatsystemet har nulpunkt $(0,0)$ i øverste venstre hjørne og,
+såfremt vidden og højden af koordinatsystemet er henholdsvis $w$ og
+$h$, optræder punktet $(w-1,h-1)$ i nederste højre hjørne.  Antag for
+eksempel at programfilen \texttt{testPNG.fsx} indeholder følgende F\#
+kode:
 
 \begin{lstlisting}[numbers=none,frame=none,mathescape]
 let C = ImgUtil.mk 256 256
@@ -88,7 +89,7 @@ type figure =
   | Circle of point * int * color
      // defined by center, radius, and color
   | Rectangle of point * point * color
-     // defined by corners bottom-left, top-right, and color
+     // defined by corners top-left, bottom-right, and color
   | Mix of figure * figure
      // combine figures with mixed color at overlap
 \end{lstlisting}
