@@ -1,0 +1,17 @@
+Betragt funktionen
+\begin{lstlisting}
+  let sumadd2sq (xs : float list) : float =
+    let ys = List.map (fun x -> x*x) xs
+    let zs = List.map (fun y -> y+2.0) ys
+    in List.fold (+) 0.0 zs
+\end{lstlisting}
+Omskriv funktionen ved at benytte ligningen
+\lstinline{map f << map g = map (f << g)} til at undgå at listen \lstinline{ys} konstrueres.
+%
+Omskriv funktionen yderligere ved enten at benytte en pipe-funktion
+eller funktionssammensætning til at undgå \lstinline{let}-bindingen af
+variablen \lstinline{zs}.
+%
+Test funktionen på en række forskellige float-lister. For eksempel
+skal kaldet \lstinline{sumadd2sq [2.0;3.0]} resultere i
+værdien \lstinline{17.0}.

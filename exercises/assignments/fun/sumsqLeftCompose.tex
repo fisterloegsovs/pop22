@@ -1,0 +1,13 @@
+Omdefinér funktionen \lstinline{sumsq : float list -> float} således
+at den benytter sig af F\#'s \textbf{left-compose
+funktion} \lstinline{<<} til at sammensætte (1) en funktion defineret
+ved at kalde \lstinline{List.map} med en funktion samt (2) en funktion
+defineret ved at kalde \lstinline{List.fold} med to
+argumenter. Definitionen skal følge formen:
+\begin{lstlisting}
+  let sumsq : float list -> float =
+    ... << ...
+\end{lstlisting}
+Bemærk at F\#'s left-compose funktion svarer til matematisk funktionssammensætning givet ved $(f \circ g)(x) = f(g(x))$.
+%
+Test funktionen på en række forskellige float-lister.
