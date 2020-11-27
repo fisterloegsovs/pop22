@@ -1,0 +1,51 @@
+\textbf{Terminal Brugergrænseflade}
+
+For at vise spillets verden implementer vi en klasse
+\lstinline{Canvas}, som er et gitter af felter. Hvor feltet
+ der er i øverste ventre hjørne har position $(0,0)$.
+
+Hvert felt har en \lstinline{char}, og så \emph{kan}
+feltet have en forgrundsfarve, og det \emph{kan} have en baggrundsfarve.
+
+Implementér en klassen \lstinline{Canvas} som har følgende signatur:
+
+\begin{lstlisting}
+  type Color = System.ConsoleColor
+  type Canvas =
+    class
+      new : rows:int * cols:int -> Canvas
+      member MaxX : int
+      member MaxY : int
+      member Set : x:int * y:int * cont:char * fg:Color * bg:Color -> unit
+      member Show : unit -> unit
+    end
+\end{lstlisting}
+
+Det vil sige:
+\begin{itemize}
+\item En konstruktør der tager antal rækker og koloner som argumenter.
+\item To properties der angiver det maksimale række-indeks, \lstinline{MaxX}, og
+  kolonne-indeks, \lstinline{MaxY}.
+\item en metode \lstinline{Set} til at sætte indhold og farver på et felt.
+\item en metode \lstinline{Show} til at vise en canvas i terminalen.
+\end{itemize}
+
+I rapporten skal I beskrive jeres designovervejelser, samt redegøre for
+hvilken skjult tilstand en canvas har.
+
+\textbf{Hints}: Brug følgende funktionalitet fra standard-biblioteket:
+
+\begin{itemize}
+\item \lstinline{System.Console.ForegroundColor <- System.ConsoleColor.White}
+  til at sætte forgrundsfarven til hvid.
+\item \lstinline{System.Console.BackgroundColor <- System.ConsoleColor.Blue} til
+  at sætte baggrundsfarven til blå.
+\item \lstinline{System.Console.ResetColor()} til at sætte farverne i terminalen
+  tilbage til normal.
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
