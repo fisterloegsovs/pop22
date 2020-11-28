@@ -1,4 +1,15 @@
-In a not-so-distant future drones will be used for delivery of groceries. Imagine that the drone-traffic has become intense in your area and that you have been asked to decide if drones collide. Assume that all drones fly at the same altitude and that drones fly with different speeds measured in meters/minute and in different directions. If 2 drones are less than 5 meters from each other, then they collide. When a drone reaches its destination, then it lands and can no longer collide with any drone. Create an implementation file \lstinline{simulate.fs}, and add to it a \lstinline{Drone} class with properties and methods:
+In a not-so-distant future drones will be used for delivery of
+groceries. Imagine that the drone-traffic has become intense in your
+area and that you have been asked to decide if drones collide. Assume
+that all drones fly at the same altitude, that drones fly with
+different speeds measured in meters/minute and in different
+directions, and that drones fly with constant speed (no
+acceleration). If two drones are less than 5 meters from each other,
+then they collide. When a drone reaches its destination, then it lands
+and can no longer collide with any other drone. Create an implementation
+file \lstinline{simulate.fs}, and add to it a \lstinline{Drone} class
+with properties and methods:
+
 \begin{itemize}
 \item The constructor must take start-position, -destination, and -speed.
 \item \lstinline{position} (property): returns the drone's position in $(x, y)$ coordinates.
@@ -14,7 +25,24 @@ Extend your implementaiton file with a class \lstinline{Airspace}, which contain
 \item \lstinline{droneDist} (method): The distance between two given drones.
 \item \lstinline{flyDrones} (method): Advance the position of all flying drones in the collection by 1 minute.
 \item \lstinline{addDrone} (method): Add a new drone to the collection of drones.
-\item \lstinline{willCollide} (method): Given a time interval, determine which drones will collide.
+\item \lstinline{willCollide} (method): Given a time interval,
+  determine which drones will collide. After two (or more) drones
+  collide they are assumed to fall to the ground and are no longer
+  considered. The method should return a list of pairs of drones that
+  collided.
+
+  \textbf{Hard:} In the unfortunate event that three drones $A$, $B$
+  and $C$ collided at the same time, the list should contain the pairs
+  $(A,B)$, $(A, C)$ and $(B,C)$ (the order of components in the pairs
+  is not important). However, don't worry too much about getting this
+  special case exactly right. If your implementation decide that $A$
+  and $B$ collides first, and $C$ gets a lucky break and dodge the
+  crash, then that is fine as well. Just make sure that you clearly
+  document what the indented behaviour is.
 \end{itemize}
 
-Write a white-box test class \lstinline{testSimulate.fsx} that tests both the above classes.
+Write a white-box test class \lstinline{testSimulate.fsx} that tests
+both of the above classes.
+
+Note that the required methods and properties are \emph{minimum
+  requirements}, feel free to add methods and properties if you need them.
