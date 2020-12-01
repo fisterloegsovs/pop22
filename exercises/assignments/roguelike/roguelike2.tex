@@ -20,18 +20,37 @@ foregår på følgende vis:
 \begin{enumerate}
 \item Vis hvordan verden ser ud, samt om der er eventuelt er sket
   noget for spilleren
-\item Hent brugerens træk
+\item Hent brugerens træk som gives ved brug af pile-tasterne.
 \item Afgør hvilke \lstinline{Item}s som brugeren eventuelt interagerer med,
   samt hvad det betyder for hvad spillerens position og helbred er.
-\item Hvis spilleren er død vis et afslutningsskærmbillede og stop
+\item Hvis spilleren er død eller hvis spilleren har fundet
+  \lstinline{Exit} vis et afslutningsskærmbillede og stop
   spillet, ellers start forfra.
 \end{enumerate}
 
+Klassen \lstinline{World} samt de andre klasser fra de andre
+delopgaver skal være i filen \texttt{rougelike.fs}. Lav derudover en
+fil \texttt{rougelike-game.fsi}, der som minimum laver en ny verden og
+kalder \lstinline{Play}.
+
+
+\textbf{Basal Storyline}
+
+Den mest basale udgave af spillet: Spilleren starter et sted i et
+underjordisk dungeon, og skal finde udgangen. Når spilleren finder
+udgangen skal de have mindst fem \emph{hit points} for at kunne tvinge
+døren op og undslippe dungeon.
+
+Det er op til jer hvordan dungeon skal se ud, hvor spilleren starter,
+samt hvor mange genstande og skabninger der er i verden.
+
+
 \textbf{Hints:}
 \begin{itemize}
-\item Det er en vigtig pointe at \lstinline{World} ikke tager sig af at rendere
-  spilleren og \lstinline{Item}s i verden, men blot skaber en canvas, de kan
-  rendere sig selv på.
+\item Det er en vigtig pointe at \lstinline{World} ikke tager sig af
+  at rendere spilleren og \lstinline{Item}s i verden, men blot skaber
+  en canvas, som de forskellige \lstinline{Entry} kan rendere sig selv
+  på.
 \item Brug \lstinline{System.Console.Clear()} at fjerne alt fra terminalen inden
   verden vises.
 \item Brug \lstinline{Console.ReadKey(true)} til at hente et træk fra brugeren
@@ -39,6 +58,9 @@ foregår på følgende vis:
   lig med \lstinline{System.ConsoleKey.UpArrow}, hvis brugere trykkede på
   op-pilen.
 \end{itemize}
+
+
+
 
 
 %%% Local Variables:

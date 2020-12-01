@@ -1,7 +1,7 @@
 \textbf{Genstande og Skabninger}
 
 Vi bruger klassen \lstinline{Entity} til at repræsentere genstande og skabninger
-i vores verden. Disse skal kunne renderes på en canvas. Tag udgang i
+i vores verden. Disse skal kunne renderes på en canvas. Tag udgangspunkt i
 følgende erklæring:
 
 \begin{lstlisting}
@@ -10,8 +10,9 @@ følgende erklæring:
     default this.RenderOn canvas = ()
 \end{lstlisting}
 
-Hvis I får behov for det må I gerne tilføje tilstand og en anden
-default implementering af \lstinline{RenderOn} til \lstinline{Entity}.
+Hvis I får behov for det må I gerne tilføje tilstand (data og
+properties), metoder og en anden default implementering af
+\lstinline{RenderOn} til \lstinline{Entity}.
 
 Til at repræsentere spilleren bruger vi klassen \lstinline{Player}:
 
@@ -31,27 +32,30 @@ Til at repræsentere spilleren bruger vi klassen \lstinline{Player}:
 En spiller er død hvis de har mindre end nul hit points. En spiller
 har et maksimum hit points de kan helbredes op til.
 
-Til at repræsenter genstande som spiller kan interagere
-med bruger vi den abstrakte klasse \lstinline{Item} \kfl{Find på bedre navn}:
+Til at repræsentere genstande og skabninger, som spilleren kan
+interagere med, bruger vi den abstrakte klasse \lstinline{Item}
+\kfl{Find på bedre navn}:
 
 \begin{lstlisting}
   type Item =
     class
       inherit Entity
-      abstract member FullyOccupy : unit -> bool
       abstract member InteractWith : Player -> unit
+      member FullyOccupy : bool
     end
 \end{lstlisting}
 
-Den måde en spiller interagere med en genstand på, er ved at gå ind i genstanden (det
-kommer vi tilbage til i næste delopgave). Til dette skal vi bruge
-\lstinline{FullyOccupy} til at sige om genstanden fylder feltet helt ud eller om spilleren
-kan stå i samme felt som genstanden. Metoden \lstinline{InteractWith} bruges
-dels til at genstanden kan have effekter på spilleren, og
-retur-værdien siger om genstanden stadigvæk skal være i verden
-(\lstinline{true}) efter interaktionen, eller om den skal fjernes (\lstinline{false}) fra verden.
+Den måde en spiller interagerer med et \lstinline{Item} på, er ved at
+gå ind i \lstinline{Item} (det kommer vi tilbage til i næste
+delopgave). Til dette skal vi bruge \lstinline{FullyOccupy} til at
+sige om \lstinline{Item} fylder feltet helt ud eller om spilleren kan
+stå i samme felt som genstanden. Metoden \lstinline{InteractWith}
+bruges dels til at genstanden kan have effekter på spilleren, og dels
+så siger retur-værdien om genstanden stadigvæk skal være i verden
+(\lstinline{true}) efter interaktionen, eller om den skal fjernes
+(\lstinline{false}) fra verden.
 
-Implementér følgende fire konkrete klasser der nedarver fra \lstinline{Item}:
+Implementér følgende fem konkrete klasser der nedarver fra \lstinline{Item}:
 
 \begin{itemize}
 \item \lstinline{Wall} der fylder et helt felt, men ellers ikke har effekter på
@@ -63,6 +67,7 @@ Implementér følgende fire konkrete klasser der nedarver fra \lstinline{Item}:
   interagereret fem gange med ilden går den ud.
 \item \lstinline{FleshEatingPlant} der fylder feltet helt ud, og giver fem hit point i
   skade ved hver interaktion med spilleren.
+\item \lstinline{Exit} vejen ud af dungeon!
 \end{itemize}
 
 

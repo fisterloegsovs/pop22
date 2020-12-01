@@ -14,7 +14,7 @@ all: $(PDF)
 8i.pdf: $< $(wildcard ../assignments/polynomials/*.tex) $(wildcard ../assignments/integration/*.tex) $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/treeStructure/*.tex) setup.tex
 9i.pdf: $< $(wildcard ../assignments/exceptions/*.tex) $(wildcard ../assignments/io/*.tex) $(wildcard ../assignments/web/*.tex) $(wildcard ../assignments/cat/*.tex) assignmentSetup.tex bookSetup.tex
 10i.pdf: $< $(wildcard ../assignments/classes/*.tex) assignmentSetup.tex bookSetup.tex
-11g.pdf: $< $(wildcard ../assignments/design/*.tex) $(wildcard ../assignments/inheritance/*.tex) $(wildcard ../assignments/uml/*.tex) $(wildcard ../assignments/owlsNMice/*.tex) assignmentSetup.tex bookSetup.tex
+11g.pdf: $< $(wildcard ../assignments/design/*.tex) $(wildcard ../assignments/inheritance/*.tex) $(wildcard ../assignments/uml/*.tex) $(wildcard ../assignments/roguelike/*.tex) assignmentSetup.tex bookSetup.tex
 12g.pdf: $< $(wildcard ../assignments/inheritance/*.tex) $(wildcard ../assignments/chess/*.tex) setup.tex
 13i.pdf: $< $(wildcard ../assignments/winforms/*.tex) $(wildcard ../assignments/clock/*.tex) setup.tex
 
