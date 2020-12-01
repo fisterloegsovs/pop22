@@ -29,12 +29,16 @@ Til at repræsentere spilleren bruger vi klassen \lstinline{Player}:
     end
 \end{lstlisting}
 
-En spiller er død hvis de har mindre end nul hit points. En spiller
-har et maksimum hit points de kan helbredes op til.
+En spiller skal starter med ti hit points. En
+spiller er død hvis de har mindre end nul hit points. En spiller
+har et maksimum hit points de kan helbredes op til (I betemmer
+hvor mange, husk at dokumentere det i rapporten).
+
+Metoderne \lstinline{Damage} og \lstinline{Heal} bruge til at gøre
+skade på og, henholdsvis, helbrede spilleren med et antal hit points.
 
 Til at repræsentere genstande og skabninger, som spilleren kan
-interagere med, bruger vi den abstrakte klasse \lstinline{Item}
-\kfl{Find på bedre navn}:
+interagere med, bruger vi den abstrakte klasse \lstinline{Item}:
 
 \begin{lstlisting}
   type Item =
