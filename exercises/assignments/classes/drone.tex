@@ -15,7 +15,8 @@ with properties and methods:
 \item \lstinline{position} (property): returns the drone's position in $(x, y)$ coordinates.
 \item \lstinline{speed} (property): returns the drone's present speed in meters/minute.
 \item \lstinline{destination} (property): returns the drone's present destination in $(x, y)$ coordinates. If the drone is not flying, then its present position and its destination are the same.
-\item \lstinline{fly} (method): Set the drone's new position after 1 minutes flight.
+\item \lstinline{fly} (method): Set the drone's new position after one
+  seconds flight.
 \item \lstinline{isFinished} (method): Returns true or false depending on whether the drone has reached its destination or not.
 \end{itemize}
 
@@ -23,9 +24,11 @@ Extend your implementaiton file with a class \lstinline{Airspace}, which contain
 \begin{itemize}
 \item \lstinline{drones} (property): The collection of drones instances.
 \item \lstinline{droneDist} (method): The distance between two given drones.
-\item \lstinline{flyDrones} (method): Advance the position of all flying drones in the collection by 1 minute.
+\item \lstinline{flyDrones} (method): Advance the position of all
+  flying drones in the collection by one second.
 \item \lstinline{addDrone} (method): Add a new drone to the collection of drones.
-\item \lstinline{willCollide} (method): Given a time interval,
+\item \lstinline{willCollide} (method): Given a time interval (number
+  of minutes),
   determine which drones will collide. After two (or more) drones
   collide they are assumed to fall to the ground and are no longer
   considered. The method should return a list of pairs of drones that
@@ -34,8 +37,8 @@ Extend your implementaiton file with a class \lstinline{Airspace}, which contain
   In the unfortunate event that three drones $A$, $B$ and $C$ are
   destined to collide at the same time, the list should contain the
   pairs $(A,B)$, $(A, C)$ and $(B,C)$. In this case, you are free to
-  choose whether the 3 drones collide simultaneously or one gets a
-  luck break and doges the crash. Clearly document the choice you
+  choose whether the 3 drones collide simultaneously or if one gets a
+  lucky break and doges the crash. Clearly document the choice you
   make.
 \end{itemize}
 
