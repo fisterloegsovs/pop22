@@ -18,15 +18,15 @@ fra top mod bund.
 Hvert felt har en \lstinline{char}, og så \emph{kan}
 feltet have en forgrundsfarve, og det \emph{kan} have en baggrundsfarve.
 
-Implementér en klassen \lstinline{Canvas} som har følgende signatur:
+Implementér klassen \lstinline{Canvas} som har følgende signatur:
 
 \begin{lstlisting}
 type Color = System.ConsoleColor
 type Canvas =
   class
     new : rows:int * cols:int -> Canvas
-    member Set : x:int * y:int * c:char * fg:Color * bg:Color -> unit
-    member Show : unit -> unit
+    member Set: x:int * y:int * c:char * fg:Color * bg:Color -> unit
+    member Show: unit -> unit
   end
 \end{lstlisting}
 
