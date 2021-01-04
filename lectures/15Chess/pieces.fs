@@ -6,11 +6,11 @@ open Chess
 /// <returns> A king object. </returns>
 type king(col : Color) =
   inherit chessPiece(col)
-  override this.nameOfType = "king"
   // king has runs of 1 in 8 directions: (N, NE, E, SE, S, SW, W, NW)
   override this.candiateRelativeMoves =
       [[(-1,0)];[(-1,1)];[(0,1)];[(1,1)];
       [(1,0)];[(1,-1)];[(0,-1)];[(-1,-1)]]
+  override this.nameOfType = "king"
 
 /// <summary> A rook is a chessPiece which moves horisontally and vertically. </summary>
 /// <param name = "col"> The color black or white </param>
@@ -31,8 +31,6 @@ type rook(col : Color) =
     fun elm -> (0,-elm) // East by elm
     ]
   // For each function in indToRel, we calculate List.map f [1..7].
-  // swap converts (List.map fct indices) to (List.map indices fct).
-  let swap f a b = f b a
   override this.candiateRelativeMoves =
-    List.map (swap List.map [1..7]) indToRel
+    List.map (fun e -> List.map e [1..7]) indToRel
   override this.nameOfType = "rook"

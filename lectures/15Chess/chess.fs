@@ -40,7 +40,7 @@ type chessPiece(color : Color) =
   abstract member candiateRelativeMoves : Position list list
 
 /// A chess board.
-type Board () =
+type board () =
   let _board = Collections.Array2D.create<chessPiece option> 8 8 None
 
   /// <summary> Wrap a position as option type. </summary>
@@ -91,40 +91,34 @@ type Board () =
 
   /// Produce string of board for, e.g., the printfn function.
   override this.ToString() =
-    let rec boardStr (i : int) (j : int) : string =
-      match (i,j) with 
-        (8,0) -> ""
-        | _ ->
-          let stripOption (p : chessPiece option) : string = 
+    let mutable str = ""
+    for i = Array2D.length1 _board - 1 downto 0 do
+      str <- str + string i
+      for j = 0 to Array2D.length2 _board - 1 do
+        let p =  _board.[i,j]
+        let pieceStr =
             match p with
-              None -> ""
+              None -> " "; 
               | Some p -> p.ToString()
-          // print top to bottom row
-          let pieceStr = stripOption _board.[7-i,j]
-          let lineSep = " " + String.replicate (8*4-1) "-"
-          match (i,j) with 
-          (0,0) -> 
-            let str = sprintf "%s\n| %1s " lineSep pieceStr
-            str + boardStr 0 1
-          | (i,7) -> 
-            let str = sprintf "| %1s |\n%s\n" pieceStr lineSep
-            str + boardStr (i+1) 0 
-          | (i,j) -> 
-            let str = sprintf "| %1s " pieceStr
-            str + boardStr i (j+1)
-    boardStr 0 0
+        str <- str + " " + pieceStr
+      str <- str + "\n"
+    str + "  0 1 2 3 4 5 6 7"
 
   /// <summary> Move piece from a source to a target position. Any
   /// piece on the target position is removed. </summary>
   /// <param name = "source"> The source position </param>
   /// <param name = "target"> The target position </param>
   member this.move (source : Position) (target : Position) : unit =
+    // Update piece' knowledge about it's position
+    Option.iter (fun (p : chessPiece) -> p.position <- None) this.[fst target, snd target]
+    Option.iter (fun (p : chessPiece) -> p.position <- Some target) this.[fst source, snd source]
+    // Update board's pieces
     this.[fst target, snd target] <- this.[fst source, snd source]
     this.[fst source, snd source] <- None
-
+    
   /// <summary> Find the list of available empty positions for this
-  /// piece, and the list of possible opponent pieces, which can be
-  /// taken. </summary>
+  /// piece, and the list of possible own and opponent pieces, which
+  /// can be protected or taken. </summary>
   /// <param name = "piece"> A chess piece </param>
   /// <returns> A pair of lists of all available moves and neighbours,
   /// e.g., ([(1,0); (2,0);...], [p1; p2]) </returns>
@@ -139,5 +133,5 @@ type Board () =
         // Extract and merge lists of vacant squares
         let vacant = List.collect fst vacantPieceLists
         // Extract and merge lists of first obstruction pieces and filter out own pieces
-        let opponent = List.choose snd vacantPieceLists
-        (vacant, opponent)
+        let neighbours = List.choose snd vacantPieceLists
+        (vacant, neighbours)
