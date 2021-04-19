@@ -1,0 +1,15 @@
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/myApp.deps.json
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/myApp.runtimeconfig.json
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/myApp.runtimeconfig.dev.json
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/myApp.dll
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/ref/myApp.dll
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/bin/Debug/net5.0/myApp.pdb
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.csprojAssemblyReference.cache
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.AssemblyInfoInputs.cache
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.AssemblyInfo.cs
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.csproj.CoreCompileInputs.cache
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.dll
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/ref/myApp.dll
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.pdb
+/Users/jrh630/repositories/PoP.git/exam/2020-21Reeksam/myApp/obj/Debug/net5.0/myApp.genruntimeconfig.cache
