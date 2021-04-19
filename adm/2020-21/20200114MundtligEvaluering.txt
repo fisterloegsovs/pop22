@@ -1,0 +1,225 @@
+10:13:32 From Kasper Rask Jensen to Everyone : Du snakker dansk
+10:13:35 From Youran Tao Jensen to Everyone : Good morning
+10:13:43 From Kasper Rask Jensen to Everyone : Ah
+10:13:48 From Kasper Rask Jensen to Everyone : I snakkede bare engeelsk sammen før
+10:13:52 From Anders Friis Persson to Everyone : Gode gamle siberia headset Pog
+10:14:52 From Kasper Rask Jensen to Everyone : Når du share er baren i toppen
+10:17:58 From Kasper Rask Jensen to Everyone : Ved du om kampus stadig er lukket I blok 3, da regeringen har udvidet restriktioner til feb?
+10:21:26 From Laurits Fredsgaard Larsen to Everyone : Seneste udmelding de gav var at det er lukket indtil de siger noget andet
+10:21:34 From Morten Skovlund Holst to Everyone : Hvad er det, at passcode til det her møde er? Der er nemlig en, som ikke kan joine mødet.
+10:21:51 From Martin to Everyone : Tror måske han bruger det forkerte link
+10:22:01 From Martin to Everyone : Jeg har ikke typet nogen kode i hvert fald
+10:22:09 From Jon Sporring to Everyone : passcode er 231967
+10:22:13 From Morten Skovlund Holst to Everyone : Tak!
+10:22:21 From Andreas Bardie Høgh Joensen to Everyone : Jeg fik også at vide jeg skulle bruge passcode. Jeg lukkede bare og trykkede på linket igen
+10:22:51 From Morten Skovlund Holst to Everyone : Tak! Tror, at det virker nu. :D
+10:28:31 From Kasper Rask Jensen to Everyone : Torben is right?
+10:28:42 From Kasper Rask Jensen to Everyone : And Anders is left?
+10:28:47 From Mark to Everyone : They will agree about a solution
+10:28:49 From Casper to Everyone : communicstion to others
+10:28:51 From Martin to Everyone : They would think of the same things?
+10:28:52 From mariusz to Everyone : Same way of thinking 
+10:28:53 From Jonatan Ruiz to Everyone : Well Torben is not very independent
+10:28:55 From Martin to Everyone : And have the same problems?
+10:29:03 From Theo to Everyone : They think the same, so less variety in solutions
+10:29:19 From Kasper Rask Jensen to Everyone : Then a good thing isd that the left one will likely come up with a lot of ideas, but the Right one might support or correct the ideas 
+10:29:30 From . to Everyone : +
+10:29:43 From Kasper Rask Jensen to Everyone : Really?
+10:30:06 From Kasper Rask Jensen to Everyone : The right one seemed to correc6t the left one if he forgot or left something out
+10:31:00 From Laurits Fredsgaard Larsen to Everyone : They might do well with concurrency or parallelism, but they lack a scheduler
+10:38:47 From Jonatan Ruiz to Everyone : Why come to work!
+10:40:39 From Theo to Everyone : respect
+10:49:39 From Theo to Everyone : Traveling salesman problem
+10:51:59 From Ali Farahnak to Everyone : https://cognitiveservices.azurewebsites.net/
+10:52:33 From Jonatan Ruiz to Everyone : we cant see
+10:52:53 From . to Everyone : You support face recognition then? 
+10:53:58 From Uffe Dalgas to Everyone : PyTorch or TensorFlow? :)
+10:56:34 From Jørn Salonin to Everyone : So Microsoft dev work in visual studio,  or do you chose yourself ?
+10:57:00 From Theo to Everyone : If you want us to read the code I think you need to zoom a bit, at least for me
+10:57:01 From Jakob Due Jensen to Everyone : A lot of us use VS code
+10:57:39 From Sebastian Christiansen to Everyone : VIM + coc.nvim for terminal based workflow
+10:58:10 From Kasper Rask Jensen to Everyone : Sam e
+10:58:11 From Morten Skovlund Holst to Everyone : Here too
+10:58:11 From . to Everyone : I can't read anything at all
+10:58:12 From Sia Susanne Lykke Sejer to Everyone : Same
+10:58:16 From Martin to Everyone : Same
+10:58:26 From Martin to Everyone : Better
+10:58:26 From Morten Skovlund Holst to Everyone : yes
+10:58:29 From Kasper Rask Jensen to Everyone : Yes
+10:59:54 From . to Everyone : So what do you enjoy the most/least about your employment?
+11:03:26 From Tore Andersen to Everyone : Why is it they fly you out instead of getting one from the US
+11:04:15 From Tore Andersen to Everyone : In terms of sustainability
+11:05:03 From Tore Andersen to Everyone : why did you go to the us
+11:06:08 From Morten Skovlund Holst to Everyone : How would you say that the compay has changed since Steve Ballmer as CEO?
+11:09:08 From Andreas Bardie Høgh Joensen to Everyone : Well, since Steve Ballmer got replaced, Microsoft has grown 27% a year xD
+11:09:45 From Mathias scholz to Everyone : My zoom froze Can someone tell me about the pencils. it sounded relevant
+11:13:15 From Kjartan Johannesen to Everyone : he was asked what he would make out of ten pencils
+11:13:42 From Kjartan Johannesen to Everyone : and he ended up saying they were colored pencils, and he would take out the colors and make a rainbow
+11:16:56 From William Henrich Due to Everyone : why do you use light theme?
+11:16:57 From Theo to Everyone : Would you ever use nullable bool in c#
+11:17:29 From Sebastian Christiansen to Everyone : Is the Microsoft AI open-source?
+11:18:18 From Sebastian Christiansen to Everyone : Yes
+11:18:26 From Morten Skovlund Holst to Everyone : Do you know any interesting projects based on the MS licensing of GTP-3?
+11:18:27 From Jørn Salonin to Everyone : Are you guys doing agile / scrum method, or some other type of management system for your teams ? 
+11:19:21 From marc to Everyone : these certificats, is this something we should take while studing? (maybe in the sommer holliday) or is this something you do after you get your masters?
+11:20:00 From Andreas Bardie Høgh Joensen to Everyone : ^ Yes, good question
+11:21:04 From Jørn Salonin to Everyone : How must F# is being used compare to c# ?
+11:21:55 From Kasper Rask Jensen to Everyone : I woukd create echo if I unmuted
+11:21:56 From Jonatan Ruiz to Everyone : 100% winrater bocer
+11:22:07 From Jonatan Ruiz to Everyone : winrate boxer*
+11:23:08 From Caroline H. Alsing to Everyone : https://www.linkedin.com/in/alirezafarahnak/
+11:23:44 From Kjartan Johannesen to Everyone : thank you
+11:23:46 From Aske Nord Raahauge to Everyone : THank you
+11:23:48 From Sebastian Christiansen to Everyone : Thank you!
+11:23:49 From Jacob Jensen to Everyone : thank you
+11:23:49 From Morten Skovlund Holst to Everyone : Thank you!
+11:23:50 From johan to Everyone : Thanks
+11:23:50 From Simon to Everyone : Thank you
+11:23:54 From yosef to Everyone : Ty ty ^^
+11:23:56 From Mark to Everyone : thanks 
+11:24:03 From Annika Vrist to Everyone : Thank you
+11:24:03 From Therese Lyngby to Everyone : Thank You
+11:24:06 From William Henrich Due to Everyone : byw
+11:24:41 From Caroline H. Alsing to Everyone : https://docs.microsoft.com/en-us/learn/browse
+11:25:02 From . to Everyone : Jon! Jeg har mistet mit link til evaluation. Hvor kan jeg finde det igen? (Kom til at slette mailen tror jeg)
+11:25:30 From Jonas Paszkowiak Bacci to Everyone : evaluering.ku.dk
+11:25:51 From . to Everyone : Tak Jonas
+11:36:44 From Morten Skovlund Holst to Everyone : Jeg må indrømme, at jeg havde samme indtryk.
+11:36:51 From marc to Everyone : fedt tænkte præcis det samme
+11:36:52 From . to Everyone : Same
+11:37:11 From yosef to Everyone : Nasa er på samme måde
+11:38:12 From Jørn Salonin to Everyone : tbh siger alle virksomheder ikke det også. Har hørt det fra mange andre salepitchs.
+11:38:59 From Anders to Everyone : Sådan er alle amerikanske virksomheder
+11:39:24 From Kasper Rask Jensen to Everyone : Her som en der lender til den Amerikanske metode og kultur, der er STOR forskel på at sige at de ønsker at man gar det godt og rent faktisk at de ønsker det...¨
+11:40:59 From Anders to Everyone : Flotte solbriller Ken
+11:41:00 From . to Everyone : KEN <3
+11:41:22 From Anna Frederikke levinsen to Everyone : Ken :D
+11:42:58 From Rebecca Eriksen to Everyone : Bestemt nyttigt!
+11:42:58 From Ken Friis Larsen to Everyone : Hvorfor er Martin og Jon ikke ligeså veltrænede som Ken?
+11:43:07 From yosef to Everyone : Det var godt at have et fokus på hvad man skal lære
+11:43:08 From Kasper Rask Jensen to Everyone : Jeg ved ikke om jeg var den eneste der havde det sådan her, men jeg ville gerne ønske nogle mere specifikke opgave beskrivelser. Ofte følte keg at jeg ikke engang kunne forstå hvad det var I søgte.
+11:43:13 From Caroline H. Alsing to Everyone : Ja, det var fedt
+11:43:16 From emilv to Everyone : Jeg synes ikke, der var helt nok sammenhæng mellem ugesedlerne og torsdagsforlæsningen
+11:43:21 From . to Everyone : Hvad Kasper sagde
+11:43:24 From Jakob Due Jensen to Everyone : Ken er manden
+11:43:38 From marc to Everyone : forskelligt fra opgave til opgave, nogle uge indrammede det godt hvad vi skulle lave, andre gange virkede det mindre vigtigt
+11:43:50 From Martin to Everyone : Punkterne var meget behalige, men oftest fokuserede jeg personligt mere på bare at læse opgaverne
+11:43:53 From Kasper Rask Jensen to Everyone : Hvis man møder op klædt som nisse er det svært ikke at hæppe for nogn xD
+11:44:40 From Christine Mehlsen to Everyone : Det var godt, men ind imellem var der lidt uoverensstemmelser imellem fokuspunkterne og den del af pensum som hørte til den pågældende uge, hvilket godt kunne skabe lidt forvirring
+11:45:14 From Theo to Everyone : Den sidste skak opgave var lidt for vag
+11:45:15 From Aske Nord Raahauge to Everyone : Det var meget tydeligt at der var en progression i opgaverne og jeg synes det fungerede godt. Selvom de godt kunne ende med at blive en anelse abstrakte ti l sidst.
+11:45:32 From yosef to Everyone : 12i0 og 12i1 var lidt vag formuleret, og det var svært at anskue hvilken retning i ville lede os hen i opgavebeskrivelsen
+11:45:36 From Jørn Salonin to Everyone : feks, hvis man finder en løsning. Også når man få den tilbage så ser man der kun gives points for x og y. Så i virkeligheden var den ret sat i hvad man skulle.
+11:45:43 From Kasper Rask Jensen to Everyone : Hvis I giver en arbejdsbeskrivelse som du siger, så vilel det være rart i seende af at vi er på en uddannelse at du giver en specifikiation om hvilke redskaber vi må bruge
+11:45:50 From olgah to Everyone : I opgaven om droner stod der noget med at man skulle beslutte om 3 droner kolliderede på samme tid og faldt ned eller om den tredje undveg, det forstod jeg ikke
+11:45:51 From william to Everyone : Nogle gange var opgaveteksterne ikke så specifikke, og synes ikke altid at alle de ting vi havde lært om indgik i øvelserne
+11:46:23 From Kasper Rask Jensen to Everyone : ¨fx, om man må bruge for løkker som min TA ofte nævner, dog at det aldrig var nævnt i teksten
+11:46:45 From Kasper Rask Jensen to Everyone : det er bare et eksempel
+11:47:06 From mariusz to Everyone : Det vil være måske smart at nævne at alle opgaver som har noget med tid at gøre bruger diskret tid. 
+11:47:11 From marc to Everyone : I starten har de været meget specifikke, så det fungere helt fint. men senere blev de lidt svære at tyde fx. I spillet I OOP var der forskel på signaturen givet I teksten, og hvordan den givne function var beskrevet I teksten
+11:47:15 From Aske Nord Raahauge to Everyone : Specifikt med OOP og UML synes jeg der var flere ting der blev gennemgået, men som vi aldrig fik behov/ mulighed for at benytte.
+11:47:17 From Kasper Rask Jensen to Everyone : Præcist og I nævner sjældent i opgave beskrivelsen om  hvad er tilladt
+11:47:18 From . to Everyone : Jeg ved ikke hvordan mange andre har det, men jeg har stadig ikke en følelse af, at jeg kan "kode". Det skyldes måske gruppe arbejdet, i den forstand, at en i ens gruppe måske fangede en ting lidt hurtigere. Det synes jeg selv godt kan være svært når man bevæger sig videre til et nyt fag. 
+11:47:24 From jesper to Everyone : Synes ikke altid at øvelserne hang sammen med opgaven. Til tider, var det nemmere blot at gå I gang med opgave/afleveringen end egentlig at bruge tid på øvelelserne
+11:47:31 From Morten Skovlund Holst to Everyone : Jeg vil først og fremmest sige tak for rigtig gode forelæsninger og godt materiale! I den optimale verden ville jeg nok gerne have haft et andet sprog end F#, da jeg synes, at det til tider kan spænde ben for forståelsen, da der kommer til at være meget fokus på mere sprogspecifikke ting ved F# (relativt til f.eks. python). Men tak for et godt kursus!
+11:47:46 From Uffe Dalgas to Everyone : Synes det ville være rigtig godt hvis i fremadrettet frigiver ugeseddelerne på det tidspunkt som i har kommunikeret til os (på Absalon) - det har ikke været mange gange, men et par enkelte gange har der stået at en ugeseddel ville blive frigivet Fredag kl 17, hvilket den så ikke er blevet, hvilket jeg mener er vigtigt at den bliver, da det gør det muligt for os som studerende at planlægge vores uge bedst muligt - ellers et mega godt kursus :)
+11:47:48 From Aske Nord Raahauge to Everyone : Progressionen var en win
+11:48:31 From yosef to Everyone : Jeg synes det var rigtig godt, for hvor meget vi selv måtte gøre for at løse opgaverne, uden for mange krav (udover at besvare opgaven)
+11:48:39 From Martin to Everyone : Synes den stigende sværhedsgrad var godt balanceret
+11:48:39 From Aske Nord Raahauge to Everyone : Det er altid rart at have en fod indenfor før man begynder på de abstrakte opgaver.
+11:48:50 From Sia Susanne Lykke Sejer to Everyone : Jeg kunne godt lide, at det blev muligt at diskutere hvilken løsning, der var bedst
+11:48:52 From yosef to Everyone : Det var gjort rigtig godt!
+11:48:55 From Kjartan Johannesen to Everyone : Jeg kunne måske godt have ønsket lidt mere repetition i forklaringerne. Synes især noget af det funktionnelle som Martin præsenterede blev ret abstrakt. Der kunne jeg som nybegynder godt have brugt lidt mere forklaring af programmerne med henvisning til det vi havde lært tidligere.
+11:48:55 From Kasper Rask Jensen to Everyone : Jeg føler at prograssionen er god, hvis I bare husker at være lidt mere specifikt med hvad man må og ikke må, samt hvad I faktisk ønsker af opgaven. Da dette ofte var unødvendigt forvirrende i min mening
+11:49:02 From Morten Skovlund Holst to Everyone : ^ Enig
+11:49:19 From marc to Everyone : altså generelt har kurset været rigtigt godt, en ren 9/10. enig med martin med at den stiende sværhedgrad var rigtig godt placeret
+11:49:28 From olgah to Everyone : Ved ikke om det bare er meget, men jeg var meget forvirret i starten, har ikke kodet før. Måske skulle basale ting være gennemgået grundigere i starten, fx hvordan en funktion fungerer
+11:49:32 From olgah to Everyone : mig*
+11:49:33 From Casper to Everyone : Jeg er af den opfattelse af, at det kan være enormt risikabelt for os der er nye til at kode, at lade os selv finde "hele" løsningen på opgaven, da meget let kan gå tabt. Dette har alt andet lige resulteret i, at TA hjælp har været nødvendigt, hvilket har været lidt problematisk, da der tit har manglet timer og mandkraft til dette
+11:49:36 From Nikolaj to Everyone : Det føles bare som om der en meget bestemt måde ting skal gøres på, når der altid står præcist vilke og hvor mange filer der skal være, og præcist hvad parametre funktioner og klasser skal have
+11:49:39 From Valentin Nygaard to Everyone : Synes at løsningerne i de senere opgaver kunne være mindre lagt fast i opgaveteksten og mere åbne for andre løsninger.
+11:49:50 From Philip Kroon Enevoldsen to Everyone : Progression var godt. Måske kunne man blande det lidt, så man også havde nogle "find selv løsningen" opgaver i begyndelsen
+11:50:21 From Martin to Everyone : Der var da en masse diagram opgaver mht UML?
+11:50:30 From David to Everyone : Mit største problem har været at opgaveteksterne ikke altid er helt klar med hvad en løst opgave er. F.eks har en opgave tekst modsagt sig selv flere gang i løbet af en opgavebeskrivelse.
+11:50:34 From Kasper Rask Jensen to Everyone : Tror han sagde URL
+11:51:20 From Mathias scholz to Everyone : vi havde nogen rekursions øvelser på et tidspunkt hvor hver opgave tog under 1 min og man brugte en ny list operator hver gang. føler det var rigtig godt at man fik prøvet de mange forskellige operatorer 1 gang i nogle simple opgaver, og var rigtig glad for de opgaver
+11:51:30 From Anders to Everyone : ^
+11:52:36 From Tore Andersen to Everyone : Jeg syntes tit at der var en stor forskel på øvelsesopgaverne også den aflevering der hørte til
+11:52:50 From William Henrich Due to Everyone : føler der kunne være virkeligt fedt af spille lidt boldt mellem DMA og PO9 med nogle af datastrukturerne og de algoritmer der bruges til dem hvis muligt.
+11:53:10 From William Henrich Due to Everyone : POP*
+11:53:11 From jesper to Everyone : Materiale matte godt udkomme lidt før end søndag aften/nat eller mandag - 1 dag før øvelsestimen tirsdag
+11:53:19 From Julian Pedersen to Everyone : også enig med Mathias. Vi kunne nok have brugte mere repetition med simplere opgaver, især som begyndere til programmering.
+11:53:27 From marc to Everyone : enig med William, det kunne havde været fedt at prøve at implimentere nogle af de ting vi har lært I DMA
+11:53:54 From Andreas Bardie Høgh Joensen to Everyone : William, problemet  med det oplevede man sidste år. ML og DatØk har POP men ikke DMA
+11:54:24 From William Henrich Due to Everyone : arv fair surt
+11:54:24 From Rebecca Eriksen to Everyone : Jeg savner lidt use cases. At komme lidt op i helikopteren og drøfte, hvad der kan være af udfordringer på arbejdspladser, som kan løses med programmering. 
+11:54:43 From leonk to Everyone : videoer > forlæsninger 
+11:54:47 From Kasper Rask Jensen to Everyone : Nu bliver jeg nysgerrig Jon, men et fag som programmering/teknologi hvis du siger er ved at "lære". Mit spørgsmål til dette ville være, at du implicit indikere at man har "lært" på et tidspunkt. Men hvornår ville dette ske med et fag der altid er I udvikling?
+11:55:05 From Kasper Rask Jensen to Everyone : De er fine
+11:55:22 From Aske Nord Raahauge to Everyone : Videoerne var en kæmpe bonus. Stor Win! De var bare så gode at de nogen gange kunne overskygge forelæsningen.
+11:55:27 From Daniel to Everyone : + 1
+11:55:28 From Kasper Rask Jensen to Everyone : Jeg følte at I gjorde det bedste med hvad I havde og var muligt
+11:55:31 From . to Everyone : Torsdag forelæsningen var altid lidt mærkelige. Følte mere pligt til at komme end "Jeg får rigtig meget ud af det" Videoerne var rigtig gode
+11:55:32 From Sebastian Giovanni M Kristensen to Everyone : De fysiske torsdags forelæsninger, kunne jeg bedst lide
+11:55:34 From bruger to Everyone : Video forelæsningerne var bedre
+11:55:34 From William Henrich Due to Everyone : kunne godt lidt forelæsningener de var gode til af hinte til Løsninger
+11:55:36 From Sia Susanne Lykke Sejer to Everyone : Jeg kan godt lide, at noget er mere konkret (videoerne) og at noget bliver lidt mere abstrakt (torsdag), selvom relevansen nogle gange var svær at følge
+11:55:39 From Mark to Everyone : Ret dejlige
+11:55:40 From Mathias scholz to Everyone : synes der er meget reppetation fra videoer
+11:55:42 From Morten Skovlund Holst to Everyone : Det er måske i kke verdens mest anvendelige svar, men jeg synes, at de har været gode. Fedt med optagede videoer, så man også kunne planlægge efter egen tid.
+11:55:58 From Jørn Salonin to Everyone : Video er rigtig gode, forelæsningen var nogen gange for abstractet. 
+11:56:07 From Casper to Everyone : jeg følte, at videoerne gav rigtig godt, da du kunne sidde og spole i dem og tage dem i eget tempo, men det resulterer så i, at forelæsningerne blev supplerende
+11:56:07 From Helene to Everyone : Jeg synes at det har fungeret rigtig godt med at man har forsøgt at tage det materiale fra videoerne lidt videre, men der har måske været lidt meget repetition
+11:56:09 From william to Everyone : Synes det har været godt med nogle større eksempler
+11:56:09 From Julian Pedersen to Everyone : Jeg tror det var meget givende at gøre "live-kodning," hvor professoren løser nogen problemer ind i forelæsning. Det er noget Ken har gjort meget lige før juleferien, og vi var ekstremet glade for det.
+11:56:14 From Johan Topp to Everyone : Nogle af torsdagsforelæsningerne var gode, fx når Ken programmerede fra bunden, så at det var muligt at se ting der ikke var afpudsede, men at det er godt fx at teste kode efter man har skrevet 2 linjer, for at se om der er fejl, i stedet for at skrive 20-30 linjer inden man tester
+11:56:15 From jesper to Everyone : lidt bøvlet med 3 forskellige metoder. Nogen gange kunne man stille spørgsmål I chatten, andre gange I "discussion" på absalon osv
+11:56:23 From Kjartan Johannesen to Everyone : Har været glad for videoerne
+11:56:45 From marc to Everyone : der er stor forskel på hvordan I alle 3 forlæser, alle er gode. kunne rigtig godt lide live porgrammering fra Ken, og at se hvad de emne vi arbejde kan bruges til som martin gør
+11:56:45 From Rebecca Eriksen to Everyone : Enig med Jesper - læg jer fast på en metode
+11:57:10 From Anders to Everyone : Synes tit at forelæsningen ikke havde ret meget at gøre med ugeopgaven
+11:57:11 From bruger to Everyone : Enig med marc
+11:57:12 From Casper to Everyone : Nogle gange har de videoer der generelt er lagt op før en forelæsning, og selve forelæsningen stort set været 1:1 ift., hvad man kunne få ud af det.
+11:57:22 From johan to Everyone : Jeg er stor fan af live programming, ved det kan være vanskeligt for jer, men det giver et rigtig godt indblik
+11:57:30 From Aske Nord Raahauge to Everyone : Live programmering med tankegang er fedt
+11:57:30 From yosef to Everyone : Ken var virkelig en god forelæser
+11:57:34 From Morten Skovlund Holst to Everyone : Skal vi ikke lige klappe ligesom før?
+11:57:38 From yosef to Everyone : Og i alle forelæsere er rigtig dygtige!
+11:57:39 From marc to Everyone : giv jer selv et klap på skulderen, det har generelt været en dejlig oplevelse
+11:57:42 From emilv to Everyone : Fedt fag :)
+11:57:47 From Uffe Dalgas to Everyone : Det har været virkelig fedt :)
+11:57:47 From William Henrich Due to Everyone : twitch > zoom
+11:57:51 From marc to Everyone : og et klap til alle instruktøre
+11:57:54 From Daniel to Everyone : i har alle 3 gjort det vildt godt til forelæsningerne
+11:57:58 From Anders to Everyone : Synes i har været gode alle sammen
+11:57:58 From Aske Nord Raahauge to Everyone : Tusind tak for kurset
+11:58:26 From marc to Everyone : ja, Ken lær lige de andre hvordan man streamer på 3 platforme på en gang :D
+11:58:27 From Morten Skovlund Holst to Everyone : Tak for et godt kursus!
+11:58:32 From Mark to Everyone : Tak for kurset. Det var fed!
+11:58:41 From Rebecca Eriksen to Everyone : Det var ift. at skrive spørgsmål til forelæsningerne :) Ikke ift. indhold :) 
+11:58:50 From gthgj to Everyone : <3
+11:58:51 From Mathias scholz to Everyone : også stærkt enig i brug af forskellige programmerings orienteringer
+11:58:52 From marc to Everyone : det er HELT KLART et plus at I har hver jeres forlæsning stil
+11:59:04 From Morten Skovlund Holst to Everyone : Enig
+11:59:09 From Mathias Madsen to Everyone : Tak for et godt kursus! Jeg har lært meget! :) 
+11:59:09 From Johan Topp to Everyone : I starten hvor der blev brugt List library, men TA's foreslog at bruge .Head i stedet for, imens andre sagde at det måtte man ikke, fordi det var objektorienteret, hvilket vi først ville lære senere. der kunne det have været fint allerede i den forelæsning at fortælle forskellen om dem, men det er en mindre detalje
+12:00:27 From William Henrich Due to Everyone : jern mette
+12:01:06 From Morten Skovlund Holst to Everyone : LAD OS KLAPPE
+12:01:10 From Jørn Salonin to Everyone : Tak for nu.
+12:01:15 From Rebecca Eriksen to Everyone : Tak for nu :) 
+12:01:16 From Tore Andersen to Everyone : tak for nu
+12:01:16 From Anders to Jon Sporring(Direct Message) : Tak for nu :)
+12:01:19 From Isabella Odorico to Everyone : Tak for denne gang 
+12:01:20 From Philip Kroon Enevoldsen to Everyone : Tak for et godt kursus
+12:01:20 From William Henrich Due to Everyone : goodbye
+12:01:26 From Jan Johannsen to Everyone : Tak for kurset!
+12:01:31 From Theo to Everyone : TAK
+12:01:31 From Anna Frederikke levinsen to Everyone : +
+12:01:33 From Daniel to Everyone : mange tak!
+12:01:34 From Tore Andersen to Everyone : takker
+12:01:35 From Therese Lyngby to Everyone : Tak for et godt kursus : D
+12:01:37 From yosef to Everyone : TAK ALLE SAMMEN!!!
+12:01:43 From Rasmus Ross Nylandsted to Everyone : Tusind tak :)
+12:02:03 From Ahsunalla’s iPhone to Everyone : Tak for denne gang til alle tre
+12:02:04 From Kjartan Johannesen to Everyone : Tak for for god undervisning!
+12:02:12 From Julian Pedersen to Everyone : Tak alle sammen!
