@@ -7,3 +7,5 @@ type ball(p) =
 let b1 = ball((1,1))
 let b2 = ball((0,0))
 printfn "b1.pos = %A, b2.pos = %A" b1.pos b2.pos
+b1.pos <- (2,2)
+printfn "b1.pos = %A, b2.pos = %A" b1.pos b2.pos
