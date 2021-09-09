@@ -1,0 +1,70 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{bookSetup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{11}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ december - 22.\ december}{tirsdag d.\ 22.\ december kl. 22:00}{Ken Friis Larsen og Jon Sporring}
+
+\begin{document}
+\maketitle
+Denne arbejdsseddel strækker sig over to uger og indeholder opgaver
+der fortrinsvis omhandler objektorienteret \emph{design}, med fokus på brug
+af \emph{nedarvning}. Derudover er der også opgaver der går ud på at
+bruge UML diagrammer til at dokumentere (og udvikle) jeres designvalg.
+
+\learningPurposeTxt{Objektorienteret design, nedarvning, UML diagramer, statiske værdier (properties) og metoder}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/design/}{}{war}
+
+\continueExercises{\exerciseNumber ø}{../assignments/inheritance/}{}{customer}
+
+\continueExercises{\exerciseNumber ø}{../assignments/uml/}{}{customer}
+
+\continueExercises{\exerciseNumber ø}{../assignments/classes/}{}{myFirstStatic}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber ø}{../assignments/design/}{}{calendar,checkers}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber ø}{../assignments/inheritance/}{}{employee}
+
+\continueExercises{\exerciseNumber ø}{../assignments/uml/}{}{employee}
+
+\continueExercises{\exerciseNumber ø}{../assignments/inheritance/}{}{mammals}
+
+\continueExercises{\exerciseNumber ø}{../assignments/uml/}{}{mammals}
+
+\section*{Afleveringsopgaver}
+\subimport{../assignments/roguelike/}{introduction}
+\exercises{\exerciseNumber\typeLetter}{../assignments/roguelike/}{}{roguelike0}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/roguelike/}{}{roguelike1}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/roguelike/}{}{roguelike2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+\handinTextThreeTwo{\exerciseNumber\typeLetter}{\texttt{roguelike.fs} og \texttt{roguelike-game.fsx}}{3}
+
+%\handinTextThreeTwo{\exerciseNumber\typeLetter}{preditorPrey.fs, testPreditorPrey.fsx, simulate.fsx, simulationExtinction.txt, simulationOverpopulation.txt, simulationBalance.txt}{3}
+
+\flushright God fornøjelse.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

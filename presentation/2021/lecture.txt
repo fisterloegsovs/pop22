@@ -1,0 +1,23 @@
+Programmering og problemløsning:
+
+Absalon: typisk skema
+
+Mål: at lære at løse problemer vha. et program
+
+Absalon: forelæsningsplan
+
+Bog
+
+Forskellige måder at strukturere sin løsning på (paradigmer): 
+ Imperativ, 
+ funktionel, 
+ objektorienteret.
+
+Eksempler: 
+ Fibonacci talrække, 
+ relation til gyldne snit, 
+ ligninger, 
+ kommandolinje og teksteditor 
+ programmerne Fib*.fsx, 
+ køretider fortolket, 
+ forskel på oversat og fortolket

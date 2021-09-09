@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{bookSetup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{10}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{30.\ november - 5.\ december}{lørdag d.\ 5.\ december kl. 23.59}{Ken Friis Larsen, Christina Lioma og Jon Sporring}
+
+\begin{document}
+\maketitle
+I \emph{object-oriented} programmering bruger vi objekter til at
+indkapsle små bidder af imperativ tilstand, samt at hæfte operationer
+som ændrer ved data sammen med det data som ændres. Dette
+opgavesæt går ud på at træne jer i at bruge de forskellige
+sprogkonstruktioner som bruges til object-oriented programmering. Det
+vil sige, hvordan vi kan definere \emph{klasser}, som vi kan
+\emph{instansiere objekter} fra, samt hvordan vi kan definere
+\emph{metoder}, \emph{felter} og \emph{properties} på vores klasser.
+
+\learningPurposeTxt{{at kunne definere klasser}, {at kunne instantiere objekter}, {erklære metoder i klasser}, {erklære felter og properties i klasser}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/classes/}{}{myFirstClass,myFirstAccessor,counter,car,moth}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber ø}{../assignments/classes/}{}{carAdvanced}
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/classes/}{introduction}{drone}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+\handinTextThreeTwo{\exerciseNumber\typeLetter}{simulate.fs, testSimulate.fsx}{1}
+
+\flushright God fornøjelse.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

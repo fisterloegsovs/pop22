@@ -1,0 +1,32 @@
+% Listings are verbatim, and exsheets does not work with verbatim. Hence, we follow
+% https://tex.stackexchange.com/questions/131546/fixing-lstlisting-inside-exsheets-question-and-solution-environments and define a savebox. Since exsheets reads the problem file twice, we use etoolbox to ensure it's only defined once.
+\ifdef{\myboxa}{}{\newsavebox\myboxa}
+\begin{lrbox}{\myboxa}\begin{minipage}{\textwidth}\begin{lstlisting}[]
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  printf("hello, world\n");
+}
+\end{lstlisting}\end{minipage}\end{lrbox}
+\begin{question}[class=A,ID=A3,topic=X]
+\noindent\usebox\myboxa
+\end{question}
+\begin{solution}
+First solution of class A.
+\end{solution}
+
+\begin{lrbox}{\myboxa}\begin{minipage}{\textwidth}\begin{lstlisting}[]
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  printf("goodbye, world\n");
+}
+\end{lstlisting}\end{minipage}\end{lrbox}
+\begin{question}[class=A,ID=A2,topic=Y]
+Second question of class A, topic Y.
+\\\noindent\usebox\myboxa
+\end{question}
+\begin{solution}
+Second solution of class A.
+\end{solution}
+\endinput

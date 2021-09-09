@@ -1,0 +1,38 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{6}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{5.\ oktober - 10.\ oktober}{lørdag d.\ 10.\ oktober kl. 22:00}{Martin Elsman og Jon Sporring}
+
+\begin{document}
+\maketitle
+Løkker i funktionsprogrammering foretages ofte ved rekursive kald, som er et kald af en funktion til funktionen selv, som f.eks.\ fibonacci talrækken, $f(1)=f(2)=1, f(i) \stackrel{i>2}{=} f(i-1)+f(i-2)$. Rekursion er et kraftigt værktøj til løsning af en række problemer, blandt andet ved behandling af lister, og kan kædes direkte sammen med induktionsbeviser til at bevise korrekthed af kode. Det er også en tankegang, som det tager tid at tilegne sig, og derfor bruger vi denne periode på udelukkende at arbejde med rekursive funktioner.
+
+
+\learningPurposeTxt{
+  {Skrive en rekursiv funktion og forklare forskellen på almindelig rekursion og halerekursion},
+  {Gemmenløbe en liste imperativt og rekursivt ved brug af pattern matching, og forklare fordele og ulemper ved de to tilgange},
+  {Løse et problem ved hjælp af rekursion},
+  {Skrive funktioner, som bruger pattern matching til behandling af lister og simple værdier}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber  ø}{../assignments/recursion/}{}{fac,pow2,powN,sum,sumList,length,lengthAcc,gcd,lastFloat,map,fold}
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,test}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+
+\handinTextOneThree{\exerciseNumber\typeLetter}{\texttt{continuedFraction.fsi, continuedFraction.fs} og \texttt{continuedFractionTest.fsx}}
+
+\flushright God fornøjelse.
+
+\end{document}
