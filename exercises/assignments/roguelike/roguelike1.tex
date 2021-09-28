@@ -44,7 +44,7 @@ interagere med, bruger vi den abstrakte klasse \lstinline{Item}:
   type Item =
     class
       inherit Entity
-      abstract member InteractWith : Player -> unit
+      abstract member InteractWith : Player -> bool
       member FullyOccupy : bool
     end
 \end{lstlisting}
