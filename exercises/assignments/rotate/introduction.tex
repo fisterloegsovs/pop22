@@ -1,0 +1,53 @@
+In this assignment, you are to work with a puzzle called Rotate. The puzzle consists of a square board with $n\times n, n \in \{2, 3, 4, 5\}$ fields similarly to a chess-board. Each field has a unique id-number, which we will call the field's position, and on each field is one unique letter from the alphabet 'a', 'b', \dots. For example, when $n=$, then the board could look like,
+\begin{center}
+  \begin{tabular}{cccc}
+     h &o &l &k
+     \\b &i &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+\end{center}
+and the position of the respective fields are
+\begin{center}
+  \begin{tabular}{cccc}
+    1  &2  &3  &4
+    \\ 5  &6  &7  &8
+    \\ 9 &10 &11 &12
+    \\13 &14 &15 &16
+  \end{tabular}
+\end{center}
+The puzzle is solved by rotating the letters in small $2\times 2$ subsquares clockwise until the board reaches the state
+\begin{center}
+  \begin{tabular}{cccc}
+    a &b &c &d
+    \\ e &f &g &h
+    \\ i &j &k &l
+    \\ m &n &o &p
+  \end{tabular}
+\end{center}
+A rotation is specified by the position of its top-left corner, and all but the right-most column and the bottom-most row are valid inputs to the rotation operation. Let $p_1, p_2, p_3, p_4 \rightarrow q_1, q_2, q_3, q_4$ denote a rotation from $p_*$ to $q_*$, where $p_1$ is the top-left corner, then for example, specifying a rotation of subsquare 1 results in $1, 2, 5, 6\rightarrow 2, 6, 5, 1$, or equivalently,
+\begin{center}
+  \begin{tabular}{cccc}
+     h &o &l &k
+     \\b &i &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+  $\rightarrow$
+  \begin{tabular}{cccc}
+     b &h &l &k
+     \\i &o &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+\end{center}
+The overall task of this assignment is to build a program, that will generate rotate-puzzles and allow you to iteratively enter a sequence of positions untill the puzzle is solved. Detailed requirements are:
+\begin{itemize}
+\item If your program includes loops, then the loops must be programmed using recursion
+\item Your program must use lists and not arrays.
+\item Your program must not use mutable values (variables).
+\item Your solution must be parametrized by $n$, the size of the board.
+\item you must represent your board as a list of letters, e.g., for $n=4$ the board for a solved puzzle must be \lstinline{['a' .. 'p']}
+\item Your program must consist of the following files \lstinline{game.fsx}, \lstinline{rotate.fsi}, \lstinline{rotate.fs}, \lstinline{whiteboxtest.fsx}, and \lstinline{blackboxtest.fsx}. The files \lstinline{rotate.fsi}, \lstinline{rotate.fs} must be the interface and implementation of a library with your main types, functions, and values; the file \lstinline{game.fsx} must be a maximally 10 line program, which defines the value $n$ and starts the game; and \lstinline{test.fsx} must contain your test for the library.
+\end{itemize}
+As part of this assignment, you are to write a maximally 10-page report following \lstinline{rapport.tex} template.

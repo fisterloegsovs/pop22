@@ -1,0 +1,19 @@
+Write the interface file for the library \lstinline{rotate} with user defined types \lstinline{Board} which is a list of characters and \lstinline{Position} which is an integer and with the following functions,
+\begin{quote}
+  \lstinline{create : int -> Board}
+  \\\lstinline{board2Str : Board -> string}
+  \\\lstinline{permute : Board -> Board}
+  \\\lstinline{rotate : Board -> Position -> Board}
+  \\\lstinline{solved : Board -> bool}
+\end{quote}
+The function \lstinline{create} must take an integer $n$ and return a $n\times n$ board in its solved state.
+
+The function \lstinline{board2Str} must take a board and return a string, containing the board formatted such that it can be printed with the \lstinline{printfn "%s"} command and formatting string.
+
+  The function \lstinline{permute} must take a board and return another board, where all the elements of the original board are present but have been randomly changed positions.
+
+  The function \lstinline{rotate} must take a board and a position and return another board, where is identical to the original but where a local $2\times 2$ rotation has been performed at the indicated position. If an invalid position is given, then the function must return an empty board.
+
+    The function \lstinline{solved} must take a board and return true or false depending on whether the puzzle has been solved or not.
+
+The interface must include documentation following the documentation standard.
