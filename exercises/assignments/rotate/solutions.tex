@@ -1,5 +1,5 @@
-Extend your libray and your whiteboxtest with a function
+A fellow programmer has made the function
 \begin{quote}
-  \lstinline{solutions : Board -> int -> int list list}
+  \lstinline{solutions : b:Board -> m:int -> int list}
 \end{quote}
-which takes an integer $m$ and seeks possible solutions to a given board within maximally $m$ rotations. The function should return 0 or more lists of possible rotation sequences, of length no longer than $m$, and which solves the puzzle.
+which takes an non-negative integer $m$ and seeks a possible solutions to a given board within maximally $m$ rotations. The program compiles and runs without error, but for some combinations of board-size $n$ and maximum rotations $m$, the program is very slow and the computer eventually runs out of memory. Why do you think this may be?

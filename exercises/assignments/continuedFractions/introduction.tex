@@ -1,7 +1,4 @@
-In this assignment, you will work with continued
-fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}. Continued
-fractions are lists of integers that represent real numbers. The list
-is finite for rational numbers and infinite for irrational numbers.
+In this assignment, you will work with simple continued fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}, henceforth just called continued fractions. Continued fractions are lists of integers which represent real numbers. The list is finite for rational numbers and infinite for irrational numbers.
 
 \paragraph{Continued fractions to decimal numbers}
 A continued fraction is written as $x = [q_0; q_1, q_2, \ldots]$ and the corresponding decimal number is found by the following recursive algorithm:
@@ -13,10 +10,15 @@ The series of fractions continues as long as there are elements in the continued
 For example, $[3;4, 12, 4] = 3.245$, since:
 \begin{align}
   x &= 3 + \frac{1}{4 + \frac{1}{12 + \frac{1}{4}}}
-  \\&=  3 + \frac{1}{4 + \frac{1}{12.25}}
-  \\&=  3 + \frac{1}{4.081632653}
-  \\&=  3.245.
+  \\&= 3 + \frac{1}{4 + \frac{1}{12.25}}
+  \\&= 3 + \frac{1}{4.081632653}
+  \\&= 3.245.
 \end{align}
+Note that all but the first digit must be larger than 0, e.g., $[1;0]$ is an illigal number, and that every rational number has exactly 2 representations $[q_0; q_1,\ldots,q_n] = [q_0; q_1,\ldots,(q_n-1),1]$ where the first is called the canoncial representation. E.g., $[2; 3] = [2; 2, 1]$, since
+\begin{align}
+  2 + \frac{1}{3} = 2 + \frac{1}{2 + \frac{1}{1}}.
+\end{align}
+
 
 \paragraph{Decimal numbers to continued fractions}
 For a given number $x$ on decimal form, its continued fraction $[q_0; q_1, q_2, \ldots]$ can be found using the following algorithm:

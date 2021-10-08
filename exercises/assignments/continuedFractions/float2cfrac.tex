@@ -2,4 +2,4 @@ Write a function
 \begin{quote}
   \lstinline{float2cfrac : x:float -> int list}
 \end{quote}
-that takes a real number and calculates its continued fraction.
+that takes a real number and calculates its continued fraction. Recall that floating-point numbers are inaccurate, so you should check that $r_i$ is reasonably close to 0 instead of comparing it for equality to 0.0. For example, \lstinline{abs ri < 1e-10}.
