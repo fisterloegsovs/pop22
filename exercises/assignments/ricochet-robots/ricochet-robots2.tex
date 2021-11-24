@@ -1,0 +1,92 @@
+\textbf{Interaktion}
+
+Implementer klassen \lstinline{Board}:
+
+\begin{lstlisting}
+  type Board =
+    class
+      new : ...
+      member AddRobot : robot:Robot -> unit
+      member AddElement : element:BoardElement -> unit
+      member Elements : BoardElement list
+      member Robots : Robot list
+    end
+\end{lstlisting}
+
+Metoden \lstinline{AddElement} bruges til at sætte en spilleplade
+op. Typisk inden spillet går i gang. Property \lstinline{Elements}
+bruges til at få en liste af alle spilelementer (inklusiv robotter),
+og \lstinline{Robots} bruges til at få en liste af alle robotter. Et
+\lstinline{Board} har altid et \lstinline{BoardFrame} spilelement.
+
+Implementer klassen \lstinline{Game}:
+
+\begin{lstlisting}
+  type Game =
+    class
+      new : Board -> Game
+      member Play: unit -> unit
+    end
+\end{lstlisting}
+
+
+
+Metoden \lstinline{Play} bruges til at starte spillet, og tager sig af
+interaktionen med brugeren via terminalen. Spillet
+foregår på følgende vis:
+\begin{enumerate}
+ \item Vis hvordan pladen ser ud, hvor mange træk der er brugt
+  indtilvidere, navnene på robotterne, samt evt anden information som
+  I finder relevant.
+\item Lad brugeren vælge en robot (fx ved at skrive navnet på
+  robotten), herefter kan robotten flyttes rundt ved brug af
+  pile-tasterne indtil at der tastes enter.
+\item En robot flyttes ved at der fortages et antal skridt med
+  robotten i en givet retning. Inden hvert skridt løbes alle
+  spilelementer (undtagen robotten selv), og metoden
+  \lstinline{Interact} kaldes for hvert element. Hvis alle
+  spilelementer
+  returnere \lstinline{Ignore} kan robotten flyttes eet felt i den
+  givne retning, og robotten forsøges at flyttes endnu et felt. Hvis
+  et spilelement returnerer \lstinline{Stop pos}, stoppes robottens
+  flytning i felt \lstinline{pos} (som ikke nødvendigvis er robottens
+  nuværende position). Hvis et spilelement returnerer
+  \lstinline{Continue dir pos} fortsætter robotten fra felt
+  \lstinline{pos} med retning \lstinline{dir} (bemærk at ingen af de
+  obligatoriske spilelementer bruger \lstinline{Continue}).
+
+\item Hvis spilleren er død eller hvis spilleren har fundet
+  \lstinline{Exit} vis et afslutningsskærmbillede og stop
+  spillet, ellers start forfra.
+\end{enumerate}
+
+Klasserne \lstinline{Board} og \lstinline{Game}, samt de andre klasser fra de andre
+delopgaver, skal være i filen \texttt{robots.fs} i modulet
+\lstinline{Robots}. Lav derudover en fil \texttt{robots-game.fsx}, der
+som minimum laver en ny split og kalder \lstinline{Play}.
+
+
+\textbf{Hints:}
+\begin{itemize}
+\item Det er en vigtig pointe at \lstinline{Board} holder styr på hvor
+  de forskellige spilelementer er og ikke tager sig af at rendere
+  spilelementer, men blot skaber et \lstinline{BoardDisplay}, som de
+  forskellige spilelementer kan rendere sig selv på.
+\item Brug \lstinline{System.Console.Clear()} at fjerne alt fra
+  terminalen inden verden vises.
+\item Brug \lstinline{Console.ReadKey(true)} til at hente tryk på
+  piletasterne fra brugeren
+\item Hvis \lstinline{key} er resultatet fra
+  \lstinline{Console.ReadKey} så er \lstinline{key.Key} lig med\\
+  \lstinline{System.ConsoleKey.UpArrow}, hvis brugeren trykkede på
+  op-pilen.
+\end{itemize}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
