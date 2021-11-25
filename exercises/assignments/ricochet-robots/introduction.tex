@@ -7,9 +7,22 @@
       \filldraw[pic actions,fill=white,rotate=\a]
           (0,0) -- (-45:0.35)--(0:1)--cycle;
     };
-  }
+  },
+  >=stealth'
 }
 
+\newcommand{\exampleboard}{%
+  \draw[step=10mm,color=gray,thin] (0,0) grid (7,-4);
+  \draw[ultra thick] (0,0) rectangle (7,-4);
+  \foreach \col in {1,...,7} {
+    \node at (\col-0.5, 0.25) {\footnotesize\col};
+  };
+  \foreach \row in {1,...,4} {
+    \node at (-0.25, 0.5-\row) {\footnotesize\row};
+  };
+  \draw[line width=3pt] (2,-2) -- (3,-2) -- (3,-1) -- (5,-1);
+  \node at (5.5,-2.5) {\footnotesize{}goal};
+}
 
 
 \newcommand*{\TODO}[1]{\textsf{TODO: #1}}
@@ -67,21 +80,11 @@ gennem målfeltet.
 \begin{figure}
   \begin{tikzpicture}[baseline=0]
   \pic[scale=.6] at (-0.5,0.5) {compass};
-  \draw[step=10mm,color=gray,thin] (0,0) grid (7,-4);
-  \draw[ultra thick] (0,0) rectangle (7,-4);
-  \foreach \col in {1,...,7} {
-    \node at (\col-0.5, 0.25) {\footnotesize\col};
-  };
-  \foreach \row in {1,...,4} {
-    \node at (-0.25, 0.5-\row) {\footnotesize\row};
-  };
-
-  \draw[line width=3pt] (2,-2) -- (3,-2) -- (3,-1) -- (5,-1);
+  \exampleboard{}
   \begin{scope}[shift={(-0.5,0.5)}]
   \node at (1,-1) {\textbf{B}};
   \node at (3,-2) {\textbf{A}};
   \node at (7,-4) {\textbf{C}};
-  \node at (6,-3) {\footnotesize{}goal};
   \end{scope}
 \end{tikzpicture}
 \hfill
@@ -92,22 +95,52 @@ gennem målfeltet.
   Robotter: \textbf{A} i felt~(2,3), \textbf{B} i felt~(1,1) og
   \textbf{C} i felt~(3,6).
 
-  Indre vægge, tre stk: vertikal, 1~felt, øst,
-startfelt~(2,3); horisontal, 1~felt, syd, startfelt~(2,3); horisontal,
-2~felter, syd, startfelt~(1,4).
+  Indre vægge, tre stk: \\
+  vertikal, 1~felt, øst, startfelt~(2,3); \\
+  horisontal, 1~felt, syd, startfelt~(2,3); \\
+  horisontal, 2~felter, syd, startfelt~(1,4).
 
-  Målfelt: (3,6) $(3,6)$
+  Målfelt: (3,6)
 \end{minipage}
   \caption{Eksempel startposition}
   \label{fig:example}
 \end{figure}
 
 Figur~\ref{fig:example} viser et eksempel på en startposition for et
-spil. Dette spil kan fx løses i seks træk: flyt \textbf{A} nord, flyt
-\textbf{A} øst, flyt \textbf{A} syd, flyt \textbf{C} vest, flyt
-\textbf{B} syd, flyt \textbf{B} øst. Der er 24 forskellige løsninger
+spil. Dette spil kan fx løses i seks træk: flyt \textbf{B} syd, flyt
+\textbf{B} øst, flyt \textbf{C} nord, flyt \textbf{A} nord, flyt
+\textbf{A} øst, flyt \textbf{A} syd. Der er 24 forskellige løsninger
 på 6 træk til spillet i Figur~\ref{fig:example}, og ingen løsninger der er
 kortere end 6~træk.
+
+\begin{tikzpicture}[baseline=0,scale=0.75]
+  \exampleboard{}
+  \begin{scope}[shift={(-0.5,0.5)}]
+  \node at (6,-4) {\textbf{B}};
+  \node at (3,-2) {\textbf{A}};
+  \node at (7,-4) {\textbf{C}};
+  \draw[->,teal!80,ultra thick] (1,-1) -- (1,-4) -- (5.5,-4);
+  \end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[baseline=0,scale=0.75]
+  \exampleboard{}
+  \begin{scope}[shift={(-0.5,0.5)}]
+  \node at (6,-4) {\textbf{B}};
+  \node at (3,-2) {\textbf{A}};
+  \node at (7,-1) {\textbf{C}};
+  \draw[->,red!40,ultra thick] (7,-4) -- (7,-1.5);
+  \end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[baseline=0,scale=0.75]
+  \exampleboard{}
+  \begin{scope}[shift={(-0.5,0.5)}]
+  \node at (6,-4) {\textbf{B}};
+  \node at (6,-3) {\textbf{A}};
+  \node at (7,-1) {\textbf{C}};
+  \draw[->,lime!80,ultra thick] (3,-2) -- (3,-1) -- (6,-1) -- (6,-2.5);
+  \end{scope}
+\end{tikzpicture}
+
 
 %%% Local Variables:
 %%% mode: latex
