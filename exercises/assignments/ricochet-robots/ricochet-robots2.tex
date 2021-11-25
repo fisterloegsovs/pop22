@@ -25,14 +25,13 @@ Implementer klassen \lstinline{Game}:
   type Game =
     class
       new : Board -> Game
-      member Play: unit -> unit
+      member Play: unit -> int
     end
 \end{lstlisting}
 
-
-
 Metoden \lstinline{Play} bruges til at starte spillet, og tager sig af
-interaktionen med brugeren via terminalen. Spillet
+interaktionen med brugeren via terminalen, returværdien er hvor mange
+træk der blev brugt. Spillet
 foregår på følgende vis:
 \begin{enumerate}
  \item Vis hvordan pladen ser ud, hvor mange træk der er brugt
@@ -55,9 +54,9 @@ foregår på følgende vis:
   \lstinline{pos} med retning \lstinline{dir} (bemærk at ingen af de
   obligatoriske spilelementer bruger \lstinline{Continue}).
 
-\item Hvis spilleren er død eller hvis spilleren har fundet
-  \lstinline{Exit} vis et afslutningsskærmbillede og stop
-  spillet, ellers start forfra.
+\item Når en robot stoppes, får alle spilelementer mulighed for at
+  afgøre om et spil er slut. Hvis spillet er slut, vis et
+  afslutningsskærmbillede og stop spillet.
 \end{enumerate}
 
 Klasserne \lstinline{Board} og \lstinline{Game}, samt de andre klasser fra de andre

@@ -1,24 +1,4 @@
 \textbf{Visning af spilleplade}
-\begin{figure}%[thp]
-%  \includegraphics[width=.99\linewidth]{screenshot.png}
-  \begin{center}
-    \begin{minipage}{5cm}
-\begin{verbatim}
-+--+--+--+--+--+--+--+
-|BB                  |
-+  +  +  +--+--+  +  +
-|      AA|           |
-+  +  +--+  +  +  +  +
-|               gg   |
-+  +  +  +  +  +  +  +
-|                  CC|
-+--+--+--+--+--+--+--+
-\end{verbatim}
-    \end{minipage}
-  \end{center}
-  \caption{Eksempel på visning af spilleplade.}
-  \label{fig:example-text}
-\end{figure}
 
 For at kunne vise en spilleplade implementerer vi en klasse
 \lstinline{BoardDisplay}, som er et gitter af felter. Hvor feltet
@@ -44,6 +24,26 @@ type BoardDisplay =
     member Show : unit -> unit
   end
 \end{lstlisting}
+
+\begin{figure}%[thp]
+  \begin{center}
+    \begin{minipage}{5cm}
+\begin{verbatim}
++--+--+--+--+--+--+--+
+|BB                  |
++  +  +  +--+--+  +  +
+|      AA|           |
++  +  +--+  +  +  +  +
+|               gg   |
++  +  +  +  +  +  +  +
+|                  CC|
++--+--+--+--+--+--+--+
+\end{verbatim}
+    \end{minipage}
+  \end{center}
+  \caption{Eksempel på visning af spilleplade.}
+  \label{fig:example-text}
+\end{figure}
 
 Det vil sige:
 \begin{itemize}
