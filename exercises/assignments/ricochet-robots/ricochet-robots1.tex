@@ -42,7 +42,7 @@ flytning.
 
 Klassen \lstinline{Robot} bruges til at repræsentere
 robotter. Robotter er også spilelementer, da de kan påvirke andre
-robotter. Det vil at klassen skal implementere metoderne fra
+robotter. Det vil sige, at klassen skal implementere metoderne fra
 \lstinline{BoardElement}. Derudover har en robot to properties:
 \lstinline{Position} et par, $(r,c)$, der angiver hvor
 på pladen robotten er og \lstinline{Name} der angiver robottens
@@ -53,25 +53,25 @@ felt~$(1,4)$ og er på vej vest, og robotten (\lstinline{this}) står i
 felt~$(1,3)$, så skal \lstinline{Interact} returnere \lstinline{Stop(1,4)}.
 
 
-Implementér følgende fem konkrete klasser, der alle nedarver fra
-\lstinline{BoardElemen}, til at repræsentere indre og ydre vægge samt målfelt:
+Implementér følgende fire konkrete klasser, der alle nedarver fra
+\lstinline{BoardElement}, til at repræsentere indre og ydre vægge samt målfelt:
 
 \begin{itemize}
 \item \lstinline{Goal} der skal have en konstruktor der tager to
   heltals argumenter, $r$ og $c$, som angiver et målfelt. Metoden
   \lstinline{GameOver} skal returnere \lstinline{true}, hvis en robot
   er stoppet ovenpå målfeltet.
-\item \lstinline{BoardElement} bruges til at repræsentere rammen for
-  en spilleplade (de ydre vægge). Klassen skal en konstruktor der tager to
+\item \lstinline{BoardFrame} bruges til at repræsentere rammen for
+  en spilleplade (de ydre vægge). Klassen skal have en konstruktor der tager to
   heltals argumenter, $r$ og $c$, som angiver størrelsen på pladen.
 \item \lstinline{VerticalWall} bruges til at repræsentere en indre
-  vertikal væg. Klassen skal en konstruktor der tager tre
+  vertikal væg. Klassen skal have en konstruktor der tager tre
   heltals argumenter, $r$, $c$ og $n$, som angiver startfelter for
   væggen, $(r,c)$, samt længden af væggen, $n$. Hvis $n$ er positiv
   løber væggen fra nord til syd, ellers løber den fra syd mod
   nord. Væggen er på østsiden af startfeltet.
 \item \lstinline{HorizontalWall} bruges til at repræsentere en indre
-  horisontal væg. Klassen skal en konstruktor der tager tre
+  horisontal væg. Klassen skal have en konstruktor der tager tre
   heltals argumenter, $r$, $c$ og $n$, som angiver startfelter for
   væggen, $(r,c)$, samt længden af væggen, $n$. Hvis $n$ er positiv
   løber væggen fra vest til øst, ellers løber den fra øst mod

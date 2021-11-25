@@ -18,9 +18,9 @@ Implementér klassen \lstinline{BoardDisplay} med følgende signatur:
 type BoardDisplay =
   class
     new : rows:int * cols:int -> BoardDisplay
-    member Set : x:int * y:int * cont:string -> unit
-    member SetBottomWall : x:int * y:int -> unit
-    member SetRightWall : x:int * y:int -> unit
+    member Set : row:int * col:int * cont:string -> unit
+    member SetBottomWall : row:int * col:int -> unit
+    member SetRightWall : row:int * col:int -> unit
     member Show : unit -> unit
   end
 \end{lstlisting}
