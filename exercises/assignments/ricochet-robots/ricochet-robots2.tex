@@ -10,6 +10,7 @@ Implementer klassen \lstinline{Board}:
       member AddElement : element:BoardElement -> unit
       member Elements : BoardElement list
       member Robots : Robot list
+      member Move: Robot -> Direction -> unit
     end
 \end{lstlisting}
 
@@ -18,6 +19,20 @@ op. Typisk inden spillet går i gang. Property \lstinline{Elements}
 bruges til at få en liste af alle spilelementer (inklusiv robotter),
 og \lstinline{Robots} bruges til at få en liste af alle robotter. Et
 \lstinline{Board} har altid et \lstinline{BoardFrame} spilelement.
+
+Metoden \lstinline{Move} bruges til at tage et træk med en robot. En
+robot flyttes ved at der fortages et antal skridt med robotten i en
+givet retning. Inden hvert skridt løbes gennem alle spilelementer (undtagen
+robotten selv), og metoden \lstinline{Interact} kaldes for hvert
+element. Hvis alle spilelementer returnere \lstinline{Ignore} kan
+robotten flyttes eet felt i den givne retning, og robotten forsøges at
+flyttes endnu et felt. Hvis et spilelement returnerer \lstinline{Stop pos},
+stoppes robottens flytning i felt \lstinline{pos} (som ikke
+nødvendigvis er robottens nuværende position). Hvis et spilelement
+returnerer \lstinline{Continue dir pos} fortsætter robotten fra felt
+\lstinline{pos} med retning \lstinline{dir} (bemærk at ingen af de
+obligatoriske spilelementer bruger \lstinline{Continue}).
+
 
 Implementer klassen \lstinline{Game}:
 
@@ -40,21 +55,8 @@ foregår på følgende vis:
 \item Lad brugeren vælge en robot (fx ved at skrive navnet på
   robotten), herefter kan robotten flyttes rundt ved brug af
   pile-tasterne indtil at der tastes enter.
-\item En robot flyttes ved at der fortages et antal skridt med
-  robotten i en givet retning. Inden hvert skridt løbes alle
-  spilelementer (undtagen robotten selv), og metoden
-  \lstinline{Interact} kaldes for hvert element. Hvis alle
-  spilelementer
-  returnere \lstinline{Ignore} kan robotten flyttes eet felt i den
-  givne retning, og robotten forsøges at flyttes endnu et felt. Hvis
-  et spilelement returnerer \lstinline{Stop pos}, stoppes robottens
-  flytning i felt \lstinline{pos} (som ikke nødvendigvis er robottens
-  nuværende position). Hvis et spilelement returnerer
-  \lstinline{Continue dir pos} fortsætter robotten fra felt
-  \lstinline{pos} med retning \lstinline{dir} (bemærk at ingen af de
-  obligatoriske spilelementer bruger \lstinline{Continue}).
 
-\item Når en robot stoppes, får alle spilelementer mulighed for at
+\item Når en robots træk er slut, får alle spilelementer mulighed for at
   afgøre om et spil er slut. Hvis spillet er slut, vis et
   afslutningsskærmbillede og stop spillet.
 \end{enumerate}
