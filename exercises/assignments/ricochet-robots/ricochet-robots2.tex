@@ -26,8 +26,8 @@ givet retning. Inden hvert skridt løbes gennem alle spilelementer (undtagen
 robotten selv), og metoden \lstinline{Interact} kaldes for hvert
 element. Hvis alle spilelementer returnere \lstinline{Ignore} kan
 robotten flyttes eet felt i den givne retning, og robotten forsøges at
-flyttes endnu et felt. Hvis et spilelement returnerer \lstinline{Stop
-  pos}, stoppes robottens flytning i felt \lstinline{pos} (som ikke
+flyttes endnu et felt. Hvis et spilelement returnerer \lstinline{Stop pos},
+stoppes robottens flytning i felt \lstinline{pos} (som ikke
 nødvendigvis er robottens nuværende position). Hvis et spilelement
 returnerer \lstinline{Continue dir pos} fortsætter robotten fra felt
 \lstinline{pos} med retning \lstinline{dir} (bemærk at ingen af de
