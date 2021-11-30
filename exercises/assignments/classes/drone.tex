@@ -1,8 +1,8 @@
 In a not-so-distant future drones will be used for delivery of
-groceries. Imagine that the drone-traffic has become intense in your
+groceries. Imagine that the drone traffic has become intense in your
 area and that you have been asked to decide if drones collide.
 
-We will make the sfollowing simplifying assumptions: that all drones
+We will make the simplifying assumptions that all drones
 fly at the same altitude, that drones fly with different speeds
 measured in centimetre/second and in different directions, and that
 drones fly with constant speed (no acceleration). If two drones are
@@ -13,8 +13,6 @@ any other drone. Create an implementation file
 the following properties and methods:
 
 \begin{itemize}
-\item The constructor must take start-position, destination, and speed.
-
 \item \lstinline{Position} (property): returns the drone's current
   position in $(x, y)$ coordinates.
 
@@ -23,7 +21,7 @@ the following properties and methods:
 
 \item \lstinline{Destination} (property): returns the drone's present
   destination in $(x, y)$ coordinates. If the drone is not flying,
-  then its present position and its destination are the same.
+  its present position and its destination are the same.
 
 \item \lstinline{Fly} (method): Set the drone's new position after one
   second flight.
@@ -33,10 +31,11 @@ the following properties and methods:
   destination or not.
 \end{itemize}
 
-Where all positions and speeds are integers.
+The constructor must take the start position, the destination, and the speed as arguments.
+All positions and speeds are integers.
 
-Extend your implementation file with a class \lstinline{Airspace},
-which contains the drones and as a minimum has the following
+Extend your implementation file with a class \lstinline{Airspace} that
+contains the drones and as a minimum has the following
 properties and methods:
 \begin{itemize}
 \item \lstinline{Drones} (property): The collection of drones instances.
@@ -63,6 +62,6 @@ properties and methods:
 Write a black-box test class \lstinline{testSimulate.fsx} that tests
 both the \lstinline{Drone} class and the \lstinline{Airspace} class.
 
-Note that the required methods and properties are \emph{minimum
-  requirements}, feel free to add methods and properties if you need
-them.
+Notice that the required methods and properties are \emph{minimum
+  requirements}; feel free to add methods and properties if you need
+  them.
