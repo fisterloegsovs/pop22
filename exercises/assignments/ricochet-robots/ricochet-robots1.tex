@@ -20,13 +20,13 @@ type BoardElement() =
     abstract member GameOver : Robot list -> bool
     default __.GameOver _ = false
 
-and Robot(x:int, y:int, name:string) =
+and Robot(row:int, col:int, name:string) =
     inherit BoardElement()
     member this.Position = ...
     override this.Interact other dir = ...
     override this.RenderOn display = ...
     member val Name = ...
-    member robot.Move dir = ...
+    member robot.Step dir = ...
 \end{lstlisting}
 
 Hvor typen \lstinline{Direction} bruges til at angive en retning i
@@ -52,6 +52,7 @@ der forsøges at flytte ind i robotten. Fx, hvis \lstinline{other}
 felt~$(1,4)$ og er på vej vest, og robotten (\lstinline{this}) står i
 felt~$(1,3)$, så skal \lstinline{Interact} returnere \lstinline{Stop(1,4)}.
 
+\TODO{Beskriv Name og Step}
 
 Implementér følgende fire konkrete klasser, der alle nedarver fra
 \lstinline{BoardElement}, til at repræsentere indre og ydre vægge samt målfelt:
