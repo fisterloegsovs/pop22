@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{7}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{19.\ oktober - 7.\ november}{lørdag d.\ 7.\ november kl. 22:00}{Martin Elsman og Jon Sporring}
+
+\begin{document}
+\maketitle Denne arbejdsseddel strækker sig over to uger og indeholder
+således øvelsesopgaver dækkende matriale både for uge 7, omhandlende
+typer og mønstergenkendelse, og for uge 8, omhandlende rekursive datastrukturer.
+
+\learningPurposeTxt{{rekursion,}
+  {mønstergenkendelse (pattern matching),},
+  {sum-typer,},
+  {træstrukturer.}}
+
+\learningConditionsTxt{\typeLetter} Afleveringsopgaverne er designet således at I kan starte på dem allerede i uge 7.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver for uge 7}
+%\exercises{\exerciseNumber  ø}{../assignments/sort/}{}{isort, bsort, blackBoxTestIsortBsort, msort, blackBoxTestMsort}
+
+%\begin{center}
+%\rule{0.7\textwidth}{1pt}
+%\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/weekday/}{introduction}{daytonumber, nextday, numberToDay}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/cards/}{introduction}{succSuit, succRank, succCard, initDeck, sameRank, sameSuit, highCard}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/sumtypes/}{introduction}{safeDivOption, safeDivResult}
+
+\section*{Øveopgaver for uge 8}
+
+%\begin{center}
+%\rule{0.22\textwidth}{1pt} \hspace{3mm} \textbf{Exercises for Week 8} \hspace{3mm} \rule{0.22\textwidth}{1pt}
+%\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/exprtrees/}{introduction}{eval,subtract,divide}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/leaftrees/}{introduction}{sum,leafs,find}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber  ø}{../assignments/imgutil/}{introduction}{sierpinski, keys, xFractal}
+
+\section*{Afleveringsopgaver}
+\subimport{../assignments/warGame/}{introduction}
+\exercises{\exerciseNumber\typeLetter}{../assignments/warGame/}{}{warGame0}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/warGame/}{}{warGame1}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/warGame/}{}{warGame2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+\handinTextThreeOne{\exerciseNumber\typeLetter}{\texttt{wargame-shuffle.fs}, \texttt{wargame-game.fs} og \texttt{wargame-game-stats.fs}}
+
+\textbf{Addendum:} Yderligere skal I aflevere testfiler for de forskellige
+delopgaver. Testfiler kan afleveres enten som \texttt{fs}-filer eller
+som \texttt{fsx}-filer. I rapporten skal I dokumentere resultatet af
+at køre de forskellige testfiler.
+
+\flushright God fornøjelse.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

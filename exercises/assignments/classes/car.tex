@@ -1,0 +1,15 @@
+\label{ex:car}
+Implement a class \lstinline{Car} with the following properties:
+\begin{enumerate}
+\item a specific fuel economy measured in km/liter
+\item a variable amount of fuel in liters in its tank
+\end{enumerate}
+The fuel economy for a particular \lstinline{Car} object must be specified as an argument to the constructor, and the initial amount of fuel in the tank should be set to 0.
+
+\lstinline{Car} objects must have the following methods:
+\begin{itemize}
+\item \lstinline{addGas}: Add a specific amount of fuel to the car.
+\item \lstinline{gasLeft}: Return the present amount of fuel in the car.
+\item \lstinline{drive}: Let the car drive a specific length in km, reducing the amount of fuel in the car. If there is too little fuel then cast an exception.
+\end{itemize}
+Make a white-box test class \lstinline{CarTest} to test \lstinline{Car} and run it.

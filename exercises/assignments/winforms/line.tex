@@ -1,0 +1,15 @@
+\begin{enumerate}
+\item \label{item:line} Lav et program, der tegner en streg mellem 2 punkter i et
+  vindue.
+\item Opdater \ref{item:line}, således at efter kort tid så slettes
+  den gamle streg, og en ny tegnes tæt på den forrige. Hvert endepunkt
+  skal parametriseres som en vektor $(x,y)$, og det skal følge en ret
+  linje parametriseret ved $(dx, dy)$ og
+  \begin{equation}
+    (x_{i+1}, y_{i+1}) = (x_i,y_i) + \alpha (dx, dy)
+  \end{equation}
+  hvor $\alpha$ er en lille konstant. Hvis et endepunkt $(x_{i+1}, y_{i+1})$ er
+  udenfor vinduets tegn\-bare areal, skal punktet ignoreres og istedet
+  skal der vælges en ny vektor $(dx,dy)$ tilfældigt og et nyt
+  endepunkt skal udregnes.
+\end{enumerate}

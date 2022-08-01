@@ -1,0 +1,199 @@
+%!TEX spellcheck = da-DK
+\documentclass{article}
+% !TEX encoding = UTF-8 Unicode
+\input{setup}
+
+
+
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Uge(r)seddel 11 - group opgave}
+\author{Jon Sporring and Christina Lioma}
+\date{2.\ -- 17.\ January.\\Afleveringsfrist: onsdag d. 18. January kl. 22:00}
+
+\begin{document}
+
+\maketitle
+I denne periode skal I arbejde i grupper. 
+Formålet er at arbejde med:
+\begin{itemize}
+\item Inheritance
+\item UML diagrams
+\end{itemize}
+
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+Øve-opgaverne er:
+\begin{enumerate}[label=11ø.\arabic*,start=0]
+
+\item Winforms TODO
+
+\item Integrations TODO
+
+\item Write a program that simulates the flight of a cannonball. We wish to find out how far the cannonball will travel when fired at various launch angles and initial velocities. The input to the program will be the launch angle (in degrees), the initial velocity (in meters per second) and the initial height (in meters). The output should be the distance that the projectile travels before striking the ground (in meters).
+Let us assume that there are no effects of wind resistance and that the cannonball stays close to earth's surface (i.e., not in orbit). The acceleration of gravity near the earth’s surface is about 9.8 meters per second. That means if an object is thrown upward at a speed of 20 meters per second, after one second has passed, its upward speed will have slowed to 20 - 9.8 = 10.2 meters per second. After another second, the speed will be only 0.4 meters per second, and shortly thereafter it will start coming back down.
+ 
+
+You should consider the flight of the cannonball in two dimensions: height, so we know when it hits the ground, and distance, to keep track of how far it goes. Think of the position of the cannonball as a point $(x,y)$ in a 2D graph, where the value of $y$ gives the height and the value of $x$ gives the distance from the starting point.Produce a simulation that takes as input the launch angle, the initial velocity, and the initial height, and updates the position of the cannonball to account for its flight. 
+
+
+Some help: Suppose the canonball starts at position $(0,0)$, and we want to check its position, say, every tenth of a second. In that interval, it will have moved some distance upward (positive $y$) and some distance forward (positive $x$). The exact distance in each dimension is determined by its velocity in that direction. Since we are ignoring wind resistance, the $x$ velocity remains constant for the entire flight. However, the $y$ velocity changes over time due to the influence of gravity. In fact, the $y$ velocity will start out being positive and then become negative as the cannonball starts back down.
+
+\item Simulate a Global Positioning System (GPS) for hikers. A GPS for hikers can show the current longitude and latitude (a pair of floating point values). The range of longitude is -180.0 degrees to +180.0 degrees. The range of latitude is -90.0 degrees to +90.0 degrees. The GPS should be able to: 
+\begin{itemize}\item	randomly generate a longitude and latitude pair;\item	associate a longitude and latitude pair with a name (e.g. start of hike, hotel, shop). This association (longitude, latitude, name) is called a waypoint. Each waypoint should be saved;
+\item	calculate the distance to a saved waypoint from the current location (randomly generated);\item	create a path as a sequence of saved waypoints.Write a GPS class to implement the above, and a separate test class for testing all methods.
+\end{itemize}\textbf{Extra challenge:} write a method that computes the length of a path, assuming a straight line between each waypoint.
+
+\item Simulate an online shopping cart that allows customers to:
+\begin{itemize}\item	add items to it and remove items from it, in different quantities;\item	show the total price of all items in the cart at any given time;\item	apply a discount to the above total price, if a correct discount code is given by the customer. The amount of the discount can vary, but can be no more than 50\%;\item	recommend random items to the customer, if the cart is empty for more than 5 minutes;\item	cancel and exit the session if the cart is empty for more than 40 minutes;\item	save the items in the cart (but not their quantities) as a shopping list;\item	add items to the cart from a shopping list (at default quantity of 1).
+\end{itemize}Write a Cart class to implement the above, and a separate test class for testing all methods.\textbf{Extra challenge}: the customer should be allowed to optionally cluster items in the cart in different groups and specify a name for each cluster. Each cluster should be saved. The customer should be able to add or remove the cluster to/from the shopping list.  
+
+\item You are organising a publicity event to launch a new product and you wish to have maximum coverage in the media. To do this, you must select your guests wisely. There is only space to invite 50 guests. Each guest has a name, probability of accepting your invitation, and \textit{media currency} (measured as minutes of media exposure per month). Guests can be divided into the following groups:
+\begin{itemize}\item	Group 1: these guests have a low probability of accepting your invitation (low probability means 0.1 – 0.4) but very high media currency (500 – 700 minutes per month). \item	Group 2: these guests have a probability of accepting your invitation of 0.5 – 0.8, and a media currency of 300 – 400 minutes per month.\item	Group 3: these guests have a probability of accepting your invitation of 0.9 – 1.0, and a media currency of 1 – 200 minutes per month. 
+\end{itemize}When instantiating guests from each group, you can randomly assign values to their probability of accepting and to their media currency from the ranges specified in each group. Each guest who attends the event, regardless of group, costs 1000 kr. for catering. In addition, each invitation that is sent out, regardless of whether it is accepted or rejected, costs 200 kr. in administration expenses. Which combination(s) of guests are likely to yield the most press coverage for your event at the lowest possible expense?
+
+\end{enumerate}
+Afleveringsopgaven er:
+\begin{enumerate}[label=11g.\arabic*,start=0]
+\item I denne opgave skal du implementere en simulator der kan simulere planeternes og Solens bevægelse i vores solsystem.  Simulationen består af beregning af Solen og planeternes position og hastighed som funktion af tid. I simulationen inkluderer vi, udover de 8 planeter, også dværgplaneten Pluto.
+
+\paragraph{Modellen}
+Planeternes bevægelse er bestemt af gravitationskraften. Dertil kommer at den enkelte planet følger en banekurve rundt om Solen som har en vis afstand til Solen og de andre planeter, samt har en hastighed som afhænger af hvor på banekurven planeten befinder sig (se Figur~\ref{fig:2-legeme}).
+\begin{figure}
+  \begin{center}
+    \includegraphics[height=5.0cm]{state}
+    \caption{En planets tilstand til tiden $t$ angives ved en positionsvektor $\vec{r}$, en hastighedsvektor $\vec{v}$ og en accelerationsvektor $\vec{a}$. Når tiden går, følger planeten en banekurve (illustreret med stiplet kurve) og tilstandsvektorene ændres.}
+    \label{fig:2-legeme}
+  \end{center}
+\end{figure}
+
+Vi vil antage følgende simplificeringer: 
+\begin{enumerate}
+\item I simulatoren antager vi at planeter er punktformede masser (dvs. de har ingen udbredelse i rummet) og at de ikke roterer om sig selv.
+\item Vi ser desuden bort fra påvirkning fra måner, kometer og andre former for planeter.
+\item Solens masse er langt større end alle andre himmellegemer i solsystemet og derfor vil Solens gravitationstiltrækning på planeterne være betragtelig større end påvirkningen mellem planterne.
+\item Vi kan også antage at planeternes gravitationstiltrækning på Solen er forsvindende lille og derfor sætte gravitationskraften på Solen til nul, dvs. at Solens acceleration er nul, og dermed ændrer Solens hastighedsvektor sig ikke med tiden.
+\end{enumerate}
+Dette er selvfølgelig grove tilnærmelser til det virkelige solsystem, men modellen kan fungere til forudsigelse af planeternes baner over kortere tidsrum.\\
+Under disse antagelser, kan vi for planet $i$ beregne dens acceleration omkring Solen ved,
+\begin{equation}
+  \label{eq:2-gravitationalacceleration}
+  \vec{a}_i = - \frac{G M_{\mathrm{Solen}} }{\|\vec{r}_i \|^3} \vec{r}_i
+\end{equation}
+hvor $G$ er gravitationskonstanten og $M_{\mathrm{Solen}}$ er solens masse (se Tabel~\ref{tab:constants}). Vektoren $\vec{r}_i$ angiver vektoren fra Solen til planet $i$, og $\| \vec{r}_i\|$ er længden af denne. 
+\begin{table}
+  \caption{Relevante naturkonstanter og enheder, samt estimater af produktet mellem gravitationskonstanten og de forskellige planeters masser. Tal fra JPL Ephemeris \cite{JPL}} \label{tab:constants}
+  \begin{center}
+    \begin{tabular}{|l|r|}
+      \hline
+      Gravitationskonstant, $G$ & $6.67384 \times 10^{-11}$ $\meter^3 / (\second^2 \cdot \mass)$ \\ \hline
+      Astronomisk enhed, AU & 1~AU = $149597870700$ $\meter$ \\ \hline
+      % Solens masse & $1.9891 \times 10^{30}$ $\mass$ \\ \hline
+      % Jordens masse & $5.97219 \times 10^{24}$ $\mass$ \\ \hline
+      % Saturns masse & $568.36 \times 10^{24}$ $\mass$ \\ \hline \hline
+      $GM_{\mathrm{Solen}}$ & $2.959122082322128 \times 10^{-4}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Merkur}}$ & $4.912549571831092 \times 10^{-11}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Venus}}$ & $7.243453179939512 \times 10^{-10}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Jorden}}$ & $8.887692546888129 \times 10^{-10}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Mars}}$ & $9.549531924899252 \times 10^{-11}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Jupiter}}$ & $2.824760453365182 \times 10^{-7}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Saturn}}$ & $8.457615171185583 \times 10^{-8}$ $\AU^3 / \udag^2$\\ \hline
+%      $GM_{\mathrm{Uranus}}$ & $1.291894922020739 \times 10^{-8}$ $\AU^3 / \udag^2$\\ \hline
+%      $GM_{\mathrm{Neptun}}$ & $1.524040704548216 \times 10^{-8}$ $\AU^3 / \udag^2$\\ \hline 
+%      $GM_{\mathrm{Pluto}}$ & $1.945211846204988 \times 10^{-12}$ $\AU^3 / \udag^2$\\ \hline
+    \end{tabular}
+  \end{center}
+  \label{default}
+\end{table}%
+
+\paragraph{Løsningsmetode}
+I simulatoren ønsker vi at beregne de enkelte planeters position $\vec{r}(t) = (x(t), y(t), z(t))$ som funktion af tiden $t$ og som resultat af påvirkningen af gravitationsaccelerationen. Tiden $t$ diskretiseres i tidsskridt $\Delta t$, således at tiden fremskrives ved hjælp af følgende rekursionsformel
+\begin{equation}
+  t_{n+1} = t_{n} + \Delta t,
+\end{equation}
+og en approximation af vektorerne $\vec{r}(t_{n+1})$, og $\vec{v}(t_{n+1})$, fremskrives ved\footnote{Disse ligninger er Euler's metode til samtidigt at løse differentialligningerne $\frac{d\vec{r}(t)}{dt} = \vec{v}(t)$ og $\frac{d\vec{v}(t)}{dt} = \vec{a}(t)$.}
+\begin{align}
+  \vec{r}(t_{n+1}) &= \vec{r}(t_{n}) + \vec{v}(t_{n}) \Delta t,
+  \\\vec{v}(t_{n+1}) &= \vec{v}(t_{n}) + \vec{a}(t_{n}) \Delta t.
+\end{align}
+Accelerationen $\vec{a}(t_n)$ kan beregnes udfra $\vec{r}(t_n)$ for alle planeter ved at anvende \eqnref{eq:2-gravitationalacceleration}. Endeligt forudsættes initielle værdier for  $\vec{r}(t_0)$ og $\vec{v}(t_0)$ for hvert himmellegeme kendte.
+ 
+For at opnå høj præcision i simulatoren er det vigtigt at de initielle værdier angives med høj præcision. Dertil kommer at det er vigtigt at vælge så små tidskridt $\Delta t$ som muligt, under hensyntagen til at beregningstiden stiger når $\Delta t$ gøres mindre (flere beregningsskridt er nødvendige for at simulere eksempelvis 1 år frem i tiden).
+
+\paragraph{Data}
+For at vurdere hvor præcis din simulation er, skal du sammenligne simulatorens resultat med data fra NASA JPL Ephemeris \cite{JPL}. JPL Ephemeris er en kombination af observationer af planeternes bevægelse og simulering med høj præcision. NASA anvender blandt andet dette datasæt til planlægning af rummissioner.
+
+%Vi har forberedt et udsnit af JPL Ephemeris datasættet som består af position $(X,Y,Z)$ og hastighed $(V_x, V_y, V_z)$ for Solen, de otte planeter og dværgplaneten Pluto ved midnat den første dag i hver måned i perioden 1/1 2013 til 1/1 2014.  
+Sammen med opgaveteksten finder du en tekstfil for hvert himmellegeme med informationer taget fra JPL Ephemeris datasættet. Datasættet beskriver positionen for de otte planeter og dværgplaneten Pluto ved midnat den første dag i hver måned i perioden 1/1 1966 til 31/12 2016 i et sfærisk koordinatsystem. Formatet filerne er som følger: først kommer der data for planeten, og derefter en tabel af positioner, med en tidspunkt per linje. Den første kolonne er dagens nummer i hhv. Epoch Julian Date (EJD) og, derpå kommer længdegrad (Lon), breddegrad (Lat), og radius (R) for planetens position, som set fra solens centrum. Den sidste kolonne kan ignoreres.
+EJD er angivet som et reelt tal som tæller antal dage siden en referencedato og kan med fordel anvendes som intern repræsentation af dato-tid i din implementation af simulatoren.
+
+For præcision i beregningerne anvendes ofte astronomiske enheder (AU) i stedet for meter (m). Den astronomiske enhed er defineret ved gennemsnitsafstanden mellem jorden og solen og er fastsat til 1~AU = 149597870700~m. Denne relation kan anvendes til konvertering af tal angivet i meter til astronomisk enhed eller omvendt. I JPL Ephemeris er radius R angivet i enheden $\AU$ og vinklerne Lon og Lat i grader.
+
+JPL Ephemeris datasættet benytter det solsystem-barycentriske koordinatsystem, hvor origo er angivet ved solsystemets massecenter og akser angivet udfra jordens orientering på et referencetidspunkt. Du skal anvende dette koordinatsystem i din simulator (dette gøres uden videre ved at anvende JPL Ephemeris data til at angive initielle positioner og hastigheder for planeterne).
+
+Yderligere information om planeterne og Solen kan eksempelvis findes på NASA Planetary Fact Sheets \cite{NASA}, men er ikke nødvendig for at løse denne opgave.
+
+\paragraph{Opgaven}
+I denne opgave skal du designe en solsystem simulator og skrive et program i F\#, der implementerer dit design. Minimumskrav til din løsning er at
+\begin{enumerate}
+\item den kan simulere solsystemets bevægelse over tid;
+\item den kan indlæse JPL Ephemeris data filer for planeterne og solen;
+\item den kan illustrere dine simulationsresultater, og sammenligne dem med JPL Ephemeris data;
+\item brugeren interaktivt kan indtaste, hvor lang tid simulatoren skal simulere;
+%\item den følger Model-View-Control (MVC) mønsteret.
+\end{enumerate}     
+
+\noindent Opgavens besvarelse skal bestå af
+
+%\item Det udviklede program som kildekode dokumenteret efter Javadoc standarden. Når programmet køres skal følgende grafiske fremstillinger produceres i separate plotvinduer (og ikke mere end):
+  \begin{enumerate}
+  \item en animation af planeternes bevægelse som beregnet af din simulator i tidsrummet 1/1/2016-31/12/2016. Det skal blot være en 2D animation som viser $x$ og $y$ komponenterne af $\vec{r}(t)$;  
+%  en tabel, som viser Solen og planeternes baner tegnet som kurver baseret på simulationen og baseret på JPL Ephemeris data for perioden 1/1 2013 til 1/1 2014, som viser et 2-dimensionalt plot af $x$ og $y$ komponenterne af $\vec{r}(t)$;
+  \item en tabel som for hver planet og for hvert tidspunkt i NASA JPL Ephemeris's tilhørende datafil viser den euklidiske afstand mellem positionen angivet i NASAs datafil og den beregnet af din simulator.
+\item Et repræsentativt billede fra animationen samt en udskrift af tabellen.
+\item Et UML diagram, som illustrerer dit design.
+\item Skemaer, der beskriver din afprøvning samt udskrift fra kørsel af din unittest.
+\item 1-2 siders tekst i pdf format, som kort beskriver
+  \begin{enumerate}
+  \item overvejelser og valg gjort ved udvikling af programmet;
+  \item en kort fortolkning af tabellernes indhold;
+  \item en kort beskrivelse af evt. fejl og mangler ved løsningen.
+\end{enumerate}
+\end{enumerate}
+Ved vurdering af din besvarelse vil der, udover ovenstående, blive lagt vægt på dine valg af datatyper, datastrukturer og dit programs struktur.
+
+%\begin{center}
+%{\bf Husk at tjekke at både kildekode og pdf med rapport er inkluderet i din aflevering!}
+%\end{center}
+
+\paragraph{Bedømmelseskriterier}
+Der lægges vægt på at der afleveres et kørende program, dvs. at et simpelt og lille men veldesignet, kørende program foretrækkes frem for et ambitiøst eller stort program, der ikke rigtig virker. Det er vigtigt, at individuelle klasser er veldesignet, specificeret, implementeret og afprøvet, selv hvis programmet som helhed ikke kan køre. Det anbefales stærkt at designe, implementere og afprøve et system med meget enkel funktionalitet, inden eventuelle udvidelser føjes til.
+%Besvarelsen bedømmes ud fra deltagerens evne til at omsætte kursets målsætninger: at udarbejde et objektorienteret design og så programmere og afprøve det vha. af de på kurset gennemgåede faciliteter i Java. Se kursets målsætning på kursets hjemmeside i KUs kursuskatalog\footnote{\url{http://kurser.ku.dk/course/ndaa04012u}} herunder punktet ''Målbeskrivelse''. 
+
+%En egentlig problemanalyse indgår ikke i bedømmelsen, hverken fra et fagligt perspektiv om eksempelvis animationsteori, fysik eller numeriske metoder, eftersom disse emner ikke er genstand for kurset.
+
+%Bemærk afslutningsvis at det er tilladt at tale med andre om opgaven og mulige løsninger, men at aflevering af hele eller delvise kopier af andres opgaver eller opgaver skrevet i fællesskab er at betragte som eksamenssnyd.  Desuden vil lærere og instruktorer gerne besvare spørgsmål omkring forståelse af opgavetekstens indhold og af generel karakter.  For at stille alle lige, vil al diskussion foregå på kursets diskussionsforum i Absalon i hele opgavens tidsrum.
+%\section{Formalia}
+%Denne opgave skal løses individuelt. Der tillades ikke genaflevering. Under helt særlige omstændigheder (sygdom, dødsfald, m.v.) kan der gives en udsættelse efter dispensation fra studienævnet. En dispensationsansøgning skal være studienævnet i hænde inden afleveringsfrist- ens udløb. Yderligere oplysninger kan findes i eksamensbestemmelserne for Det Naturvidenskabelige Fakultet samt studieordningen for Datalogiuddannelsen.
+%
+%Eksamensopgaven udgøres af nærværende dokument samt eventuelle supplerende beskeder fra kursets undervisere, det måtte være nødvendigt at give på kursets hjemmeside under ''Diskussionsforum''. Det er deltagerens ansvar løbende at holde sig orienteret på hjemmesiden.
+%
+%Bemærk følgende politik for kommunikation under eksamensugen:
+%\begin{enumerate}
+%\item Eksaminanderne må stille spørgsmål til hinanden, som er uafhængig af opgaven, f.eks. om de obligatoriske opgaver eller vedr. stof i en af lærebøgerne, Java API, vejledningerne eller andre almene ressourcer.
+%\begin{itemize}
+%\item Tænk på denne eksamen som en ''open book'' eksamen: det er tilladt at bruge medeksaminander, lige som man bruger en bog eller anden alment tilgængelig ressource (som altså ikke ved noget specifikt om denne eksamensopgave).
+%\item Det er altså tilladt at bruge hinanden som kilde for f.eks. hvordan Observer/Observable fungerer, hvor man kan finde noget læsbart om Swing JButtons, hvad der adskiller et HashSet fra et TreeSet m.m.
+%\item Det er ikke tilladt at spørge hinanden eller tredjepart, hvordan en anden har tænkt sig at løse eksamensopgaven.
+%\end{itemize}
+%\item  Hver linie kode og tekst, der afleveres skal være produceret af eksaminanden og af eksaminanden alene.
+%\item  Alle kan stille spørgsmål om opgaven på kursets hjemmeside under ''Diskussionsforum''. Generelle svar (uden specifik kode eller specifikke designs for opgaven) på disse, herunder af andre studerende, er tilladt, men skal i denne forbindelse gives på diskussionsforummet for at tilgå alle eksamensdeltagere og således ligestille alle indbyrdes.
+%\item  Alle eksaminander er underlagt KUs eksamensregler i hele opgaveperioden. Det betyder, at snyd, forsøg på snyd og hjælp til at begå snyd (f.eks. ved at hjælpe nogen konkret med løsningen) resulterer i bortvisning fra eksamen samt anmeldelse til studielederen mhp. eventuel forelæggelse hos dekanen mhp. yderligere skridt (f.eks. bortvisning fra alle eksaminer i indeværende eksamensperiode). Det gælder for så vidt også ikke-OOPD/studerende, som hjælper en OOPD-eksaminand.
+%\item  Desuden er alle eksaminander også underlagt citatloven og KUs ordensregler i øvrigt, herunder om videnskabelig etisk adfærd. Det betyder, at kilder til viden, der viderebringes, som er væsentlige og ikke har almenviden inden for faget, være det i form af personer, bøger, artikler, eller elektroniske resourcer, skal angives, og citater skal markeres som sådan. Bemærk, at det at kopiere en stump kode således kræver citation.
+\end{enumerate}
+
+\bibliography{references}
+\bibliographystyle{plain}
+
+\end{document}

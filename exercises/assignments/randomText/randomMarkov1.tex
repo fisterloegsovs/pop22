@@ -1,0 +1,15 @@
+\label{markov1}
+The script \lstinline[language=console]{mockup.fsx} contains a number
+of functions including
+\begin{quote}
+  \mbox{\lstinline!randomString : hist:int list -> len:int -> string!}
+\end{quote}
+The function \lstinline{randomString} generates an identically and
+independently distributed string of a given length, where the
+characters are distributed according to a given histogram. The script
+is complete in the sense that it compiles and runs without errors, but
+its \lstinline{histogram} function is a mockup function and does not
+produce the correct histograms.
+
+Create the library file \lstinline{textAnalysis.fs} and add the functions
+from \lstinline{mockup.fsx}

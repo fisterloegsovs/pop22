@@ -1,0 +1,53 @@
+\textbf{Spillet}
+
+Til brug for implementation af spillet skal vi benytte følgende type
+til at repræsentere en spillers situation under et spil:
+\begin{lstlisting}
+  type player = deck
+\end{lstlisting}
+En spillers situation i et spil er således repræsenteret ved en stak af kort.
+
+I første omgang ønskes implementet to funktioner til henholdsvis at
+trække et kort fra en spillers hånd (såfremt hånden ikke er tom) samt
+indsætte en stak kort i bunden af en spillers kortstak:
+\begin{lstlisting}
+  val getCard  : player -> (card * player) option
+  val addCards : player -> deck -> player
+\end{lstlisting}
+Når der tilføjes en kortstak i bunden af en spillers hånd skal
+kortstakken først blandes. Bemærk at \lstinline{getCard} trækker kort
+fra toppen af kortstakken og \lstinline{addCards} tilføjer kort i
+bunden af kortstakken.
+
+Der ønskes nu implementeret en rekursiv funktion \lstinline{game} der
+simulerer at to spillere spiller spillet krig mod hinanden:
+\begin{lstlisting}
+  val game : card list -> player -> player -> int
+\end{lstlisting}
+Funktionen \lstinline{game} tager some det første argument en liste af
+kort, der repræsenterer de kort der ligger på bordet (til at starte
+med er denne liste tom). Derudover tager funktionen repræsentationerne
+af de to spillere som argumenter. Kroppen af funktionen kan nu
+passende trække kort fra spillernes hænder og undersøge om den ene
+spiller vinder runden eller om der er krig. Funktionen skal enten
+foretage et rekursivt kald eller umiddelbart returnere et heltal, som
+har til hensigt at identificere hvilken af spillerne der har vundet
+(der skal returneres 1 hvis spiller 1 har vundet, 2 hvis spiller 2 har
+vundet og 0 hvis det er uafgjort.)
+
+\textbf{Hint:} Kroppen af funktionen skal også indeholde kode der tager
+sig af at håndtere det tilfælde at der trækkes to ens kort (der er
+krig). I det tilfælde forsøges der igen med træk af kort fra
+spillernes hænder, hvorefter der fortsættes rekursivt med de trukne
+kort lagt på bordet.
+
+I rapporten skal I beskrive jeres designovervejelser og demonstrere at
+jeres funktioner fungerer som forventet (skriv tests for de
+implementerede funktioner). Husk at vise jeres implementation af
+funktionen \lstinline{game} i rapporten. Bemærk at det kan være
+vanskeligt at teste kode der benytter sig af
+funktionen \lstinline{rand}. For at adressere dette problem kan I
+eventuelt (til brug for tests) erstatte funktionen \lstinline{shuffle}
+med en mere deterministisk (dvs. funktionel) funktion. Til testformål
+vil det også være oplagt at køre koden på kortstakke med væsentlig
+færre end de sædvanlige 52 kort (f.eks. 4 og 6 kort).

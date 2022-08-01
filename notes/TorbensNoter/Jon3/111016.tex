@@ -1,0 +1,345 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Symbolske udtryk}
+
+\date[2016]{PoP 10102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Regneudtryk i variablen $x$}
+
+Vi kender regneudtryk i en variabel fra gymnasiematematikken.  Vi kan
+beskrive sådanne rekursivt:
+
+\vspace{1ex}
+
+\begin{tabular}{@{~}c@{~}l}
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være variablen $x$.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være en konstant $c \in \textsf{I\!R}$.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være to udtryk adskilt af $+$.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være to udtryk adskilt af $-$.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være to udtryk adskilt af \textcolor{darkgreen}{$\cdot$} (gange).\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være to udtryk adskilt af en brøkstreg.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være et udtryk opløftet til en
+  potens $p$.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være funktionen $\sin$ anvendt på et udtryk.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være funktionen $\cos$ anvendt på et udtryk.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være funktionen $\log$ anvendt på et udtryk.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være $e$
+opløftet til en potens angivet med et udtryk.\\
+\textcolor{darkgreen}{$\bullet$} & Et udtryk kan være et udtryk
+omgivet af parenteser.
+\end{tabular}
+
+
+\vspace{1ex}
+Eksempel: $\frac{\sin\,x}{\cos\,x}+(x+1)^2$
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Representation af udtryk med rekursiv type}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+type expr = X
+          | Const of float
+          | Plus of expr * expr
+          | Minus of expr * expr
+          | Times of expr * expr
+          | Divide of expr * expr
+          | Power of expr * float
+          | Sin of expr
+          | Cos of expr
+          | Log of expr
+          | Exp of expr
+          | Paren of expr
+\end{verbatim}
+
+\renewcommand{\baselinestretch}{1.0}
+
+$\frac{\sin\,x}{\cos\,x}+(x+1)^2$ repræsenteres som
+
+\begin{verbatim}
+Plus (Divide (Sin X, Cos X),
+      Power (Paren (Plus (X, Const 1.0)), 2.0))
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Udregning af udtryk}
+
+%\texttt{eval : expr -> float -> float}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec eval e x =
+  match e with
+  | X -> x
+  | Const c -> c
+  | Plus (e1, e2) -> (eval e1 x) + (eval e2 x)
+  | Minus (e1, e2) -> (eval e1 x) - (eval e2 x)
+  | Times (e1, e2) -> (eval e1 x) * (eval e2 x)
+  | Divide (e1, e2) -> (eval e1 x) / (eval e2 x)
+  | Power (e, p) -> (eval e x) ** p
+  | Sin e -> sin (eval e x)
+  | Cos e -> cos (eval e x)
+  | Log e -> log (eval e x)
+  | Exp e -> exp (eval e x)
+  | Paren e -> eval e x
+\end{verbatim}
+
+Eksempel: \texttt{eval $ee$ 2.0 $\leadsto$ 6.814960137}, hvor $ee$ er
+udtrykket fra før.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Konvertering til \LaTeX-formler}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec toLaTeX e =
+  match e with
+  | X -> "x"
+  | Const c -> sprintf "%g" c
+  | Plus (e1, e2) -> toLaTeX e1 + "+" + toLaTeX e2
+  | Minus (e1, e2) -> toLaTeX e1 + "-" + toLaTeX e2
+  | Times (e1, e2) -> toLaTeX e1  + "\\cdot " + toLaTeX e2
+  | Divide (e1, e2) ->
+      "\\frac{" + toLaTeX e1 + "}{" + toLaTeX e2 + "}"
+  | Power (e, p) -> toLaTeX e + sprintf "^%g" p
+  | Sin e -> "\\sin " + toLaTeX e
+  | Cos e -> "\\cos " + toLaTeX e
+  | Log e -> "\\log " + toLaTeX e
+  | Exp e -> "e^{" + toLaTeX e + "}"
+  | Paren e -> "(" + toLaTeX e + ")"
+\end{verbatim}
+
+Eksempel: \texttt{toLaTeX $ee$ 2.0} $\leadsto$
+
+\begin{verbatim}
+"\frac{\sin x}{\cos x}+(x+1)^2"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Symbolsk differentiering}
+
+\renewcommand{\arraystretch}{1.1}
+
+\[\begin{array}{c@{\quad\quad}c}
+h(x) & h'(x) \\\hline
+x & 1 \\
+c & 0 \\
+f(x) + g(x) & f'(x) + g'(x) \\
+f(x) - g(x) & f'(x) - g'(x) \\
+f(x) \cdot g(x) & f'(x)\cdot g(x) + f(x)\cdot g'(x) \\[1ex]
+\frac{f(x)}{g(x)} & \frac{f'(x)\cdot g(x) - f(x)\cdot g'(x)}{(g(x))^2}
+\\[1ex]
+x^n & n\cdot x^{n-1} \\
+\sin x & \cos x \\
+\cos x & - \sin x \\
+\log x &  \frac{1}{x}\\
+e^x & e^x \\
+f(g(x)) & f'(g(x))\cdot g'(x)\\
+\end{array}\]
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Symbolsk differentiering i F\#}
+
+{\small
+\begin{verbatim}
+let rec ddx e =
+  match e with
+  | X -> Const 1.0
+  | Const c -> Const 0.0
+  | Plus (e1, e2) -> Plus(ddx e1, ddx e2)
+  | Minus (e1, e2) -> Minus (ddx e1, ddx e2)
+  | Times (e1, e2) ->
+      Paren (Plus (Times (ddx e1, e2), Times (e1, ddx e2)))
+  | Divide (e1, e2) ->
+      Divide(Minus (Times (ddx e1, e2), Times (e1, ddx e2)),
+             Power (e2, 2.0))
+  | Power (e, p) ->
+      Paren (Times (Times (Const p, Power (e, p-1.0)), ddx e))
+  | Sin e -> Paren (Times (Cos e, ddx e))
+  | Cos e -> Paren (Times (Minus (Const 0.0, Sin e), ddx e))
+  | Log e -> Paren (Times (Divide (Const 1.0, e), ddx e))
+  | Exp e -> Paren (Times (Exp e, ddx e))
+  | Paren e -> Paren (ddx e)
+\end{verbatim}
+}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel på symbolsk differentiering}
+
+\texttt{ddx $ee$} $\leadsto$
+
+{\small
+\begin{verbatim}
+Plus
+  (Divide
+     (Minus
+        (Times (Paren (Times (Cos X,Const 1.0)),Cos X),
+         Times (Sin X,Paren (Times (Minus (Const 0.0,Sin X),
+                                          Const 1.0)))),
+      Power (Cos X,2.0)),
+   Paren
+     (Times
+        (Times (Const 2.0,Power (Paren (Plus (X,Const 1.0)),1.0)),
+         Paren (Plus (Const 1.0,Const 0.0)))))
+\end{verbatim}
+}
+
+%Kan simplificeres væsentligt
+
+Svarende til
+
+\[
+\frac{(\cos x\cdot 1)\cdot \cos x-\sin x\cdot (0-\sin x\cdot 1)}{\cos x^2}+(2\cdot (x+1)^1\cdot (1+0))
+\]
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Simplificering af udtryk (ukomplet)}
+
+\renewcommand{\baselinestretch}{0.75}
+{\footnotesize
+\begin{verbatim}
+let rec simplify e =
+  match e with
+  | Plus (e1, Const 0.0) -> simplify e1
+  | Plus (Const 0.0, e2) -> simplify e2
+  | Plus (Const a, Const b) -> Const (a + b)
+  | Plus (e1, e2) -> Plus (simplify e1, simplify e2)
+  | Minus (e1, Const 0.0) -> simplify e1
+  | Minus (Const a, Const b) -> Const (a - b)
+  | Minus (e1, e2) -> Minus (simplify e1, simplify e2)
+  | Times (e1, Const 0.0) -> Const 0.0
+  | Times (Const 0.0, e2) -> Const 0.0
+  | Times (e1, Const 1.0) -> simplify e1
+  | Times (Const 1.0, e2) -> simplify e2
+  | Times (Const a, Const b) -> Const (a * b)
+  | Times (e1, e2) -> Times (simplify e1, simplify e2)
+  | Divide (Const 0.0, e2) -> Const 0.0
+  | Divide (e1, Const 1.0) -> simplify e1
+  | Divide (e1, e2) -> Divide (simplify e1, simplify e2)
+  | Power (e, 1.0) -> simplify e
+  | Sin e -> Sin (simplify e)
+  | Cos e -> Cos (simplify e)
+  | Log e -> Log (simplify e)
+  | Exp e -> Exp (simplify e)
+  | Paren X -> X
+  | Paren (Const c) -> Const c
+  | Paren e -> Paren (simplify e)
+  | _ -> e
+\end{verbatim}
+}
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Gentagen simplificering}
+
+\texttt{ddx $ee$} $\leadsto$
+
+\[
+\frac{(\cos x\cdot 1)\cdot \cos x-\sin x\cdot (0-\sin x\cdot 1)}{\cos x^2}+(2\cdot (x+1)^1\cdot (1+0))
+\]
+
+
+\texttt{simplify (ddx $ee$)} $\leadsto$
+
+\[
+\frac{(\cos x)\cdot \cos x-\sin x\cdot (0-\sin x)}{\cos x^2}+(2\cdot (x+1)\cdot (1))
+\]
+
+\texttt{simplify (simplify (ddx $ee$))} $\leadsto$
+
+\[
+\frac{(\cos x)\cdot \cos x-\sin x\cdot (0-\sin x)}{\cos x^2}+(2\cdot (x+1)\cdot 1)
+\]
+
+\texttt{simplify (simplify (simplify (ddx $ee$)))} $\leadsto$
+
+\[
+\frac{(\cos x)\cdot \cos x-\sin x\cdot (0-\sin x)}{\cos x^2}+(2\cdot (x+1))
+\]
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Itereret simplificering}
+
+Vi kan gentage simplificering indtil, der ikke sker ændringer:
+
+\begin{verbatim}
+let rec simplifyMax e =
+  let se = simplify e
+  if se = e then e
+  else simplifyMax se  
+\end{verbatim}
+
+\texttt{simplifyMax (ddx $ee$)} $\leadsto$
+
+\[
+\frac{(\cos x)\cdot \cos x-\sin x\cdot (0-\sin x)}{\cos x^2}+(2\cdot (x+1))
+\]
+
+
+Der er stadig flere muligheder for simplificering, f.eks.
+
+\[
+\begin{array}{ccc}
+  (\cos x) & \leadsto & \cos x\\
++ (2\cdot (x+1)) & \leadsto & + 2\cdot (x+1)\\
+- \sin x\cdot (0-\sin x) & \leadsto & + \sin x \cdot \sin x
+\end{array}
+\]
+
+\end{frame}
+
+\end{document}

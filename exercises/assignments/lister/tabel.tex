@@ -1,0 +1,19 @@
+A table can be represented as a non-empty list of equally long lists, for example, the list \lstinline{[[1; 2; 3]; [4; 5; 6]]} represents the table:
+  \begin{quote}
+\[\left [\begin{array}{rrr}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{array}
+\right ]\]
+\end{quote}
+\begin{enumerate}
+\item Make a function \lstinline{isTable : llst:'a list list -> bool}, which determines whether \lstinline{llst} is a legal non-empty list, i.e., that
+  \begin{itemize}
+  \item there is at least one element, and
+  \item all lists in the outer list has equal length.
+  \end{itemize}
+\item Make a function \lstinline{firstColumn : llst:'a list list -> 'a list} which takes a list of lists and returns the list of first elements in the inner lists.  For example, \lstinline{firstColumn [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[1; 4]}.  If any of the lists are empty, then the function must return the empty list of integers\lstinline{[] : int list}.
+\item Make a function \lstinline{dropFirstColumn : llst:'a list list -> 'a list list} which takes a list of lists and returns the list of lists where the first element in each inner list is removed. For example, \lstinline{dropFirstColumn [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[[2; 3]; [5; 6]]}. Ensure that your function fails gracefully, if there is no first elements to be removed.
+\item \label{listTranspose}Make a function \lstinline{transposeLstLst : llst:'a list list -> 'a list list} which transposes a table implemented as a list of lists, that is, an element that previously was at \lstinline{a.[i,j]} should afterwards be at \lstinline{a.[j,i]}. For example, \lstinline{transposeLstLst [[1; 2; 3]; [4; 5; 6]]} should return \lstinline{[[1; 4]; [2; 5]; [3; 6]]}.  Ensure that your function fails gracefully. Note that \lstinline{transposeLstLst (transposeLstLst t) = t} when \lstinline{t} is a table as list of lists. Hint: the functions \lstinline{firstColumn} and \lstinline{dropFirstColumn} may be useful.
+\item Make a whitebox test of the above functions.
+\end{enumerate}

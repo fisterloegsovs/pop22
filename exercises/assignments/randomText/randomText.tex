@@ -1,0 +1,57 @@
+\begin{enumerate}
+\item The script \lstinline[language=console]{readFile.fsx} reads the
+  content of the text file
+  \lstinline[language=console]{readFile.fsx}. Convert this script into
+  a function which reads the content of any text file and has the
+  following type:
+  \begin{quote}
+    \mbox{\lstinline!readText : filename:string -> string!}
+  \end{quote}
+\item Write a program that converts a string, such that all letters
+  are converted to lower case, and removes all characters except
+  a\ldots z. It should have the following type:
+  \begin{quote}
+    \mbox{\lstinline!convertText : src:string -> string!}
+  \end{quote}
+\item Write a program that counts occurrences of each lower-case letter
+  of the English alphabet in a string and returns a list. The first
+  element of the list should be the count of 'a's, second the count of
+  'b's etc. The function must have the type:
+  \begin{quote}
+    \mbox{\lstinline!histogram : src:string -> int list!}
+  \end{quote}
+\item The script \lstinline[language=console]{sampleAssignment.fsx}
+  contains the function
+  \begin{quote}
+    \mbox{\lstinline!randomString : hist:int list -> len:int -> string!}
+  \end{quote}
+  which generates a string of a given length, and contains
+  random characters distributed according to a given histogram. Modify
+  the code to use your histogram function. Further, write a program,
+  which reads the text
+  \lstinline[language=console]{littleClausAndBigClaus.txt} using
+  \lstinline{readText}, converts it using \lstinline{convertText}, and
+  calculates its histogram and generates a new random string using
+  \lstinline{histogram} and \lstinline{randomString}.  Test the
+  quality of your code by comparing the histograms of the two texts.
+\item Write a program that counts occurrences of each pairs of
+  lower-case letter of the English alphabet in a string and returns a
+  list of lists (a table). The first list should be the count of 'a'
+  followed by 'a's, 'b's, etc., second list should be the count of 'b'
+  followed by 'a's, 'b's, etc. etc.
+  \begin{quote}
+    \mbox{\lstinline!cooccurrence : src:string -> int list list!}
+  \end{quote}
+\item Write a program that generates a random string of length
+  \lstinline!len!, whose character pairs are distributed according to
+  a user specified cooccurrence histogram \lstinline!cooc!.  The
+  function must have the type:
+  \begin{quote}
+    \mbox{\lstinline!fstOrderMarkovModel : cooc:int list list -> len:int -> string!}
+  \end{quote}
+  Test your function by generating a random string, whose character
+  pairs are distributed as the converted characters in H.C.\
+  Andersen's fairy tale, ``Little Claus and Big Claus'', calculate the
+  cooccurrence histogram for the random string, and compare this with
+  the original cooccurrence histogram.
+\end{enumerate}

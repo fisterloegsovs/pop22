@@ -1,0 +1,31 @@
+<doc>
+  <assembly><name>Vector</name></assembly>
+  <members>
+    <member name="T:Vector.Vector">
+      <summary>
+	A demonstration of defining a module from H &amp; R, Functional Programming Using F#. Note: Bad style, better use augmented types.
+	
+	How to compile:
+	&lt;code&gt;
+	fsharpc --doc:Vector.xml -a Vector.fsi Vector.fs
+	fsharpc --doc:testVector.xml -r Vector.dll testVector.fsx
+	&lt;/code&gt;
+	
+	Author: Jon Sporring.
+	Date: 2015/10/27
+	A 2 dimensional vector type, whose elements are floats.
+      </summary>
+    </member>
+    <member name="M:Vector.coord(Vector.Vector)">
+      <summary>
+	Get coordinates
+      </summary>
+    </member>
+    <member name="M:Vector.make(System.Double,System.Double)">
+      <summary>
+	Make vector
+      </summary>
+    </member>
+  </members>
+</doc>
+  

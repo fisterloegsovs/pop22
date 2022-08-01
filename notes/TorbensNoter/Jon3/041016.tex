@@ -1,0 +1,271 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Mængder og Arrays}
+
+\date[2016]{PoP 04102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}
+\frametitle{Mængder}
+
+Vi kender mængder fra matematik:
+
+\begin{definition}
+En mængde er en samling af værdier, hvor antal forekomster af hver
+værdi og værdiernes indbyrdes rækkefølge ikke er specificeret.
+\end{definition}
+
+Matematisk notation:
+
+\[\begin{array}{c@{\quad}p{0.7\textwidth}}
+\{2,\,3\} & En mængde med to tal: 2 og 3.\\
+ \{3,\,2,\,3\} & Samme mængde \\
+A \cup B & Foreningsmængden af $A$ og $B$. \\
+A \cap B & Fællesmængden af $A$ og $B$. \\
+A \setminus B & Differensmængden af $A$ og $B$ ($A$ minus $B$). \\
+x \in A & Prædikatet ``Er $x$ element i $A$?''\\
+A \subseteq B & Prædikatet ``Er $A$ en delmængde af $B$?''\\
+\end{array}\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Matematik versus F\#}
+
+\[\begin{array}{c@{\quad}p{0.5\textwidth}}
+\textrm{Matematisk notation} & F\#{} notation \\\hline
+\{2,\,3\} & \texttt{set [2; 3] : Set<int> }\\
+ \{3,\,2,\,3\} & \texttt{set [3; 2; 3]} \\
+A \cup B & \texttt{Set.union $A$ $B$} \\
+A \cap B &  \texttt{Set.intersect $A$ $B$} \\
+A \setminus B &  \texttt{Set.difference $A$ $B$} \\
+x \in A &  \texttt{Set.contains  $x$ $A$} \\
+A \subseteq B & \texttt{Set.isSubset $A$ $B$}\\
+\end{array}\]
+
+\texttt{Set<int>} betyder det samme som \texttt{int\,\,Set}.
+Dette generaliserer, så \texttt{list<int>} betyder det samme som
+\texttt{int\,\,list}, osv.
+
+\vspace{1ex}
+
+Når F\#{} viser en mængde, viser den elementerne i sorteret orden og
+uden gentagelser, f.eks.
+
+\vspace{1ex}
+\texttt{set [3; 2; 4; 2] $\leadsto$ set [2; 3; 4]}
+\end{frame}
+
+\begin{frame}
+\frametitle{Andre funktioner fra \texttt{Set} biblioteket}
+
+{\small%
+\begin{tabular}{@{\!\!\!\!\!\!\!\!\!\!\!\!}l@{\quad}l}
+\texttt{Set.add\,:\,'a\,->\,Set<'a>\,->\,Set<'a>} & Tilføj element\\
+\texttt{Set.remove\,:\,'a\,->\,Set<'a>\,->\,Set<'a>} & Fjern element\\
+\texttt{Set.count\,: Set<'a>\,->\,int} & Antal elementer\\
+\texttt{Set.minElement\,: Set<'a>\,->\,'a} & Mindste element\\
+\texttt{Set.maxElement\,: Set<'a>\,->\,'a} & Største element\\
+\texttt{Set.map\,:\,('a\,->\,'b)\,->\,Set<'a>\,->\,Set<'b>} & som \texttt{List.map}\\
+\texttt{Set.exists\,:\,('a\,->\,bool)\,->\,Set<'a>\,->\,bool} & som \texttt{List.exists}\\
+\texttt{Set.forall\,:\,('a\,->\,bool)\,->\,Set<'a>\,->\,bool} & som \texttt{List.forall}\\
+\texttt{Set.filter\,:\,('a\,->\,bool)\,->\,Set<'a>\,->\,Set<'a>} & som \texttt{List.filter}\\
+\texttt{Set.fold\,:\,('b\,->\,'a\,->\,'b)\,->\,'b\,->\,Set<'a>\,->\,'b} & som \texttt{List.fold}\\
+\texttt{Set.foldBack\,:\,('a\,->\,'b\,->\,'b)->\,Set<'a>\,->\,'b\,\,->\,'b} & som \texttt{List.foldBack}\\
+\end{tabular}
+}
+
+\vspace{2ex}
+Ved \texttt{fold} og \texttt{foldBack} bruges den sorterede rækkefølge.
+
+\vspace{1ex}
+Bemærk: Mængder er ikke muterbare (\emph{mutable}), så der returneres
+altid nye mængder.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Endimensionelle arrays minder om lister}
+
+\texttt{\small
+\begin{tabular}{@{\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!}l@{~}l}
+\textrm{\bf Listeudtryk} & \textrm{\bf Arrayudtryk}\,\\\\
+{}[1;\,2;\,3]\,:\,int\,list & [|1;\,2;\,3|]\,:\,int\,[]\\
+{}[]\,:\,'a\,list & [||]\,:\,'a\,[]\\
+List.head\,[1;\,2;\,3]\,$\leadsto$\,1 & Array.head\,[|1;\,2;\,3|]\,$\leadsto$\,1\\
+List.tail\,[1;\,2;\,3]\,$\leadsto$\,[2;\,3] & Array.tail\,[|1;\,2;\,3|]\,$\leadsto$\,[|2;\,3|]\\
+{}[1;\,2;\,3].[2]\,$\leadsto$\,3 & [|1;\,2;\,3|].[2]\,$\leadsto$\,3\\
+{}[1;\,2;\,3].[1..2]\,$\leadsto$\,[2;\,3] & [|1;\,2;\,3|].[1..2]\,$\leadsto$\,[|2;\,3|]\\
+List.length\,[1;\,2;\,3]\,$\leadsto$\,3&\,Array.length\,[|1;\,2;\,3|]\,$\leadsto$\,3\\
+List.map\,f\,[1;\,2]\,$\leadsto$\,\,[f\,1;\,f\,2]\,&
+\,Array.map\,f\,[|1;\,2|]\,$\leadsto$\,[|f\,1;\,f\,2|]\\
+List.filter\,odd\,[1;\,2;\,3]\,$\leadsto$\,\,[1;\,3]\,&
+\,Array.filter\,odd\,[|1;\,2;\,3|]\,$\leadsto$\,[|1;\,3|]\\
+{}[1;\,2]\,@\,[3]\,$\leadsto$\,[1;\,2;\,3]\,&
+\,Array.append\,[|1;\,2|]\,[|3|]\,$\leadsto$\,[|1;\,2;\,3|]\\
+\\
+\textrm{\bf Listemønstre} & \textrm{\bf Arraymønstre}\,\\\\
+{}[x;\,y;\,z] & [|x;\,y;\,z|]\\
+{}[] & [||]\\
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Forskelle mellem arrays og lister}
+
+\begin{enumerate}[~1.]
+\item \texttt{::} er ikke defineret for arrays.
+\item Arrayelementer er muterbare, så man kan f.eks.\ skrive
+
+\vspace{0.8ex}
+
+\texttt{
+\begin{tabular}{l}
+let aa = [|1..5|]\\[-0.5ex]
+aa.[2] <- 17\\[-0.5ex]
+printfn "\%A" aa
+\end{tabular}
+}
+
+\vspace{0.8ex}
+
+og få \texttt{[|1; 2; 17; 4; 5|]} som resultat.
+
+\item Indeksering i array for at få et element ($a.[i]$) er hurtigere
+  end indeksering i liste, specielt hvis $i$ er stort.
+
+\item \texttt{Array.tail} er meget langsommere end \texttt{List.tail}.
+
+\item Funktionen \texttt{Array.create : int -> 'a -> 'a []} kan bruges
+  til at lave en tabel med ens elementer.
+\end{enumerate}
+
+\vspace{0.8ex}
+
+Groft sagt er lister optimerede til rekursion med \texttt{[]} og
+\texttt{::}, mens arrays er optimerede til indeksering med
+\texttt{$a$.[$i$]}.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Eksempel på imperativ programmering med arrays}
+
+Primtalsgenerering med Erastothenes si:
+
+\begin{verbatim}
+let primesUpto n =
+  let prime = Array.create (n+1) true
+  for p in 2 .. int (sqrt (float n)) do
+    if prime.[p] then
+      for i in (p*p) .. p .. n do
+        prime.[i] <- false
+  for i in 2 .. n do
+    if prime.[i] then printf " %d" i
+\end{verbatim}
+
+Eksempel: \texttt{primesUpto 70} skriver
+
+
+\begin{verbatim}
+ 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Todimensionelle arrays (\texttt{Array2D})}
+
+Todimensionelle arrays er rektangulære arrays, som indiceres med to
+koordinater.  Man kan lave dem med \texttt{Array2D.create} eller
+\texttt{Array2D.init}.  F.eks.\ giver \texttt{Array2D.init 3 5 (fun x
+  y -> 10*x+y)} giver resultatet
+
+\begin{verbatim}
+val it : int [,] = [[0; 1; 2; 3; 4]
+                    [10; 11; 12; 13; 14]
+                    [20; 21; 22; 23; 24]]
+\end{verbatim}
+
+Bemærk, at udskriften ligner en liste af lister, men typen er anderledes.
+
+Todimensionale arrays indiceres med notationen \texttt{$a$.[$i$,$j$]}.
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Udvalgte funktioner på todimensionelle arrays}
+
+\begin{itemize}
+\item \texttt{array2D : 'a list list -> 'a\,[,]}  konverterer en liste
+  af lister til et todimensionelt array.
+
+\item \texttt{Array2D.create\,:\,int\,->\,int\,->\,'a\,->\,'a\,[,]}
+
+\texttt{Array2D.create\,$h$\,$w$\,$v$} laver et $h×w$ array, hvor alle
+elementer er lig med $v$.
+
+\item \texttt{Array2D.init\,:\,int\,->\,int\,->\,(int\,->\,int\,->\,'a)\,->\,'a\,[,]}
+
+\texttt{Array2D.init\,$h$\,$w$\,$f$} laver et $h×w$ array, hvor
+elementet på plads $(i,j)$ er lig med $f\,(i,j)$.
+
+\item \texttt{Array2D.length1\,:\,'a\,[,]\,->\,int}
+
+\texttt{Array2D.length1\,$a$} finder antallet af rækker i $a$.
+
+\item \texttt{Array2D.length2\,:\,'a\,[,]\,->\,int}
+
+\texttt{Array2D.length2\,$a$} finder antallet af søjler i $a$.
+
+\item \texttt{Array2D.map\,:\,('a\,->\,'b)\,->\,'a\,[,]\,->\,'b\,[,]}
+
+Virker ligesom \texttt{List.map} og  \texttt{Array.map}.
+
+\item \texttt{$a$.[$i$,*]} finder den $i$'te række af $a$ som
+  endimensionalt array.
+
+\item \texttt{$a$.[*,$j$]} finder den $j$'te søjle af $a$ som
+  endimensionalt array.
+
+\end{itemize}
+
+
+\end{frame}
+
+\end{document}

@@ -1,0 +1,36 @@
+I det følgende skal der simuleres et lukket miljø med ulve og elge. Simuleringen skal benytte følgende regler:
+\begin{enumerate}
+\item Et miljø består af $n\times n$ felter.
+\item Alle levende dyr har en coordinat i miljøet, og der kan højst være et dyr per felt. Når et dyr dør, fjernes det fra miljøet. Hvis et dyr fødes, tilføjes det i et tomt felt. Ved simuleringens begyndelse skal der være $u$ ulve og $e$ elge som placeret tilfældigt i tomme felter.
+\item Miljøet opdateres i tidsenheder, som kaldes tiks, og simuleringen udføres $T$ tiks. Indenfor et tik kan dyrene gøre et af følgende: Flytte sig, formere sig, og for ulvenes vedkommende spise en elg. Kun et dyr handler ad gangen og rækkefølgen er tilfældig.
+\item Dyr kan flytte sig et felt per tik til et af de 8 nabofelter, som er tomme.
+\item Alle dyr har en artsspecifik formeringstid $f$ angivet i antal tiks, og som tæller ned. Når formeringstiden når nul (for et levende dyr), og der er et tomt nabofelt, så fødes der et nyt dyr af samme type ved at det nye dyr tilføres i et tomt nabofelt. Moderdyrets formeringstid sættes til startværdien, hhv.\ $f_{\text{elg}}$ og $f_{\text{ulv}}$.
+\item Ulve har en sulttid $s$ angivet i antal tiks, og som tæller ned. Hvis sulttiden når nul, så dør ulven, og den fjernes fra miljøet.
+\item Ulve kan spiser elge. Hvis der er en elg i et nabofelt vil ulven spise elgen, elgen fjernes fra miljøet, ulven flytter til elgens felt, og ulvens sulttid sættes til startværdien, $s$.
+\item I hvert tik reduceres alle formerings- og sulttællere for levende dyr med 1.
+\end{enumerate}
+
+Lav et program, som kan simulere dyrene som beskrevet ovenfor og skrive en rapport. Til opgaven udleveres følgende kildefiler:
+\begin{quote}
+\lstinline[language=console]{animalsSmall.fsi}, \lstinline[language=console]{animalsSmall.fs}, og \lstinline[language=console]{testAnimalsSmall.fs}.
+\end{quote}
+Opgaven er at tage udgangspunkt i disse filer og programmere følgende regler:
+\begin{enumerate}
+\item Der skal laves et bibliotek som implementerer klasser for miljø, ulve og elge. Det er ikke et krav at der bruges nedarvning.
+\item Man skal kunne starte simuleringen med forskellige værdier af $T$, $n$, $u$, $e$, $f_{\text{elg}}$, $f_{\text{ulv}}$ og $s$
+\item Der skal laves en white-box test af biblioteket.
+\item Der skal laves en applikation, som kører en simulering, og tidsserien over antallet af dyr per tik skal gemmes i en fil. Filnavn og parametrene $T$, $n$, $e$, $f_{\text{elg}}$, $u$, $f_{\text{ulv}}$ og $s$ skal angives som argumenter til det oversatte program fra komandolinjen. Eksempelvis kunne:
+  \begin{quote}
+    \lstinline[language=console]{mono experimentWAnimals.exe 40 test.txt 10 30 10 2 10 4}
+  \end{quote}
+  starte et eksperiment med $T=40$, $n=10$, $e=30$, $f_{\text{elg}}=10$, $u=2$, $f_{\text{ulv}}=10$ og $s=4$ og hvor tidsserien skrives til filen \lstinline[language=console]{test.txt}.
+\item Der skal laves et antal eksperimenter, hvor simuleringen køres med forskellige værdier af simuleringens parametre. For hvert eksperiment skal der laves en graf (ikke nødvendigvis i F\#), der viser antallet af ulve og elge over tid.
+\item Koden skal kommenteres ved brug af F\# kommentarstandarden.
+\end{enumerate}
+Kravene til rapporten er:
+\begin{enumerate}[resume]
+\item Rapporten skal skrives i \LaTeX\ og tage udgangspunkt i \texttt{rapport.tex} skabelonen
+\item Rapporten skal som minimum indeholde afsnittene Introduktion, Problemanalyse og design, Programbeskrivelse, Afprøvning, Eksperiment og Konklusion. Som bilag skal I vedlægge afsnittene Brugervejledning og Programtekst.
+\item Eksperimentafsnittet skal kort diskutere hvert eksperiments udfald.
+\item Rapporten minus bilag må maximalt være på 10 A4 sider alt inklusivt.
+\end{enumerate}

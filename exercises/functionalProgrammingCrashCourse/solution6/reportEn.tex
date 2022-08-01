@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for making LaTeX properly handle utf8 characters set and danish language rules
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for changing to a nicer font 
+\usepackage [T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for conctroling the text area
+\usepackage[margin=2.5cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for inserting clickable hyperlinks in pdf versions as produced by pdflatex
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for including figures. TeX and thus LaTeX was developped before the existence of directory file-structures, but the graphicspath let's you add directories, that the \includegraphics will search.
+\usepackage{graphicx}
+\graphicspath{{figures/}{anotherFigureDirectory/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for typesetting programs. Listings does not support fsharp, but a little modification goes a long way
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{turqusnumbers}{rgb}{0.17,0.57,0.69}
+\definecolor{redstrings}{rgb}{0.5,0,0}
+
+\lstdefinelanguage{FSharp}
+                {morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, and, for, in, do, begin, end, fun, function, try, mutable, if, then, else},
+    keywordstyle=\color{bluekeywords},
+    sensitive=false,
+    morecomment=[l][\color{greencomments}]{///},
+    morecomment=[l][\color{greencomments}]{//},
+    morecomment=[s][\color{greencomments}]{{(*}{*)}},
+    morestring=[b]",
+    stringstyle=\color{redstrings}
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for extended math settings, e.g. \eqref
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% These will be the title and author, as included when \maketitle is called.
+\title{Assignment 6}
+\author{Jon Sporring}
+
+\begin{document}
+\maketitle % Insert title etc.
+
+% sections are the outer logical structure when using documentclass-article, while chapter would be the outer structure, when using report documentclass
+\section{Preface}
+This document is a response to Assignment~6 on the course Introduction to Functional Programming at UESTC, 2019/7/8-12.
+
+\section{Introduction}
+Assignment 6 includes the code \texttt{recursiveMapFoldFilter.fsx},
+which uses \texttt{List.fold} and \texttt{List.filter}. My task is to
+make my own implementations of these two functions and to verify that they work.
+
+\texttt{List.fold} is defined as
+\begin{quote}
+  \texttt{List.fold : f:('a->'b->'a) -> acc:'a -> lst:'b list -> 'a}
+\end{quote}
+and for $acc=a$ and $lst=[e_1;e_2;\dots;e_n]$ computes $f \dots (f (f a e_1) e_2)\dot e_n$. For example, a call could be \texttt{List.fold (fun acc elm -> acc+elm) 0 [1;2]} which sum 0 with all the elements in the list and give 3.
+
+\texttt{List.filter} is defined as
+\begin{quote}
+  \texttt{List.filter : p:('a->bool) -> lst:'a list -> 'a list}
+\end{quote}
+and returns the list of elements in \texttt{lst} for which \texttt{p} returns \texttt{true}. For example, a call could be \texttt{List.filter (fun elm -> elm\%2=0) [0..5] }, which returns \texttt{[0; 2; 4]}, i.e., all the even numbers from the list.
+
+\section{Problem analysis and design}
+The course requires us to use the functional programming paradigm and F\#, so I must use recursion and no mutable values, for-loops, nor while-loops.
+
+\texttt{List.fold} takes a function, an initial accumulator, and a list. I have considered the following case:
+\begin{description}
+\item[The list is empty:] I have tested \texttt{List.fold}, and it returns the initial accumulator.
+\item[The list is non-empty:] Here, \texttt{List.fold} acts as explained in the introduction.
+\item[Error cases:] If arguments are missing, then F\# gives a syntax error.
+\end{description}
+
+\texttt{List.filter} takes a function and a list. I have considered the following case:
+\begin{description}
+\item[The list is empty:] I have tested \texttt{List.filter}. If the type of the empty filter can be determined by the function, then it returns an empty list. Otherwise, it gives an error.
+\item[The list is non-empty:] Here, \texttt{List.filter} acts as explained in the introduction.
+\item[Error cases:] If arguments are missing, then F\# gives a syntax error.
+\end{description}
+
+\section{Program description}
+The resulting code pieces are so short that we have chosen to include them here in their entirety.
+
+I have used recursion and match-with to implement fold. There are 2 cases: empty and non-empty. For the empty, list we return \texttt{acc}, and for the non-empty, we assume that \texttt{myFold} works, so I split the list into its first element and the rest and call \texttt{myFold} with a new accumulator and the rest. This is shown in Figure~\ref{fig:fold}.
+\begin{figure}
+  \lstset{language=FSharp}
+\begin{lstlisting}
+// fold f [a1; ...; an] = f ... (f (f acc a1) a2) ...) an
+let rec myFold (f: 'b -> 'a -> 'b) (acc: 'b) (lst: 'a list) : 'b =
+  // List.fold f acc lst
+  match lst with
+    | []     -> acc
+    | a::rst -> myFold f (f acc a) rst
+\end{lstlisting}
+  \caption{The implemented code for fold.}
+  \label{fig:fold}
+\end{figure}
+
+I have also used recursion and match-with to implement filter. It is
+implemented similarly to fold. For an empty list, an empty list is
+returned. This will give similar errors as \texttt{List.filter}. For a
+non-empty list, I assume that \texttt{myFilter} works, and hence, if \texttt{p} is true for the first element, I prepend it to the result of \texttt{myFilter} on the rest. Otherwise, I just return the result of \texttt{myFilter} on the rest. I have found no way to avoid having two calls to \texttt{myFilter p rst}. The code is shown in Figure~\ref{fig:filter}.
+\begin{figure}
+  \lstset{language=FSharp}
+\begin{lstlisting}
+// filter f [a1; ...; an] = [ai; aj; ak ...], where f ai = true etc.,
+let rec myFilter (p: 'a -> bool) (lst: 'a list) : 'a list =
+  // List.filter p lst
+  match lst with
+    | a::rst -> if p a then a :: (myFilter p rst) else myFilter p rst
+    | []     -> []
+\end{lstlisting}
+  \caption{The implemented code for filter.}
+  \label{fig:filter}
+\end{figure}
+
+\section{Testing and experiements}
+The code \texttt{recursiveMapFoldFilter.fsx} includes testing of my code, so I have run the modified program using a long list, which statistically should cover many although not all possible versions. The result is shown in Figure~\ref{fig:test}
+\begin{figure}
+  \lstset{language=bash}
+\begin{lstlisting}
+$ mono recursiveMapFoldFilter.exe fold 10
+Random list is: [9; 5; 9; 6; 7; 6; 1; 7; 2; 9]
+Result is CORRECT  : [18; 4; 14; 2; 12; 14; 12; 18; 10; 18]
+$ mono recursiveMapFoldFilter.exe filter 10
+Random list is: [9; 4; 6; 3; 1; 4; 4; 4; 5; 6]
+Result is CORRECT  : [9; 6; 5; 6]
+\end{lstlisting}
+  \caption{Output from the console of test runs.}
+  \label{fig:test}
+\end{figure}
+In the figure, the results of running my code is identical to the \texttt{List} implementations, so I conclude that my code is working correctly.
+
+\section{Discussion and/or Conclusion}
+I have worked with Assignment~6 and implemented my own versions of fold and filter. I have used recursion and match-statements, and I have tested the code using the supplied test function. My conclusion is that my code is running correctly.
+\end{document}
+

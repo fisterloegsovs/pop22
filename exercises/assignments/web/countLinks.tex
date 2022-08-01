@@ -1,0 +1,14 @@
+In the html-standard, links are given by the \lstinline!<a></a>! tags. For example, a link to Google's homepage is written as \lstinline[language=console]!<a href="http://google.com">Press to go to Google</a>!.
+
+Make a program \lstinline[language=console]{countLinks} which includes
+the function
+\begin{quote}
+  \mbox{\lstinline!countLinks : url:string -> int!}
+\end{quote}
+The function should read the page given in \lstinline!url! and count
+how many links that page has to other pages. You should count by
+counting the number of \lstinline!<a! substrings. The program should
+take a url, pass it to the function and print the resulting count on
+the screen. In case of an error, then the program should handle it
+appropriately.
+

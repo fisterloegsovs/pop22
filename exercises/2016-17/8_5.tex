@@ -1,0 +1,105 @@
+\documentclass[a4paper]{article}
+
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{graphpap}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Øvelsesopgaver til uge 11 og 12}
+
+\author{Torben Mogensen \& Jon Sporring}
+\date{\today}
+
+\maketitle
+
+\noindent
+I uge 11 og 12 (28/11 -- 9/12) er der ikke afleveringsopgaver (udover
+8g, som afleveres 30/11).  Der er dog stadig øvelser i nyt stof, og
+denne ``ugeseddel'', der er uden for nummerrækken, beskriver disse.
+
+\subsubsection*{Øveopgaverne er:}
+
+\begin{enumerate}[ø1.]
+\item Denne opgave handler om at arbejde med vinduer i WinForms
+  \begin{enumerate}
+  \item Lav et program, som åbner et vindue og tegner en
+    firkant. Hjørnerne skal være 25\% af vinduets størrelse fra
+    vinduets hjørner, således at hvis billedet tegnbare areal har
+    størrelse (bredde, højde), så har øverste venstre hjørne position
+    (bredde/4, højde/4)
+  \item Lav et tegneprogram, som når man klikker på et punkt i et
+    vindue, så bliver punktet gemt i en liste, og der bliver tegnet en
+    lille firkant med centrum i punktet.
+  \item Udvid oventstående tegneprogram, således at man kan slette
+    punkter igen. Man skal kunne slette ved at trykke tæt på et
+    eksisterende punkt, og der skal indføres tastetryk, således at hvis
+    man trykker 't', så vil programmet tegne firkanter næste gang der
+    trykkes med musen og hvis man trykker 's', så vil man slette næste gang.
+  \end{enumerate}
+
+  \item Denne opgave handler om opbygning af moduler
+    \begin{enumerate}
+    \item Lav en fil \texttt{Figure.fs}, der indeholder definitionerne af typer og funktioner, I brugte til løsning af øvelsesopgaverne om figurer på ugeseddel 6, mere specifikt typerne \texttt{point}, \texttt{colour} og \texttt{figure} og funktionerne \texttt{colourAt}, \texttt{makePicture}, \texttt{checkFigure}, \texttt{move} og \texttt{boundingBox}.  Tilføj linjen \texttt{module Figure} som første linje i denne fil.
+    \begin{enumerate}
+    \item Kør denne fil ved at skrive \texttt{fsharpi -r makeBMP.dll Figure.fs}.  Bemærk, hvad fsharpi fortæller om de definerede navne.
+
+    \item Lav fra denne kørsel af fsharpi en definition af en variabel med navn \texttt{o63}, som indeholder figuren fra øveopgave 6.3.  Bemærk, at du skal bruge modulnavnet \texttt{Figure} som præfix, når du bruger konstruktorerne \texttt{Circle}, \texttt{Rectangle} og \texttt{Mix}.
+
+    \item Åben modulet, og kald \texttt{makePicture} (nu uden præfix) til at lave en 100×150 pixel stor billedfil for figuren \texttt{o63}.
+    \end{enumerate}
+
+  \item Lav en fil \texttt{Figure.fsi}, der indeholder en signatur til filen \texttt{Figure.fs}.
+
+    \begin{enumerate}
+    \item Oversæt modulet med kommandoen \texttt{fsharpc -r makeBMP.dll -a Figure.fsi Figure.fs}
+
+    \item Kør \texttt{fsharpi -r Figure.dll}, gentag definitionen af \texttt{o63} og lav et funktionskald, der finder bounding box til denne.
+    \end{enumerate}
+
+  \item Udvid modulet fra forrige opgave, så kan vise billedet i et vindue: Kopier billedet ind i et bitmap:
+\begin{verbatim}
+let bitMap = new System.Drawing.Bitmap (width, height)
+\end{verbatim}
+  og vis resultatet med en picturebox control:
+\begin{verbatim}
+let pictureBox = new System.Windows.Forms.PictureBox ()
+\end{verbatim}
+
+  \end{enumerate}
+\item Denne opgave handler om at definere overloadede operatorer.
+
+  \begin{enumerate}
+  \item  Udvid \texttt{Figure.fsi} og \texttt{Figure.fs} med overloadede
+  definitioner af infixoperatorerne + og * (jvf.\ HR afsnit 7.3 og
+  7.4) med typerne
+
+  \texttt{( + ) : figure * figure -> figure}
+
+  og
+
+  \texttt{( * ) : (int * int) * figure -> figure}
+
+  hvor \texttt{+} anvender konstruktøren \texttt{Mix} på sine argumenter
+  og \texttt{*} anvender funktionen \texttt{move} på sine argumenter.
+
+\item Genoversæt modulet og lav igen opgave ø2(b), men hvor du bruger \texttt{+} i
+stedet for \texttt{Mix} til at konstruere figuren.  Bemærk, at du ikke
+skal præfixe \texttt{+} med modulnavnet.
+
+\item Lav en ny figur, hvor du bruger både \texttt{+} og \texttt{*}.
+
+  \end{enumerate}
+\end{enumerate}
+
+
+\end{document}

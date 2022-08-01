@@ -1,0 +1,12 @@
+Write a function \lstinline{succCard : card -> card option} that takes
+a card as argument and returns the next card as an optional value.  To
+implement the function, use a \lstinline{match} construct and the two
+functions \lstinline{succSuit} and \lstinline{succRank}.
+
+The call \lstinline{succCard (Ace, Spades)} should return
+\lstinline{None}.
+%
+If \lstinline{succRank} returns \lstinline{None} and
+\lstinline{succSuit} returns \lstinline[mathescape]{Some $s$}, where
+$s$ is a suit, \lstinline{succCard} should return the value
+\lstinline[mathescape]{Some (Two,$s$)}.

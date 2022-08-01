@@ -1,0 +1,3 @@
+sudo mozroots --import --sync
+curl -L http://nuget.org/nuget.exe -o nuget.exe
+mono nuget.exe install MathNet.Numerics.FSharp -Pre -OutputDirectory packages

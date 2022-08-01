@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage[school,simplified]{pgf-umlcd}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{class}[text width=5em, text height=1em]{spiller}{0,0}
+  \end{class}
+  \begin{class}[text width=5em, text height=1em]{plade}{-2,-2}
+   \end{class}
+   \begin{class}[text width=5em, text height=1em]{skib}{2,-2}
+   \end{class}
+  \composition{spiller}{}{}{plade}
+  \unidirectionalAssociation{plade}{}{}{skib}
+  \composition{spiller}{}{}{skib}
+\end{tikzpicture}
+\end{document}

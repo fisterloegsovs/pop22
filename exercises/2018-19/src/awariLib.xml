@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>awariLib</name></assembly>
+<members>
+<member name="T:Awari.player">
+<summary>
+ A game is played between two players
+</summary>
+</member>
+<member name="T:Awari.board">
+<summary>
+ A board consists of pits.
+</summary>
+</member>
+<member name="T:Awari.pit">
+<summary>
+  Each player has a set of regular pits and one home pit. A pit holds zero or more beans
+</summary>
+</member>
+<member name="M:Awari.play(Microsoft.FSharp.Collections.FSharpList{System.Int32},Awari.player)">
+ <summary>
+ Play game until one side is empty
+ </summary>
+ <param name="b">The initial board</param>
+ <param name="p">The player who starts</param>
+ <returns>A new board after one player has won</returns>
+</member>
+<member name="M:Awari.turn(Microsoft.FSharp.Collections.FSharpList{System.Int32},Awari.player)">
+ <summary>
+ Interact with the user through getMove to perform a possibly repeated turn of a player
+ </summary>
+ <param name="b">The present state of the board</param>
+ <param name="p">The player, whose turn it is</param>
+ <returns>A new board after the player's turn</returns>
+</member>
+<member name="M:Awari.distribute(Microsoft.FSharp.Collections.FSharpList{System.Int32},Awari.player,System.Int32)">
+ <summary>
+ Distributing beans counter clockwise, capturing when relevant
+ </summary>
+ <param name="b">The present statu of the board</param>
+ <param name="p">The player, whos beans to distribute</param>
+ <param name="i">The regular pit to distribute</param>
+ <returns>A new board after the beans of pit i has been distributed, and which player's pit the last bean landed in</returns>
+</member>
+<member name="M:Awari.getMove(Microsoft.FSharp.Collections.FSharpList{System.Int32},Awari.player,System.String)">
+ <summary>
+ Get the pit of next move from the user
+ </summary>
+ <param name="b">The board the player is choosing from</param>
+ <param name="p">The player, whose turn it is to choose</param>
+ <param name="q">The string to ask the player</param>
+ <returns>The pit the player has chosen</returns>
+</member>
+<member name="M:Awari.isGameOver(Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+ <summary>
+ Check whether the game is over
+ </summary>
+ <param name="b"> A board to check</param>
+ <returns>True if either side has no beans</returns>
+</member>
+<member name="M:Awari.isHome(Microsoft.FSharp.Collections.FSharpList{System.Int32},Awari.player,System.Int32)">
+ <summary>
+ Check wether a pit is the player's home
+ </summary>
+ <param name="b">A board to check</param>
+ <param name="p">The player, whos home to check</param>
+ <param name="i">A regular or home pit of a player</param>
+ <returns>True if either side has no beans</returns>
+</member>
+<member name="M:Awari.printBoard(Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+ <summary>
+ Print the board
+ </summary>
+ <param name="b"> A board to be printed </param>
+ <returns>() - it just prints</returns>
+ , e.g.,
+ <remarks>
+ Output is for example,
+ <code>
+      3  3  3  3  3  3
+   0                    0
+      3  3  3  3  3  3
+ </code>
+ where player 1 is bottom row and rightmost home
+ </remarks>
+</member>
+</members>
+</doc>

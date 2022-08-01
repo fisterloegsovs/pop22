@@ -1,0 +1,18 @@
+\label{gcd} The greatest common divisor (gcd) between two integers $t$
+and $n$ is the largest integer $c$ that divides both $t$ and $n$ with
+$0$ as remainder. Euclid's
+algorithm\footnote{\url{https://en.wikipedia.org/wiki/Greatest_common_divisor}}
+finds the greatest common divisor, using recursion, as follows:
+  \begin{align}
+    \text{gcd}(t,0) &= t, \label{gcd:1}
+    \\ \text{gcd}(t,n) &= \text{gcd}(n, t \text{ \% } n), \label{gcd:2}
+  \end{align}
+Here $\%$ is the remainder operator (as in F\#).
+\begin{enumerate}
+\item Implement Euclid's algorithm by writing a recurive function
+  \begin{quote}
+    \lstinline{gcd : t:int -> n:int -> int}
+  \end{quote}
+\item Make a white- and blackbox test of your implementation.
+\item Write down a tracing-by-hand derivation for the calls \lstinline{gcd 8 2} and \lstinline{gcd 2 8}.
+\end{enumerate}

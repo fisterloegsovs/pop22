@@ -1,0 +1,16 @@
+\label{wordCoocurrence}
+Extend your library with the function
+\begin{quote}
+  \mbox{\lstinline!type wordCooccurrences = (string * wordHistogram) list!}
+  \\\mbox{\lstinline!cooccurrenceOfWords : src:string -> wordCooccurrences!}
+\end{quote}
+which counts occurrences of each pair of words in a string and
+returns a list of pairs. Each returned pair must be a
+word and the wordHistogram of counts of cooccurrences. E.g., for the
+string ``a hat and a cat'' the function must return,
+\begin{quote}
+  \mbox{\lstinline![("a", [("hat", 1); ("cat", 1)]);!}
+  \\\hspace*{.5em}\mbox{\lstinline!("and", [("a", 1)]);!}
+  \\\hspace*{.5em}\mbox{\lstinline!("cat", []);!}
+  \\\hspace*{.5em}\mbox{\lstinline!("hat", [("and", 1)])]!}
+\end{quote}

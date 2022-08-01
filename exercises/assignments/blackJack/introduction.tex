@@ -1,0 +1,21 @@
+\sbl er en forsimplet udgave af kortspillet Blackjack. I \sbl\ spiller man ikke om penge/jetoner men blot om sejr/tab mellem en spiller og dealer.  Reglerne for \sbl er som følger:
+
+Spillet består af en dealer, 1-5 spillere samt et normalt kortspil (uden jokere). Ved spillets start får dealer og hver spiller tildelt 2 tilfældige kort fra bunken som placeres med billedsiden opad foran spilleren, så alle kan se dem. I \sbl\ spilles der med åbne kort dvs. alle trukne kort til hver en tid er synlige for alle spillere.  Kortene har værdi som følger:
+\begin{enumerate}
+\item Billedkort (knægt, dame og konge) har værdien 10
+\item Es kan antage enten værdien 1 eller 11
+\item Resten af kortene har den påtrykte værdi
+\end{enumerate}
+For hver spiller gælder spillet om at ende med en korthånd hvis sum af værdier er højere en dealers sum af værdier,  uden at summen overstiger 21, i hvilket tilfælde spilleren er "bust". Spillerne får nu en tur hver, hvor de skal udføre en af følgende handlinger:
+\begin{enumerate}
+\item "Stand": Spilleren/dealeren vælger ikke at modtage kort og turen går videre.
+\item "Hit": Spilleren/dealeren vælger at modtage kort fra bunken et ad gangen indtil han/hun vælger at stoppe og turen går videre.
+\end{enumerate}
+Det er dealers tur til sidst efter alle andre spillere har haft deres tur. Når dealer har haft sin tur afsluttes spillet. Ved spillets afslutning afgøres udfaldet på følgende måde: En spiller vinder hvis ingen af følgende tilfælde gør sig gældende:
+\begin{enumerate}
+\item Spilleren er "bust"
+\item Summen af spillerens kort-værdier er lavere end, eller lig med dealers sum af kort-værdier
+\item Både spilleren og dealer har SimpleJack (SimpleJack er et Es og et billedkort)
+\end{enumerate}
+Bemærk at flere spillere altså godt kan vinde på en gang. Et spil \sbl\ er mellem en spiller og dealer, 
+så med 5 spillere ved bordet, er det altså 5 separate spil som spilles.

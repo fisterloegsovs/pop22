@@ -1,0 +1,27 @@
+A color is often represented as a triple (red, green, blue), where
+each entry is called a color-channel, and each channel is typically an
+integer between and including 0 and 255:
+\begin{align}
+  c &= (r, g,b).
+\end{align}
+Colors can be added, by adding their channels,
+\begin{align}
+  c_1 + c_2 &= \big(\text{trunc}(r_1+r_2), \text{trunc}(g_1+g_2), \text{trunc}(b_1+b_2)\big),
+  \\c_i &= (r_i, g_i,b_i),
+  \\\text{trunc}(v) &=
+  \begin{cases}
+    0, &v < 0
+    \\255, &v > 255
+    \\v, &\text{ellers}
+  \end{cases}
+\end{align}
+and colors can be scaled by a factor by multiplying each channel with
+that same factor,
+\begin{align}
+  a c &= \big(\text{trunc}(a r), \text{trunc}(a g), \text{trunc}(a b)\big).
+\end{align}
+Colors where the channels have identical values, $v=r=g=b$, are grays,
+and colors are converted to grays as the average,
+\begin{align}
+  v = \text{gray}(c) &= \frac{r+g+b}{3}.
+\end{align}

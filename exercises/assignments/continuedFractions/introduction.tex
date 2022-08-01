@@ -1,0 +1,104 @@
+In this assignment, you will work with simple continued fractions\footnote{\url{https://en.wikipedia.org/wiki/Continued_fraction}}, henceforth just called continued fractions. Continued fractions are lists of integers which represent real numbers. The list is finite for rational numbers and infinite for irrational numbers.
+
+\paragraph{Continued fractions to decimal numbers}
+A continued fraction is written as $x = [q_0; q_1, q_2, \ldots]$ and the corresponding decimal number is found by the following recursive algorithm:
+\begin{equation}
+  x = q_0 + \frac{1}{q_1 + \frac{1}{q_2 + \dots}}.
+\end{equation}
+The series of fractions continues as long as there are elements in the continued fraction.
+
+For example, $[3;4, 12, 4] = 3.245$, since:
+\begin{align}
+  x &= 3 + \frac{1}{4 + \frac{1}{12 + \frac{1}{4}}}
+  \\&= 3 + \frac{1}{4 + \frac{1}{12.25}}
+  \\&= 3 + \frac{1}{4.081632653}
+  \\&= 3.245.
+\end{align}
+Note that all but the first digit must be larger than 0, e.g., $[1;0]$ is an illigal number, and that every rational number has exactly 2 representations $[q_0; q_1,\ldots,q_n] = [q_0; q_1,\ldots,(q_n-1),1]$ where the first is called the canonical representation. E.g., $[2; 3] = [2; 2, 1]$, since
+\begin{align}
+  2 + \frac{1}{3} = 2 + \frac{1}{2 + \frac{1}{1}}.
+\end{align}
+
+
+\paragraph{Decimal numbers to continued fractions}
+For a given number $x$ on decimal form, its continued fraction $[q_0; q_1, q_2, \ldots]$ can be found using the following algorithm:
+
+Let $x_0 = x$ and $i \geq 0$, and calculate
+\begin{align}
+q_i &= \lfloor x_i \rfloor\\
+r_i &= x_i - q_i\\
+x_{i+1} &= 1/r_i\\
+\end{align}
+recursively until $r_i = 0$. The continued fraction is then the sequences of $q_i$.
+
+For example, if $x=3.245$ then
+\begin{center}
+  \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    $i$ & $x_i$ & $q_i = \lfloor x_i \rfloor$ & $r_i = x_i - q_i$ & $x_{i+1}=1/r_i$\\
+    \hline
+    0 & 3.245 & 3 & 0.245 & 4.081632653\ldots\\
+    1 & 4.081632653\ldots & 4 & 0.081632653 & 12.25\\
+    2 & 12.25 & 12 & 0.25 & 4\\
+    3 & 4 & 4 & 0 & -\\
+    \hline
+  \end{tabular}
+\end{center}
+and hence, the continued fraction is in the third column as $3.245 = [3; 4, 12, 4]$.
+
+% \paragraph{Heltalsbrøk til kædebrøk}
+% Kædebrøken for en heltals brøk $t/n$ udregnes ved
+% følgende algoritme: Lad $r_{-2} = t$ og $r_{-1}=n$ og $i\geq-2$, udregn
+% \begin{align}
+%   r_i &= r_{i-2}\text{ \% }r_{i-1}\quad\text{(rest ved heltalsdivision)},\label{rest}
+%   \\q_i &= r_{i-2}\text{ div }r_{i-1}\quad\text{(heltalsdivision)},\label{div}
+% \end{align}
+% indtil $r_{i-1}=0$. Så vil $[q_0; q_1,\ldots,q_j]$ vil være $t/n$ som
+% kædebrøk. F.eks.\ for brøken $t/n = 649/200$ beregnes:
+% \begin{center}
+%   \begin{tabular}{|r|r|r|r|r|}
+%     \hline
+%     $i$ & $r_{i-2}$ & $r_{i-1}$ & $r_i = r_{i-2}\text{ \% }r_{i-1} $ & $q_i = r_{i-2} \text{ div } r_{i-1}$\\
+%     \hline
+%     0 & 649 & 200 & 49 & 3 \\
+%     1 & 200 & 49 & 4 & 4\\
+%     2 & 49 & 4 & 1  & 12\\
+%     3 & 4 & 1 & 0  & 4\\
+%     4 & 1 & 0 & -  & -\\
+%     \hline
+%   \end{tabular}
+% \end{center}
+% Kædebrøken aflæses som højre søjle: $649/200 = [3; 4, 12, 4]$.
+
+% Kædebrøker af heltalsbrøker $t/n$ er særligt effektive at udregne
+% vha.\ Euclids algoritme for største fællesnævner. Algoritmen i
+% Opgave~\ref{gcd} regner rekursivt på relationen mellem heltalsdivision
+% og rest: Hvis $a = t \text{ div } n$ er heltalsdivision mellem $t$ og
+% $n$, og $b = t \text{ \% } n$ er resten efter heltalsdivision, så er
+% $t = a n + b$. For \eqref{rest}--\eqref{div} skal der altså gælde, at
+% $r_{i-2} = q_i r_{i-1} + r_i$. Algoritmen i Opgave~\ref{gcd} regner
+% udelukkende på $r_i$ som transformationen
+% $(r_{i-2}, r_{i-1}) \rightarrow (r_{i-1}, r_i) = (r_{i-1},
+% r_{i-2}\text{ \% }r_{-1})$ indtil $(r_{i-2}, r_{i-1}) =
+% (r_{i-2},0)$. Hvis man tilføjer beregning af $q_i$ i rekursionen, har
+% man samtidigt beregnet brøken som kædebrøk.
+
+
+% \paragraph{Kædebrøk til Heltalsbrøk(er)}
+% En kædebrøk kan approximeres som en heltalsbrøk
+% $\frac{t_i}{n_i}, i \geq 0$ ved følgende algorime. Lad
+% $t_{-2} = n_{-1} = 0$ og $t_{-1} = n_{-2} =1$, udregn
+% \begin{align}
+%   t_i &= q_it_{i-1}+t_{i-2},
+%   \\n_i &= q_in_{i-1}+n_{i-2},
+% \end{align}
+% indtil $i$ er passende stor, eller der ikke er flere cifre
+% $q_i$.  F.eks.\ for kædebrøken $[3; 4, 12, 4]$ beregnes,
+% \begin{align}
+%   \frac{t_0}{n_0} &= \frac{q_0t_{-1} + t_{-2}}{q_0n_{-1}+n_{-2}} = \frac{3\cdot 1+0}{3\cdot 0 + 1} = \frac{3}{1} = 3,
+%   \\\frac{t_1}{n_1} &= \frac{q_1t_0 + t_{-1}}{q_1n_0+n_{-1}} = \frac{4\cdot 3 + 1}{4\cdot 1+0} = \frac{13}{4} = 3.25,
+%   \\\frac{t_2}{n_2} &= \frac{q_2t_1 + t_{0}}{q_2n_1+n_{0}} = \frac{12\cdot 13 + 3}{12\cdot 4 + 1} = \frac{159}{49} = 3.244897959\ldots,
+%   \\\frac{t_3}{n_3} &= \frac{q_3t_2 + t_{1}}{q_3n_2+n_{1}} = \frac{4\cdot 159 + 13}{4\cdot 49+4} = \frac{649}{200} = 3.245.
+% \end{align}
+% Altså kan kædebrøkken $[3;4, 12, 4]$ approximeres som heltalsbrøkkerne
+% $3/1$, $13/4$, $159/49$ og $649/200$ med gradvist stigende nøjagtighed.

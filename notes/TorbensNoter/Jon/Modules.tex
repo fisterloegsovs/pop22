@@ -1,0 +1,313 @@
+\documentclass[a4paper]{article}
+
+\usepackage{cmap}
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Introduction to Modules in F\#}
+
+\author{Torben Mogensen}
+\date{\today}
+
+\maketitle
+
+\noindent
+These notes is a brief introduction to modules to supplement the
+textbook.  Read this first, and then Chapter 7 in the textbook.
+
+\section{Simple Modules}
+
+\emph{Modules} are a way to split a program into multiple files.  A
+program is built from a number of modules and a single \texttt{.fsx}
+file that binds these modules together to an executable program.  A
+module is in itself not executable, but functions declared in a module
+can be called from either the interactive system (\texttt{fsharpi}),
+from other modules or from a \texttt{.fsx} file.
+
+A simple module is a file \texttt{\emph{filename}.fs} which starts
+with a line of the form \texttt{module \emph{filename}} followed by
+declarations.  Note that the filename specified in the \texttt{module}
+line must be the same as the name of the file (sans extension).  As an
+example, we can define the following module in the file
+\texttt{Fib.fs}:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+module Fib
+
+let rec fib n = if n<2 then n else fib(n-1) + fib(n-2)
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+If we start the interactive system with the command \texttt{fsharpi
+  Fib.fs}, we get the following output:
+
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+F# Interactive for F# 4.0 (Open Source Edition)
+Freely distributed under the Apache 2.0 Open Source License
+
+For help type #help;;
+
+[Loading /home/torbenm/DIKU/home/whm779/vile-backup/PoP2016/Fib.fs]
+
+namespace FSI_0002
+  val fib : n:int -> int
+
+> 
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+This shows that we have defined a \texttt{namespace} containing a
+declaration of a value \texttt{fib} of type \texttt{int -> int}.  A
+namespace is a set of declarations that do not conflict with or
+replace declarations in other namespaces.
+
+Note that \texttt{fsharpi} does not terminate (as it would if given a
+\texttt{.fsx} file), but shows a prompt where you can type expressions
+and declarations.
+
+To call \texttt{fib}, we must prefix the call with the the module
+name, so we can at the prompt write \texttt{Fib.fib 7;;} followed by
+newline (which we from now on will assume implicit after a double
+semicolon) and get \texttt{13} as a result.
+
+It is possible to omit the module prefix when using names declared in
+the module by \emph{opening the module}.  If we at the prompt write
+\texttt{open Fib;;}, we can afterwards simply write \texttt{fib 8} to
+get \texttt{21} as a result.  Opening a module will, however, replace
+any current declarations that overlap with declarations in the module,
+so the namespaces are no longer separate.  So it should be done with
+caution and is generally not recommended.  Namespaces can be nested,
+which is common for library modules, so file operations are found in
+the module / namespace \texttt{System.IO.File}.  To avoid writing the
+full prefix, it is common to partly open this namespace by writing
+\texttt{open System.IO}, after which it is sufficient to write only
+the \texttt{File} prefix, e.g, \texttt{File.OpenText}.  Partly opening
+a namespace (mostly) prevents names from the current namespace from
+being overwritten.  So a general advise is not to fully open
+namespaces / modules, but partially opening them is common practice.
+
+One of the advantages of using modules is that modules can be compiled
+separately.  To compile the module above, we write \texttt{fsharpc -a
+  Fib.fs}.  This produces a file \texttt{Fib.dll}, where the
+\texttt{dll} extension is used for libraries and modules that can be
+shared between multiple programs.  We can now start the interactive
+system using the command \texttt{fsharpi -r Fib.dll}, which makes the
+module available in the same way as when writing \texttt{fsharpi
+  Fib.fs}, but it is faster to do so, since the module is already
+compiled.  If we use the \texttt{Fib} module in an executable file,
+say, \texttt{FunnyFunctions.fsx}, we can do so by using the prefix,
+e.g, \texttt{Fib.fib} or by opening the \texttt{Fib} module before
+using the \texttt{fib} function.  If \texttt{FunnyFunctions.fsx} is
+executed using \texttt{fsharpi}, we must use the command
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+fsharpi -r Fib.dll FunnyFunctions.fsx
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+If we, instead, compile \texttt{FunnyFunctions.fsx} to make a
+\texttt{.exe} file, we must use the command
+
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+fsharpc -r Fib.dll FunnyFunctions.fsx
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+which produces the executable \texttt{FunnyFunctions.exe}, which can
+be executed using \texttt{mono}.
+
+\section{Signatures}
+
+We have, so far, seen the following motivations for using modules:
+
+\begin{itemize}
+\item We can reuse a module in several programs without having to copy
+  the text.
+\item We can compile a module separately from the program that uses
+  the module.
+\item We get separate namespaces, so we can have multiple
+  declarations using the same name, as long as they are in different
+  namespaces.  We have seen examples of this in the \texttt{List} and
+  \texttt{Array} modules that both define functions called
+  \texttt{length}, \texttt{map}, and so on.
+\end{itemize}
+
+\noindent
+But there is a further motivation for using modules: The user of the
+module need not worry about \emph{how} the functions defined in the
+module are defined, only their type and behaviour.  So we can hide
+details of the implementation from the user of the module, and we can
+change these details without invalidating the programs that use the
+module (though these may have to be recompiled).  Hiding details of
+implementation in this way is called \emph{abstraction}.
+
+To increase abstraction, we can separate a module into a specification
+part and an implementation part.  The specification part is called a
+\emph{signature} or \emph{interface} and contains declarations of the
+types of the names defined in the module, while the implementation
+part has the full declarations of these names.  The signature is
+written in a separate file \texttt{\emph{filename}.fsi}, where the
+file name is the module name.  For example, we can make a signature
+for the \texttt{Fib} module by writing a file \texttt{Fib.fsi} with
+the content
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+module Fib
+
+val fib : int -> int
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+Note that only the type of \texttt{fib} is specified.  The
+\texttt{val} keyword specifies that \texttt{fib} is a value (as
+opposed to a type).
+
+We use the signature file when compiling a module:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+fsharpc -a Fib.fsi Fib.fs
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+will compile the module \texttt{Fib.fs} to a library file
+\texttt{Fib.dll}, but it will also verify that \texttt{Fib.fs} defines
+all the names specified in the interface and with the specified
+types.  \texttt{Fib.fs} can define more names than specified in the
+interface, but not less, and the types can not differ.  Furthermore,
+only the names specified in the interface can be used outside the
+module.  For example, if \texttt{Fib.fs} in addition to declaring
+\texttt{fib} declares a function \texttt{fac}, \texttt{fac} is hidden
+and can not be accessed by programs using the module.  This allows
+auxiliary functions used in the implementation to be hidden from users
+of the module.
+
+\section{Overloaded operators}
+
+Some operators in F\# are \emph{overloaded}, which means that the
+operator works on several different types.  For example, \texttt{+}
+works on both integers, floats and strings.
+
+We can define overloaded operators on our own types, as long as they
+are enumerated types or sum types.  We do this by adding\emph{member
+  functions} to the type declaration.  For example, we can specify a
+number type with a signature \texttt{Number.fsi} containing
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+module Number
+
+[<Sealed>]
+type Number =
+  static member ( + ) : Number * Number -> Number
+  static member ( - ) : Number * Number -> Number
+  static member ( * ) : Number * Number -> Number
+  static member ( / ) : Number * Number -> Number
+
+val ofInt : int -> Number
+val show : Number -> string
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+The \texttt{[<Sealed>]} attribute is required for adding member
+functions to a type in a signature, unless the type is specified to be
+a sum type (discriminated union type) in the signature.  The
+\texttt{[<Sealed>]} is an attrubute of the type and not the module, so
+if several types in a module have member functions, they must all be
+sealed.
+
+This signature says that the module has a type called \texttt{Number}
+that overloads the four arithmetic operators.  Additionally, the
+module has a function for converting an integer to a number and for
+converting a number to a string.
+
+We can make an implementation \texttt{Number.fs} of this signature
+where the \texttt{Number} type is a sum type having both integers and
+reals:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+module Number
+
+type Number =
+  | I of int | F of float
+  static member ( + ) (a, b) =
+    match (a,b ) with
+    | (I m, I n) -> I (m + n)
+    | (I m, F y) -> F (float m + y)
+    | (F x, I n) -> F (x + float n)
+    | (F x, F y) -> F (x + y)
+
+  static member ( - ) (a, b) =
+    match (a,b ) with
+    | (I m, I n) -> I (m - n)
+    | (I m, F y) -> F (float m - y)
+    | (F x, I n) -> F (x - float n)
+    | (F x, F y) -> F (x - y)
+
+  static member ( * ) (a, b) =
+    match (a,b ) with
+    | (I m, I n) -> I (m * n)
+    | (I m, F y) -> F (float m * y)
+    | (F x, I n) -> F (x * float n)
+    | (F x, F y) -> F (x * y)
+
+  static member ( / ) (a, b) =
+    match (a,b ) with
+    | (I m, I n) -> if m % n = 0 then I (m / n)
+                    else F (float m / float n)
+    | (I m, F y) -> F (float m / y)
+    | (F x, I n) -> F (x / float n)
+    | (F x, F y) -> F (x / y)
+
+let ofInt n = I n
+
+let show = function
+  | I m -> sprintf "%d" m
+  | F x -> sprintf "%g" x
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+Note that the keyword \texttt{static} must be aligned with the first
+\texttt{|} in the type declaration.
+
+If we compile this module using the command
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+fsharpc -a Number.fsi Number.fs
+\end{verbatim}
+\renewcommand{\baselinestretch}{1}
+
+\noindent
+and start the interactive system using the command \texttt{fsharpi -r
+  Number.dll}, we can write expressions like \texttt{Number.show
+  (Number.ofInt 7 / Number.ofInt 5);;} and get the result
+\texttt{"1.4"}.  Note that we do not need to specify a prefix for the
+\texttt{/} operator.
+
+\end{document}
+
+

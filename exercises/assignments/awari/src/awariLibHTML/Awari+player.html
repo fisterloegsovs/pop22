@@ -1,0 +1,795 @@
+<html>
+  <head>
+    <title>Awari.player</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="index.html">awariLib</a> : <a href="index.html"> Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Awari.player">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Awari.player:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Awari.player:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Awari.player:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Awari.player">Awari.player  Class</h1>
+    <p class="Summary" id="T:Awari.player:Summary">
+ A game is played between two players
+</p>
+    <div>
+      <h2>Syntax</h2>
+      <div class="Signature" id="T:Awari.player:Signature">[Microsoft.FSharp.Core.CompilationMapping(Microsoft.FSharp.Core.SourceConstructFlags.SumType)]<br />[System.Diagnostics.DebuggerDisplay("{__DebugDisplay(),nq}")]<br />public sealed class  <b>Awari.player</b> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IStructuralComparable">IStructuralComparable</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IStructuralEquatable">IStructuralEquatable</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.IComparable">IComparable</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.IComparable`1">IComparable&lt;Awari.player&gt;</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.IEquatable`1">IEquatable&lt;Awari.player&gt;</a></div>
+    </div>
+    <div class="Remarks" id="T:Awari.player:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Awari.player:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Awari.player:Docs:Version Information">
+        <b>Namespace: </b>
+        <br />
+        <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>.
+							</p>
+        <h2 class="Section">Public Properties</h2>
+        <div class="SectionBox" id="Public Properties">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Awari.player.IsPlayer1">IsPlayer1</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Awari.player.IsPlayer2">IsPlayer2</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div>static </div></td>
+                <td>
+                  <b>
+                    <a href="#P:Awari.player.Player1">Player1</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="Awari+player.html">Awari.player</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div>static </div></td>
+                <td>
+                  <b>
+                    <a href="#P:Awari.player.Player2">Player2</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="Awari+player.html">Awari.player</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>[read-only]<div></div></td>
+                <td>
+                  <b>
+                    <a href="#P:Awari.player.Tag">Tag</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Methods</h2>
+        <div class="SectionBox" id="Public Methods">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.CompareTo(Awari.player)">CompareTo</a>
+                  </b>(<a href="Awari+player.html">Awari.player</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.CompareTo(System.Object)">CompareTo</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.CompareTo(System.Object,System.Collections.IComparer)">CompareTo</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IComparer">IComparer</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.Equals(Awari.player)">Equals</a>
+                  </b>(<a href="Awari+player.html">Awari.player</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.Equals(System.Object)">Equals</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer)">Equals</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IEqualityComparer">IEqualityComparer</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.GetHashCode()">GetHashCode</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.GetHashCode(System.Collections.IEqualityComparer)">GetHashCode</a>
+                  </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IEqualityComparer">IEqualityComparer</a>)<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>override </div>
+                </td>
+                <td colspan="2">
+                  <b>
+                    <a href="#M:Awari.player.ToString()">ToString</a>
+                  </b>()<nobr> : <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a></nobr><blockquote><span class="NotEntered">Documentation for this section has not yet been entered.</span></blockquote></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Awari.player:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="M:Awari.player.CompareTo(Awari.player)">CompareTo Method</h3>
+        <blockquote id="M:Awari.player.CompareTo(Awari.player):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>CompareTo</b> (<a href="Awari+player.html">Awari.player</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(Awari.player):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(Awari.player):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(Awari.player):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(Awari.player):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.CompareTo(System.Object)">CompareTo Method</h3>
+        <blockquote id="M:Awari.player.CompareTo(System.Object):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>CompareTo</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(System.Object):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(System.Object):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(System.Object):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(System.Object):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer)">CompareTo Method</h3>
+        <blockquote id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>CompareTo</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IComparer">IComparer</a> comp)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>comp</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.CompareTo(System.Object,System.Collections.IComparer):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.Equals(Awari.player)">Equals Method</h3>
+        <blockquote id="M:Awari.player.Equals(Awari.player):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="Awari+player.html">Awari.player</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(Awari.player):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(Awari.player):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(Awari.player):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(Awari.player):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.Equals(System.Object)">Equals Method</h3>
+        <blockquote id="M:Awari.player.Equals(System.Object):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(System.Object):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(System.Object):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(System.Object):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(System.Object):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer)">Equals Method</h3>
+        <blockquote id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>Equals</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a> obj, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IEqualityComparer">IEqualityComparer</a> comp)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer):Parameters">
+            <dl>
+              <dt>
+                <i>obj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>comp</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.Equals(System.Object,System.Collections.IEqualityComparer):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.GetHashCode()">GetHashCode Method</h3>
+        <blockquote id="M:Awari.player.GetHashCode():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>GetHashCode</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.GetHashCode():Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.GetHashCode():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.GetHashCode():Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer)">GetHashCode Method</h3>
+        <blockquote id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer):member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override sealed <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>GetHashCode</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Collections.IEqualityComparer">IEqualityComparer</a> comp)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer):Parameters">
+            <dl>
+              <dt>
+                <i>comp</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer):Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.GetHashCode(System.Collections.IEqualityComparer):Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Awari.player.IsPlayer1">IsPlayer1 Property</h3>
+        <blockquote id="P:Awari.player.IsPlayer1:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]<br />[System.Diagnostics.DebuggerNonUserCode]<br />[get: System.Diagnostics.DebuggerNonUserCode]<br />public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>IsPlayer1</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Awari.player.IsPlayer1:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Awari.player.IsPlayer1:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Awari.player.IsPlayer1:Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Awari.player.IsPlayer2">IsPlayer2 Property</h3>
+        <blockquote id="P:Awari.player.IsPlayer2:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]<br />[System.Diagnostics.DebuggerNonUserCode]<br />[get: System.Diagnostics.DebuggerNonUserCode]<br />public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>IsPlayer2</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Awari.player.IsPlayer2:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Awari.player.IsPlayer2:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Awari.player.IsPlayer2:Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Awari.player.Player1">Player1 Property</h3>
+        <blockquote id="P:Awari.player.Player1:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]<br />[System.Diagnostics.DebuggerNonUserCode]<br />[get: Microsoft.FSharp.Core.CompilationMapping(Microsoft.FSharp.Core.SourceConstructFlags.UnionCase, 0)]<br />public static <a href="Awari+player.html">Awari.player</a> <b>Player1</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Awari.player.Player1:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Awari.player.Player1:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Awari.player.Player1:Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Awari.player.Player2">Player2 Property</h3>
+        <blockquote id="P:Awari.player.Player2:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]<br />[System.Diagnostics.DebuggerNonUserCode]<br />[get: Microsoft.FSharp.Core.CompilationMapping(Microsoft.FSharp.Core.SourceConstructFlags.UnionCase, 1)]<br />public static <a href="Awari+player.html">Awari.player</a> <b>Player2</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Awari.player.Player2:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Awari.player.Player2:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Awari.player.Player2:Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="P:Awari.player.Tag">Tag Property</h3>
+        <blockquote id="P:Awari.player.Tag:member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]<br />[System.Diagnostics.DebuggerNonUserCode]<br />[get: System.Diagnostics.DebuggerNonUserCode]<br />public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>Tag</b>  { get; }</div>
+          <h4 class="Subsection">Value</h4>
+          <blockquote class="SubsectionBox" id="P:Awari.player.Tag:Value">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="P:Awari.player.Tag:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="P:Awari.player.Tag:Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="M:Awari.player.ToString()">ToString Method</h3>
+        <blockquote id="M:Awari.player.ToString():member">
+          <div class="msummary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2>Syntax</h2>
+          <div class="Signature">public override <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> <b>ToString</b> ()</div>
+          <h4 class="Subsection">Returns</h4>
+          <blockquote class="SubsectionBox" id="M:Awari.player.ToString():Returns">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="M:Awari.player.ToString():Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="M:Awari.player.ToString():Version Information">
+            <b>Namespace: </b>
+            <br />
+            <b>Assembly: </b>awariLib (in awariLib.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>

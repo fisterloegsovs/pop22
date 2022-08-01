@@ -1,0 +1,145 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Uge(r)seddel 3 - individuel opgave}
+\author{Jon Sporring}
+\date{19.\ - 25.\ september.\\Afleveringsfrist: onsdag d.\ 28.\ september kl.\ 22:00}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde individuelt. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at arbejde med:
+\begin{itemize}
+\item bindinger af værdier og funktioner
+\item muterbare variable
+\item kodedokumentation
+\item betingelser og løkker
+\item rekursive funktioner
+\end{itemize}
+
+Opgaverne for denne uge er delt i øve- og afleveringsopgaver. 
+
+Øve-opgaverne er:
+\begin{enumerate}[label=3ø.\arabic*,start=0]
+\item Indtast følgende program i en tekstfil, og oversæt og kør programmet 
+\begin{lstlisting}[caption=Expression for a line,label=linear]
+let a = 3
+let b = 4
+let x = 5
+printfn "%A * %A + %A = %A" a x b (a * x + b)
+\end{lstlisting}
+Forklar hvad parentesen i kaldet af \lstinline!printfn! funktionen gør godt for. Tilføj en linje i programmet, som udregner udtrykket $ax+b$ og binder resultatet til \lstinline!y!, og modificer kaldet til \lstinline!printfn! så det benytter denne nye binding. Er det stadig nødvendigt at bruge parentes?
+\item Listing~\ref{linear} benytter F\#'s letvægtssyntaks (Lightweight syntax). Omskriv programmet (enten med eller uden \lstinline!y! bindingen), så det benytter regulær syntaks.
+\item Følgende program,
+\begin{lstlisting}
+let firstName = "Jon"
+let lastName = "Sporring" in let name = firstName + " " + lastName;;
+printfn "Hello %A!" name;;
+\end{lstlisting}
+skulle skrive "`Hello Jon Sporring!"' ud på skærmen, men det indeholder desværre fejl og vil ikke oversætte. Ret fejlen(e). Omskriv programmet til en linje (uden brug af semikolonner). Overvej hvor mange forskellige måder, dette program kan skrives på, hvor det stadig gør brug af bindingerne \lstinline!firstName! \lstinline!lastName! \lstinline!name! og \lstinline!printfn! funktionen. 
+\item \label{linearFct} Tilføj en funktion
+  \begin{quote}
+    \mbox{\lstinline!f : a:int -> b:int -> x:int -> int!}
+  \end{quote}
+til Listing~\ref{linear}, hvor \lstinline!a!, \lstinline!b! og \lstinline!x! er argumenter til udtrykket $ax+b$, og modificer kaldet til \lstinline!printfn! så det benytter funktionen istedet for udtrykket \lstinline!(a * x + b)!.
+\item \label{table} Brug funktionen udviklet i Opgave~\ref{linearFct}, således at du udskriver værdien af funktionen for $a=3$, $b=4$ og $x=0\ldots5$ ved brug af 6 \lstinline!printfn! kommandoer. Modificer nu dette program vha. af en \lstinline!for! løkke og kun en \lstinline!printfn! kommando. Gentag omskrivningen men nu med en \lstinline!while! løkke.
+\item \label{multiplicationTable} Lav et program, som udskriver 10-tabellen på skærmen, således at der er 10 søjler og 10 rækker formateret som
+  \begin{center}
+    \begin{tabular}{rrrrr}
+      &1 & 2 & \dots & 10\\
+      1 &1 & 2 & \dots & 10\\
+      2 &2 & 4 & \dots & 20\\
+      \vdots \\
+      10 &10 & 20 & \dots & 100\\
+    \end{tabular}
+  \end{center}
+hvor venstre søjle og første række angiver de tal som er ganget sammen. Du skal benytte to \lstinline!for! løkker, og feltbredden for alle tallene skal være den samme. 
+\item Fakultetsfunktionen kan skrives som,
+  \begin{equation}
+    n! = \prod_{i=1}^n i = 1\cdot 2\cdot \ldots \cdot n
+  \end{equation}
+  \begin{enumerate}
+  \item Skriv en funktion
+    \begin{quote}
+      \mbox{\lstinline!fac : n:int -> int!}
+    \end{quote}
+som benytter en \lstinline!while! løkke og en lokal variable til at beregne fakultetsfunktionen.
+  \item Lav en variant
+    \begin{quote}
+      \mbox{\lstinline!recFac : n:int -> int!}
+    \end{quote}
+som benytter rekursion og ingen variable til at beregne fakultetsfunktionen.
+  \item Afprøv begge funktioner ved at lave et program, som laver en tabel med 3 kolonner \lstinline!n!, \mbox{\lstinline!fac n!} og \mbox{\lstinline!recFac n!}, og sikr dig at de 2 funktioner regner rigtigt.
+  \item Hvad er det største $n$, som disse funktioner kan beregne fakultetsfunktionen for, og hvad er begrænsningen?
+  \end{enumerate}
+\end{enumerate}
+
+Afleveringsopgaven er:
+\begin{enumerate}[label=3i.\arabic*,start=0]
+\item Betragt følgende sum af heltal,
+  \begin{equation}
+    \sum_{i=1}^n i.
+  \end{equation}
+  Man kan ved induktion vise, at $\sum_{i=1}^n i = \frac{n(n+1)}{2},\, n\geq 0$. Opgaven har følgende delafleveringer:
+  \begin{enumerate}
+  \item \label{sum} Skriv en funktion
+    \begin{quote}
+      \mbox{\lstinline!sum : n:int -> int!}
+    \end{quote}
+    som benytter en lokal variabel \lstinline!s! og en \lstinline!while! løkke til at udregne summen $1 + 2 + \dots + n$.
+  \item Lav en funktion
+    \begin{quote}
+      \mbox{\lstinline!recSum : n:int -> int!}
+    \end{quote}
+ som benytter rekursion og uden brug af variable til at udregne summen $1 + 2 + \dots + n$. Hint: $\sum_{i=1}^n i = n + \sum_{i=1}^{n-1} i$.
+  \item Lav en funktion
+    \begin{quote}
+      \mbox{\lstinline!simpleSum : n:int -> int!}
+    \end{quote}
+som i stedet benytter formlen $\frac{n(n+1)}{2}$.
+  \item Lav et program, som skriver en tabel ud på skærmen med 4 kolonner: \lstinline!n!, \lstinline!sum n!, \mbox{\lstinline!recSum n!} og \mbox{\lstinline!simpleSum n!}, og verificer at de 3 funktioner kommer til samme resultat.
+  \end{enumerate}
+\item Som en variant af Opgave~\ref{multiplicationTable}, skal der arbejdes med funktionen
+  \begin{quote}
+    \mbox{\lstinline!mulTable : n:int -> string!}
+  \end{quote}
+  som tager 1 argument og returnerer en streng indeholdende de første $1\leq n\leq 10$ linjer i multiplikationstabellen inklusiv ny-linje tegn, således at hele tabellen kan udskrives med et enkelt \lstinline!printf "%s"! statement. F.eks.\ skal kald til \mbox{\lstinline!mulTable 3!} returnere
+\begin{lstlisting}[caption=Eksempel på brug og output fra \lstinline!mulTab!,label=mulTab]
+printf "%s" (mulTab 3);;
+       1   2   3   4   5   6   7   8   9  10
+   1   1   2   3   4   5   6   7   8   9  10
+   2   2   4   6   8  10  12  14  16  18  20
+   3   3   6   9  12  15  18  21  24  27  30
+\end{lstlisting}
+  hvor alle indgange i tabellen har samme bredde. Opgaven har følgende delafleveringer
+  \begin{enumerate}
+  \item Lav
+    \begin{quote}
+      \mbox{\lstinline!mulTable : n:int -> string!}
+    \end{quote}
+så den som lokal værdibinding benytter en og kun en streng, der indholder tabellen for $n=10$, og benyt streng-indicering til at udtrække dele af tabellen for $n<10$.  Afprøv \mbox{\lstinline!mulTable n!} for $n= 1, 2, 3, 10$.
+  \item Lav
+    \begin{quote}
+      \mbox{\lstinline!loopMulTable : n:int -> string!}
+    \end{quote}
+så den benytter en lokal streng-variabel, som bliver opbygget dynamisk vha.\ 2 \lstinline!for! løkker og \lstinline!sprintf!.  Afprøv \mbox{\lstinline!loopMulTable n!} for $n= 1, 2, 3, 10$.
+  \item Lav
+    \begin{quote}
+      \mbox{\lstinline!recMulTable : n:int -> string!}
+    \end{quote}
+som benytter rekursion og uden brug af variable opbygger strengen. Afprøv \mbox{\lstinline!recMulTable n!} for $n= 1, 2, 3, 10$.
+  \item Lav et program, som benytter sammenligningsoperatoren for strenge \lstinline!=!, og som skriver en tabel ud på skærmen med 3 kolonner: \lstinline!n!, og resultatet af sammenligningen af \mbox{\lstinline!mulTable n!} med hhv.\ \mbox{\lstinline!loopMulTable n!} og \mbox{\lstinline!recMulTable n!} som \lstinline!true! eller \lstinline!false!.
+  \item Forklar forskellen mellem at benytte \lstinline!printf "%s"! og \lstinline!printf "%A"! til at printe resultatet af \lstinline!mulTab!.
+  \end{enumerate}
+\end{enumerate}
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!3i0a.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal besvarelserne indtastes som kommentarer i de fsx-filer, de hører til. Det hele skal samles i en zip fil og uploades på Absalon.
+
+\flushright God fornøjelse.
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

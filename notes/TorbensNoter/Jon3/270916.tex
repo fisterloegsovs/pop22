@@ -1,0 +1,314 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Rekursion og funktioner på lister}
+
+\date[2016]{PoP 27092016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}
+\frametitle{Skabelon for typisk funktion på lister}
+
+Når vi skal behandle en liste, opdeler vi typisk i to tilfælde:
+
+\begin{enumerate}[~1.]
+\item Den tomme liste, som matcher mønstret \texttt{[]}.
+\item Den ikke-tomme liste, som matcher mønstret \texttt{x~::~xs}.
+
+  Valget af variabelnavne er arbitrært.
+\end{enumerate}
+
+I det ikke-tomme tilfælde er \texttt{x} det første element i listen,
+og \texttt{xs} er resten af listen.  Da vi netop er ved at lave en
+funktion, der kan behandle lister, kan vi kalde denne for at behandle
+resten af listen.  Derfor bruger vi et rekursivt kald.
+
+Skabelonen for en funktion \texttt{f : $a$ list -> $b$}, hvor $a$ og
+$b$ kan være vilkårlige typer, er altså
+
+\vspace{1ex}
+\texttt{
+\begin{tabular}{l}
+let rec f alist =\\
+~~match alist with\\
+~~| [] -> \ldots\\
+~~| x :: xs -> \ldots~x \ldots~f xs \ldots
+\end{tabular}}
+
+\vspace{1ex}
+hvor \ldots~afhænger af den ønskede funktion.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Eksempler}
+
+\texttt{
+\begin{tabular}{l}
+let rec \textcolor{darkred}{product} alist =\\
+~~match alist with\\
+~~| [] -> \textcolor{darkgreen}{1}\\
+~~| x :: xs -> x \textcolor{darkgreen}{*} \textcolor{darkred}{product}
+xs\\
+\\
+let rec \textcolor{darkred}{length} alist =\\
+~~match alist with\\
+~~| [] -> \textcolor{darkgreen}{0}\\
+~~| x :: xs -> \textcolor{darkgreen}{1 +} \textcolor{darkred}{length} xs\\
+\\
+let rec \textcolor{darkred}{reverse} alist =\\
+~~match alist with\\
+~~| [] -> \textcolor{darkgreen}{[]}\\
+~~| x :: xs -> \textcolor{darkred}{reverse} xs \textcolor{darkgreen}{@ [}x\textcolor{darkgreen}{]}\\
+\end{tabular}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hvorfor virker det?}
+
+At en funktion kalder sig selv, kan virke som magi og list som at
+trække sig selv op ved hårpisken (som Baron von Münchausen).
+
+\begin{center}
+\includegraphics[width=0.25\textwidth]{muenchhausen.png}
+\end{center}
+
+Så hvorfor virker det?
+
+\pause
+
+\vspace{1ex}
+Fordi det rekursive kald tager en kortere liste som argument!
+
+\pause
+
+\vspace{1ex}
+Baronen hiver ikke sig selv op, men hiver en mindre baron op, som
+hiver en endnu mindre baron op, osv,\ indtil den mindste baron ikke
+skal hive noget op.
+\end{frame}
+
+\begin{frame}
+\frametitle{Eksempler}
+
+\texttt{
+\begin{tabular}{ll}
+&product [7; 9; 13] \\
+\pause$\leadsto$ & 7 * product [9; 13] \\
+\pause$\leadsto$ & 7 * 9 * product [13] \\
+\pause$\leadsto$ & 7 * 9 * 13 * product [] \\
+\pause$\leadsto$ & 7 * 9 * 13 * 1 \\
+\pause$\leadsto$ & 819 \\
+\pause\\
+& reverse  [7; 9; 13] \\
+\pause$\leadsto$ & reverse [9; 13] @ [7]\\
+\pause$\leadsto$ & reverse [13] @ [9] @ [7]\\
+\pause$\leadsto$ & reverse [] @ [13] @ [9] @ [7]\\
+\pause$\leadsto$ & [] @ [13] @ [9] @ [7]\\
+\pause$\leadsto$ & [13; 9; 7]\\
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Rekursion på andet end lister}
+
+Generelt princip:
+
+\begin{enumerate}[~1.]
+\item Opdel med mønstre eller if-then-else i \emph{små} værdier og
+  \emph{store} værdier.
+\item Løs problemet direkte for de små værdier.
+\item Reducer eller opdel store værdier til en eller flere
+  \emph{mindre} værdier, kald rekursivt for de mindre værdier, og
+  sammensæt resultatet.
+\end{enumerate}
+
+Eksempler:
+
+\begin{verbatim}
+  let rec fac n = if n = 0 then 1 else n * fac (n - 1)
+
+  let rec fib n =
+    if n<2 then n else fib (n - 1) + fib (n - 2)
+
+  let rec gcd (a, b) =
+    if b = 0 then a else gcd (b, a % b)
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Gensidig rekursion}
+
+To eller flere funktioner kan kalde hinanden rekursivt.  Her er et
+eksempel fra Microsofts sider om F\#:
+
+\begin{verbatim}
+  let rec Even x =
+     if x = 0 then true
+     else Odd (x - 1)
+
+  and Odd x =
+     if x = 1 then true
+     else Even (x - 1)
+\end{verbatim}
+
+Bemærk nøgleordet \textcolor{darkred}{and} i stedet for
+\textcolor{darkred}{let~rec} i definitionen af \texttt{Odd}.
+
+
+
+\vspace{1ex}
+\textcolor{white}{Programmet virker ikke!  Men det skyldes ikke den gensidige rekursion.}
+
+\end{frame}
+\begin{frame}[fragile=singleslide]
+\frametitle{Gensidig rekursion}
+
+To eller flere funktioner kan kalde hinanden rekursivt.  Her er et
+eksempel fra Microsofts dokumentation om F\#:
+
+\begin{verbatim}
+  let rec Even x =
+     if x = 0 then true
+     else Odd (x - 1)
+
+  and Odd x =
+     if x = 1 then true
+     else Even (x - 1)
+\end{verbatim}
+
+Bemærk nøgleordet \textcolor{darkred}{and} i stedet for
+\textcolor{darkred}{let~rec} i definitionen af \texttt{Odd}.
+
+\vspace{1ex}
+Programmet virker ikke!
+
+Men det skyldes ikke den gensidige rekursion.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Akkumulerende parametre}
+
+Man bruger nogle gange en hjælpefunktion med en \emph{akkumulerende
+  parameter}.
+
+En akkumulerende parameter er en parameter, hvori man bygger
+resultatet, som så til sidst returneres.  Eksempel:
+
+\begin{verbatim}
+  let reverse xs =
+    let rec revAccum ys acc =
+      match ys with
+      | [] -> acc
+      | y :: ys' -> revAccum ys' (y :: acc)
+    revAccum xs []
+\end{verbatim}
+
+\hrule
+
+\texttt{
+\begin{tabular}{ll}
+&reverse [7; 9; 13] \\
+$\leadsto$ & revAccum [7; 9; 13] []\\
+$\leadsto$ & revAccum [9; 13] [7]\\
+$\leadsto$ & revAccum [13] [9; 7]\\
+$\leadsto$ & revAccum [] [13; 9; 7]\\
+$\leadsto$ & [13; 9; 7]\\
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Skabelon for listefunktion\\ med akkumulerende parametre}
+
+\vspace{1ex}
+
+\texttt{
+\begin{tabular}{l}
+let f alist =\\
+~~let rec fAccum alist accum =\\
+~~~~match alist with\\
+~~~~| [] -> accum\\
+~~~~| x :: xs -> fAccum xs (\ldots~accum \ldots)\\
+~~fAccum alist \emph{initialværdi}
+\end{tabular}}
+
+\vspace{2ex}
+
+Eksempel:
+
+\begin{verbatim}
+  let maximum alist =
+    let rec maxAccum alist accum =
+      match alist with
+      | [] -> accum
+      | x :: xs -> maxAccum xs (max x accum)
+    maxAccum alist System.Int32.MinValue
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Akkumulerende udgaver af funktioner på tal}
+
+
+\begin{verbatim}
+  let fac n =
+    let rec facAccum n accum =
+      if n = 0 then accum
+      else facAccum (n - 1) (n * accum)
+    fac n 1
+
+  let fib n =
+    let rec fibAccum n (a, b) =
+      if n = 0 then a
+      else fibAccum (n - 1) (b, a + b)
+    fibAccum n (0, 1)
+
+  let upto n =
+    let rec uptoAccum n accum =
+      if n = 0 then accum
+      else uptoAccum (n - 1) (n :: accum)
+    uptoAccum n []
+\end{verbatim}
+
+
+\end{frame}
+
+\end{document}

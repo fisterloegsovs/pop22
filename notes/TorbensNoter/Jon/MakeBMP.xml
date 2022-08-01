@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>MakeBMP</name></assembly>
+<members>
+<member name="M:MakeBMP.readBMP(System.String)">
+ <summary> Reads a BMP file and creates funtion
+ <example>
+ The call <c>readBMParray "something"</c>
+ reads a file <c>something.bmp</c> containing a pixel image.
+ </example>
+ <param name="fname"> File name (without .bmp extension)</param>
+ <returns> size of bitmap (w,h) and function from position to colour</returns>
+</member>
+<member name="M:MakeBMP.readBMParray(System.String)">
+ <summary> Reads a BMP file into a colour array
+ <example>
+ The call <c>readBMParray "something"</c>
+ reads a file <c>something.bmp</c> containing a pixel image.
+ </example>
+ <param name="fname"> File name (without .bmp extension)</param>
+ <returns> array containing bitmap</returns>
+</member>
+<member name="M:MakeBMP.makeBMParray(System.String,System.Tuple{System.Int32,System.Int32,System.Int32}[0:,0:])">
+ <summary> Create BMP file from a colour array
+ <example>
+ The call <c>makeBMParray "something"  colourArray</c>
+ creates a file <c>something.bmp</c> containing a pixel image
+ with size and colours as specified in the array.
+ </example>
+ <param name="fname"> File name (without .bmp extension)</param>
+ <param name="colsArray"> array containing bitmap</param>
+ <returns> nothing</returns>
+ <remarks> Width and height are integers between 1 and 8192.
+ (0,0) is bottom-left corner</remarks>
+</member>
+<member name="M:MakeBMP.makeBMP(System.String,System.Int32,System.Int32,Microsoft.FSharp.Core.FSharpFunc{System.Tuple{System.Int32,System.Int32},System.Tuple{System.Int32,System.Int32,System.Int32}})">
+<summary>
+ Functions for reading and writing BMP files.
+ For documentation about BMP files, see https://en.wikipedia.org/wiki/BMP_file_format
+ &lt;summary&gt; Create BMP file from size and colour function
+ &lt;example&gt;
+ The call &lt;c&gt;makeBMP &quot;gradient&quot; 128 256 (fun (i,j) -&gt; (i+i,j,0))&lt;/c&gt;
+ creates a file &lt;c&gt;gradient.bmp&lt;/c&gt; containing a 128×256 pixel image
+ showing a red/yellow/green gradient.
+ &lt;/example&gt;
+ &lt;param name=&quot;fname&quot;&gt; File name (without .bmp extension)&lt;/param&gt;
+ &lt;param name=&quot;w&quot;&gt; Width of image in pixels&lt;/param&gt;
+ &lt;param name=&quot;h&quot;&gt; Height of image in pixels&lt;/param&gt;
+ &lt;param name=&quot;cols&quot;&gt; function from pixel position to RGB value.&lt;/param&gt;
+ &lt;returns&gt; nothing&lt;/returns&gt;
+ &lt;remarks&gt; Width and height are integers between 1 and 8192.
+ (0,0) is bottom-left corner&lt;/remarks&gt;
+</summary>
+</member>
+</members>
+</doc>

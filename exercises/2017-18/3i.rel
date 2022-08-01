@@ -1,0 +1,48 @@
+;; RefTeX parse info file
+;; File: /Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex
+;; User: sporring (Jon Sporring)
+
+(set reftex-docstruct-symbol '(
+
+
+(xr nil "\\\\\\\\\\\\")
+
+(index-tags "idx")
+
+(is-multi t)
+
+(bibview-cache)
+
+(master-dir . "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/")
+
+(label-numbers)
+
+(bof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex")
+
+(bof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex")
+
+(index "idx" "\\expandarg\\IfSubStr{#1}{@}{\\StrBehind{#1}{@}}{#1}}}\\index{#1}}" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex" 3241 "#1" "#1" "#1" "#1" nil)
+
+(index "idx" "\\newcommand{\\idxss}[1]{\\index{#1}}" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex" 3342 "#1" "#1" "#1" "#1" nil)
+
+(eof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/setup.tex")
+
+("3ø.\\arabic*" "i" "NO MATCH FOR CONTEXT REGEXP" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("linear" "l" "] let a = 3 let b = 4 let x = 5 printfn \"%A * %A + %A = %A\" a x b (a * x + b) " "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("linearFct" "i" "Tilføj en funktion \\begin{quote} \\mbox{\\lstinline!f : a:int -> b:int -> x:int -> int!} " "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("table" "i" "Brug funktionen udviklet i Opgave~\\ref{linearFct}, således at du udskriver værdien af funktionen for" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("multiplicationTable" "i" "Lav et program, som udskriver 10-tabellen på skærmen, således at der er 10 søjler og 10 rækker forma" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("3i.\\arabic*" "i" "NO MATCH FOR CONTEXT REGEXP" "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("sum" "i" "Skriv en funktion \\begin{quote} \\mbox{\\lstinline!sum : n:int -> int!} " "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+("mulTab" "l" "] printf \"%s\" (mulTab 3);; 1 2 3 4 5 6 7 8 9 10 1 1 2 3 4 5 6 7 8 9 10 2 2 4 6 8 10 12 14 " "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex" nil)
+
+(eof "/Users/sporring/repositories/PoP/ugeopgaver/2017-18/3i.tex")
+))
+

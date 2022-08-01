@@ -1,0 +1,41 @@
+\textbf{Udvidelser}\\
+Lav mindst 2 udvidelser til spillet og beskriv dem i jeres
+rapport. Følgende er nogle forslag til udvidelser, men I må gerne selv lade
+fantasien råde.
+
+I er ligeledes velkommen til at udvide storyline.
+
+\begin{itemize}
+\item Teleport, lav en teleport der flytter spilleren fra et sted i
+  verden til et (evt tilfældigt) andet sted i verdenen.
+\item Udvid \lstinline{Item} så de kan påvirke verdenen. Fx, så kunne
+  \lstinline{FleshEatingPlant} sætte en stikling (en ny
+  \lstinline{FleshEatingPlant}) i et ledigt felt ved
+  siden af den, hver tredje tur den ikke interagerer med spilleren.
+\item Monstre der kan bevæge sig rundt i verden, fx tilfældigt hvis de
+  er langt fra spilleren, men går mod spilleren hvis de er tæt på.
+\item Udvid \lstinline{Player} med et \emph{inventory}, så man kan samle ting op i
+  verden og flytte rundt på dem. Det kan fx bruges til at spilleren
+  skal finde en nøgle for at komme gennem en dør.
+\item Udvid \lstinline{Canvas} til at kunne vise emoji. Det kan gøres ved at
+  hvert felt kan indeholde en \lstinline{string} frem for kun en \lstinline{char}, og så
+  skal I være opmærksomme på at emoji ofte fylder det samme som to
+  almindelige tegn.
+\item Skriv en level-generator (stor udvidelse!)
+\item Gør det muligt at indlæse et level fra en tekstfil
+\item Udvid Player-klassen med hhv. \lstinline{Hunger} og \lstinline{Thirst}.
+
+  Tilføj, fx, \lstinline{Food} og \lstinline{WaterBottle} som
+  \lstinline{Item}s. For hvert træk bliver \lstinline{Player} mere
+  sulten og tørstig. \lstinline{Player} dør, hvis \lstinline{Player}
+  løber tør for enten mad eller vand.
+
+\item Giv \lstinline{Player} en bue/magi/et sværd og gør det muligt at slås med monstre.
+\item Tilføj krukker der kan ødelægges. Krukkerne indeholder måske
+  guld, som \lstinline{Player} kan samle op.
+\end{itemize}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

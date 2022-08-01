@@ -1,0 +1,487 @@
+Programmering og problemløsning
+
+—————————————————————————————————————
+4.3
+1. Funktioner er tripletter (argument, expression, environment)
+functionFirstClass.fsx
+//  mul: ((x, y), (x * y), ())
+//  applyFactor: ((fct, x), let a = fct factor x; string a, (mul -> ((x, y), (x * y), ()), factor -> 2.0))
+
+2. Håndkøring
+lexicalScopeTracing.fsx
+// p. 102
+
+dynamicScopeTracing.fsx
+// p. 104
+
+// stakken holder lokale værdier og variable, hoben holder globale. Stak-værdier smides væk når funktionen når til enden
+inc.fsx
+// incr -> ((), (counter <- counter + 1; counter), (counter -> alpha1))
+
+3. Variable som returværdier (ref, !, :=)
+let x = ref 0 
+printfn "%d" !x 
+x := !x + 1 
+printfn "%d" !x
+
+// Referencer giver aliasing
+let a = ref 0
+let b = a
+a := 1
+printfn "%d" !b
+
+// Referencer kan returneres
+let f () =              
+  let x = ref 0
+  x
+let a = f ()
+a := 3
+
+// Referencer kan give sideeffekter
+let inc x =
+  x := !x + 1
+let a = ref 0
+printfn "%d" !a
+inc a
+printfn "%d" !a
+
+4. Ekstraopgave: håndkør 
+dec2bin.fsx
+
+—————————————————————————————————————
+4.2
+1. Krav til Software:
+a. Funktionalitet: Kompilerer det, løser det opgaven?
+b. Pålideligt: Hvad vis internettet falder ud?
+c. Brugsvenligt: Er det nemt at bruge?
+d. Effektivitet: Tager det lang tid at bruge, er det langsomt?
+e. Vedligeholdelse: Er det net at rette bugs, at tilføje ny funktionalitet?
+f. Porterbart: Kan det nemt flyttes til en ny computer, telefon, etc.?
+
+
+2. White-box testing - kendskab til program
+dec2bin.fsx
+
+a. Decide on which units to test
+b. Identify branching points
+c. Produce cases: For each unit, produce an input that tests each branch and not expected output
+d. Write a program that tests each case and check output
+
+Unit     Branch   Condition  Input  Expected-output  Comment
+dec2bin  1        n < 0
+         1a       true       -1     "Illegal value"
+         1b       branch 2                           Fall through
+         2 (n>=0) n = 0      
+         2a       true       0      "0b0"
+         2b       branch 3                           Fall through
+         3 (n>0)  v > 0
+         3a       true       1      "0b1"            Always looping 1 or more times
+         3b       false      1      "0b1"            Identical to 3a
+
+1. Blackbox testing - kun kendskab til kravspecifikation
+a. Beslut et interface
+b. Find grænsetilfælde
+
+Unit       Case   Expected-output  Comment 
+dec2bin n  n < 0  "Illegal value"  negative tal
+           n = 0  "0b0"            grænsetilfælde
+           n = 1  "0b1"            1 bit
+           n = 2  "0b10"           2 bit
+           n = 10 "0b1010"         stort lige tal (venstre bit sat min ikke højre)
+           n = 11 "0b1011"         stort ulige tal (venstre og højre bit sat)
+
+// Besøg af Dansk Bank
+
+—————————————————————————————————————
+4.1
+1. Introduktion til brugerdefineret typer
+let a = ("jon", 23)
+// Tupler eksempel på mere produkttyper
+type id = string * int
+let b : id = ("martin", 24)
+
+2. Organisering af kode i flere filer / Moduler
+// Hvis ikke andet er angivet, så er en fil et modul navngivet efter filnavn
+Meta.fsx og MetaApp.fsx
+// fsharpc Meta.fsx MetaApp.fsx && mono MetaApp.exe
+// Exe-filen får navn efter sidste filnavn af argumenter til fsharpc
+
+3. Kode kan præcompileres som dll-filer - biblioteker
+fsharpc -a MetaExplicit.fsx
+// Skal ikke genkompileres, hver gang applikationen ændres
+fsharpc -r MetaExplicit.dll MetaApp.fsx && mono MetaApp.exe
+// Særligt for interaktive mode henter man biblioteker med #r kommandoen
+MetaHashApp.fsx
+// Bemærk, at det kræver at man på programmeringstidspunktet kender stien til biblioteket.
+
+4. Signaturfiler beskriver bibliotekets interface fsi-fil og fs-fil
+// Kan genereres automatisk, f.eks.
+cp MetaExplicit.fsx MetaExplicit.fs
+fsharpc --sig:MetaExplicit.fsi MetaExplicit.fs
+cat MetaExplicit.fsi
+fsharpc -a MetaExplicit.fsi MetaExplicit.fs
+fsharpc -r MetaExplicit.dll MetaApp.fsx 
+// Edit MetaExplicit.fsi og fjern apply
+fsharpc -a MetaExplicit.fsi MetaExplicit.fs
+fsharpc -r MetaExplicit.dll MetaApp.fsx
+// Interface angiver nu, at apply en privat funktion som skjules for applikationen
+
+
+////////////////////////////////////
+6. Closures
+// Funktioner er værdier:
+let f x = x * x
+do printfn "%A" f
+
+// Funktioner kan returneres
+let inc () =
+  let dx = 1
+  fun x -> x + dx
+let addOne = inc ()
+printfn "%A" (addOne 2) 
+
+—————————————————————————————————————
+3.3
+0. Husk at gøre reklame for fredagsforedrag
+
+///////////////////////////
+1. Betingede udtryk
+// Opgave: lav en funktion som korrekt sætter flertals s m.m.
+conditionalLightweight.fsx
+
+///////////////////////////
+2. Opvarmning og repetition af variable
+// Opgave: byt om på værdierne af x1 og x2
+let mutable x1 = 3
+let mutable x2 = 4
+// Løsning ved temporær værdi
+let t = x1
+x1 <- x2
+x2 <- t
+
+///////////////////////////
+// Tupler
+///////////////////////////
+3. Tupler 
+let x = (3,4)
+do printfn "%A" x
+// Type som produktmængder, her int * int
+// Typer kan blandes
+let y = (3,4,’a’,"hej jon")
+do printfn "%A" y
+// Ingen indekseringsfunktion men
+let y = (3,4,'a',"hej jon")
+let (a, b, c, d) = y
+do printfn "%A" d
+// Par er så hyppige, at de har indbyggede funktioner
+let x = (3,4)
+do printfn "fst x = %A, snd x = %A" (fst x) (snd x)
+
+4. Muterbare tupler og opgave
+let mutable x = (3,4)
+x <- (snd x, fst x)
+do printfn "%A" x
+// Eller mere advanceret
+let y = (3,4,'a',"hej jon")
+let (a, b, c, d) = y
+do printfn "%A" (d, c, b, a)
+
+///////////////////////////
+// Avancerede funktioner
+///////////////////////////
+5. Anonyme funktioner
+let first = fun x y -> x
+do printfn "%d" (first 5 3)
+
+6. Funktioner som argument
+let apply f x y  = f x y
+let mul a b = a * b
+do printfn "%d" (apply mul 3 6)
+// Bemærk at apply tager en funktion og 2 argumenter som argument
+// Andet eksempel: ombyt argumenter
+let rev f x y = f y x
+let sub a b = a - b
+let a = 3
+let b = 5
+do printfn "sub %d %d = %d" a b (sub a b)
+do printfn "rev sub %d %d = %d" a b (rev sub a b) 
+
+// Eller ved brug af anonym funktion
+rev (fun x y -> x - y) 3 5
+
+// Eller i dette tilfælde '-' operatorens funktionsækvivalente
+rev (-) 3 5
+
+—————————————————————————————————————
+3.2
+1. Funktioner, der indeholder værdibindinger og funktionsbindinger
+// a * x**2 + b * x + c = 0
+square.fsx
+// Bemærk sidste udtryk skal være en værdi
+
+2. Kommentarer og standard
+(* *) Blokkommentar
+// linjekommentar
+commentExample.fsx
+
+fsharpc --doc:commentExample.xml commentExample.fsx
+mdoc update -o commentExample -i commentExample.xml commentExample.exe
+mdoc export-html -out commentExampleHTML commentExample
+
+3. Funktionssammensætning og piping
+// ~/repositories/fsharpNotes/src/
+functionComposition.fsx
+// Bemærk: En grundlæggende programstruktur: resultatet af en funktion er argument til en anden
+functionPiping.fsx
+// Bemærk: Piping er som rør, der viser, hvordan informationen flyder mellem funktionerne.
+
+4. Særlig funktionsfamilie: printf, placeholder, 
+printfExample.fsx
+// Bemærk: forskellig fortolking og formatering, kontrol over formateringen
+
+let a = 3
+sprintf "a: %d" a
+// Bemærk, returnværdi er en streng, sammenlign med printf
+
+5. Variable (mutable, <-)
+let mutable x = 5 
+printfn "%d" xx <- -3printfn "%d" x
+
+// Forvir ikke <- og =
+let mutable a = 0
+a = 3
+
+6. For og while løkker
+countWhile.fsx // Tællevariabel, betingelse, udtryk
+countWhileLightweight.fsx // indryk angiver udtryk
+countLightweight.fsx // Tællevariabel indbygget
+
+—————————————————————————————————————
+3.1
+
+0. Læs 3i, spørgsmål? Tællevariabel i 3ø.6a
+
+1. værdibinding, letvægtssyntaks
+let name = "World" in do printfn "Hello %A" name
+// Bemærk at bindingsnavne skal starte med et bogstav men kan derudover være næsten alt pånær nøgleord (Tabel 6.1) 
+
+//letvægts
+let name = "World"
+do printfn "Hello %A" name
+
+//letvægts, do er valgfrit
+let name = "World"
+printfn "Hello %A" name
+
+2. sekvenser, 
+let name = "World" in do printfn "Hello %A" name; do printfn "Goodbye %A" name
+
+let name = "World" 
+do printfn "Hello %A" name
+do printfn "Goodbye %A" name
+
+3. virkefelter:
+let name = "World" in let name = "Jon" in do printfn "Hello %A" name
+
+// navne kan ikke overskrives i yderste virkefelt
+let name = "World" 
+let name = "Jon"
+do printfn "Hello %A" name
+
+// navne kan god overskrives i dybere virkefelt
+(
+  let name = "World" 
+  let name = "Jon"
+  do printfn "Hello %A" name
+)
+
+// bindinger i dybere virkefelter slettes, når der vendes tilbage
+let greeting = "World" 
+do printfn "%A" greeting
+(
+  let name = "Jon"
+  do printfn " %A" name
+)
+do printfn "%A %A" greeting name
+
+4. Ikke-rekursive funktionsbindinger, typespecifikation og typeinferens, hvor skal parenteserne stå?
+
+let greetings (name : string) : string = "Hello " + name
+let str = greetings "Jon"
+do printfn "%A" str
+// Bemærk funktionstype: val greetings : name:string -> string
+
+// Typer bliver infereret i scriptblokke:
+let greetings name = "Hello " + name
+let str = greetings "Jon"
+do printfn "%A" str
+// Bemærk typer kan være partielt specificeret, parenteser er derfor nødvendige, for hvad ville
+//  let greetings name : string
+// betyde?
+
+// Hvilken type har:
+let sum x y = x + y
+// Kan bruges i
+let sum x y = x + y in do printfn "%A + %A = %A" 3 4 (sum 3 4)
+
+// Hvad med
+let sum x y = x + y in do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
+
+// Hvad så med
+let sum x y = x + y 
+do printfn "%A + %A = %A" 3 4 (sum 3 4)
+do printfn "%A + %A = %A" 3.0 4.0 (sum 3.0 4.0)
+
+—————————————————————————————————————
+2.3
+
+Operatorer: +, -, *, /, %, **. For heltal, flydende kommatal, tegn og strenge
+3 + 4
+3.0 + 4.0
+3 + 4.0
+5 / 2
+5 % 2
+2 * (5 / 2) + 5 % 2
+2.0 ** 3.0
+pown 2 3
+"hej " + "med " + "dig"
+
+Præcedens: Vis tabel 5.4
+exp 0.0
+exp 1.0
+exp 0.0 + 1.0
+
+Casting og afrunding
+float 3
+int 3.2
+int 3.6
+int (3.2 + 0.5)
+int (3.6 + 0.5)
+int 'a'
+int 'A'
+char 65
+char (int 'c' - int 'a' + int 'A')
+char (int 'c' -int 'a' + int 'A') // unary minus
+
+Unære versus binære operatorer:
+2 - 3
+-3
+- 3
+char (int 'c' + -int 'a' + int 'A')
+
+Strenge, streng indicering og slicing, verbatim
+"abcdefghijkl".[1]
+"abcdefghijkl".[1..4]
+"abcdefghijkl".[..4]
+"abcdefghijkl".[4..]
+"abcdefghijkl".Length
+"abcdefghijkl".[0..11]
+
+Bolsk algebra, sandhedstabeller
+Sand = 1
+Falsk = 0
+a && b // som gange
+a || b // som plus
+not a
+
+Sammenligningsoperatorer.
+3 < 4
+3 > 4
+3 <> 4
+3 = 4
+not (3 = 4)
+not 3 = 4 // funktionspræcedens!
+
+—————————————————————————————————————
+2.2
+Husk at sige:
+  Aflevering 2i skal skrives i latex for at øve tabeller etc.
+  Der er en fejl i tabel 5.1
+  Emacs Workshop
+
+7. Bits, bytes, heltal. Talsystemer, base-sum formel. Binær: division med 2 algoritme. Hexadecimal, oktal.
+
+10-talsystemet vs. 2-talsystemet (lav tabel med 1 ~ 10^0, 10 ~ 10^1, …)
+Del-med-2 algoritmen
+
+8. Flydende tal, tegn
+Flydende tal. 
+
+ASCII vs. UTF8. Tegn og strenge, escape-sekvenser
+
+Literaler, vis Tabel 5.3 
+
+—————————————————————————————————————
+2.1
+1. Aflevering af 1g
+2. Opgave 2i, kort gennemgang, hjemmeside med beskrivelsen af reglerne
+3. Demonstration af at starte fsharpi i windows og osx inkl. path
+4. Hvordan lærer man at programmere? Vælg et sprog, lær sproget, øvelse gør mester, brug det i praksis.
+5. Hvordan løser man et problem: Forstå, design, implementer, reflekter
+6. Filendelser: .fsx, fsscript, .exe, .fs, .fsi. Kørsel af fsharp på Windows og OSX, fsharpi, fsharpc+mono, 
+
+Fsharp som lommeregner:
+357
+864
+357+864
+
+Gem og hent værdier:
+let a = 357let b = 864let c = a + bdo printfn "%A" c
+
+";;" i interaktiv modus
+"&&" notation
+
+Typer: 3, 3.0, '3', "3", 3e0, 3.0e0. Vis Tabel 5.1
+
+—————————————————————————————————————
+1.3
+
+Scratch
+1. Kamera
+2. Walking med variabel retning
+3. Collect Laptops (deligering af ansvar)
+4. Space landing, demo
+
+Pointer:
+1. Veldefineret tilstand ved start (Walking, første kommandoer bør være at flytte til startsted og start retning)
+2. Delegering og lokale versus globale variable. (Collect …: Skal score være i Laptops eller i Octopus?  Hvem har brug for viden, og hvem kunne have glæde af viden om score?)
+3. Event drevent eller if-then-else loop: Hvad giver det “simpleste” program. Hvilke parametre kan vi bruge til at vurdere simplicitet?
+
+
+—————————————————————————————————————
+1.2
+
+Læs 1g
+
+Imperativt program er som en kageopskrift
+
+Tælleopskrift, timing af 2 måder (sekventielt eller parallelt)
+
+Centrale Scratch elementer:
+Look, Løkke, Værdier Variable
+
+3. Walking (costumes, touching, direction, if-then)
+4. MoveToMouse (clone)
+5. Bat bounce (putting it all together)
+
+—————————————————————————————————————
+1.1
+Velkommen (Martin, Christina, Jon (kursusansvarlig), instruktorer)
+
+Inddeling i studiegrupper (Machine Learning og Datavidenskab, Datalogi og Økonomi, Andre)
+
+Hvad skal vi lærer (imperativ-, funktions- og objektorienteret programmering)
+Oversigt over kurset (Canvas, kurser.ku.dk, øvelseshold, lokaler, grupper, scratch, fsharp, opgaver, ugesedler og aflevering)
+God opførsel på forum, chat, forelæsninger, øvelser, grupper
+
+Læs 0
+
+Scratch - Imperativ programmering:
+
+Scratch:
+1. Hello (sprite, say, mouse, loop)
+2. Count (variables, wait)
+
+Kommandoprompten (Linux, windows, Macos)
+
+LaTeX

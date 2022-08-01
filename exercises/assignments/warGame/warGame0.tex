@@ -1,0 +1,62 @@
+\textbf{Kortspilsoperationer}.
+
+I denne første delopgave skal der implementeres en række generelle
+funktioner på kortspil. I det følgende skal vi antage at kuløren på et
+kort er uden betydning. Vi kan derfor repræsentere et kort som et
+heltal mellem 2 og 14 (et Es repræsenteres som værdien 14). Et spil
+kort repræsenteres som en liste af kort:
+\begin{lstlisting}
+  type card = int
+  type deck = card list
+\end{lstlisting}
+
+Implementér en funktion \lstinline{deal} med
+type \lstinline{deck->deck*deck}, som deler en kortstak i to lige
+store stakke ved skiftevis at give et kort til hver stak. I tilfælde
+af at der er et ulige antal kort i argumentstakken skal den første
+stak i resultatparret prioriteres. Kaldet \lstinline{deal [4;9;2;5;3]}
+skal således returnere parret \lstinline{([3;2;4],[5;9])}.
+
+Følgende funktion kan benyttes til at generere tilfældige heltal i F\#:
+\begin{lstlisting}
+  let rand : int -> int = let rnd = System.Random()
+                          in fun n -> rnd.Next(0,n)
+\end{lstlisting}
+Funktionen \lstinline{rand} tager et heltal $n > 0$ og returnerer et tal
+i intervallet $[0;n[$. Bemærk at funktionen ikke er funktionel i
+matematisk forstand (den returnerer ikke nødvendigvis den samme værdi
+hver gang den kaldes med det samme argument.)
+
+Implementér nu, ved brug af \lstinline{rand}, en
+funktion \lstinline{shuffle} med type \lstinline{deck->deck}, der
+givet en kortstak returnerer en blandet version af
+kortstakken. Her følger en mulig strategi for at blande en kortstak
+$D$ af længde $n$:
+\begin{enumerate}
+\item Konstruér en liste $L$ af $n$ tilfældige tal, hvert mellem 0 og $k$ hvor $k >> n$.
+\item Konstruér en liste af par bestående af parvis elementer fra $D$ og $L$.
+\item Sortér listen af par ved brug af en ordningsrelation på de tilfældige tal i parrene.
+\item Udtræk kortene fra den sorterede liste.
+\end{enumerate}
+Ovenstående strategi kan implementeres i F\# ved brug
+af \lstinline{List.map2}, \lstinline{List.sortWith}, samt
+funktionen \lstinline{compare} anvendt på
+heltal.\footnote{Funktionen \lstinline{compare:int->int->int} tager to
+argumenter \lstinline{a} og \lstinline{b} og returnerer 1
+hvis \lstinline{a>b}, -1 hvis \lstinline{a<b} og 0
+hvis \lstinline{a=b}. Funktionen \lstinline{List.sortWith} har
+type \lstinline{('a->'a->int)->'a list->'a list} og tillader således
+at tage en ordningsrelation som argument.}
+
+Der findes andre (f.eks. rekursive) strategier hvormed en kortstak
+kan blandes. I er velkomne til at designe og skrive jeres egen
+blandingsfunktion.
+
+Implementer også en funktion \lstinline{newdeck} med
+type \lstinline{unit->deck}, der returnerer en blandet kortstak
+bestående af 52 kort (4 serier af 13 kort med pålydende værdier fra 2
+til 14).
+
+I rapporten skal I beskrive jeres designovervejelser og demonstrere at
+jeres funktioner fungerer som forventet (skriv tests for de
+implementerede funktioner).

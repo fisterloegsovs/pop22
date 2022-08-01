@@ -1,0 +1,11 @@
+A fellow programmer has made the function
+\begin{quote}
+  \lstinline{solve : b:Board -> m:int -> int list}
+\end{quote}
+which takes as argument a non-negative integer $m$ and returns either
+the empty list or a list of rotation positions (of length $m$ or less)
+that will leave the board in the solved configuration (if one such
+list exists).  The program compiles and runs without error, but for
+some combinations of board-size $n$ and maximum rotations $m$, the
+program is very slow and the computer eventually runs out of
+memory. Why do you think this may be?

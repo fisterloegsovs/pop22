@@ -1,0 +1,5 @@
+Extend the implementation with a class \lstinline{Player} and a derived class \lstinline{Human}. The intention is to prepare for a future derived class \lstinline{Computer}, not to be implemented at the moment. The derived classes must have a method
+\begin{quote}
+\lstinline{nextMove : board -> string}
+\end{quote}
+which returns a legal movement as a codestring or the string ``quit''.  A codestring is a string of the name of two squares separated by a space. E.g., if the white king is placed at a4, and a5 is an available move for the king, then a legal codestring for moving the king to a5 is ``a4 a5''. The codestring (for humans) is obtained by a text dialogue with the user.

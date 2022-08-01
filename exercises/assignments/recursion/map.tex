@@ -1,0 +1,15 @@
+Write a function
+%
+\lstinline{map : ('a -> 'b) -> 'a list -> 'b list}
+%
+that takes a function and a list as arguments and returns a new list of
+the same length as the argument list with elements obtained by
+applying the supplied function on each of the elements of the argument
+list. The function should make use of recursion and pattern matching
+on lists.
+
+As an example, a call
+%
+\lstinline{map (fun x -> x+2) [2;3]}
+%
+should return the list \lstinline{[4;5]}.

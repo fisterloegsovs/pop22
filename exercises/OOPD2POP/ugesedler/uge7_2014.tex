@@ -1,0 +1,727 @@
+\documentclass[a4paper,12pt]{article}
+
+\title{Introduktion til programmering, ugeseddel 7}
+\author{Version 1.1}% Torben Mogensen
+\date{17.\ oktober 2014}
+
+\usepackage[top=2cm,left=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{cmap}
+%\usepackage{microtype}
+\hyphenpenalty=750
+
+\usepackage{amsmath}
+%\usepackage{lmodern}
+%\usepackage{mathptmx}
+%\usepackage{libertine}
+%\usepackage[scaled=0.90]{inconsolata}
+%\usepackage[scaled=0.83]{beramono}
+
+\usepackage{enumerate}
+\usepackage{graphics,graphpap}
+\usepackage{listing}
+\usepackage{fancyvrb}
+\usepackage{graphics,tikz}
+\usepackage{listings}
+\usepackage{framed}
+\usepackage{upquote}
+
+\lstset{
+    language=ML,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    basicstyle=\footnotesize\ttfamily,
+    %numberstyle=\footnotesize,
+    %numbers=left,
+    %stepnumber=1,
+    numbersep=10pt,
+    tabsize=2,
+    breaklines=false,
+    aboveskip={0.7\baselineskip},
+    columns=fixed,
+    escapechar=@
+%    extendedchars=true
+% frame=single,
+% backgroundcolor=\color{lbcolor},
+}
+
+\usepackage{todonotes}
+\usepackage{hyperref}
+\hypersetup{pdftitle={Introduktion til programmering, ugeseddel 7},
+            pdfsubject={},
+            pdfauthor={},
+            pdfkeywords={rekursive datatyper, gensidig rekursion},
+            pdfborder={0 0 0}}
+
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0pt}
+\setlength{\parfillskip}{30pt plus 1 fil}
+
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
+\begin{document}
+\maketitle{} Den syvende undervisningsuge handler om \textit{moduler}.
+
+\section{Plan for ugen}
+\label{sec:pensum-og-plan}
+
+\subsubsection*{Mandag}
+Strukturer og signaturer, separat oversættelse.
+
+\textit{Pensum:} HR: 11.1-11.4. Moscow ML Owner's Manual afsnit 1 og
+5-7 (findes i Absalon under ``Undervisningsmateriale'').
+
+\subsubsection*{Tirsdag}
+Strukturer, signaturer og funktorer.
+
+\textit{Pensum:} HR: 11.5-11.7.
+
+\subsubsection*{Fredag}
+Repetition af ugens pensum. Se ovenfor.
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\vspace{5ex}
+
+\textcolor{darkred}{\textbf{Bemærk:} Da eksamen ligger i kursusuge 8,
+  er det ikke muligt at genaflevere ugeopgave 7.  Desuden er
+  afleveringsfristen for den individuelle opgave allerede lørdag aften
+  i stedet for søndag aften.}
+
+\newpage
+\section{Mandagsopgaver}
+\label{sec:mandagsopgaver}
+
+\textit{Emner:} Strukturer og signaturer.
+
+\vspace{1ex}
+
+\noindent
+Vi har i tidligere uger (uge 4 og 5) brugt to forskellige typer til at
+repræsentere farver.  Vi vil nu generalisere dette med SML's
+modulsystem.
+
+Et farvemodul skal definere følgende elementer:
+
+\begin{enumerate}[1.]
+\item en type \lstinline{colour}, der bruges til at repræsentere
+  farveværdier.
+
+\item Værdier \lstinline{black : colour}, \lstinline{white : colour},
+  \lstinline{red : colour}, \lstinline{green : colour},
+  \lstinline{blue : colour}, \lstinline{cyan : colour}, \lstinline{magenta : colour},
+  \lstinline{yellow : colour}, der definerer primærfarverne.
+
+\item En funktion \lstinline{complement : colour -> colour}, der
+  returnerer \emph{komplementærfarven} til en farve.  Se
+  \url{http://en.wikipedia.org/wiki/Complementary_colors#The_RGB_model}
+  for en forklaring af komplementærfarver.
+
+\item En funktion \lstinline{toRGB : colour -> int * int * int}, der kan
+  konvertere en farve til et tripel af heltal i intervallet 0-255, der
+  repræsenterer farven som en RGB-værdi (ligesom i
+  \lstinline{InstagraML}).
+
+\item En funktion \lstinline{fromRGB : int * int * int -> colour}, der
+  kan konvertere et RGB-tripel (tre heltal i intervallet 0-255) til en
+  farve.
+\end{enumerate}
+
+Mandagsopgaverne omhandler farvemoduler af denne slags.  Alle
+signaturer og strukturer skrives i en enkelt \texttt{.sml} fil (altså
+som en toplevel-mode compilation unit, som beskrevet i Moscow ML
+Owner's Manual afsnit 5 og 7).
+
+\begin{enumerate}[{7}M1]
+
+\item Brug beskrivelsen herover af farvemoduler til at skrive en
+  signatur for et farvemodul.  Signaturen skal have navnet
+  \lstinline{Colour}.
+
+\item Skriv en struktur \lstinline{RGB : Colour}, der implementerer
+  farver som RGB-tripler, således at \lstinline{toRGB} bliver
+  identitetsfunktionen.  Bemærk, at vi bruger gennemsigtig
+  (\emph{transparent}) signaturmatching.
+
+  Farvekomplementering sker ved at hvert RGB-komponent komplementeres.
+  Dette gøres ved at trække komponentens værdi fra 255.  For eksempel
+  er\newline \lstinline{(255, 155, 55) = complement (0, 100, 200)}.
+
+\item Skriv en struktur \lstinline{PrimaryColours :> Colours} (bemærk
+  uigennemsigtig (\emph{opaque}) signaturmatching), hvor farver er
+  repræsenteret med den datatype, der blev brugt i uge5-opgaven:
+
+\begin{lstlisting}
+datatype primaryColours = Black | Red | Green | Blue
+                   | White | Cyan | Magenta | Yellow
+\end{lstlisting}
+
+Der skal gælde følgende:
+
+\begin{itemize}
+\item Funktionen \lstinline{toRGB} skal implementeres som beskrevet i opgave 5G1.
+
+\item Funktionen \lstinline{fromRGB} skal runde RGB-værdier mellem 0
+  og 127 (begge inklusive) til 0 og værdier mellem 128 og 255 til 255,
+  således at hvert RGB-komponent har værdier, der enten er 0 eller
+  255, og derefter returnere den primærfarve, der med
+  \lstinline{toRGB} afbildes til dette RGB-tripel.  Med andre ord,
+  ``rundes'' en farve af til nærmeste primærfarve.  \textbf{Vink:} Lav
+  en hjælpefunktion \lstinline{round : int -> int}, der afrunder et
+  tal til enten 0 eller 255 som beskrevet herover.
+
+\item \lstinline{complement} følger de almindelige regler for
+  komplementærfarver.  For eksempel er \lstinline{Green = complement Magenta}.
+
+\end{itemize}
+
+\item Prøv at skrive \lstinline{PrimaryColours.red = PrimaryColours.green}.
+Forklar resultatet.
+
+\vspace{2ex}
+
+\hrule
+
+\vspace{1ex}
+
+Vi ønsker nu at definere udvidede moduler for farver med to ekstra operationer:
+
+\begin{enumerate}[1.]
+\item En funktion \lstinline{+++ : colour * colour -> colour}, der kan
+  lægge to farveværdier sammen.
+
+\item En funktion \lstinline{*** : real * colour -> colour}, der kan
+  skalere en farveværdi.
+
+\end{enumerate}
+
+\item Definer en signatur \lstinline{ExtendedColour}, der udvider
+  \lstinline{Colour}.  Brug \lstinline{include Colour} til dette.
+
+\item Definer en struktur \lstinline{ExtendedRGB : ExtendedColour},
+  der udvider \lstinline{RGB} med de to operationer.  Brug
+  \lstinline{open RGB} til dette.
+
+  Sørg for at RGB-værdier ligger i intervallet 0-255 selv efter
+  addition og skalering af farver.  Definer til dette en
+  hjælpefunktion \lstinline{constrain : int -> int}, der ``skubber''
+  tal ind i intervallet 0-255.
+
+\item Definer en struktur \lstinline{ExtendedPrimaryColours : ExtendedColour},
+  der udvider\newline \lstinline{PrimaryColours} med de to operationer.
+
+\textbf{Vink:} Det kan være en fordel at konvertere farverne til RGB,
+behandle RGB-værdierne, og konvertere resultatet tilbage til en
+primærfarve.  Du kan godt kalde funktioner fra \lstinline{ExtendedRGB}
+til at gøre dette.
+
+\end{enumerate}
+
+\newpage
+\section{Tirsdagsopgaver}
+\label{sec:tirsdagsopgaver}
+\textit{Emner:} Strukturer og signaturer, separat oversættelse.
+
+Det forventes, at du inden øvelserne tirsdag har forberedt dig på
+opgaverne ved at løse så mange som muligt på egen hånd.
+
+\vspace{1ex}
+
+Til forskel fra mandagsopgaverne bruger vi nu \emph{structure mode
+  compilation units} som beskrevet i Moscow ML Owner's Manual afsnit 5
+og 6.
+
+\begin{enumerate}[{7}T1]
+\item Skriv signaturen \lstinline{Colour} fra mandagsøvelserne i en
+  fil \texttt{Colour.sig}.
+
+\item Fra en kommandolinje (brug evt.\ ``Shell Command'' fra menuen
+  ``Tools'' i Emacs) oversæt denne med kommanden \texttt{mosmlc -c
+  Colour.sig}.
+
+\item Lav en fil \texttt{Colour.sml}, der indeholder en struktur
+  \lstinline{Colour :> Colour}, der implementere signaturen
+  \lstinline{Colour} som RGB-tripler (dvs.\ at den bortset fra navnet
+  og uigennemsigtigheden er identisk med strukturen \lstinline{RGB}).
+
+\item Fra en kommandolinje (brug evt.\ ``Shell Command'' fra menuen
+  ``Tools'' i Emacs) oversæt denne med kommanden \texttt{mosmlc -c
+  Colour.sml}.
+
+\item Start mosml med \texttt{mosml -P full}, men uden at give nogen
+  fil eller buffer som inddata (brug ``Start SML repl'' fra SML menuen
+  i Emacs).  Skriv derefter kommandoen \texttt{load "Colour";} i
+  mosml-kommandolinjen.  Skriv derefter \texttt{Colour.red;} og
+  observer svaret.
+
+\item Skriv følgende kodelinjer:
+
+\begin{Verbatim}
+structure Hello =
+struct
+  val _ = TextIO.output (TextIO.stdOut, "Hello World!\n");
+end
+\end{Verbatim}
+
+  i en fil \texttt{Hello.sml} og oversæt denne med kommandoen\newline
+  \texttt{mosmlc Hello.sml -o Hello}.  Hvis du bruger Windows, så brug i
+  stedet\newline \texttt{mosmlc Hello.sml -o Hello.exe}.
+
+\item Kald programmet \texttt{Hello} fra en kommandolinje.  Hvis du er
+  bruger Linux eller MacOS, så skriv \texttt{./Hello} på kommandolinjen,
+  hvis du er i Windows, skriv \texttt{Hello}.  \textbf{NB!} Sørg for
+  at din kommandolinje bliver afviklet i det filkatalog, hvor filen
+  \texttt{Hello} (eller \texttt{Hello.exe}) findes.
+
+
+\end{enumerate}
+
+\newpage
+\section{Fredagsopgaver}
+\label{sec:fredagsopgaver}
+\textit{Emne:} Funktorer.
+
+Det forventes, at du inden øvelserne fredag har forberedt dig på
+opgaverne ved at løse så mange som muligt på egen hånd.
+
+\vspace{1ex}
+
+Fredagsopgaverne bygger videre på mandagsopgaverne og inddrager flere
+elementer fra uge5-opgaverne.
+
+Alle funktorer, signaturer og strukturer skrives i en enkelt
+\texttt{.sml} fil (altså som en toplevel-mode compilation unit, som
+beskrevet i Moscow ML Owner's Manual afsnit 5 og 7).  Som udgangspunkt
+bruges en fil med alle signaturer og strukturer fra mandagsopgaverne.
+
+
+\begin{enumerate}[{7}F1]
+\item Skriv en funktor \lstinline{Figure}, der er parameteriseret med
+  en struktur \lstinline{C}, der matcher signaturen \lstinline{Colour},
+  og som implementerer følgende elementer:
+
+\begin{enumerate}[1.]
+
+\item En type \lstinline{colour}, der er identisk med den farvetype, der
+  er defineret i parameteren \lstinline{C}.
+
+\item En funktion \lstinline{toRGB}, der er identisk med den funktion, der
+  er defineret i parameteren \lstinline{C}.
+
+\item En type \lstinline{figure}, der ligner den, der er beskrevet i
+  opgavetemaet fra uge 5, pånær at den i stedet for at være polymorf i
+  farven bruger farvetypen \lstinline{colour}.
+
+\item En funktion \lstinline{colourOf : figure -> point -> colour option},
+  svarende til den funktion, der blev implementeret i opgave 5G3.
+
+\item En funktion\newline
+\lstinline{toInstagraML : figure * point * int * int * real -> InstagraML.image}\newline
+svarende til den funktion, der blev implementeret i opgave 5G6.
+
+Bemærk, at denne funktion selv skal konvertere fra \texttt{colour} til RGB.
+\end{enumerate}
+
+\item Definer en struktur \lstinline{RGBFigure} ved at anvende
+  funktoren \lstinline{Figure} på strukturen \lstinline{RGB}.
+
+\item Definer en struktur \lstinline{PrimaryFigure} ved at anvende
+  funktoren \lstinline{Figure} på strukturen \lstinline{PrimaryColours}.
+
+\item Skriv en funktor \lstinline{ExtendedFigure}, der er
+  parameteriseret over en struktur\newline \lstinline{C : ExtendedColour}.
+  Den skal implementere de samme typer og funktioner som \lstinline{Figure},
+  pånær at datatypen \lstinline{figure} implementerer en ekstra konstruktor\newline
+  \lstinline{Blend of real * figure * figure}.
+
+  Ideen er, at \lstinline{Blend}\,$(b,f,g)$ blander farverne fra de to
+  figurer $f$ og $g$ i forholdet $b$, hvor $0<b<1$ efter følgende regler:
+
+  \begin{enumerate}[1.]
+  \item Hvis et punkt ligger i den ene figur, men ikke i dem begge,
+    har det farven fra denne figur.
+  \item Hvis et punkt ligger i begge figurer, farven fra $f$ er $c_f$
+    og farven fra $g$ er $c_g$, gives farven
+    \texttt{+++(***($b$,\,$c_f$),\,***($1{-}b$,\,$c_g$))}.
+  \end{enumerate}
+
+\item Definer en struktur \lstinline{ExtendedRGBFigure} ved at anvende
+  funktoren \lstinline{ExtendedFigure} på strukturen \lstinline{ExtendedRGB}.
+
+\item Definer en struktur \lstinline{ExtendedPrimaryFigure} ved at anvende
+  funktoren \lstinline{Figure} på strukturen \lstinline{ExtendedPrimaryColours}.
+
+\end{enumerate}
+
+
+\newpage
+\section{Opgavetema: }\label{tema}
+
+\newcommand{\forekomster}{\textit{forekomster}}
+
+Ugens opgavetema er \emph{multimængder}.
+En \emph{multimængde} er en variant af mængder, hvor antallet af
+forekomster af et element har betydning.  Derfor kan man ikke blot
+spørge, \emph{om} et element findes i multimængden, men også
+\emph{hvor mange gange} elementet findes. $\forekomster(m,~x)$ vil være
+antallet af forekomster af $x$ i multimængden $m$.  Dette vil altid
+være større end eller lig med 0.
+
+Foreningsmængde, fællesmængde og mængdedifferens for multimængder
+defineres således:
+
+\begin{itemize}
+\item Foreningsmængden $m_1 \uplus m_2$ af to multimængder $m_1$ og
+  $m_2$ er en multimængde, der indeholder elementerne fra $m_1$ og
+  $m_2$ lige så mange gange, som de forekommer i $m_1$ og $m_2$
+  tilsammen.  For eksempel er
+
+\[\begin{array}{rcl}
+\{1,2,2,3\} \uplus \{1,1,4\} &=& \{1,1,1,2,2,3,4\}
+\end{array}\]
+
+\item Fællesmængden $m_1 \cap m_2$ af to multimængder $m_1$ og $m_2$
+  er en multimængde, der indeholder elementerne, der findes i både
+  $m_1$ og $m_2$ lige så mange gange, som de forekommer i den af $m_1$
+  og $m_2$, hvor de forekommer færrest gange.  For eksempel er
+
+\[\begin{array}{rcl}
+\{1,2,2,3\} \cap \{1,1,4\} &=& \{1\}
+\end{array}\]
+
+\item Differensmængden $m_1 \setminus m_2$ af to multimængder $m_1$ og
+  $m_2$ er en multimængde, der indeholder elementerne, der findes i
+  $m_1$ flere gange end i $m_2$.  Antallet af forekomster i
+  differensmængden er da differensen mellem antal forekomster i $m_1$
+  og $m_2$.  For eksempel er
+
+\[\begin{array}{rcl}
+\{1,2,2,3\} \setminus \{1,1,4\} &=& \{2,2,3\}
+\end{array}\]
+
+\end{itemize}
+
+Dette kan udtrykkes med formlerne
+
+\[\begin{array}{lcl}
+\forekomster(m_1 \uplus m_2,~x) &=&
+ \forekomster(m_1,~x)+\forekomster(m_2,~x)\\
+\forekomster(m_1 \cap m_2,~x) &=&
+ \min(\forekomster(m_1,~x),~\forekomster(m_2,~x))\\
+\forekomster(m_1 \setminus m_2,~x) &=&
+ \max(0,~\forekomster(m_1,~x)-\forekomster(m_2,~x))
+\end{array}\]
+
+\noindent
+$\max$-operationen i ligningen for multimængdedifferens er for at
+undgå et negativt antal forekomster.
+
+Se evt.\ også \url{http://en.wikipedia.org/wiki/Multiset} og\newline
+\url{http://theory.stanford.edu/~arbrad/pivc/sets.pdf}.  Bemærk dog,
+at sidstnævnte bruger $-$ i stedet for $\setminus$ til at angive
+multimængdedifferens.
+
+En mulig signatur for multimængder er:
+\vspace{1ex}
+
+\begin{Verbatim}
+signature MSET =
+sig
+  type 'a mset  (* typen af multimængder med elementer af type 'a *)
+  val multiplicity : ''a mset * ''a -> int (* antal forekomster af element *)
+  val empty : 'a mset  (* den tomme multimængde *)
+  val singleton : ''a -> ''a mset  (* laver multimængde med et element *)
+  val union : ''a mset * ''a mset -> ''a mset (* foreningsmængde *)
+  val intersect : ''a mset * ''a mset -> ''a mset (* fællesmængde *)
+  val minus : ''a mset * ''a mset -> ''a mset (* mængdedifferens *)
+end
+\end{Verbatim}
+
+\newpage
+\section{Gruppeaflevering}
+\label{sec:gruppeaflevering}
+Gruppeafleveringen obligatorisk.  Alle delspørgsmål skal besvares.
+Opgaven afleveres i Absalon.  Der afleveres en fil pr.\ gruppe, men
+den skal angive alle deltageres fulde navne i kommentarlinjer øverst i
+filen. Filens navn skal være af formen
+\texttt{7G-\textit{initialer}.sml}, hvor initialer er erstattet af
+gruppemedlemmernes initialer. Hvis f.eks.\ Bill~Gates, Linus~Torvalds,
+Steve~Jobs og Gabe~Logan~Newell afleverer en opgave sammen, skal filen
+hedde \texttt{7G-BG-LT-SJ-GLN.sml}. Brug gruppeafleveringsfunktionen i
+Absalon.
+
+Gruppeopgaven giver op til 2 point, som tæller til de 20 point, der
+kræves for eksamensdeltagelse.
+
+\textcolor{darkred}{\textbf{NB!} Der er af tidshensyn \emph{ikke}
+  mulighed for genaflevering af ugeopgave 7.}
+
+\vspace{1ex}
+
+Alle signaturer og strukturer skrives i den SML-fil, der afleveres.
+Denne fil skal kunne åbnes med \texttt{mosml -P full} uden fejl.  Der
+bruges altså \emph{toplevel mode compilation units}.
+
+\begin{enumerate}[{7G}1]
+
+\item Kopier ovenstående signatur til SML-filen.
+
+\item Skriv en struktur \texttt{Mset : MSET}, som implementerer en
+  multimængde som en uordnet liste af elementer, hvor antallet af
+  forekomster af et element i en liste angiver antallet af forekomster
+  af elementet i multimængden.
+
+\item Definer følgende multimængder:
+
+\begin{lstlisting}
+val one = Mset.singleton 1
+val two = Mset.singleton 2
+val three = Mset.singleton 3
+val four = Mset.singleton 4
+val m1223 = Mset.union (one,
+                        Mset.union(two,
+                                   Mset.union (two, three)))
+val m114 = Mset.union (one,
+                       Mset.union(one,
+                                  Mset.union (four, Mset.empty)))
+\end{lstlisting}
+
+Ser de ud som forventet?
+
+\item Definer følgende multimængder:
+
+\begin{lstlisting}
+val forening = Mset.union (m1223, m114)
+val faelles = Mset.intersect (m1223, m114)
+val minus = Mset.minus (m1223, m114)
+\end{lstlisting}
+
+Sammenlign resultaterne med eksemplerne i opgavetemaet.
+
+\item Definer følgende værdier:
+
+\begin{lstlisting}
+val forekomster1 = Mset.multiplicity (forening, 1)
+val forekomster2 = Mset.multiplicity (faelles, 1)
+val forekomster3 = Mset.multiplicity (minus, 1)
+\end{lstlisting}
+
+Er resultaterne som forventet?
+\vspace{1ex}
+
+\hrule
+
+\newpage
+
+Vi laver nu en signatur:
+
+\begin{Verbatim}
+signature EMSET =
+sig
+  include MSET
+  val twice : ''a mset -> ''a mset
+end
+\end{Verbatim}
+
+der udvider \texttt{MSET} med en funktion \texttt{twice}, der
+fordobler forekomsten af alle elementer i en multimængde.
+
+\item Skriv en funktor \texttt{UMset(mm : MSET) : EMSET}, der tager en
+  multimængdestruktur og laver en udvidet multimængdestruktur.
+
+\item Anvend \texttt{UMset} på strukturen \texttt{Mset} for at få en
+  struktur \texttt{Eset}, der implementerer \texttt{EMSET}.
+
+\end{enumerate}
+
+
+\newpage
+\section{Individuel aflevering}
+\label{sec:indiv-aflev}
+Den individuelle opgave er obligatorisk.  Alle delspørgsmål skal
+besvares.  Opgaven afleveres i Absalon som en fil med navnet
+\texttt{7I-\textit{navn}.sml}, hvor \texttt{\textit{navn}} er
+erstatttet med dit navn. Hvis du fx hedder Anders~A.~And, skal
+filnavnet være \texttt{7I-Anders-A-And.sml}. Skriv også dit fulde navn
+som en kommentar i starten af filen.
+
+Den individielle opgave giver op til 3 point, som tæller til de 20
+point, der kræves for eksamensdeltagelse.
+
+\textcolor{darkred}{\textbf{NB!} Af tidshensyn er afleveringsfristen
+  for den individuelle opgave allerede \emph{lørdag aften} i stedet
+  for søndag aften.  Endvidere er der \emph{ikke} mulighed for
+  genaflevering af ugeopgave 7.}
+
+\vspace{1ex}
+
+Alle signaturer og strukturer skrives i den SML-fil, der afleveres.
+Denne fil skal kunne åbnes med \texttt{mosml -P full} uden fejl.  Der
+bruges altså \emph{toplevel mode compilation units}.
+
+\begin{enumerate}[{7I}1]
+
+\item Kopier signaturen \texttt{MSET} fra opgavetemaet til din SML-fil.
+
+\item Skriv en struktur \texttt{MsetF :> MSET}, som implementerer en
+  multimængde som en funktion fra elementer til antallet af
+  forekomster af disse.
+
+  Din struktur skal blandt andet altså indeholde linjerne
+
+\begin{Verbatim}
+  type 'a mset = 'a -> int
+
+  fun multiplicity (m, x) = m x
+      (* anvend multimængden på elementet *)
+
+  fun singleton x = fn y => if y = x then 1 else 0
+      (* x har 1 forekomst, alle andre elementer har 0 *)
+
+  fun union (m1, m2) = fn x => m1 x + m2 x
+      (* bruger formlen fra beskrivelsen i opgavetemaet *)
+\end{Verbatim}
+
+\textbf{Vink:} Brug formlerne vist i opgavetemaet for antal
+forekomster af $x$ i $m_1 \cap m_2$ og $m_1 \setminus m_2$ til at
+definere \texttt{intersect} og \texttt{minus} på samme måde som
+\texttt{union} er defineret herover.
+
+\end{enumerate}
+
+
+\newpage
+\section{Ugens nød}
+\label{sec:ugens-nod}
+De fleste kender nok spillet "`Minestryger"'
+(\url{http://da.wikipedia.org/wiki/Minestryger_%28spil%29}).
+
+  Vi laver nu en variant af dette spil, hvor det for alle felter på
+  forhånd er kendt, hvor mange bomber, der i alt er i de otte
+  nabofelter samt feltet selv.  Det g<E6>lder både felter med og felter
+  uden bomber.
+
+  Et eksempel på et sådant spil er
+
+\begin{verbatim}
+221
+232
+232
+\end{verbatim}
+  
+  Opgaven går nu ud på at finde ud af, i hvilke felter bomberne er.
+  Svaret skal gives som en tekst, hvor tomme felter angives med
+  \texttt{.} og bomber med \texttt{B}.  Eksempelvis skal det
+  ovenstående inddata give følgende uddata:
+
+\begin{verbatim}
+...
+BB.
+..B
+\end{verbatim}
+  
+Der er ikke altid en entydig løsning.  For eksempel vil inddataet
+
+
+\begin{verbatim}
+11
+11
+\end{verbatim}
+ 
+have fire løsninger, blandt andet:
+
+\vspace{1ex}
+
+\noindent
+\begin{tabular}{lcl}
+\texttt{.B} & og & \texttt{B.} \\
+\texttt{..} &  & \texttt{..}
+\end{tabular}
+\vspace{1ex}
+
+Der er heller ikke altid løsninger, idet for eksempel
+
+\begin{verbatim}
+10
+00
+\end{verbatim}
+ 
+ikke har en løsning.
+
+\begin{enumerate}[{7}N1]
+
+\item Lav i SML en funktion \texttt{minestryger : string -> string ->
+    unit}, sådan at\newline \texttt{minestryger $in$ $out$} læser et
+  spil fra filen $in$ og skriver en løsning i filen $out$.  Hvis der
+  er flere mulige løsninger, er det ligegyldigt, hvilken af dem, der
+  skrives til $out$.  Hvis ingen løsning findes, kastes undtagelsen
+  \texttt{Uloeselig}.  Et spil består af $m$ linjers tekst med hver
+  $n$ cifre fra 0 til 9.  Hvis inddatafilen ikke har dette format,
+  kastes undtagelsen \texttt{Domain}.
+
+  Et par eksempelspil er angivet herunder:
+
+\begin{verbatim}
+4421332
+4543543
+3433432
+2434321
+2312110
+\end{verbatim}
+
+\begin{verbatim}
+233322234320
+233333335541
+012333335652
+112244324763
+334455445763
+554234444653
+554233333543
+332012221322
+111013442211
+001234442100
+111233332100
+111232111100
+\end{verbatim}
+
+\begin{verbatim}
+22122235444654334453
+33133458654776546685
+23144557754665457674
+24343456644666556685
+14454565657765567785
+36554565668754556685
+36454677766443556675
+36454555654222333354
+24344655553123433465
+23345743354213332465
+33224643365424443465
+33113542244323444465
+44102331344334445464
+34223554444455545575
+35432345666766565565
+36553456667987653355
+47553455656655564455
+58553455644334442244
+46432466755223442355
+34310134544223320133
+\end{verbatim}
+
+I bedømmelsen af løsninger, gives programmet større og større opgaver
+og stoppes når den samlede køretid overstiger et minut.  Det program,
+der har løst flest opgaver inden da, vinder.  Bemærk: Bedømmerens PC
+kører måske ikke helt så hurtigt som din.
+
+\end{enumerate}
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

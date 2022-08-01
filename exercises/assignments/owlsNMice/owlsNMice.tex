@@ -1,0 +1,37 @@
+You are to simulate owls and mice in a closed environment. The owls are immortal and hunt mice to eat, and the mice run around randomly and multiply (propagate). The overall rules for the simulation are:
+\begin{enumerate}
+\item The environment must consist of $n\times n$ fields organized as a checkerboard.
+\item Alive animals have a coordinate in the environment, and there can only be one animal per coordinate.
+\item The simulation updates in ticks, and after each tick, all animals perform an action.
+\item The simulation runs for $T$ ticks.
+\item There must initially be $O$ owls and $M$ mice.
+\end{enumerate}
+The possible actions are:
+\begin{enumerate}[resume]
+\item A mouse can move to a neighbouring empty field.
+\item A mouse must have a counter, such that after $p$ ticks, the mouse will not move but multiply. The effect is that an offspring is created in an empty neighbouring field. If there is no empty neighbouring field, then the mouse waits a turn.
+\item An owl can move to all neighbouring fields not occopied by another owl. If an owl moves to a field with a mouse, then the mouse is eaten and the mouse is removed from the board.
+\end{enumerate}
+
+You are to:
+\begin{enumerate}
+\item Use the object-oriented programming paradigm and include inheritance in your solution.
+\item Create a program \lstinline[language=console]{simulate.fsx}, which runs the simulation and prints the tick number and the total number of mice after each tick to the textfile \lstinline[language=console]{simulation.txt}. The program must accept the parameters $n$, $T$, $p$, $M$, $O$, at the command-line when the simulation starts.
+\item Collect the main classes in an implementation file called \lstinline[language=console]{preditorPrey.fs}, which \lstinline[language=console]{simulate.fsx} links to.
+\item Make a white-box test of the implementation file, \lstinline[language=console]{testPreditorPrey.fsx}.
+\item Find parameters, where the mice population diminishes to zero quickly, explodes, and is seemingly in balance, and demonstrate this by copying and renaming the textfile \lstinline[language=console]{simulation.txt} to the three corresponding files
+  \begin{itemize}
+  \item \lstinline[language=console]{simulationExtinction.txt},
+  \item \lstinline[language=console]{simulationOverpopulation.txt}, and
+  \item \lstinline[language=console]{simulationBalance.txt} respectively.
+  \end{itemize}
+\end{enumerate}
+You are also to write a report:
+\begin{enumerate}[resume]
+\item The report must as a minimum include
+  the sections: Introduction, Problem analysis and design, Program
+  description, Testing, Experiments, and Conclusion. Include a User
+  guide and your source code as appendices.
+\item The report must be
+  no longer than 10 pages excluding the appendices.
+\end{enumerate}

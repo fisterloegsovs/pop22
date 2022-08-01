@@ -1,0 +1,69 @@
+\textbf{Verden}
+
+Implementer klassen \lstinline{World}:
+
+\begin{lstlisting}
+  type World =
+    class
+      new : ...
+      member AddItem : item:Item -> unit
+      member Play : unit -> unit
+    end
+\end{lstlisting}
+
+Metoden \lstinline{AddItem} bruges til at befolke verden med ting som spilleren
+kan interagere med. Typisk inden spillet går i gang.
+
+Metoden \lstinline{Play} bruges til at starte spillet, og tager sig af
+interaktionen med brugeren via terminalen. Spillet er tur-baseret og
+foregår på følgende vis:
+\begin{enumerate}
+\item Vis hvordan verden ser ud, samt om der er eventuelt er sket
+  noget for spilleren
+\item Hent brugerens træk som gives ved brug af pile-tasterne.
+\item Afgør hvilke \lstinline{Item}s som brugeren eventuelt interagerer med,
+  samt hvad det betyder for hvad spillerens position og helbred er.
+\item Hvis spilleren er død eller hvis spilleren har fundet
+  \lstinline{Exit} vis et afslutningsskærmbillede og stop
+  spillet, ellers start forfra.
+\end{enumerate}
+
+Klassen \lstinline{World} samt de andre klasser fra de andre
+delopgaver skal være i filen \texttt{roguelike.fs}. Lav derudover en
+fil \texttt{roguelike-game.fsx}, der som minimum laver en ny verden og
+kalder \lstinline{Play}.
+
+
+\textbf{Basal Storyline}
+
+Den mest basale udgave af spillet: Spilleren starter et sted i et
+underjordisk dungeon, og skal finde udgangen. Når spilleren finder
+udgangen skal de have mindst fem \emph{hit points} for at kunne tvinge
+døren op og undslippe dungeon.
+
+Det er op til jer hvordan dungeon skal se ud, hvor spilleren starter,
+samt hvor mange genstande og skabninger der er i verden.
+
+
+\textbf{Hints:}
+\begin{itemize}
+\item Det er en vigtig pointe at \lstinline{World} ikke tager sig af
+  at rendere spilleren og \lstinline{Item}s i verden, men blot skaber
+  en canvas, som de forskellige \lstinline{Entry} kan rendere sig selv
+  på.
+\item Brug \lstinline{System.Console.Clear()} at fjerne alt fra terminalen inden
+  verden vises.
+\item Brug \lstinline{Console.ReadKey(true)} til at hente et træk fra brugeren
+\item Hvis \lstinline{key} er resultatet fra \lstinline{Console.ReadKey} så er \lstinline{key.Key}
+  lig med\\ \lstinline{System.ConsoleKey.UpArrow}, hvis brugeren trykkede på
+  op-pilen.
+\end{itemize}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

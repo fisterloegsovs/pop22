@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{exsheets}
+\usepackage{exsheets-listings}
+\lstdefinestyle{mystyle}{
+  frame=single,
+  xleftmargin=20pt,
+  numbers=left,
+  numberstyle=\small,
+  tabsize=2,
+  breaklines,
+  showspaces=false,
+  showstringspaces=false,
+  language=C,
+  basicstyle=\small\ttfamily,
+  commentstyle=\itshape\color{gray}
+}
+\SetupExSheets{
+  question/listings={style=mystyle} ,
+  solution/listings={style=mystyle}
+}
+\begin{document}
+
+\begin{lstquestion}[pre=Consider the following C program.,points=6]
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  printf("hello, world\n");
+}
+\end{lstquestion}
+
+\begin{lstsolution}[pre=Consider the following C program.]
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  printf("hello, world\n");
+}
+\end{lstsolution}
+
+% \pagebreak
+\printsolutions 
+
+\end{document}

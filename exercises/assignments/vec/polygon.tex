@@ -1,0 +1,6 @@
+Punkter på en cirkel med radius 1 kan beregnes som $(\cos \theta, \sin \theta), \;\theta\in [0,2\pi)$. Betragt det lukkede polygon, som består af $n>1$ punkter på en cirkel, hvor $\theta_i = \frac{2\pi i}{n},\; i = 0..(n-1)$.
+Skriv et program med en funktion,
+  \begin{quote}
+    \lstinline{polyLen : n:int -> float}
+  \end{quote}
+  som benytter ovenstående bibliotek til at udregne længden af polygonet. Længden udregnes som summen af længden af vektorerne mellem nabopunkter. Programmet skal desuden udskrive en tabel af længder for et stigende antal værdier $n$, og resultaterne skal sammenlignes med omkredsen af cirklen med radius $1$. Ud fra tabellen, hvad ser det ud til at der sker med længden af polygonet, når $n\rightarrow\infty$?

@@ -1,0 +1,148 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\newcommand{\sbl}{Simple Jack}
+
+\title{Programmering og Problemløsning\\Datalogisk Institut,
+  Københavns Universitet\\Arbejdsseddel 10 - gruppeopgave}
+\author{Jon Sporring and Christina Lioma}
+\date{4.\ december -- 13.\ december.\\Afleveringsfrist: onsdag d. 13. december kl. 22:00}
+
+\begin{document}
+\maketitle
+
+I denne periode skal I arbejde i grupper. Regler for individuelle afleveringsopgaver er beskrevet i "`Noter, links, software m.m."'$\rightarrow$"`Generel information om opgaver"'. Formålet er at arbejde med:
+\begin{itemize}
+\item Classes
+\item Objects
+\item Methods
+\item Attributes
+\end{itemize}
+
+Opgaverne for denne uge er delt i Øve- og afleveringsopgaver. 
+
+Øve-opgaverne er:
+\begin{enumerate}[label=10ø.\arabic*,start=0]
+\item Implementer en klasse \texttt{Counter}. Objekter (variable) af typen \texttt{Counter} skal være tællere, og den skal have 3 metoder (funktioner): Konstruktoreren, som laver en tæller hvis start værdi er 0; \texttt{get}, som returnerer tællerens nuværende værdi; \texttt{incr}, som øger tællerens værdi med 1. Skriv et unit-test program, som afprøver klassen.
+\item Implementér en klasse \texttt{Car} med følgende egenskaber. En bil har en specifik benzin effektivitet (målt i km/liter) og en bestemt mængde benzin i tanken. Benzin effektiviteten for en bil er specificeret med konstruktoren ved oprettelse af et \texttt{Car} objekt. Den indledende mængde benzin er 0 liter. Implementer følgende metoder til \texttt{Car} klassen:
+    \begin{itemize}
+    \item \texttt{addGas}: Tilføjer en specificeret mængde benzin til bilen.
+    \item \texttt{gasLeft}: Returnerer den nuværende mængde benzin i bilen.
+    \item \texttt{drive}: Bilen køres en specificeret distance, og bruger tilsvarende benzin. Hvis der ikke er nok benzin på tanken til at køre hele distancen kastes en undtagelse.
+    \end{itemize}
+    Lav også en klasse \texttt{CarTest} som tester alle metoder i \texttt{Car}.
+ % \end{description}
+
+\item Implementér en klasse \texttt{Moth} som repræsenterer et møl der flyver i en lige linje fra en bestemt position mod et lys således at møllets nye position er halvvejs mellem dets nuværende position og lysets position.  En position er to float tal som angiver x og y koordinater. Møllets indledende position gives ved oprettelse af et \texttt{Moth} objekt vha.\ konstruktoren.  Implementér metoderne:
+  \begin{itemize}
+\item \texttt{moveToLight} som bevæger møllet i retning af et lys med specificeret position som beskrevet ovenfor.
+\item \texttt{getPosition} som returnerer møllets nuværende position.
+\end{itemize}
+Test alle metoder i \texttt{Moth} klassen.
+%\end{description}
+
+\item I en ikke-så-fjern fremtid bliver droner massivt brugt til levering af varer købt på nettet.  Drone-trafikken er blevet så voldsom i dit område, at du er blevet bedt om at skrive et program som kan afgøre om droner flyver ind i hinanden. Antag at alle droner flyver i samme højde og at 2 droner rammer hinanden hvis der på et givent tidspunkt (kun hele minutter) er mindre end 5 meter imellem dem.  Droner flyver med forskellig hastighed (meter/minut) og i forskellige retninger. En drone flyver altid i en lige linje mod sin destination, og når destinationen er nået, lander dronen og kan ikke længere kollidere med andre droner.  Ved oprettelse af et \texttt{Drone} objekt specificeres start positionen, destinationen og hastigheden.  Implementér klassen \texttt{Drone} så den som minimum har attributterne og metoderne:
+    \begin{itemize}
+    \item \texttt{position} (attribut) : Angiver dronens position i (x, y) koordinater.
+    \item \texttt{speed} (attribut) : Angiver distancen som dronen flyver for hvert minut.
+    \item \texttt{destination} (attribut) : Angiver positionen for dronens destination i (x, y) koordinater.
+    \item \texttt{fly} (metode) : Beregner dronens nye position efter et minuts flyvning.
+    \item \texttt{isFinished} (metode) : Afgør om dronen har nået sin destination eller ej.
+    \end{itemize}
+    og klassen \texttt{Airspace} så den som minimum har attributterne og metoderne:
+    \begin{itemize}
+    \item \texttt{drones} (attribut) : En samling droner i luftrummet.
+    \item \texttt{droneDist} (metode) : Beregner afstanden mellem to droner.
+    \item \texttt{flyDrones} (metode) : Lader et minut passere og opdaterer dronernes positioner tilsvarende.
+    \item \texttt{addDrone} (metode) : Tilføjer en ny drone til luftrummet.
+    \item \texttt{willCollide} (metode) : Afgør om der sker en eller flere kollisioner indenfor et specificeret tidsinterval givet
+      i hele minutter.
+    \end{itemize}
+    Test alle metoder i begge klasser. Opret en samling \texttt{Drone} objekter som du ved ikke vil medføre kollisioner, samt en anden samling som du ved vil medføre kollisioner og test om din \texttt{willCollide} metode virker korrekt.
+ % \end{description}
+ \item Write a class \texttt{Car} that has the following data attributes:
+ \begin{itemize}
+    \item \texttt{yearOfModel} (attribute) : The car's year model.
+    \item \texttt{make} (atttribute) : The make of the car.
+    \item \texttt{speed} (atttribute) : The car's current speed.
+    \end{itemize}
+The \texttt{Car} class should have a constructor that accepts the car's year model and make as arguments. Set the car's initial speed to 0.
+The \texttt{Car} class should have the following methods:
+ \begin{itemize}
+    \item \texttt{accelerate} (method) : The \texttt{accelerate} method should add 5 to the \texttt{speed} attribute each time it is called.
+    \item \texttt{brake} (method) : The \texttt{brake} method should subtract 5 from the \texttt{speed} attribute each time it is called.
+    \item \texttt{getSpeed} (method) : The \texttt{getSpeed} method should return the current speed.
+     \end{itemize}
+Design a program that instantiates a \texttt{Car} object, and then calls the \texttt{accelerate} method five times. After each call to the \texttt{accelerate} method, get the current speed of the car and display it. Then call the \texttt{brake} method five times. After each call to the \texttt{brake} method, get the current speed of the car and display it.
+
+Extend class \texttt{Car} with the attributes \texttt{addGas, gasLeft} from exercise 9ø.0, and modify methods \texttt{accelerate, break} so that the amount of gas left is reduced when the car accelerates or breaks. Call \texttt{accelerate, brake} five times, as above, and after each call display both the current speed and the current amount of gas left.
+
+Test all methods. Create an object instance that you know will not run out of gas, and another object instance that you know will run out of gas and test that your \texttt{accelerate, brake} methods work properly.
+\end{enumerate}
+
+Afleveringsopgaven er:
+\begin{enumerate}[label=10g.\arabic*,start=0]
+\item Du skal implementere en forsimplet udgave af kortspillet Blackjack som vi kalder \sbl. I \sbl\ spiller man ikke om penge/jetoner men blot om sejr/tab mellem en spiller og dealer.  Reglerne for \sbl er som følger:
+  \begin{description}
+  \item[Regler]
+    Spillet består af en dealer, 1-5 spillere samt et normalt kortspil (uden jokere). Ved spillets start får dealer og hver spiller tildelt 2 tilfældige kort fra bunken som placeres med billedsiden opad foran spilleren, så alle kan se dem. I \sbl\ spilles der med åbne kort dvs. alle trukne kort til hver en tid er synlige for alle spillere.  Kortene har værdi som følger:
+    \begin{enumerate}
+    \item Billedkort (knægt, dame og konge) har værdien 10
+    \item Es kan antage enten værdien 1 eller 11
+    \item Resten af kortene har den påtrykte værdi
+    \end{enumerate}
+    For hver spiller gælder spillet om at ende med en korthånd hvis sum af værdier er højere en dealers sum af værdier, 
+    uden at summen overstiger 21, i hvilket tilfælde spilleren er "bust".
+    Spillerne får nu en tur hver, hvor de skal udføre en af følgende handlinger:
+    \begin{enumerate}
+    \item "Stand": Spilleren/dealeren vælger ikke at modtage kort og turen går videre.
+    \item "Hit": Spilleren/dealeren vælger at modtage kort fra bunken et ad gangen indtil han/hun 
+      vælger at stoppe og turen går videre.
+    \end{enumerate}
+    Det er dealers tur til sidst efter alle andre spillere har haft deres tur. Når dealer har haft sin tur afsluttes spillet.
+    Ved spillets afslutning afgøres udfaldet på følgende måde:
+    En spiller vinder hvis ingen af følgende tilfælde gør sig gældende:
+    \begin{enumerate}
+    \item Spilleren er "bust"
+    \item Summen af spillerens kort-værdier er lavere end, eller lig med dealers sum af kort-værdier
+    \item Både spilleren og dealer har SimpleJack (SimpleJack er et Es og et billedkort)
+    \end{enumerate}
+    Bemærk at flere spillere altså godt kan vinde på en gang. Et spil \sbl\ er mellem en spiller og dealer, 
+    så med 5 spillere ved bordet, er det altså 5 separate spil som spilles.
+  \item[Implementation]
+    I skal designe og implementere et program som kan simulere \sbl\ ved brug af klasser. 
+    Start med grundigt at overveje hvilke aspekter af spillet
+    som giver mening at opdele i klasser. I skal implementere spillet sådan, at en spiller enten kan være en bruger af
+    \sbl\ programmet, som foretager sine valg og ser kortene på bordet via terminalen, eller en spiller kan være en AI som
+    skal følge en af følgende strategier:
+    \begin{enumerate}
+    \item Vælg altid "Hit", medmindre summen af egne kort kan være 17 eller over, ellers vælg "Stand"
+    \item Vælg tilfældigt mellem "Hit" og "Stand". Hvis "Hit" vælges trækkes et kort og der vælges igen tilfældigt mellem "Hit"
+      og "Stand" osv.
+    \end{enumerate}
+    Dealer skal følge strategi nummer 1.
+    Du skal også lave:
+    \begin{itemize}
+    \item En rapport (maks 2 sider)
+    \item Unit-tests
+    \item Din implementation skal kommenteres jævnfør kommentarstandarden for F\#
+    \end{itemize}
+    Hint: Man kan generere tilfældige tal indenfor et interval (f.eks. fra og med 1 til og med 100) ved brug af følgende kode:
+    \begin{lstlisting}[frame=none]
+      let gen = System.Random()
+      let ran_int = gen.Next(1, 101)
+    \end{lstlisting}
+  \end{description}
+  
+  You should comment your code and describe in max. 2 pages what your program does and how you have tested the methods.
+\end{enumerate}
+
+Afleveringsopgaven skal afleveres som et antal fsx tekstfiler navngivet efter opgaven, som f.eks. \lstinline!10g0.fsx!. Tekstfilerne skal kunne oversættes med fsharpc, og resultatet skal kunne køres med mono. Funktioner skal dokumenteres ifølge dokumentationsstandarden, og udover selve programteksten skal der vedlægges en kort rapport i pdf format kaldet \lstinline{10g.pdf}, som indholder de dele af besvarelsen, som ikke naturligt vil være i en programtekst. Det hele skal samles i en zip fil og uploades på Absalon.
+
+\flushright God fornøjelse.
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,11 @@
+We will use the following three types to implement various functions relating to cards.
+
+\begin{lstlisting}
+type suit = Hearts | Diamonds | Clubs | Spades // The suit of a card
+
+type rank = Two | Three | Four | Five | Six    // The rank of a card
+          | Seven | Eight | Nine | Ten
+          | Jack | Queen | King | Ace
+
+type card = rank * suit          // Combination of a rank and a suit
+\end{lstlisting}

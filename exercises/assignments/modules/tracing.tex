@@ -1,0 +1,17 @@
+Consider the library from Assignment~\ref{implementation}. Assuming
+that your module is called \lstinline{Color}, consider the following application
+\begin{codeNOutput}{: Application of a Color library.}
+  \begin{lstlisting}
+let red = (255,0,0)
+let green = (0,255,0)  
+let avg = Color.add red green
+let factor = 1.25
+let bright = Color.scale factor avg
+printfn "Bright gray is: %A" bright
+  \end{lstlisting}
+\end{codeNOutput}
+If your functions \lstinline{add} and \lstinline{scale} have a
+different interface, then adjust accordingly. Perform a tracing by
+hand of the above code including the implementation of your
+library. Run the (adjusted) code with \filename{fsharpc}. Did you
+discover any errors? Do you get the same output?

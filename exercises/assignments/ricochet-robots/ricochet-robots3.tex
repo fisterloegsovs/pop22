@@ -1,0 +1,32 @@
+\textbf{Udvidelser}
+
+Lav mindst to udvidelser til spillet og beskriv dem i jeres
+rapport. Følgende er nogle forslag til udvidelser, men I må gerne selv
+lade fantasien råde. Hvis I laver udvidelser som kræver ændringer til
+de eksisterende typer og klasser, så skal I diskutere hvorfor denne
+slags ændringer kan være problematiske i jeres rapport. Hvis I laver
+nye spilelementer, så skal jeres rapport indeholde en regelbeskrivelse
+for de nye elementer som hvis man spillede en fysisk udgave af
+spillet, fx hvad der sker hvis to robotter ender i samme felt (kan
+ikke fysisk lade sig gøre).
+
+\begin{itemize}
+\item Teleport, lav en teleport der flytter en robot fra et sted i
+  verden til et andet sted i verdenen.
+\item Vægge der kan bevæge sig.
+\item Bomber som der eksploderer ved sammenstød med en robot, og
+  fjerner nærtliggende vægge.
+\item Udvid \lstinline{BoardDisplay} og \lstinline{Game} til at kunne
+  vise farver og emoji. Vær opmærksom på at emoji ofte fylder det
+  samme som to almindelige tegn. Brug
+\begin{lstlisting}
+System.Console.BackgroundColor <- System.ConsoleColor.Blue
+\end{lstlisting}
+  til, fx, at sætte baggrundsfarven til blå.
+\item Mulighed for at loade forskellige spil/startposition fra en fil.
+\end{itemize}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

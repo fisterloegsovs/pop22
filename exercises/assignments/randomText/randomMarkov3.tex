@@ -1,0 +1,13 @@
+Write a program that generates a random string of length
+\lstinline!len!, whose character triples are distributed according to a
+user specified trioccurrence histogram \lstinline!trioc!.  The function
+must have the type:
+\begin{quote}
+  \mbox{\lstinline!sndOrderMarkovModel : trioc:int list list list -> len:int -> string!}
+\end{quote}
+Use the function developed in Exercise~\ref{triocurrence}, and test
+your function by generating a random string, whose character triples are
+distributed as the converted characters in H.C.\ Andersen's fairy
+tale, ``Little Claus and Big Claus''. Calculate the trioccurrence
+histogram for the random string, and compare this with the original
+trioccurrence histogram.

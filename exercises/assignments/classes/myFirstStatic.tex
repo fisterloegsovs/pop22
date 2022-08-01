@@ -1,0 +1,17 @@
+Implement a class \lstinline{account}, which is a model of a bank account. Each account must have the following properties
+\begin{itemize}
+\item \lstinline{name}: the owner's name
+\item \lstinline{account}: the account number 
+\item \lstinline{transactions}: the list of transactions
+\end{itemize}
+The list of transactions is a list of pairs \lstinline{(description, balance)}, such that the head is the last transaction made and the present balance. If the list is empty, then the balance is zero. The transaction amount is the difference between the two last transaction balances.  To ensure that there are no reoccurring numbers, the bank account class must have a single static field, \lstinline{lastAccountNumber}, which is shared among all objects, and which contains the number of the last account number. When a new account is created, i.e., when an object of the \lstinline{account} class is instantiated, the class' \lstinline{lastAccountNumber} is incremented by one and the new account is given that number.
+The class must have a class method:
+\begin{itemize}
+\item \lstinline{lastAccount} which returns the value of the last account created.
+\end{itemize}
+Further, each account object must also have the following methods:
+\begin{itemize}
+\item \lstinline{add} which takes a text description and a transaction amount, and prepends a new transaction pair with the updated balance.
+\item \lstinline{balance} which returns the present balance of the account
+\end{itemize}
+Make a program, which instantiates 2 objects of the \lstinline{account} class and which has a set of transactions that demonstrates that the class works as intended.

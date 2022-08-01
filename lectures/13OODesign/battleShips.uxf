@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>170</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>spil
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>420</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>koordinat
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>350</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>felt
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>290</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>plade
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>290</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>skib
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>260</x>
+      <y>290</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>modstander
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>230</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>spiller
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

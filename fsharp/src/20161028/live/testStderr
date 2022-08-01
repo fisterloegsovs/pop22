@@ -1,0 +1,1 @@
+mono stderr.exe 1> stdout.txt 2> stderr.txt && echo stdout.txt: && cat stdout.txt && echo stderr.txt: && cat stderr.txt

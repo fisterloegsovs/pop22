@@ -1,0 +1,82 @@
+\textbf{Genstande og Skabninger}
+
+Vi bruger klassen \lstinline{Entity} til at repræsentere genstande og skabninger
+i vores verden. Disse skal kunne renderes på en canvas. Tag udgangspunkt i
+følgende erklæring:
+
+\begin{lstlisting}
+  type Entity() =
+    abstract member RenderOn : Canvas -> unit
+    default this.RenderOn canvas = ()
+\end{lstlisting}
+
+Hvis I får behov for det må I gerne tilføje tilstand (data og
+properties), metoder og en anden default implementering af
+\lstinline{RenderOn} til \lstinline{Entity}.
+
+Til at repræsentere spilleren bruger vi klassen \lstinline{Player}:
+
+\begin{lstlisting}
+  type Player =
+    class
+      inherit Entity
+      new : ...
+      member Damage : dmg:int -> unit
+      member Heal : h:int -> unit
+      member MoveTo : x:int * y:int -> unit
+      member HitPoints : int
+      member IsDead : bool
+    end
+\end{lstlisting}
+
+En spiller starter med ti hit points. En
+spiller er død hvis de har mindre end nul hit points. En spiller
+har et maksimum hit points de kan helbredes op til (I betemmer
+hvor mange, husk at dokumentere det i rapporten).
+
+Metoderne \lstinline{Damage} og \lstinline{Heal} bruge til at gøre
+skade på og, henholdsvis, helbrede spilleren med et antal hit points.
+
+Til at repræsentere genstande og skabninger, som spilleren kan
+interagere med, bruger vi den abstrakte klasse \lstinline{Item}:
+
+\begin{lstlisting}
+  type Item =
+    class
+      inherit Entity
+      abstract member InteractWith : Player -> bool
+      member FullyOccupy : bool
+    end
+\end{lstlisting}
+
+Den måde en spiller interagerer med et \lstinline{Item} på, er ved at
+gå ind i \lstinline{Item} (det kommer vi tilbage til i næste
+delopgave). Til dette skal vi bruge \lstinline{FullyOccupy} til at
+sige om \lstinline{Item} fylder feltet helt ud eller om spilleren kan
+stå i samme felt som genstanden. Metoden \lstinline{InteractWith}
+bruges dels til at genstanden kan have effekter på spilleren, og dels
+så siger retur-værdien om genstanden stadigvæk skal være i verden
+(\lstinline{true}) efter interaktionen, eller om den skal fjernes
+(\lstinline{false}) fra verden.
+
+Implementér følgende fem konkrete klasser der nedarver fra \lstinline{Item}:
+
+\begin{itemize}
+\item \lstinline{Wall} der fylder et helt felt, men ellers ikke har effekter på
+  spilleren.
+\item \lstinline{Water} der ikke fylder feltet helt ud, og helbreder med to
+  hit points.
+\item \lstinline{Fire} der ikke fylder feltet helt ud, og giver ét hit point i
+  skade ved hver interaktion med spilleren. Når spilleren har
+  interagereret fem gange med ilden går den ud.
+\item \lstinline{FleshEatingPlant} der fylder feltet helt ud, og giver fem hit point i
+  skade ved hver interaktion med spilleren.
+\item \lstinline{Exit} vejen ud af dungeon!
+\end{itemize}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

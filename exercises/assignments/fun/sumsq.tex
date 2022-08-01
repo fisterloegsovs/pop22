@@ -1,0 +1,11 @@
+Skriv en funktion \lstinline{sumsq : float list -> float}, som
+benytter sig af en \lstinline{let}-binding til at definere en variabel
+\lstinline{squares}. Variablen \lstinline{squares} skal bindes til
+resultatet af at konstruere en liste indeholdende kvadratet på hvert
+element i argumentlisten (benyt \lstinline{List.map}). Funktionen
+\lstinline{sumsq} kan nu returnere resultatet af at udregne udtrykket
+\lstinline{List.fold (+) 0.0 squares}.
+%
+Test funktionen på en række forskellige float-lister. For eksempel
+skal kaldet \lstinline{sumsq [3.0;4.0]} resultere i
+værdien \lstinline{25.0}.

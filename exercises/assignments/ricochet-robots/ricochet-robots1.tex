@@ -1,0 +1,99 @@
+\textbf{Spilelementer}
+
+Vi bruger den abstrakte klassen \lstinline{BoardElement} til at
+repræsentere spilelementer og klassen \lstinline{Robot} til
+repræsentere robotter. Tag udgangspunkt i følgende
+erklæringer:
+
+\begin{lstlisting}
+type Direction = North | South | East | West
+type Action =
+  | Stop of Position
+  | Continue of Direction * Position
+  | Ignore
+
+[<AbstractClass>]
+type BoardElement() =
+    abstract member RenderOn : BoardDisplay -> unit
+    abstract member Interact : Robot -> Direction -> Action
+    default __.Interact _ _ = Ignore
+    abstract member GameOver : Robot list -> bool
+    default __.GameOver _ = false
+
+and Robot(row:int, col:int, name:string) =
+    inherit BoardElement()
+    member this.Position = ...
+    override this.Interact other dir = ...
+    override this.RenderOn display = ...
+    member val Name = ...
+    member robot.Step dir = ...
+\end{lstlisting}
+
+Hvor typen \lstinline{Direction} bruges til at angive en retning i
+forhold til spillepladen. Typen \lstinline{BoardElement} bruges til at
+repræsentere spilelementer som ikke er robotter, denne klasse har tre
+abstrakte metoder: \lstinline{RenderOn} til at rendere et element på
+et \lstinline{BoardDisplay}; \lstinline{GameOver} som bruges til at
+afgøre om et spil er gennemført, baseret på robotternes positioner;
+\lstinline{Interact} som bruges at afgøre et spilelements indflydelse
+på en robot, inden den flyttes. Typen \lstinline{Action} bruges til at
+specificere hvilken indflydelse et spilelement har på en robots
+flytning.
+
+Klassen \lstinline{Robot} bruges til at repræsentere
+robotter. Robotter er også spilelementer, da de kan påvirke andre
+robotter. Det vil sige, at klassen skal implementere metoderne fra
+\lstinline{BoardElement}. Derudover har en robot:
+\begin{itemize}
+\item To properties: \lstinline{Position} et par, $(r,c)$, der angiver
+  hvor på pladen robotten er og \lstinline{Name} der angiver robottens
+  navn, som blandt andet kan bruges til at rendere en robot på et
+  \lstinline{BoardDisplay}.
+\item Metoden \lstinline{Step} som bruges at flytte robotten et felt
+  i retningen \lstinline{dir}. Dette er blot en hjælpemetode til at ændre
+  \lstinline{Position}, da \lstinline{Step} \emph{ikke} skal tage
+  hensyn til andre spilelementer.
+\item Metoden \lstinline{Interact} bruges til at
+  stoppe en anden robot der forsøges at flytte ind i robotten. Fx,
+  hvis \lstinline{other} (argumenter til \lstinline{Interact}, den
+  anden robot) står i felt~$(1,4)$ og er på vej vest, og robotten
+  (\lstinline{this}) står i felt~$(1,3)$, så skal \lstinline{Interact}
+  returnere \lstinline{Stop(1,4)}.
+\end{itemize}
+
+Implementér følgende fire konkrete klasser, der alle nedarver fra
+\lstinline{BoardElement}, til at repræsentere indre og ydre vægge samt målfelt:
+
+\begin{itemize}
+\item \lstinline{Goal} der skal have en konstruktor der tager to
+  heltals argumenter, $r$ og $c$, som angiver et målfelt. Metoden
+  \lstinline{GameOver} skal returnere \lstinline{true}, hvis en robot
+  er stoppet ovenpå målfeltet.
+\item \lstinline{BoardFrame} bruges til at repræsentere rammen for
+  en spilleplade (de ydre vægge). Klassen skal have en konstruktor der tager to
+  heltals argumenter, $r$ og $c$, som angiver størrelsen på pladen.
+\item \lstinline{VerticalWall} bruges til at repræsentere en indre
+  vertikal væg. Klassen skal have en konstruktor der tager tre
+  heltals argumenter, $r$, $c$ og $n$, som angiver startfelter for
+  væggen, $(r,c)$, samt længden af væggen, $n$. Hvis $n$ er positiv
+  løber væggen fra nord til syd, ellers løber den fra syd mod
+  nord. Væggen er på østsiden af startfeltet.
+\item \lstinline{HorizontalWall} bruges til at repræsentere en indre
+  horisontal væg. Klassen skal have en konstruktor der tager tre
+  heltals argumenter, $r$, $c$ og $n$, som angiver startfelter for
+  væggen, $(r,c)$, samt længden af væggen, $n$. Hvis $n$ er positiv
+  løber væggen fra vest til øst, ellers løber den fra øst mod
+  vest. Væggen er på sydsiden af startfeltet.
+\end{itemize}
+
+Hvis I får behov for det må I gerne tilføje tilstand (data og
+properties) samt flere metoder til alle klasser. Men de skal kunne
+bruges med de angivende minimums specifikationer.
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

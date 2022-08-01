@@ -1,0 +1,281 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Uge(r)seddel 6 -- gruppeopgave}
+
+\author{Revideret 5/10 af Torben Mogensen}
+\date{Deadline 20. oktober}
+
+\maketitle
+
+\noindent
+I denne periode skal I arbejde grupper.  Formålet er at arbejde
+med endelige træer.
+
+Vi arbejder i opgaverne med en træstruktur til at beskrive geometriske
+figurer med farver.  For at gøre det muligt at afprøve jeres opgaver,
+udleveres et simpelt bibliotek \texttt{makeBMP.dll}, der kan lave
+bitmapfiler.  I dette bibliotek findes kun en funktion:
+
+\begin{verbatim}
+makeBMP : string -> int -> int -> (int*int -> int*int*int) -> unit
+\end{verbatim}
+
+\noindent
+Det første argument er navnet på den ønskede bitmapfil (uden
+extension).  Det andet argument er bredden af billedet i antal pixel,
+det tredje element er højden af billedet i antal pixel og det sidste
+argument er en funktion, der afbilder koordinater i billedet til
+farver.  En farve er en tripel af tre tal mellem 0 og 255 (begge
+inklusive), der beskriver hhv.\ den røde, grønne og blå del af farven.
+
+Koordinaterne starter med $(0,0)$ i nederste venstre hjørne og
+$(w-1,h-1)$ i øverste højre hjørne, hvis bredde og højde er hhv.\ $w$
+og $h$.  For eksempel vil en programfil \texttt{testBMP.fsx} med
+indholdet
+
+\begin{verbatim}
+makeBMP.makeBMP "test" 256 256 (fun (x,y) -> (x,y,0))
+\end{verbatim}
+
+\noindent
+kunne oversættes med kommandoen
+
+\begin{verbatim}
+fsharpc testBMP.fsx -r makeBMP.dll -o testBMP.exe
+\end{verbatim}
+
+\noindent
+til et program, der kan køres med kommandoen \texttt{mono
+  testBMP.exe} og lave en billedfil med navnet \texttt{test.bmp},
+der indeholder følgende billede:
+
+\begin{center}
+\includegraphics{test.png}
+\end{center}
+
+\noindent
+Bemærk, at alle programmer, der bruger \texttt{makeBMP} skal
+oversættes med \texttt{-r makeBMP.dll} som en del af kommandoen.
+Tilsvarende skal man bruge \texttt{fsharpi -r makeBMP.dll} for at
+bruge \texttt{makeBMP} i det interaktive system.
+
+\textbf{\textcolor{red}{NB!}} Nogle har haft problemer med at bruge
+biblioteket \texttt{makeBMP.dll} ved først at oversætte med
+\texttt{fsharpc -r makeBMP.dll} og siden \texttt{mono} på den
+oversatte fil.  Hvis du får det problem, så prøv at køre
+\texttt{fsharpi~-r~makeBMP.dll~testBMP.fsx} eller lignende for dine
+egne programmer.  \textbf{\textcolor{red}{Update 7/10:}} En anden
+løsning er at finde filen \texttt{FSharp.Core.dll} og kopiere den til
+den folder, hvorfra Mono køres.  Så kan Mono finde dette bibliotek.
+
+Bemærk endvidere, at \LaTeX\ ikke kan inkludere BMP-filer med
+\texttt{includegraphics}.  Men man kan bruge diverse billedprogrammer
+(IrfanView, osv.) til at konvertere BMP til PNG.
+
+I Linux kan man konvertere billeder med kommandoen \texttt{convert}.
+Hvis vi har billedfilen \texttt{test.bmp}, vil kommandoen
+\texttt{convert~test.bmp~test.png} lave en tilsvarende billedfil
+\texttt{test.png} i PNG-formatet (som \LaTeX\ \emph{kan} håndtere).
+
+\vspace{2ex}
+
+\noindent
+Vi arbejder i opgaverne med følgende datastruktur:
+
+\begin{verbatim}
+type point = int * int // (x, y)
+type colour = int * int * int  // (red, green, blue), 0..255
+
+type figure = Circle of point * int * colour
+              // center, radius^2, colour
+            | Rectangle of point * point * colour
+              // bottom-left, top-right, colour
+            | Mix of figure * figure
+              // combine figures with average colours at overlap
+\end{verbatim}
+
+\noindent
+Bemærk, at vi angiver kvadratet på radius af cirklen i stedet for blot
+ radius.
+
+For eksempel kan man lave følgende funktion til at finde farven af en
+ figur i et punkt (forudsat, at punktet ligger i figuren):
+
+\begin{verbatim}
+// finds colour of figure at point
+let rec colourAt (x,y) = function
+  | Circle ((cx,cy), r2, col) ->
+      if (x-cx)*(x-cx)+(y-cy)*(y-cy) <= r2
+      then Some col else None
+  | Rectangle ((x0,y0), (x1,y1), col) ->
+      if x0<=x && x <= x1 && y0 <= y && y <= y1
+      then Some col else None
+  | Mix (f1, f2) ->
+      match (colourAt (x,y) f1, colourAt (x,y) f2) with
+      | (None, c) -> c
+      | (c, None) -> c
+      | (Some (r1,g1,b1), Some (r2,g2,b2)) ->
+           Some ((r1+r2)/2, (g1+g2)/2, (b1+b2)/2)
+\end{verbatim}
+
+\vspace{1ex}
+
+\noindent
+Opgaverne i denne uge er delt i øve- og afleveringsopgaver.
+
+\subsubsection*{Øveopgaverne er:}
+
+\begin{description}
+
+\item[Ø6.1.] Lav en figur af typen \texttt{figure}, der består af en
+  rød cirkel med centrum i (50,50) og radius $\sqrt{2000}$ samt en blå
+  rektangel med hjørnerne (40,40) og (90,110).
+
+\item[Ø6.2.] Brug \texttt{makeBMP} og \texttt{colourAt} til at lave en
+  funktion
+
+\texttt{makePicture : string -> figure -> int -> int -> unit}
+
+\noindent
+sådan at kaldet \texttt{makePicture \emph{filnavn figur b h}} laver en
+billedfil ved navn \texttt{\emph{filnavn}.bmp} med et billede af
+\texttt{\emph{figur}} med bredde \texttt{\emph{b}} og højde
+\texttt{\emph{h}}.
+
+På punkter, der ingen farve har (jvf.\ \texttt{colourAt}), skal farven
+være grå (som defineres med RGB-værdien (128,128,128)).
+
+Du kan bruge denne funktion til at afprøve dine opgaver.
+
+\item[Ø6.3.] Lav med \texttt{makePicture} en billedfil med navnet
+  \texttt{63.bmp} og størrelse $100\times150$ (bredde 100, højde 150),
+  der viser figuren fra opgave Ø6.1.
+
+\item[Ø6.4.] Lav en funktion \texttt{checkFigure : figure -> bool},
+  der undersøger, om en figur er korrekt: At kvadratradiusen i cirkler
+  er ikke.negativ, at nederste venstre hjørne i en rektangel faktisk
+  er nedenunder og til venstre for det øverste højre hjørne (bredde og
+  højde kan dog godt være 0), og at farvekompenterne ligger mellem 0
+  og 255.
+
+\item[Ø6.5.] Lav en funktion \texttt{move : figure -> int * int ->
+  figure}, der givet en figur og en vektor flytter figuren langs
+  vektoren.
+
+\item[Ø6.6.] Lav en funktion \texttt{boundingBox : figure -> point *
+  point}, der givet en figur finder hjørnerne (bund-venstre og
+  top-højre) for den mindste akserette rektangel, der indeholder hele
+  figuren.  \textbf{Vink:} Man kan runde et kommatal $x$ op til det
+  nærmeste heltal med \texttt{int (System.Math.Ceiling $x$)}.
+
+\item[Ø6.7.] Lav en funktion \texttt{scale : figure * real -> figure},
+  der skalerer en figur med en skala angivet som et positivt kommatal.
+  Alle værdier i den nye figur skal afrundes til nærmeste heltal.  NB!
+  Husk at cirkler angiver kvadratet på radius!.  Hvis skalaen er $\leq
+  0.0$, skal en passende fejlmeddelse gives.  \textbf{Vink:} Man kan
+  runde et kommatal $x$ af til det nærmeste heltal med \texttt{int
+    (System.Math.Round $x$)}.
+
+\item[Ø6.8.] Lav en funktion \texttt{flipVertical : figure * int ->
+  figure}, der givet en figur og et $x$, spejler figuren i den
+  lodrette akse omkring $x$.  NB! Pas på hjørnerne af rektangler.
+
+\end{description}
+
+\subsubsection*{Afleveringsopgaven er:}
+
+ Vi udvider typen \texttt{figure} til en ny type \texttt{figure'} med
+ følgende definition:
+
+\begin{verbatim}
+type figure' = Circle of point * int * colour
+               // center, radius^2, colour
+             | Rectangle of point * point * colour
+               // bottom-left, top-right, colour
+             | Mix of figure' * figure'
+               // combine figures with average colours at overlap
+             | Ellipse of point * point * int * colour
+               // Two focal points, great axis, colour
+\end{verbatim}
+
+\noindent
+Som tilføjer ellipser givet ved to brændpunkter og en storakse.  Et
+punkt er i en ellipse, hvis \emph{summen} af afstandende mellem
+punktet og de to brændpunkter er mindre end eller lig med storaksen.
+Se evt.\ \url{https://da.wikipedia.org/wiki/Ellipse_%28geometri%29}.
+
+
+\begin{description}
+
+\item[A6.1.] Lav en figur \texttt{twoEllipses : figure'}, som består
+  af en blå ellipse med brændpunkter i (10,10) og (80,80) og storakse
+  110 samt en gul ellipse med brændpunkter i (20,60) og (40,15) og
+  storakse 70.
+
+\item[A6.2.] Lav funktioner \texttt{colourAt'}, \texttt{makePicture'},
+  \texttt{checkFigure'}, \texttt{move'} og \texttt{scale'} svarende
+  til de tilsvarende funktioner for \texttt{figure}.
+
+Bemærk, at i en korrekt ellipse skal storaksen være mindst lige
+så stor som afstanden mellem brændpunkterne.
+
+\end{description}
+
+\noindent
+Afleveringsopgaven skal afleveres som både \LaTeX, den genererede PDF,
+samt en fsx fil med løsningen for hver delopgave, navngivet efter
+opgaven (f.eks.\ \texttt{A6-1.fsx}), som kan oversættes med
+fsharpc, og hvis resultat kan køres med mono.  Det hele samles i en
+zip-fil med sædvanlig navnekonvention (se tidligere ugesedler).
+
+
+\vspace{1ex}
+
+\hfill God fornøjelse
+
+\section*{Ugens nød 3}
+
+Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
+som interesserede kan løse.  Det er helt frivilligt at lave disse
+opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
+mindre præmie til den bedste løsning, der afleveres i Absalon.
+
+Denne uges opgave omhandler billeder.  Opgaven går i sin enkelhed ud
+på at bruge funktionen \texttt{makeBMP} til at lave det flotteste
+billede på $512\times512$ pixels.
+Instruktorer og undervisere vil fungere som dommere og udkåre det flotteste billede.
+
+Den eneste begrænsning er, at programmet højest må være på 20 linjer
+på hver maksimalt 80 tegn.  Blanke linjer og kommentarlinjer tæller
+ikke med.
+
+Du skal aflevere et billede, det program, der blev brugt til at lave
+billedet, og en rapport, der beskriver, hvordan billedet er lavet.
+
+Programmet skal kunne oversættes med kommandoen
+
+\texttt{fsharpc -r makeBMP.dll \emph{filnavn}.fsx}
+
+og kunne køre i mono, eller køre med kommandoen
+
+\texttt{fsharpi -r makeBMP.dll \emph{filnavn}.fsx}
+
+
+
+Dit program må ikke bruge andre imperative
+features end \texttt{makeBMP}-funktionen.
+
+\end{document}

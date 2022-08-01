@@ -1,0 +1,348 @@
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Diku} % was: Warsaw
+\beamertemplatenavigationsymbolsempty
+%\setbeamercovered{transparent}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{cmap,enumerate}
+\usepackage[utf8x]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[danish]{babel}
+\pagestyle{empty}
+\setlength{\unitlength}{1cm}
+
+\title{Træer, træer og flere træer}
+
+\date[2016]{PoP 24102016}
+
+\author{Torben Ægidius Mogensen}
+
+\begin{document}
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Forside}
+}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth,height=\paperheight]{Baggrund}
+}
+
+%%
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+
+\definecolor{darkred}{rgb}{0.5,0,0}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Træstrukturer findes overalt}
+\begin{tabular}{ccc}
+  \includegraphics[width=0.25\textwidth]{Trae.jpg}
+&  \rotatebox{90}{\includegraphics[height=0.25\textwidth]{flod.jpg}}
+&  \includegraphics[width=0.25\textwidth]{blodaarer.jpg}\\
+  \includegraphics[width=0.25\textwidth]{Hadrosaur-tree.jpg}
+&  \includegraphics[width=0.25\textwidth]{expression.png}
+&  \rotatebox{90}{\includegraphics[height=0.25\textwidth]{snefnug.jpg}}\\
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Datalogiske træer}
+
+\begin{itemize}
+
+\item Et træ består af \emph{knuder} forbundet med ordnede \texttt{kanter}.
+
+\item En knude har \emph{højest en} indgående kant (forælder).
+
+\item En knude kan have et \emph{vilkårligt} ikke-negativt antal udgående
+  kanter (børn).
+
+\item En knude uden børn kaldes en \emph{bladknude}, og en knude uden
+  forældre kaldes en \emph{rodknude}.  En knude med børn kaldes en
+  \emph{indre knude}.
+
+\item Normalt tegnes træer med forældre ovenover børn.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{treestructure.png}
+\end{center}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Specieltilfælde: Binære træer}
+
+\begin{itemize}
+\item Der er præcis en rodknude.
+\item En knude har enten ingen eller præcis to børn.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{binary.png}
+\end{center}
+
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Binære træer med værdier i knuder}
+
+Der findes mange måder at definere sådanne træer i F\#.  Her er et par
+forskellige måder:
+
+\begin{verbatim}
+type 'a binTree =
+  Leaf of 'a | Inner of 'a * 'a binTree * 'a binTree
+
+
+type 'a binTree =
+  Node of 'a * ('a binTree * 'a binTree) option
+\end{verbatim}
+
+Bogen bruger den øverste variant, dog med navnet \texttt{BinTree<'a>}.
+
+Jeg vil i dag bruge den nederste variant.
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Gennemløb af træer}
+
+Et \emph{gennemløb} (eng. \emph{traversal}) af et træ er et besøg af alle
+knuderne i træet.  Der er forskellige slags gennemløb:
+
+\begin{enumerate}
+\item \emph{Dybde-først gennemløb} besøger alle knuder i venstre
+  undertræ af en knude før det besøger knuder i højre undertræ.  Der
+  er tre undertyper af dybde-først gennemløb:
+
+  \begin{enumerate}
+  \item \emph{Præordens gennemløb} besøger en knude før dens børn.
+  \item \emph{Postordens gennemløb} besøger en knude efter dens børn.
+  \item \emph{Inordens gennemløb} besøger en knude efter børnene i
+    venstre undertræ, men før børnene i højre undertræ.
+  \end{enumerate}
+\item \emph{Bredde-først gennemløb} besøger knuder i rækkefølge efter
+  afstand til roden, og knuder med samme afstand fra venstre mod højre.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}%[fragile=singleslide]
+\frametitle{Eksempler på gennemløb}
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{binary.png}
+\end{center}
+
+\begin{tabular}{ll}
+Præordens gennemløb: & 1 2 4 8 9 5 3 6 7\\
+Postordens gennemløb: & 8 9 4 5 2 6 7 3 1 \\
+Inordens gennemløb: & 8 4 9 2 5 1 6 3 7 \\
+Bredde-først gennemløb: & 1 2 3 4 5 6 7 8 9
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Dybde-først gennemløb som funktioner i F\#}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+type 'a binTree =
+  Node of 'a * ('a binTree * 'a binTree) option
+
+let rec preorder (Node (a, children)) =
+  match children with
+  | None -> [a]
+  | Some (l, r) -> [a] @ preorder l @ preorder r 
+
+let rec postorder (Node (a, children)) =
+  match children with
+  | None -> [a]
+  | Some (l, r) -> postorder l @ postorder r @ [a]
+
+let rec inorder (Node (a, children)) =
+  match children with
+  | None -> [a]
+  | Some (l, r) -> inorder l @ [a] @ inorder r
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Optimeret til at undgå \texttt{@}}
+
+\renewcommand{\baselinestretch}{0.82}
+
+\begin{verbatim}
+let preorder t =
+  let rec preO (Node (a, children)) acc =
+    match children with
+    | None -> a :: acc
+    | Some (l, r) -> a :: (preO l (preO r acc))
+  preO t []
+
+let postorder t =
+  let rec postO (Node (a, children)) acc =
+    match children with
+    | None -> a :: acc
+    | Some (l, r) -> postO l (postO r (a :: acc))
+  postO t []
+
+let inorder t =
+  let rec inO (Node (a, children)) acc =
+    match children with
+    | None -> a :: acc
+    | Some (l, r) -> inO l (a :: (inO r acc))
+  inO t []
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Bredde-først gennemløb som funktion i F\#}
+
+Vi bruger en hjælpefuntion \texttt{bF}, der laver bredde-først
+gennemløb af en liste af træer.
+
+Listen fungerer som en kø: Vi tager det første element ud, og sætter
+nye elementer bagest.
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let breadthFirst t =
+  let rec bF ts =
+    match ts with
+    | [] -> []
+    | (Node (a, None)) :: ts ->
+         a :: bF ts
+    | (Node (a, Some (l, r))) :: ts ->
+         a :: bF (ts @ [l; r]) 
+  bF [t]
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Optimeret til at undgå \texttt{@}}
+
+Køen implementeres som to lister: En med de første elementer, og en
+omvendt med de sidste elementer.
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let breadthFirst t =
+  let rec bF ts =
+    match ts with
+    | ([],[]) -> []
+    | ([], ts') -> bF (List.rev ts', [])
+    | ((Node (a, None)) :: ts, ts') ->
+         a :: bF (ts, ts')
+    | ((Node (a, Some (l, r))) :: ts, ts') ->
+         a :: bF (ts, r :: l :: ts')
+  bF ([t], [])
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Generelle træer}
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{treestructure.png}
+\end{center}
+
+En knude kan have et vilkårligt antal børn, så vi bruger en liste.
+
+\begin{verbatim}
+type 'a listTree =
+  Node of 'a * ('a listTree) list
+\end{verbatim}
+
+I en bladknude er listen af børn tom.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Dybde-først gennemløb af generelle træer}
+
+Inordens gennemløb giver ikke mening, når der f.eks. kan være en eller
+tre børn, men præordens og postordens gennemløb fungerer fint:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let rec preorder (Node (a, children)) =
+  a :: List.collect preorder children
+
+let rec postorder (Node (a, children)) =
+  List.collect postorder children @ [a]
+\end{verbatim}
+
+Vi erindrer:
+
+\texttt{List.collect : ('a -> 'b list) -> 'a list -> 'b list}
+
+er en variant a \texttt{List.map}, som konkatenerer
+resultaterne til en enkelt liste.
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Optimeret til at undgå konkatenering}
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let preorder t =
+  let rec preO (Node (a, children)) acc =
+    a :: List.foldBack preO children acc
+  preO t []
+
+let postorder t =
+  let rec postO (Node (a, children)) acc =
+    List.foldBack postO children (a :: acc)
+  postO t []
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile=singleslide]
+\frametitle{Bredde-først gennemløb af generelt træ}
+
+Først med en simpel kø:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let breadthFirst t =
+  let rec bF ts =
+    match ts with
+    | [] -> []
+    | (Node (a, children)) :: ts ->
+         a :: bF (ts @ children)
+  bF [t]
+\end{verbatim}
+
+Og siden med optimeret to-liste kø:
+
+\renewcommand{\baselinestretch}{0.9}
+\begin{verbatim}
+let breadthFirst t =
+  let rec bF ts =
+    match ts with
+    | ([], []) -> []
+    | ([], ts') -> bF (List.rev ts', [])
+    | ((Node (a, children)) :: ts, ts') ->
+         a :: bF (ts, List.rev children @ ts')
+  bF ([t], [])
+\end{verbatim}
+
+\end{frame}
+
+\end{document}

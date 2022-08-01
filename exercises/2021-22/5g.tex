@@ -1,0 +1,58 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{5}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{1.\ - 9.\ oktober}{lørdag d.\ 9.\ oktober kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+Med denne arbejdsseddel skifter vi langsomt fokus fra det imperative
+programmeringsparadigme til funktionsprogrammeringsparadigmet. Hvor
+imperativ programmering er som en kageopskrift og kendes på brug af
+variable, for- og while-løkker, så lægger funktionsprogrammering vægt
+på funktioner og kendes på værdier og rekursion.
+
+I denne periode kigger vi særligt på 2 ny datastrukturer arrays og
+lists. De er begge datastrukturer til at holde lister af elementer af
+samme type, men arrays er variable og lists er værdier. Derfor ser man
+også sjældent arrays i programmer, der følger
+funktionsprogrammeringsparadigmet. I denne periode vil vi lægge vægt
+på programmering af arrays og lists via de medfølgende
+\lstinline{List} og \lstinline{Array} moduler.
+
+\learningPurposeTxt{
+  {at kunne oprette, gennemløbe og lave beregninger med lists vha.\ \lstinline{List}-modulet og med \lstinline{for}-\lstinline{in}-løkker,},
+  {at kunne oprette, gennemløbe og ændre arrays vha.\
+    \lstinline{Array}- og \lstinline{Array2D}-modulet,},
+  {at kunne beskrive de kvalitative forskelle mellem lists og arrays.}
+}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber
+  ø}{../assignments/lister/}{}{typer,filter,oneToN,forIn,iter,mapEn,evensEn,multiplicityEn,reverse,mapRevApp}
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+\continueExercises{\exerciseNumber
+  ø}{../assignments/lister/}{}{array,reverseArray,reverseArrayD}
+
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/lister/}{introduction}{tabel,array2d}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+\handinTextTwoTwo{\exerciseNumber\typeLetter}{\texttt{\exerciseNumber\typeLetter
+    0.fsx og \exerciseNumber\typeLetter 1.fsx}}
+
+\flushright God fornøjelse.
+
+\end{document}
+

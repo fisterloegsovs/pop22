@@ -1,0 +1,16 @@
+H.C. Andersen (1805-1875) is a Danish author who wrote plays, travelogues, novels, poems, but perhaps is best known for his fairy tales. An example is Little Claus and Big Claus (Danish: Lille Claus og store Claus), which is a tale about a poor farmer, who outsmarts a rich farmer. A translation can be found here: \url{http://andersen.sdu.dk/vaerk/hersholt/LittleClausAndBigClaus_e.html}. It starts like this:
+\begin{quote}
+  Hans Christian Andersen's ``Lille Claus og Store Claus'' translated by Jean Hersholt.
+
+In a village there lived two men who had the self-same name. Both were named Claus. But one of them owned four horses, and the other owned only one horse; so to distinguish between them people called the man who had four horses Big Claus, and the man who had only one horse Little Claus. Now I'll tell you what happened to these two, for this is a true story.''
+\end{quote}
+A translation of the tale is distributed with this exercise as \lstinline[language=console]{littleClausAndBigClaus.txt} and will henceforth be called The Story.
+
+Markov Chains are models which can be used to describe texts. It is a probabilistic model, where the probability of the next element is modeled to depend at most on the previous $n$ elements,
+\begin{equation}
+  \label{eq:1}
+  p(e_i | e_{i-1}, e_{i-2},\ldots,e_{i-n})
+\end{equation}
+Elements could be characters or words, and $n$ is called the order of the chain. It turns out that when estimating the probabilities for a natural text, the longer the chain, the more randomly generated texts resemble a human-generated text.
+
+In this assignment, you are to work with simple text processing, analyze the statistics of the text, and use this to generate a new text with similar statistics. You are to write a number of functions, which all are to be placed in a single library file called \lstinline[language=console]{textAnalysis.fs}

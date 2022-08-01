@@ -1,0 +1,69 @@
+In this assignment, you will be working with a puzzle called Rotate. The puzzle consists of a square chess-like board with $n\times n, n \in \{2, 3, 4, 5\}$ fields. Each field has a unique id-number, which we will call the field's position, and, for a particular configuration of the board, each field is associated with a unique letter from the alphabet 'a', 'b', \dots. For example, with $n=4$, here is a possible board configuration:
+\begin{center}
+  \begin{tabular}{cccc}
+     h &o &l &k
+     \\b &i &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+\end{center}
+Moreover, the positions of the fields are laid out as follows:
+\begin{center}
+  \begin{tabular}{cccc}
+    1  &2  &3  &4
+    \\ 5  &6  &7  &8
+    \\ 9 &10 &11 &12
+    \\13 &14 &15 &16
+  \end{tabular}
+\end{center}
+The puzzle is solved by rotating the letters in small $2\times 2$ subsquares clockwise until the board reaches the \emph{solved} configuration:
+\begin{center}
+  \begin{tabular}{cccc}
+    a &b &c &d
+    \\ e &f &g &h
+    \\ i &j &k &l
+    \\ m &n &o &p
+  \end{tabular}
+\end{center}
+A rotation is specified by the position of its top-left corner, and all but the right-most column and the bottom-most row are valid inputs to the rotation operation. Let $p_1, p_2, p_3, p_4 \rightarrow q_1, q_2, q_3, q_4$ denote a rotation from $p_*$ to $q_*$, where $p_1$ is the top-left corner. Then, a rotation of subsquare 1 results in $1, 2, 5, 6\rightarrow 5, 1, 6, 2$, or equivalently,
+\begin{center}
+  \begin{tabular}{cccc}
+     h &o &l &k
+     \\b &i &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+  $\rightarrow$
+  \begin{tabular}{cccc}
+     b &h &l &k
+     \\i &o &g &e
+     \\f &m &c &a
+     \\j &n &d &p
+  \end{tabular}
+\end{center}
+The overall task of this assignment is to build a program that generates rotate-puzzles and that allows you iteratively to enter a sequence of positions until the puzzle is solved.
+
+Here is a list of detailed requirements:
+\begin{itemize}
+\item If your program includes loops, the loops must be programmed using recursion.
+\item Your program must use lists and not arrays.
+\item Your program is not allowed to use mutable values (or variables).
+\item Your solution must be parameterized by $n$, the size of the board.
+\item You must represent your board as a list of letters. Thus, for $n=4$, the board for a solved puzzle must be identical to the list \lstinline{['a' .. 'p']}
+\item Your program must consist of the following files
+\begin{quote}
+\lstinline{game.fsx}, \lstinline{rotate.fsi}, \lstinline{rotate.fs}, \lstinline{whiteboxtest.fsx}, and \lstinline{blackboxtest.fsx}.
+\end{quote}
+The files \lstinline{rotate.fsi} and \lstinline{rotate.fs} must constitute the interface and the implementation of a library with your main types, functions, and values; the file \lstinline{game.fsx} must be a maximally 10-line program that defines the value $n$ and starts the game; and \lstinline{whiteboxtest.fsx} and \lstinline{blackboxtest.fsx} must contain your tests for the library.
+\end{itemize}
+As part of this assignment, you are to write a maximally 10-page report following the template \lstinline{rapport.tex}.
+
+Notice that calls to \lstinline{System.Random ()} returns a random number generator object. This object has a method \lstinline{Next : n:int -> int}, which draws a random non-negative integer less than \lstinline{n}. For example, the code
+%\begin{codeNOutput}{: Generating random integers.}
+\begin{lstlisting}
+let rnd = System.Random ()
+for i = 1 to 3 do
+  printfn "%d" (rnd.Next 10)
+\end{lstlisting}
+%\end{codeNOutput}
+prints 3 random non-negative integers less than 10.

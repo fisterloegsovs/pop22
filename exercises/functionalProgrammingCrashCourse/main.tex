@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\usepackage{import}
+\renewcommand*{\theenumi}{\thesection.\arabic{enumi}}
+\renewcommand*{\theenumii}{\theenumi.\arabic{enumii}}
+
+\title{Getting Started}
+
+\author{Jon Sporring}
+
+\begin{document}
+\maketitle
+
+% \section{Lærervejledningn}
+% \input{teacher}
+%\section{Introduction}
+%\input{introduction}
+%\section{Assignments}
+\section{Check the installation, get accustomed to the interactive
+  and the compile mode}
+\subimport*{../myFirstFSharp/}{introductionEn}
+\begin{enumerate}
+\item \subimport*{../myFirstFSharp/}{addEn}
+\item \subimport*{../myFirstFSharp/}{compileEn}
+\item \subimport*{../myFirstFSharp/}{typeErrorEn}
+\item \subimport*{../myFirstFSharp/}{uyEn}
+%\item \subimport*{../myFirstFSharp/}{slicing}
+\item \subimport*{../myFirstFSharp/}{slicing2En}
+\end{enumerate}
+\section{Get accustomed to F\# syntax and precedence}
+\subimport*{../bindings/}{introductionEn}
+\begin{enumerate}
+\item \subimport*{../bindings/}{printfnEn}
+\item \subimport*{../bindings/}{regularEn}
+\item \subimport*{../bindings/}{errorEn}
+\item \subimport*{../bindings/}{functionEn}
+\item \subimport*{../bindings/}{loopsEn}
+\item \subimport*{../bindings/}{tableEn}
+\end{enumerate}
+\section{Advanced exercise using modules}
+\subimport*{../vec/}{introductionEn}
+\begin{enumerate}
+\item \subimport*{../vec/}{vec2dEn}
+%\item \subimport*{../vec/}{test}
+\item \subimport*{../vec/}{polygonEn}
+\item \subimport*{../vec/}{signatureEn}
+\end{enumerate}
+\section{Recursion in F\#}
+\subimport*{../recursion/}{introductionEn}
+\begin{enumerate}
+\item \subimport*{../recursion/}{facEn}
+\item \subimport*{../recursion/}{sumEn}
+\item \subimport*{../recursion/}{gcdEn}
+%\item \subimport*{../recursion/}{fold}
+\end{enumerate}
+\section{Lists and patterns}
+\subimport*{../lister/}{introductionEn}
+\begin{enumerate}
+\item \subimport*{../lister/}{multiplicityEn}
+\item \subimport*{../lister/}{evensEn}
+\item \subimport*{../lister/}{reverseApplyEn}
+\item \subimport*{../lister/}{mapEn}
+\item \subimport*{../lister/}{listOfListsEn}
+\end{enumerate}
+
+\section{Individual hand-in assigment: Map, Fold, and Filter}
+\subimport*{../recursiveMapFoldFilter/}{introduction}
+\subimport*{../recursiveMapFoldFilter/}{recursiveMapFoldFilter}
+
+\section{Group hand-in assigment: Random Text}
+\subimport*{../randomText/}{introduction}
+\subimport*{../randomText/}{randomText}
+
+\end{document}
+

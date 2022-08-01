@@ -1,0 +1,146 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{latexsym}
+\usepackage[danish]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{enumerate}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+\title{Programmering og Problemløsning\\
+Datalogisk Institut, Københavns Universitet\\
+Uge(r)seddel 5 -- individuel opgave}
+
+\author{Torben Mogensen}
+\date{Deadline 6. oktober}
+
+\maketitle
+
+\noindent
+I denne periode skal I arbejde individuelt.  Formålet er at arbejde
+med lister, mængder (sets) og afbildninger (maps), og specielt med
+biblioteksfunktioner, der arbejder på disse typer.
+
+Opgaverne i denne uge er delt i øve- og afleveringsopgaver.
+
+\subsubsection*{Øveopgaverne er:}
+
+\begin{description}
+\item[Ø5.1.] HR: 5.1, 5.2.
+
+\item[Ø5.2.] Definer en funktion \texttt{map} ækvivalent til
+  \texttt{List.map} ved brug af \texttt{List.fold} eller
+  \texttt{List.foldBack}.
+
+\item[Ø5.3.] Givet funktionen \texttt{flip : ('a -> 'b - 'c) -> ('b -> 'a
+  - 'c)} defineret ved
+
+\texttt{let flip f x y = f y x}
+
+lav definition af en funktion \texttt{fold} ækvivalent med
+\texttt{List.fold} ved at bruge funktionerne \texttt{List.rev} og
+\texttt{List.foldBack}.
+
+\item[Ø5.4.] Brug \texttt{flip} fra opgave \textbf{5.3} til at definere
+  en funktion \texttt{foldBack} ækvivalent til \texttt{List.foldBack}
+  ved at bruge funktionerne \texttt{List.rev} og \texttt{List.fold}.
+
+\item[Ø5.5.]  Definer en funktion \texttt{ofList} ækvivalent til
+  \texttt{Set.ofList} ved at bruge et udvalg af funktionerne
+  \texttt{Set.add}, \texttt{List.fold} og \texttt{List.foldBack}.
+
+\item[Ø5.6.] En snedig programmør definerer en sorteringsfunktion med
+  definitionen
+
+\texttt{ssort xs = Set.toList (Set.ofList xs)}
+
+For eksempel giver \texttt{ssort [4; 3; 7; 2]} resultatet \texttt{[2;
+    3; 4; 7]}.
+
+Diskuter, om programmøren faktisk er så snedig, som han tror.
+
+\item[Ø5.7.] Undersøg, hvad der sker, hvis man bruger \texttt{Map.add}
+  til at tilføje et nøgle/værdipar med en nøgle, der allerede findes i
+  afbildningen.  Diskuter fordele og ulemper ved denne opførsel.
+
+\end{description}
+
+\subsubsection*{Afleveringsopgaven er:}
+
+
+\begin{description}
+
+\item[A5.1.] Brug funktionerne fra Tabel 5.1 i HR (side 94) til at
+  definere en funktion \texttt{concat : 'a list list -> 'a list}, der
+  sammensætter en liste af lister til en enkelt liste.
+
+F.eks.\ skal \texttt{concat [[2]; [6; 4]; [1]]} give resultatet
+\texttt{[2; 6; 4; 1]}.
+
+\item[A5.2.] Brug funktionerne fra Tabel 5.1 i HR (side 94) til at
+  definere en funktion \texttt{gennemsnit : float list -> float
+    option}, der finder gennemsnittet af en liste af kommatal, såfremt
+  dette er veldefineret, og \texttt{None}, hvis ikke.  Forsøg at lave
+  din løsning, så den kun laver et gennemløb af listen.
+
+\item[A5.3.] Definer en funktion \texttt{toList} ækvivalent til
+  \texttt{Set.toList} ved at bruge \texttt{Set.fold} eller
+  \texttt{Set.foldBack}.
+
+\end{description}
+
+\noindent
+Afleveringsopgaven skal afleveres som både \LaTeX, den genererede PDF,
+samt en fsx fil med løsningen for hver delopgave, navngivet efter
+opgaven (f.eks.\ \texttt{A5-1.fsx}), som kan oversættes med
+fsharpc, og hvis resultat kan køres med mono.  Det hele samles i en
+zip-fil med sædvanlig navnekonvention (se tidligere ugesedler).
+
+
+\vspace{1ex}
+
+\hfill God fornøjelse
+
+\section*{Ugens nød 2}
+
+Vi vil i udvalgte uger stille særligt udfordrende og sjove opgaver,
+som interesserede kan løse.  Det er helt frivilligt at lave disse
+opgaver, som vi kalder ``Ugens nød'', men der vil blive givet en
+mindre præmie til den bedste løsning, der afleveres i Absalon.
+
+Denne uges opgave omhandler afbildninger (maps).
+
+Der er stor lighed mellem funktioner og \emph{maps} som defineret i
+afsnit 5.3 i HR.  Vi definerer derfor typen
+
+\vspace{1ex}
+
+\texttt{type myMap<'a,'b> = ('a -> 'b) * Set<'a>}
+
+\vspace{1ex}
+
+\noindent
+hvor funktionen definerer afbildningens funktion, og mængden bruges
+til at beskrive domænet for afbildningen.
+
+\begin{description}
+
+\item[Nød 2.1.] Definer for \texttt{myMap<'a,'b>} alle de funktioner
+  fra Table 5.4 i HR, der er defineret for \texttt{Map<'a,'b>}.  Mere
+  præcist skal alle forekomster af \texttt{Map<'a,'b>} i
+  typesignaturerne erstattes af \texttt{myMap<'a,'b>}, og funktionerne
+  skal gøre det, der er beskrevet i tabellen.
+
+\end{description}
+
+\noindent
+Der skal uploades både en \LaTeX-fil, der beskriver fremgangsmåden,
+samt en fsx fil, der indeholder definitionerne.  Navngivningen af
+filerne er ikke vigtig.
+
+
+\end{document}
+
