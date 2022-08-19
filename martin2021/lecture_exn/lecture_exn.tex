@@ -1,0 +1,305 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkgray}{Exceptions (Undtagelser)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Exceptions og alternativer}
+
+  \vspace{1ex}
+
+  \begin{minipage}{.65\textwidth}
+  \begin{enumerate}
+  \item \textbf{Exceptions (undtagelser):}
+
+    \begin{itemize}
+    \item Exception-værdier.
+
+    \item Rejsning af exceptions (\lstinline{raise}/throw)
+
+    \item Håndtering af exceptions (\lstinline{try}-\lstinline{with})
+
+    \item Indbyggede exceptions.
+
+    \item Nogle nyttige hjælpefunktioner.
+    \end{itemize}
+
+  \item \textbf{Alternativer til exceptions:}
+
+    \begin{itemize}
+    \item Fejlhåndtering med \lstinline{option} typer.
+    \item Beskedbærende fejlmonade.
+    \end{itemize}
+  \end{enumerate}
+  \end{minipage}~\begin{minipage}{.3\textwidth}
+  \includegraphics[width=1.2\textwidth]{../images/exception.png}
+  \end{minipage}
+
+\end{footnotesize}
+\end{frame}
+\subsection{Exception-værdier}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Exception-værdier}
+
+  Exceptions er værdier af den indbyggede \emph{udvidbare} type
+  \lstinline{exn}.
+
+  \vspace{2ex}
+
+  Exception-værdier kan være konstante værdier, der ikke bærer
+  argumenter, og exception-værdier der bærer argumenter.
+
+  \vspace{2ex}
+
+  Nye \emph{exception-konstruktører} kan erklæres med
+  \lstinline{exception}-konstruktionen:
+
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    exception MyError
+    exception MyArgExn of int
+    let e1 : exn = MyError
+    let e2 : exn = MyArgExn 5
+  \end{lstlisting}
+
+  \textbf{Exception-værdier tillader lighed:}
+
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    let isMyError = e1 = e2                  // $\leadsto$ false
+  \end{lstlisting}
+
+  ... og kan benyttes i matches:
+
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    let isMyArgExn =
+      match e2 with MyArgExn _ -> "yes"      // $\leadsto$ "yes"
+                  | _ -> "no"
+  \end{lstlisting}
+
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Rejsning og håndtering af exceptions}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Rejsning af Exceptions}
+
+  Exceptions kan benyttes til at afbryde det normale kontrol-flow (deraf navnet exception).
+
+  \vspace{2ex}
+
+  Konstruktionen der benyttes til at ``\emph{rejse en exception}'' er
+  operationen \lstinline{raise}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  val raise : exn -> 'a
+\end{lstlisting}
+
+\textbf{Bemærk} at operationen kan instantieres til at returnere en værdi af
+vilkårlig type, hvilket skyldes at operationen aldrig returnerer, men
+derimod sender en besked (en exception) ``op i kaldstakken'' om at
+beregningen blev afbrudt.
+
+\vspace{2ex}
+
+Det er muligt at \emph{håndtere} rejste exceptions på et højere niveau
+ved at benytte en \lstinline{try}-\lstinline{with} konstruktion.
+
+\vspace{2ex}
+
+Her er hvad der sker hvis en rejst exception ikke håndteres:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  - exception MyArgExn of int;;
+  - "hello " + raise (MyArgExn 42)
+  FSI_0002+MyArgExn: Exception ... was thrown...
+  Stopped due to error
+\end{lstlisting}
+
+Den rejste exception blev ``håndteret'' af \lstinline{fsharpi}'s \emph{top-level handler}.
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Håndtering af rejste exceptions}
+
+  Rejste exceptions kan håndteres på et højere niveau i programmet ved
+  at benytte en \lstinline{try}-\lstinline{with} konstruktion.
+
+  \shead{Eksempel (\texttt{exn.fs}):}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  exception MyExnArg of int
+  let f () = if false then 8 else raise (MyExnArg 5)
+  let y = try f () with MyExnArg x -> x
+  do printfn "%d" y
+\end{lstlisting}
+
+\head{Kørsel:}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none]
+  bash-3.2$ fsharpc --nologo exn.fs && mono exn.exe
+  5
+\end{lstlisting}
+
+\head{Bemærk:}
+
+\vspace{1ex}
+Argumentet til den rejste exception blev trukket ud af
+exception-værdien ved brug af \emph{exception pattern matching}.
+\end{footnotesize}
+\end{frame}
+
+\subsection{Indbyggede exceptions og hjælpefunktioner}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Indbyggede Exceptions og Hjælpefunktioner}
+
+  For at matche de indbyggede Mono exceptions, kan det være nødvendigt at
+  benytte \emph{dynamic type matching}, som benytter sig af følgende
+  syntax:
+
+\begin{lstlisting}[numbers=none,frame=none]
+  let mydiv a b : int option =
+    try Some (a / b) with
+      :? System.DivideByZeroException -> None
+\end{lstlisting}
+
+\head{Nogle hjælpefunktioner:}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none]
+  val failwith   : string -> 'a
+  val invalidArg : string -> string -> 'a
+\end{lstlisting}
+
+\head{Brug af funktionen \lstinline{invalidArg}:}
+
+\vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let toFahrenheit c =
+    if c < -273.15 then invalidArg "c" "below absolute zero"
+    else 9.0/5.0*float(c)+32.0
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Alternativer til exceptions}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Fejlhåndtering med \lstinline{option} typer}
+
+  Funktionen \lstinline{mydiv} benytter værdien \lstinline{None} til
+  at indikere en fejl.
+
+  \vspace{1ex}
+
+  Option-typer kan således bruges til at indkode exceptionel opførsel.
+
+  \vspace{1ex}
+
+  Funktionen \lstinline{Option.bind} kan bruges til at styre
+  sammensætningen af beregninger:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  val bind : ('a -> 'b option) -> 'a option -> 'b option
+\end{lstlisting}
+
+  \head{Eksempel}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  > let (>>=) x y = Option.bind y x
+  > mydiv 8 3 >>= (fun x -> Some(float(x)+1.0));;
+  val it : float option = Some 3.0
+\end{lstlisting}
+
+\head{Bemærk:}
+
+\begin{itemize}
+\item Funktionen \lstinline{Option.bind} er et simpelt eksempel på
+  bindingsoperatoren i en såkaldt \emph{monad}, en
+  abstraktionsmekanisme der giver mulighed for at sammensætte
+  effektfulde beregninger på en sund måde.
+\item Monads ligger blandt andet til grund for sammensætning af
+  effektfulde beregninger i Haskell.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Beskedbærende fejlmonade}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Beskedbærende fejlmonade}
+
+  Det er muligt at udvidde teknikken med funktionalitet der bærer
+  information om fejlen.
+
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type 'a result = Ok of 'a | Error of string
+  val (>>=) : 'a result -> ('a -> 'b result) -> 'b result
+\end{lstlisting}
+
+  \head{Eksempel}
+
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let mydiv a b : int result =
+    try Ok (a / b) with
+      :? System.DivideByZeroException -> Error "div"
+
+  let (>>=) a f =
+    match a with Ok v -> f v
+               | Error s -> Error s
+
+  do printfn "%A" (mydiv 8 3 >>= (fun x -> Ok(float(x)+1.0)))
+\end{lstlisting}
+
+\head{Bemærk:}
+
+\begin{itemize}
+\item Funktionaliteten kan også udviddes til at understøtte tilfælde
+  hvor det er muligt at opsamle og rapportere multiple fejl.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

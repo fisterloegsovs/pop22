@@ -1,0 +1,469 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{purple}{Typer og Mønstergenkendelse (Del 4)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Opsamling på Rekursion, Stakke og Kører og Abstrakte typer}
+
+  \vspace{1ex}
+  Emner for i dag:
+
+  \vspace{1ex}
+
+\begin{minipage}[b]{0.6\textwidth}
+
+  \begin{enumerate}
+  \item \textbf{Opsamling på rekursion.}
+
+    Eksempler på oversættelse af to matematiske definitioner til F\# kode.
+
+  \item \textbf{Stakke og køer.}
+
+    To data-strukturer der let kan implementeres med lister og mønstergenkendelse og hvis
+    implementation kan holdes abstrakt ved brug af \textbf{abstrakte
+      modul typer}.
+
+  \item \textbf{Introduktion til rekursive sum-typer.}
+
+    Vi vil se på en simpel definition af en træ-struktur i F\#.
+  \end{enumerate}
+\end{minipage} \hspace{-2mm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=1.4\textwidth]{../images/lifofifo.png}
+
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+
+\subsection{Opsamling på Rekursion}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Opsamling på Rekursion}
+  \vspace{1ex}
+
+  Vi vil se på hvordan vi kan oversætte to rekursive matematiske formler til F\# kode.
+
+  \vspace{1ex}
+
+  De to eksempler giver sammen mulighed for at beregne ``Maximum Segment
+  Sum'' af et heltalsarray, hvor et \emph{segment} er defineret som
+  en vilkårlig sammenhængende del af arrayet.
+
+  \vspace{1ex}
+
+  \head{Eksempel:}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  A = [|-2; 1; -3; $\fbox{\texttt{4; -1; 2; 1}}$; -5; 4|]   // MSS(A) = 6
+\end{lstlisting}
+
+  \vspace{1ex}
+  \head{Bemærk:}
+
+\begin{itemize}
+\item Problemet er kun virkeligt interessant hvis arrayet indeholder negative værdier.
+\item Problemet er blandt andet relevant indenfor emner som gen-sekventering, billedgenkendelse og data-mining.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Maximum End-Segment Sum}
+  \vspace{1ex}
+
+  Vi løser først et nemmere problem:
+
+  \vspace{1ex}
+
+  $\id{MESS}_a(i) = $
+  \begin{quote}
+    Find det største slut-segment i delarrayet $a[0]..a[i]$.
+
+    dvs: segmentet skal indeholde $a[i]$
+  \end{quote}
+
+  \vspace{1ex}
+
+  \head{Eksempel:}
+  \vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  A = [|-2; 1; -3; $\fbox{\texttt{4; -1}}$; 2; 1; -5; 4|]   // $\id{MESS}_{\mathtt{A}}(4)$ = 3
+  //     0  1   2  3   4
+\end{lstlisting}
+  \vspace{1ex}
+
+  \head{Rekursiv formel:}
+  \vspace{1ex}
+
+  \[
+  \id{MESS}_a(i) = \left \{ \begin{array}{ll} 0 & \mathrm{if}~i < 0 \\
+    \mathrm{max} \left \{ \begin{array}{l} a[i] \\
+                                           \id{MESS}_a(i-1)+a[i]
+                          \end{array} \right \} & \mathrm{otherwise}. \end{array} \right .
+  \]
+
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Maximum End-Segment Sum --- forsat}
+  \vspace{1ex}
+
+  \[
+  \id{MESS}_a(i) = \left \{ \begin{array}{ll} 0 & \mathrm{if}~i < 0 \\
+    \mathrm{max} \left \{ \begin{array}{l} a[i] \\
+                                           \id{MESS}_a(i-1)+a[i]
+                          \end{array} \right \} & \mathrm{otherwise}. \end{array} \right .
+  \]
+
+  \vspace{1ex}
+
+  \head{F\# kode:}
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec mess (a:int array) i =
+  if i < 0 then 0
+  else max (a.[i]) (mess a (i-1) + a.[i])
+
+let ex = [|-2; 1; -3; 4; -1; 2; 1; -5; 4|]
+do printfn "mess(ex)(4)=%A" (mess ex 4)
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Maximum Segment Sum}
+  \vspace{1ex}
+
+  Vi kan nu løse det lidt vanskeligere problem:
+
+  \vspace{1ex}
+
+  $\id{MSS}_a(i) = $
+  \begin{quote}
+    Find det største segment i en vilkårligt del af delarrayet $a[0]..a[i]$.
+  \end{quote}
+
+  \vspace{1ex}
+
+  \head{Eksempel:}
+  \vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  A = [|-2; 1; -3; $\fbox{\texttt{4}}$; -1; 2; 1; -5; 4|]   // $\id{MSS}_{\mathtt{A}}(4)$ = 4
+  //     0  1   2  3   4
+\end{lstlisting}
+  \vspace{1ex}
+
+  \head{Rekursiv formel:}
+  \vspace{1ex}
+
+  \[
+  \id{MSS}_a(i) = \left \{ \begin{array}{ll} 0 & \mathrm{if}~i < 0 \\
+    \mathrm{max} \left \{ \begin{array}{l} \id{MESS}_a(i) \\
+                                           \id{MSS}_a(i-1)
+                          \end{array} \right \} & \mathrm{otherwise}. \end{array} \right .
+  \]
+
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Maximum Segment Sum --- forsat}
+  \vspace{1ex}
+
+  \[
+  \id{MSS}_a(i) = \left \{ \begin{array}{ll} 0 & \mathrm{if}~i < 0 \\
+    \mathrm{max} \left \{ \begin{array}{l} \id{MESS}_a(i) \\
+                                           \id{MSS}_a(i-1)
+                          \end{array} \right \} & \mathrm{otherwise}. \end{array} \right .
+  \]
+
+  \head{F\# kode:}
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec mss (a:int array) i =
+  if i < 0 then 0
+  else max (mess a i)        // max segment at end
+           (mss a (i-1))     // max segment somewhere before
+
+let ex = [|-2; 1; -3; $\fbox{\texttt{4; -1; 2; 1}}$; -5; 4|]
+do printfn "mss(ex)(|ex|-1)=%A" (mss ex (Array.length ex - 1))
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Stakke og Køer}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Stakke}
+
+  \vspace{1ex}
+
+\begin{minipage}[b]{0.80\textwidth}
+
+  En \emph{stak} er en data-struktur med et simpelt interface:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Stack // content of stack.fsi
+
+type 'a stack                          // LIFO
+val empty : unit -> 'a stack
+val push  : 'a stack -> 'a -> 'a stack
+val pop   : 'a stack -> ('a * 'a stack) option
+\end{lstlisting}
+  \vspace{1ex}
+  \head{Spørgsmål:}
+\begin{itemize}
+\item Hvordan implementers et stak-modul?
+\item Hvordan sikres det at man \textbf{KUN} kan tilgå værdier af type
+  \lstinline{'a stack} med operationerne \lstinline{pop} og
+  \lstinline{push}?
+\end{itemize}
+
+\end{minipage} \hspace{-8mm}
+\begin{minipage}[b]{0.16\textwidth}
+
+  \includegraphics[width=1.8\textwidth]{../images/stack.png}
+
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Stak-implementation}
+
+  \vspace{1ex}
+
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Stack
+
+type 'a stack = S of 'a list
+let empty () = S []
+let push (S s: 'a stack) v = S (v::s)
+let pop (S s) : ('a * 'a stack) option =
+  match s with
+    | [] -> None
+    | x::xs -> Some (x,S xs)
+\end{lstlisting}
+
+  \vspace{1ex}
+  \head{Bemærk:}
+\begin{itemize}
+\item Enkel version ved brug af \lstinline{'a list}.
+\item Singleton ``Sum-type'' benyttes til at sikre \textbf{fuld abstraktion} (\lstinline{S} konstruktør) .
+\item Modul skal oversættes med både fsi-fil og fs-fil:
+\begin{verbatim}
+$ fsharpc -a stack.fsi stack.fs
+$ fsharpi -r stack.dll
+\end{verbatim}
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Køer}
+
+  \vspace{1ex}
+
+\begin{minipage}[b]{0.80\textwidth}
+
+  En \emph{kø} er en data-struktur med et simpelt interface:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Queue // content of queue.fsi
+
+type 'a queue                        // FIFO
+val empty : unit -> 'a queue
+val insert  : 'a queue -> 'a -> 'a queue
+val remove  : 'a queue -> ('a * 'a queue) option
+\end{lstlisting}
+  \vspace{1ex}
+  \head{Spørgsmål:}
+\begin{itemize}
+\item Hvordan implementers et kø-modul?
+\item Hvordan sikres det at man \textbf{KUN} kan tilgå værdier af type
+  \lstinline{'a queue} med operationerne \lstinline{insert} og
+  \lstinline{remove}?
+\end{itemize}
+
+\end{minipage} \hspace{-4mm}
+\begin{minipage}[b]{0.16\textwidth}
+
+  \includegraphics[width=1.4\textwidth,height=3cm]{../images/queue.png}
+
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Kø-implementation --- NOT GOOD --- file \texttt{queue\_bad.fs}}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Queue
+
+type 'a queue = Q of 'a list                 // BAD
+let empty () = Q []                          // BAD
+let insert (Q q: 'a queue) v = Q (v::s)      // BAD
+let remove (Q q) : ('a * 'a queue) option =  // BAD
+  match List.rev q with                      // BAD
+    | [] -> None                             // BAD
+    | x::xs -> Some (x,Q (List.rev xs))      // BAD
+\end{lstlisting}
+
+  \vspace{1ex}
+  \head{Bemærk:}
+\begin{itemize}
+\item Enkel version ved brug af \lstinline{'a list}.
+\item Singleton ``Sum-type'' benyttes til at sikre \textbf{fuld abstraktion} (\lstinline{Q} konstruktør) .
+\end{itemize}
+
+  \vspace{1ex}
+  \head{Spørgsmål:}
+  \begin{itemize}
+  \item Hvad er problemet?
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Kø-test --- file \texttt{qtest.fs}}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  module Q = Queue
+  let q = List.fold (fun q v -> Q.insert q v) (Q.empty()) [0..5000]
+  let rec loop q = match Q.remove q with
+                     | None -> 0
+                     | Some (v,q) -> v + loop q
+  let a = loop q
+  do printfn "sum(queue) = %d" a
+\end{lstlisting}
+
+  \vspace{1ex}
+
+\head{Kørsel med \texttt{queue\_bad.fs}}
+\begin{verbatim}
+cp queue_bad.fs queue.fs
+fsharpc --nologo -a queue.fsi queue.fs
+fsharpc --nologo -r queue.dll qtest.fs
+time mono qtest.exe
+sum(queue) = 12502500
+        3.60 real         4.12 user         0.14 sys
+\end{verbatim}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{En bedre kø-implementation --- file \texttt{queue\_good.fs}}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Queue     // GOOD Queue Implementation
+
+type 'a queue = Q of 'a list * 'a list
+let empty () = Q ([],[])
+let insert (Q (b,f)) v = Q (v::b,f)
+let remove (Q (b,f)) : ('a * 'a queue) option =
+  match f with
+    | x :: xs -> Some (x,Q(b,xs))
+    | [] ->
+      match List.rev b with
+        | [] -> None
+        | x :: xs -> Some (x,Q([],xs))
+\end{lstlisting}
+
+  \vspace{1ex}
+  \head{Bemærk:}
+\begin{itemize}
+\item To lister: en til ``indsættelse'' og en til ``fjernelse''.
+\item Hvis listen til fjernelse er tom tages hele listen til
+  indsættelse og indsættes i listen til fjernelse (efter at den er
+  vendt om).
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Kørsel af \texttt{qtest.fs} med \texttt{queue\_good.fs}}
+  \vspace{1ex}
+
+\begin{verbatim}
+cp queue_good.fs queue.fs
+fsharpc --nologo -a queue.fsi queue.fs
+fsharpc --nologo -r queue.dll qtest.fs
+time mono qtest.exe
+sum(queue) = 12502500
+        0.06 real         0.04 user         0.00 sys
+\end{verbatim}
+
+  \vspace{1ex}
+  \head{Bemærk:}
+\begin{itemize}
+\item Vi har formået at ændre implementationen af kø-modulet uden at programmet \texttt{qtest.fs} kan ``se forskel''.
+\item Applikationen virker stadig korrekt (hvilket kunne testes med black-box unit testing).
+\item Effekten er blot at programmet \texttt{qtest.fs} nu kører hurtigere!
+
+  (Før 3 sekunder nu 60 millisekunder...)
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\end{document}

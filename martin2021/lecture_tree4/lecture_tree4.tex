@@ -1,0 +1,695 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{teal}{Træstrukturer (Del 4)}  % see ../util.tex for colors
+
+\renewcommand{\log}{\ensuremath{\mathrm{log}}}
+
+\begin{document}
+
+\popmaketitleframe
+
+\newcommand{\mytree}[1]{
+    \begin{tikzpicture}[domain=0:80,scale=#1]
+    %\draw[very thin,color=gray] (0,0) grid (80,80);
+    \draw[->] (17.5,25) -- (12.5,15);
+    \draw[->] (22.5,25) -- (27.5,15);
+    \draw[->] (27.5,45) -- (22.5,35);
+    \draw[->] (32.5,45) -- (37.5,35);
+    \draw[->] (67.5,45) -- (62.5,35);
+%    \draw[->] (72.5,45) -- (77.5,35);
+    \draw[->] (45,65) -- (35,55);
+    \draw[->] (55,65) -- (65,55);
+    \node at (50,70) {Times};
+    \node at (30,50) {Plus};
+    \node at (70,50) {Sin};
+    \node at (20,30) {Divide};
+    \node at (40,30) {X};
+    \node at (60,30) {X};
+%    \node at (80,30) {2};
+    \node at (10,10) {Const 3};
+    \node at (30,10) {X};
+    \end{tikzpicture}
+}
+
+\newcommand{\mytreetwo}[1]{
+    \begin{tikzpicture}[domain=0:80,scale=#1]
+    %\draw[very thin,color=gray] (0,0) grid (80,80);
+    \draw[->] (20,25) -- (20,15);
+    \draw[->] (40,25) -- (40,15);
+    \draw[->] (57.5,25) -- (52.5,15);
+    \draw[->] (62.5,25) -- (67.5,15);
+%    \draw[->] (22.5,25) -- (27.5,15);
+    \draw[->] (27.5,45) -- (22.5,35);
+    \draw[->] (32.5,45) -- (37.5,35);
+    \draw[->] (67.5,45) -- (62.5,35);
+    \draw[->] (72.5,45) -- (77.5,35);
+    \draw[->] (45,65) -- (35,55);
+    \draw[->] (55,65) -- (65,55);
+    \node at (50,70) {Plus};
+    \node at (30,50) {Divide};
+    \node at (70,50) {Power};
+    \node at (20,30) {Sin};
+    \node at (40,30) {Cos};
+    \node at (60,30) {Plus};
+    \node at (80,30) {2};
+    \node at (20,10) {x};
+    \node at (40,10) {x};
+    \node at (52.5,10) {x};
+    \node at (67.5,10) {1};
+    \end{tikzpicture}
+}
+
+\newcommand{\mypostordertree}[1]{
+    \begin{tikzpicture}[domain=0:80,scale=#1]
+    %\draw[very thin,color=gray] (0,0) grid (80,80);
+    \draw[->] (17.5,25) -- (12.5,15);
+    \draw[->] (22.5,25) -- (27.5,15);
+    \draw[->] (27.5,45) -- (22.5,35);
+    \draw[->] (32.5,45) -- (37.5,35);
+    \draw[->] (67.5,45) -- (62.5,35);
+    \draw[->] (72.5,45) -- (77.5,35);
+    \draw[->] (45,65) -- (35,55);
+    \draw[->] (55,65) -- (65,55);
+    \node at (50,70) {1};
+    \node at (30,50) {2};
+    \node at (70,50) {3};
+    \node at (20,30) {4};
+    \node at (40,30) {5};
+    \node at (60,30) {6};
+    \node at (80,30) {7};
+    \node at (10,10) {8};
+    \node at (30,10) {9};
+    \end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Recap}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \begin{minipage}{.7\textwidth}
+  \headsp{Recap}
+
+  \begin{itemize}
+  \item Rekursive sum-typer
+  \item Trægennemløb (depth-first, breath-first, ...)
+  \item \textbf{Postordens gennemløb}:  8 9 4 5 2 6 7 3 1 \\
+        (knude efter børn)
+  \end{itemize}
+  \end{minipage}
+  \begin{minipage}{.25\textwidth}
+    \mypostordertree{0.04}
+  \end{minipage}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type 'a t = L | T of 'a t * 'a * 'a t
+  let E e = T(L,e,L)
+  let mytree = T(T(T(E 8,4,E 9),2,E 5),1,T(E 6,3,E 7))
+\end{lstlisting}
+
+
+  \vspace{2mm}
+  \headsp{Udvalgte spørgsmål}
+
+  \begin{enumerate}
+%  \item Hvordan deles kode i flere filer?
+
+  \item Kan man lave pattern matching på værdier af komplekse typer,
+    som f.eks. \lstinline{(int * string) option}?
+
+  \item Kan man benytte pattern matching til at udtrække det sidste
+    element i en liste?
+  \end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Udtrykstræer}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Udtrykstræer og Symbolsk Differentiering}
+
+  \vspace{1ex}
+
+  \begin{minipage}{.6\textwidth}
+  \begin{enumerate}
+  \item \textbf{Udtrykstræer.}
+
+    Sum-type definition (funktioner af en variabel)
+
+  \item \textbf{Evaluering af udtryk.}
+
+  \item \textbf{Simpel pretty-printing.}
+
+    Pretty bad...
+
+  \item \textbf{Symbolsk differentiering.}
+
+    Vi implementerer gymnasiereglerne for differentiering...
+
+  \item \textbf{Generering af \LaTeX{} kode.}
+
+    Vi prøver at undgå unødige parenteser...
+
+  \item \textbf{Simplificering.}
+
+    Vi implementerer forskellige regneregler til simplificering...
+
+  \end{enumerate}
+  \end{minipage}\begin{minipage}{.25\textwidth}
+    \mytree{.065}
+{\large
+    $$~~~~~\left(\frac{3}{x} + x\right) \cdot \sin x$$}
+    \end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Regneudtryk i \'{e}n variabel}
+  \vspace{1ex}
+
+  Et udtryk kan (rekursivt) være på en af følgende former:
+
+  \vspace{1ex}
+  \begin{enumerate}
+\item Variablen $x$.
+\item En konstant $c \in \textsf{I\!R}$.
+\item To udtryk adskilt af $+$.
+\item To udtryk adskilt af $-$.
+\item To udtryk adskilt af $\cdot$ (gange).
+\item To udtryk adskilt af en brøkstreg.
+\item Et udtryk opløftet til en potens $p$.
+\item Funktionen $\sin$ anvendt på et udtryk.
+\item Funktionen $\cos$ anvendt på et udtryk.
+\item Funktionen $\log$ anvendt på et udtryk.
+\item Konstanten $e$ opløftet til en potens angivet med et udtryk.
+\item Et udtryk omgivet af parenteser.
+\end{enumerate}
+
+\vspace{1ex}
+\textbf{Eksempel:} {\large $\frac{\sin\,x}{\cos\,x}+(x+1)^2$}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Sum-Type til Udtrykstræer}
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type expr = X                       // The variable x
+          | Const of float          // Constants
+          | Plus of expr * expr     // Addition
+          | Minus of expr * expr
+          | Times of expr * expr
+          | Divide of expr * expr
+          | Power of expr * float   // $a^d$, e.g., $(x+2)^{2.3}$
+          | Sin of expr
+          | Cos of expr
+          | Log of expr
+          | Exp of expr             // $e^a$, e.g., $e^{(2+x)}$
+\end{lstlisting}
+
+\head{Bemærk}
+\begin{itemize}
+\item Vi understøtter kun funktioner af \'{e}n variabel.
+\item Parenteser er implicitte; træet indkoder parenteser direkte.
+\item Dvs: Parsning (at konvertere en streng til et udtrykstræ) er en
+  separat problemstilling vi vil se på en anden gang...
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Evaluering af Udtryk}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Evaluering af Udtryk (fortolkning)}
+  \vspace{1ex}
+
+  Et udtrykstræ repræsenterer kroppen på en funktion $f(x)$.
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec eval e x =    // assume a value for the variable X
+  match e with
+    | X -> x
+    | Const c -> c
+    | Plus (e1, e2) -> eval e1 x + eval e2 x
+    | Minus (e1, e2) -> eval e1 x - eval e2 x
+    | Times (e1, e2) -> eval e1 x * eval e2 x
+    | Divide (e1, e2) -> eval e1 x / eval e2 x
+    | Power (e, p) -> (eval e x) ** p
+    | Sin e -> sin (eval e x)
+    | Cos e -> cos (eval e x)
+    | Log e -> log (eval e x)
+    | Exp e -> exp (eval e x)
+
+let ee = Plus (Divide (Sin X, Cos X),
+               Power (Plus (X, Const 1.0), 2.0))
+
+let v = eval ee 3.0   // evaluates to 15.85745346
+\end{lstlisting}
+
+\vspace{-5cm}\hspace{8.3cm}
+\mytreetwo{0.05}
+\vspace{5cm}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Simpel Pretty-Printing}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Simpel Pretty-Printing (pretty bad)}
+
+  \vspace{2ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let par s = "(" + s + ")"
+let rec pp e : string =
+  match e with
+    | X -> "x"
+    | Const c -> sprintf "%g" c
+    | Plus (e1, e2) -> par(pp e1 + "+" + pp e2)
+    | Minus (e1, e2) -> par(pp e1 + "-" + pp e2)
+    | Times (e1, e2) -> par(pp e1 + "*" + pp e2)
+    | Divide (e1, e2) -> par(pp e1 + "/" + pp e2)
+    | Power (e, p) -> par(pp e + "^" + sprintf "%g" p)
+    | Sin e -> "sin " + pp e
+    | Cos e -> "cos " + pp e
+    | Log e -> "log " + pp e
+    | Exp e -> "exp " + pp e
+\end{lstlisting}
+
+\head{Hvad er der galt ved denne pretty-printer?}
+\begin{enumerate}
+\item \underline{\hspace{8cm}}
+\item \underline{\hspace{8cm}}
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Symbolsk Differentiering}
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Differentieringsregler}
+\end{footnotesize}
+
+\[\def\arraystretch{1.1}
+\begin{array}{c@{\quad\quad}c}
+h(x) & h'(x) \\\hline
+x & 1 \\
+c & 0 \\
+f(x) + g(x) & f'(x) + g'(x) \\
+f(x) - g(x) & f'(x) - g'(x) \\
+f(x) \cdot g(x) & f'(x)\cdot g(x) + f(x)\cdot g'(x) \\[1ex]
+\frac{f(x)}{g(x)} & \frac{f'(x)\cdot g(x) - f(x)\cdot g'(x)}{(g(x))^2}
+\\[1ex]
+x^n & n\cdot x^{(n-1)} \\
+\sin~x & \cos~x \\
+\cos~x & - \sin~x \\
+\log~x &  1 / x \\
+e^x & e^x \\
+f(g(x)) & f'(g(x))\cdot g'(x)\\
+\end{array}\]
+
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Symbolsk Differentiering i F\#}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec ddx e =
+  match e with
+  | X -> Const 1.0
+  | Const c -> Const 0.0
+  | Plus (e1, e2) -> Plus(ddx e1, ddx e2)
+  | Minus (e1, e2) -> Minus (ddx e1, ddx e2)
+  | Times (e1, e2) -> Plus (Times (ddx e1, e2),
+                            Times (e1, ddx e2))
+  | Divide (e1, e2) ->
+      Divide(Minus (Times (ddx e1, e2), Times (e1, ddx e2)),
+             Power (e2, 2.0))
+  | Power (e, p) -> Times (Times (Const p, Power (e, p-1.0)),
+                           ddx e)
+  | Sin e -> Times (Cos e, ddx e)
+  | Cos e -> Times (Minus (Const 0.0, Sin e), ddx e)
+  | Log e -> Times (Divide (Const 1.0, e), ddx e)
+  | Exp e -> Times (Exp e, ddx e)
+\end{lstlisting}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Symbolsk Differentiering i F\#}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> ddx ee;;
+val it : expr =
+  Plus
+    (Divide
+       (Minus
+          (Times (Times (Cos X,Const 1.0),Cos X),
+           Times (Sin X,Times (Minus (Const 0.0,Sin X),
+                               Const 1.0))),
+        Power (Cos X,2.0)),
+     Times
+       (Times (Const 2.0,Power (Plus (X,Const 1.0),1.0)),
+        Plus (Const 1.0,Const 0.0)))
+
+> pp (ddx ee);;
+val it : string =
+   "(((((cos x*1)*cos x)-(sin x*((0-sin x)*1)))/  ...
+    (cos x^2))+((2*((x+1)^1))*(1+0)))"
+\end{lstlisting}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Generering af \LaTeX{} kode}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \headsp{Generering af \LaTeX{} kode}
+
+  Vi kan generere \LaTeX{} kode i stedet for tekst.
+  \vspace{1ex}
+
+  Strategien er at lade vores pretty-printer returnere \textbf{et par} af
+  to værdier:
+  \begin{enumerate}
+  \item En streng der repræsenterer den genererede \LaTeX{} kode.
+  \item Et tal (præcedens) der siger hvor stærkt det underliggende udtryk binder.
+  \end{enumerate}
+
+  \head{Eksempler}
+
+  \begin{itemize}
+    \item \lstinline{pp (Plus(X, Const 1.0))} $\leadsto$ (\lstinline{"x+1.0"}, 3)
+    \item \lstinline{pp (Times(Const 2.0, Const 3.0))} $\leadsto$ (\lstinline{"2.0\\cdot 3.0"}, 4)
+  \end{itemize}
+
+  Betragt udtrykket \lstinline{Times(X,Plus(X,Const 1.0))}:
+
+  \vspace{1ex}
+
+  Når vi skal pretty-printe det højre argument til \lstinline{Times}
+  skal vi sætte paranteser rundt om udtrykket
+  \lstinline{"x+1.0"}, da præcedens-tallet 3 er mindre end (eller lig med) præcedens
+  for konstruktøren \lstinline{Times}:
+
+    \begin{itemize}
+    \item \lstinline{pp (Times(X, Plus(X, Const 1.0)))} $\leadsto$ (\lstinline{"x\\cdot (x+1.0)"}, 4)
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Generering af \LaTeX{} kode---del 0}
+
+  \vspace{1ex}
+
+  Nogle hjælpfunktioner samt præcedens-konstanter:
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let p_plus   = 3     // precedence
+let p_times  = 4
+let p_divide = 0     // division with horizontal bar
+let p_unop   = 5
+let p_max    = 1000
+
+// [par p s] adds parentheses around s if the relative
+// precedence p (p_parent - p_child) is positive or 0
+let par p s =
+  if p < 0 then s else "(" + s + ")"
+\end{lstlisting}
+
+\vspace{1ex}
+\headsp{Igen:}
+\begin{itemize}
+  \item Ingen parenteser er nødvendige omkring et barn hvis dets udtryk
+    binder stærkere end forældre-udtrykket.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Generering af \LaTeX{} kode---del 1}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let toLaTeX e =
+  let rec pp e : string * int =
+    match e with
+    | X -> ("x", p_max)
+    | Const c -> (sprintf "%g" c, p_max)
+    | Plus (e1, e2) -> pp_binop ("+",p_plus) e1 e2
+    | Minus (e1, e2) -> pp_binop ("-",p_plus) e1 e2
+    | Times (e1, e2) -> pp_binop ("\\cdot ",p_times) e1 e2
+    | Divide (e1, e2) ->
+      let (s1,s2,_) = pp_bin p_divide e1 e2
+      in ("\\frac{" + s1 + "}{" + s2 + "}", p_max)
+    | Power (e, k) -> let (s1,s2,p) = pp_bin p_unop e (Const k)
+                      in (s1 + "^{" + s2 + "}", p)
+    | Sin e -> pp_unop "sin " e
+    | Cos e -> pp_unop "cos " e
+    | Log e -> pp_unop "log " e
+    | Exp e -> let (s,a) = pp e
+               in ("e^{" + par (p_unop-a) s + "}", p_unop)
+  and ...
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Generering af \LaTeX{} kode---del 2}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  ...
+  and pp_bin p e1 e2 =
+    let (s1,p1) = pp e1
+    let (s2,p2) = pp e2
+    in (par (p-p1) s1, par (p-p2) s2, p)
+  and pp_binop (op,p) e1 e2 =
+    let (s1,s2,p) = pp_bin p e1 e2
+    in (s1 + op + s2, p)
+  and pp_unop op e =
+    let (s,p) = pp e
+    in ("\\"+op + par (p_unop-p) s, p_unop)
+  in fst(pp e)
+\end{lstlisting}
+
+\textbf{Eksempel:} \lstinline{toLaTeX (ddx ee)} $\leadsto$
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  "\frac{(\cos x\cdot 1)\cdot \cos x-\sin x\cdot ((0-\sin x)...
+   \cdot 1)}{(\cos x)^{2}}+(2\cdot (x+1)^{1})\cdot (1+0)"
+\end{lstlisting}
+
+\[
+\frac{(\cos x\cdot 1)\cdot \cos x-\sin x\cdot ((0-\sin x)
+   \cdot 1)}{(\cos x)^{2}}+(2\cdot (x+1)^{1})\cdot (1+0)
+\]
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Simplificering af Symbolske Udtryk}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Simplificering af Symbolske Udtryk}
+
+  \vspace{2ex}
+
+  Der er tilsyneladende en række konstruktioner der kan simplificeres...
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+ddx ee $\leadsto$
+  Plus
+    (Divide
+       (Minus
+          (Times ($\color{blue}\texttt{Times (Cos X,Const 1.0)}$,Cos X),
+           Times (Sin X,Times (Minus (Const 0.0,Sin X),
+                               Const 1.0))),
+        Power (Cos X,2.0)),
+     Times
+       (Times (Const 2.0,Power (Plus (X,Const 1.0),1.0)),
+        $\color{blue}\texttt{Plus (Const 1.0,Const 0.0)}$))
+\end{lstlisting}
+
+\vspace{1ex}
+\headsp{Eksempler:}
+\begin{itemize}
+  \item \lstinline{Times (Cos X,Const 1.0)} $\Longrightarrow$ \lstinline{Cos X}
+  \item \lstinline{Plus (Const 1.0,Const 0.0)} $\Longrightarrow$ \lstinline{Const 1.0}
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{En Simplificeringsfunktion i F\# --- del 1}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec simplify e =
+  match e with
+  | Plus (e1, Const 0.0) -> simplify e1
+  | Plus (Const 0.0, e2) -> simplify e2
+  | Plus (Const a, Const b) -> Const (a + b)
+  | Plus (e1, e2) -> Plus (simplify e1, simplify e2)
+  | Minus (e1, Const 0.0) -> simplify e1
+  | Minus (Const a, Const b) -> Const (a - b)
+  | Minus (e1, Minus(Const 0.0, e2)) ->
+     Plus (simplify e1, simplify e2)
+  | Minus (e1, e2) -> Minus (simplify e1, simplify e2)
+  | Divide (Const 0.0, e2) -> Const 0.0
+  | Divide (e1, Const 1.0) -> simplify e1
+  | Divide (e1, e2) -> Divide (simplify e1, simplify e2)
+  | Power (e, 1.0) -> simplify e
+  | Power (e, c) -> Power (simplify e,c)
+  ...
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{En Simplificeringsfunktion i F\# --- del 2}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec simplify e =
+  match e with
+  ...
+  | Times (e1, Const 0.0) -> Const 0.0
+  | Times (Const 0.0, e2) -> Const 0.0
+  | Times (e1, Const 1.0) -> simplify e1
+  | Times (Const 1.0, e2) -> simplify e2
+  | Times (Const a, Const b) -> Const (a * b)
+  | Times (e1,Plus(e2,e3)) ->
+    simplify (Plus(Times(e1,e2),Times(e1,e3)))
+  | Times (e1,Minus(e2,e3)) ->
+    simplify (Minus(Times(e1,e2),Times(e1,e3)))
+  | Times (e1, e2) ->
+    if e1 = e2 then simplify (Power (e1,2.0))
+    else Times (simplify e1, simplify e2)
+  | Sin e -> Sin (simplify e)
+  | Cos e -> Cos (simplify e)
+  | Log e -> Log (simplify e)
+  | Exp e -> Exp (simplify e)
+  | _ -> e
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Det tager flere steps før ``simplifyeren'' stabiliseres:}
+
+  \vspace{1ex}
+  \lstinline{toLaTeX(ddx ee)} $\leadsto$
+  \[
+  \frac{(\cos x\cdot 1)\cdot \cos x-\sin x\cdot ((0-\sin x)\cdot 1)}{(\cos x)^{2}}+(2\cdot (x+1)^{1})\cdot (1+0)
+  \]
+
+  \vspace{1ex}
+  \lstinline{toLaTeX(simplify(ddx ee))} $\leadsto$
+  \[
+  \frac{\cos x\cdot \cos x-\sin x\cdot (0-\sin x)}{(\cos x)^{2}}+(2\cdot (x+1)+0)
+  \]
+
+  \vspace{1ex}
+  \lstinline{toLaTeX(simplify(simplify(ddx ee)))} $\leadsto$
+  \[
+  \frac{(\cos x)^{2}-(0-(\sin x)^{2})}{(\cos x)^{2}}+(2\cdot x+2)
+  \]
+
+  \vspace{1ex}
+  \lstinline{toLaTeX(simplify(simplify(simplify(ddx ee))))} $\leadsto$
+  \[
+  \frac{(\cos x)^{2}+(\sin x)^{2}}{(\cos x)^{2}}+(2\cdot x+2)
+  \]
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Komplet Simplificering}
+
+  \vspace{1ex}
+
+  Med generisk lighed og rekursion kan vi let skrive en ``simplifyer''
+  der kalder \lstinline{simplify} igen og igen indtil udtrykket ikke
+  længere simplificeres:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec simplifyMax e =
+  let se = simplify e
+  in if se = e then e else simplifyMax se
+\end{lstlisting}
+
+\vspace{1ex}
+\headsp{Komplet Simplificering i Aktion:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+toLaTeX(simplifyMax(ddx ee)) $\leadsto$
+  "\\frac{(\\cos x)^{2}+(\\sin x)^{2}}{(\\cos x)^{2}}+(2\\cdot x+2)"
+\end{lstlisting}
+
+\vspace{1ex}
+\headsp{\LaTeX{} Fortolkning:}
+
+  \[
+  \frac{(\cos x)^{2}+(\sin x)^{2}}{(\cos x)^{2}}+(2\cdot x+2)
+  \]
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

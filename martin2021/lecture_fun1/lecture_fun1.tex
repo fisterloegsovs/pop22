@@ -1,0 +1,216 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkred}{Højereordens funktioner (Del 1)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Introduktion og motivation}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Højereordens Funktioner}
+
+  \vspace{1ex}
+
+  \begin{minipage}{.75\textwidth}
+  \begin{enumerate}
+  \item \textbf{Brug af højereordens funktioner:}
+
+    \begin{itemize}
+    \item Funktionsbegrebet genbesøgt.
+
+      (closures)
+    \item Funktioner der tager funktioner som argument.
+
+      (listeoperationer, generisk sortering, ...)
+
+    \item Funktioner der returnerer funktioner.
+
+      (funktionssammensætning, currying, uncurryring)
+
+    \item Funktioner som/i datastrukturer.
+
+      (afbildninger, pull arrays, funktionelle billeder, ...)
+
+    \end{itemize}
+
+  \item \textbf{Funktionelle Billeder.}
+
+    Vi skal se hvordan vi ved at forstå et billede som en \textbf{funktion fra
+    punkter i planen til farver} kan definere (og tegne) en lang række interessante billeder.
+
+  \end{enumerate}
+  \end{minipage}~~~\begin{minipage}{.2\textwidth}
+  \includegraphics[width=1.2\textwidth]{../images/wav.png}
+  \end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Funktionsbegrebet og closures}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Closures}
+  \vspace{1ex}
+
+%  Vi har tidligere arbejdet med at definere forskellige konkrete
+%  funktioner uden dog helt præcist at have defineret hvordan en
+%  funktion er repræsenteret på køretid.
+
+  På køretid er en funktion repræsenteret ved en såkaldt
+  \emph{closure} der, abstrakt set, indeholder tre dele:
+  \begin{enumerate}
+  \item En definition af de \emph{formelle parametre} til funktionen (læs: variabelnavne).
+  \item En \emph{omgivelse} der indeholder værdier for de variabler
+    der ikke er formelle parametre til funktionen.
+  \item Kode for \emph{kroppen} af funktionen.
+  \end{enumerate}
+
+  \shead{Eksempel F\# funktion defineret med \lstinline{let}:}
+
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    let a = 5+3
+    let f x = x + a
+  \end{lstlisting}
+
+  På køretid er funktionen \lstinline{f} repræsenteret som
+
+ $$\mathtt{f} ~~~\mapsto ~~~ (~~\mathtt{x}~~, ~~\{\mathtt{a} \mapsto 8\}~~, ~~\mathtt{x + a}~~)$$
+
+  \vspace{-2mm}
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Med denne repræsentation kan funktionen benyttes også fra
+    steder i programmet hvor \lstinline{a} ikke er kendt (f.eks. i et
+    eksternt bibliotek).
+    \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Anonyme funktioner}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Anonyme Funktioner}
+  \vspace{1ex}
+
+  Den samme kode kunne skrives ved brug af en \emph{anonym} funktion:
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    let a = 5+3
+    let f = (fun x -> x + a)
+  \end{lstlisting}
+
+  \head{Repræsentation:}
+
+ $$\mathtt{f} ~~~\mapsto ~~~ (~~\mathtt{x}~~, ~~\{\mathtt{a} \mapsto 8\}~~, ~~\mathtt{x + a}~~)$$
+
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Der er ingen forskel på repræsentationen af de to definitioner af \lstinline{f}.
+  \item Anonyme funktioner benyttes ofte når en funktion umiddelbart
+    skal gives til en anden funktion som argument, når vi umiddelbart
+    skal gemme en funktion i en datastruktur, eller når vi umiddelbart
+    skal returnere funktionen fra en anden funktion.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Funktioner der tager funktionsargumenter}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Funktioner der tager funktionsargumenter}
+  \vspace{1ex}
+
+  Vi har tidligere set eksempler på funktioner der tager funktioner
+  som parametre.
+
+  \head{Eksempel: \lstinline{List} modulet}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  val map    : ('a -> 'b) -> 'a list -> 'b list
+  val fold   : ('b -> 'a -> 'b) -> 'b -> 'a list -> 'b
+  val filter : ('a -> bool) -> 'a list -> 'a list
+\end{lstlisting}
+
+Det kan ofte være hensigtsmæssigt selv at konstruere funktioner der er
+parametiske over andre funktioner.
+
+\sp
+
+Et oplagt eksempel er sortering:
+
+\begin{itemize}
+\item Sammenligningsbaserede sorteringsrutiner afhænger normalt blot
+  af en funktion, der definerer en total ordning på elementerne i
+  mængden. Funktionen kunne passende være en ``mindre-end'' funktion ($<$)
+  med type \lstinline{'a->'a->bool}:
+  \begin{enumerate}
+  \item $\forall x. ~x \not < x$ ~~~~(irreflexivity)
+  \item $\forall x,y. ~x < y \Rightarrow y \not < x$ ~~~~(asymmetry)
+  \item $\forall x,y,z. ~x < y \wedge y < z \Rightarrow x < z$ ~~~~(transitivity)
+  \item $\forall x,y. ~x < y \vee y < x \vee y = x$ ~~~~(totality)
+  \end{enumerate}
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Generisk sortering}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Generisk Selection Sort}
+
+  \vspace{2ex}
+
+\newcommand{\ltbox}{\fbox{\texttt{lt}}}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec sel $\ltbox$ m ys =      // invariant: $\forall \kw{y} \in \kw{ys} \, .\,  \kw{m < y}$
+  function [] -> (m,ys)
+         | x::xs -> if $\ltbox$ x m then
+                      sel $\ltbox$ x (m::ys) xs
+                    else sel $\ltbox$ m (x::ys) xs
+
+let rec ssort ($\ltbox$:'a->'a->bool) : 'a list -> 'a list =
+  function [] -> []
+         | x::xs ->
+           let (m,xs) = sel $\ltbox$ x [] xs
+           in m :: ssort $\ltbox$ xs
+\end{lstlisting}
+
+\shead{Brug af funktionen \lstinline{ssort}:}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> ssort (>) ["Dog"; "Apple"; "Horse"; "Monkey"];;
+val it : string list = ["Monkey"; "Horse"; "Dog"; "Apple"]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

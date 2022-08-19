@@ -1,0 +1,91 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkteal}{Træstrukturer (Del 2)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Itermezzo om generisk lighed}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Generisk lighed}
+  \vspace{1ex}
+
+  F\# har en indbygget ``generisk funktion'' til at undersøge lighed på data-strukturer:
+  \vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+ val (=)  : 'a -> 'a -> bool   when 'a : equality
+ val (<>) : 'a -> 'a -> bool   when 'a : equality
+\end{lstlisting}
+  \vspace{1ex}
+
+  \head{Eksempler:}
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+ > 3 = 2;;                          > 4.2 = 2.3;;
+ val it : bool = false              val it : bool = false
+ > (2,3.2) = (2,3.2);;              > [2;3] = [2;3]
+ val it : bool = true               val it : bool = true
+ > [|2;3|] <> [|2;3|]               > [2;3] = [2;4]
+ val it : bool = false              val it : bool = false
+\end{lstlisting}
+
+  \vspace{1ex}
+\head{Bemærk:}
+
+  \begin{itemize}
+  \item F\# implementerer visse begrænsninger; det er ikke muligt at
+    teste for lighed på værdier af funktionstype.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Generisk lighed på sum-typer --- \texttt{eq.fs}}
+  \vspace{1ex}
+
+  Generisk lighed virker også på sum-typer og er internt konceptuelt
+  implementeret ved simpel rekursion og pattern-matching.
+
+  \head{Eksempel:}
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type expr = Const of int             // Expression trees
+            | Add of expr * expr
+            | Mul of expr * expr
+
+  let a = Add(Mul(Const 3,Const 8),Const 8)  // --> 24 + 8
+  let b = Add(Const 8,Mul(Const 6,Const 4))  // --> 8 + 24
+
+  do printfn "(a=b) = %A" (a=b)
+  do printfn "(eval a = eval b) = %A" (eval a = eval b)
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+
+\end{document}

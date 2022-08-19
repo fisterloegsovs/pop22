@@ -1,0 +1,453 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkred}{Højereordens funktioner (Del 4)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+\subsection{Recap}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Closures}
+  \vspace{1ex}
+
+%  Vi har tidligere arbejdet med at definere forskellige konkrete
+%  funktioner uden dog helt præcist at have defineret hvordan en
+%  funktion er repræsenteret på køretid.
+
+  På køretid er en funktion repræsenteret ved en såkaldt
+  \emph{closure} der, abstrakt set, indeholder tre dele:
+  \begin{enumerate}
+  \item En definition af de \emph{formelle parametre} til funktionen (læs: variabelnavne).
+  \item En \emph{omgivelse} der indeholder værdier for de variabler
+    der ikke er formelle parametre til funktionen.
+  \item Kode for \emph{kroppen} af funktionen.
+  \end{enumerate}
+
+  \shead{Eksempel F\# funktion defineret med \lstinline{let}:}
+
+  \begin{lstlisting}[numbers=none,frame=none,mathescape]
+    let a = 5+3
+    let f = fun x -> x + a
+  \end{lstlisting}
+
+  På køretid er funktionen \lstinline{f} repræsenteret som
+
+ $$\mathtt{f} ~~~\mapsto ~~~ (~~\mathtt{x}~~, ~~\{\mathtt{a} \mapsto 8\}~~, ~~\mathtt{x + a}~~)$$
+
+  \vspace{-2mm}
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Med denne repræsentation kan funktionen benyttes også fra
+    steder i programmet hvor \lstinline{a} ikke er kendt (f.eks. i et
+    eksternt bibliotek).
+    \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Funktioner som objekter i datastrukturer}
+
+  Funktioner (dvs. closures) kan gemmes i datastrukturer:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec loop i : (int->int) list =
+  if i < 0 then []
+  else (fun x -> i * x) :: loop (i-1)    // i is caught here!
+
+let fs = loop 200
+let xs = List.map (fun f -> f 3) fs
+\end{lstlisting}
+
+\shead{Resultatet af kaldet \lstinline{loop 200}:}
+
+$$\mathtt{[}(~\mathtt{x}~, ~\{\mathtt{i} \mapsto 200\}~, ~\mathtt{i*x}~);~ (~\mathtt{x}~, ~\{\mathtt{i} \mapsto 199\}~, ~\mathtt{i*x}~); ~...;~(~\mathtt{x}~, ~\{\mathtt{i} \mapsto 0\}~, ~\mathtt{i*x}~)\mathtt{]}$$
+
+\shead{Indholdet af \lstinline{xs}:}
+
+$$\mathtt{[}600;~ 597; ~...;~0\mathtt{]}$$
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{small}
+  \head{Piping versus Funktionssammensætning}
+
+  \shead{Pipe-operatorer}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val |> : 'a -> ('a->'b) -> 'b   // x |> g = g x
+val <| : ('a->'b) -> 'a -> 'b   // g <| x = g x
+\end{lstlisting}
+
+\shead{Funktionssammensætning}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val >> : ('a->'b) -> ('b->'c) -> ('a->'c)
+      // (g >> f)x = f(g x)
+
+val << : ('a->'b) -> ('c->'a) -> ('c->'b)
+      // (f << g)x = f(g x) = (f $\circ$ g)(x)
+\end{lstlisting}
+
+\textbf{Bemærk:} Piping virker på værdier, hvor funktionssammensætning
+benyttes til at definere nye funktioner på bagrund af andre funktioner.
+
+\end{small}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Currying}
+
+  Currying henviser til følgende indsigt:
+  \begin{enumerate}
+  \item En funktion \lstinline{f:'a*'b->'c} der tager et par som argument kan omskrives til en funktion \lstinline{g:'a->'b->'c} der tager to argumenter.
+  \item En funktion \lstinline{g:'a->'b->'c} der tager to argumenter kan omskrives til en funktion \lstinline{f:'a*'b->'c} der tager et par som argument (purity antaget).
+  \end{enumerate}
+
+  Omskrivningerne kan realiseres med følgende to funktioner:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let curry (f:'a*'b->'c) : 'a->'b->'c =
+  fun a -> fun b -> f(a,b)
+
+let uncurry (f:'a->'b->'c) : 'a*'b->'c =
+  fun (a,b) -> f a b
+\end{lstlisting}
+
+\shead{Eksempel:}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> List.map (uncurry (+)) [(2,5);(8,1);(7,6)];;
+val it : int list = [7; 9; 13]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Funktionelle billeder}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Funktionelle Billeder}
+
+  Funktionelle billeder illustrerer hvordan vi kan forstå et billede
+  som en funktion fra et punkt i planen til, f.eks., en farve:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type point = float * float          // Points in the plane
+  type 'a image = point -> 'a         // Generic image
+
+  type frac = float                   // floats in [0;1]
+  type fcolor = frac*frac*frac*frac   // alpha,red,green,blue
+
+  type region = bool image            // region (b/w)
+  type cimage = fcolor image          // color images
+\end{lstlisting}
+
+\shead{Bemærk}
+\begin{itemize}
+\item Repræsentationen fortæller ikke for hvilke værdier i planen vi skal forstå billedet.
+\item Når vi skal ``tegne billedet'' skal vi derfor vælge intervallet
+  (for $x$ og $y$) \textbf{og} antallet af pixels (vidde og højde) for
+  det resulterende canvas.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Farver}
+
+  \vspace{1ex}
+
+  Vi har brug for hjælpefunktioner til at konvertere farver og til at
+  omregne fra booleans til farver (sort/hvid).
+
+  \shead{Fra funktionelle farver til systemfarver}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let toColor ((a,r,g,b):fcolor) : ImgUtil.color =
+  ImgUtil.fromArgb (int(255.0*a),int(255.0*r),
+                    int(255.0*g),int(255.0*b))
+
+let boolToFColor (b:bool) : fcolor =    // black & white
+  if b then (1.0,0.0,0.0,0.0)
+  else (1.0,1.0,1.0,1.0)
+
+let fracToFColor (f:frac) : fcolor =    // grey-scale
+  (1.0,f,f,f)
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Tegning af Funktionelle Billeder}
+
+  Funktionen nedenfor kan benyttes til at omdanne et vilkårligt
+  funktionelt farvebillede til et canvas som kan vises eller gemmes
+  som en png-fil.
+
+  \vspace{1ex}
+
+  Funktionen benytter sig af funktionalitet i \lstinline{ImgUtil}
+  biblioteket (\lstinline{ImgUtil.mk} samt \lstinline{ImgUtil.setPixel}):
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let toCanvas (width:float) (img:cimage) w h : canvas =
+  let canvas = ImgUtil.mk w h
+  for x in [0..w-1] do
+    for y in [0..h-1] do
+      let p_x = width * float (x - w/2) / float w
+      let p_y = width * float (y - h/2) / float h
+      let fc = img (p_x,p_y)   // function call!
+      let c = toColor fc       // convert color
+      in ImgUtil.setPixel c (x,y) canvas
+  canvas
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Tegning af Simple Funktioner}
+
+  \vspace{1ex}
+
+  Vi kan let repræsentere en simpel funktion som et funktionelt billede.
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let (<<>>) : float -> float -> bool =
+  fun (x:float) y -> abs(x-y) < 0.05
+let f : region =                          // $f(x) = x^3 - 2x^2 + 1.5$
+  fun (x,y) -> y <<>> (x*x*x-2.0*x*x+1.5)
+let invY (f : 'a image) : 'a image =      // change y-direction
+  fun (x,y) -> f (x,-y)
+\end{lstlisting}
+
+\head{Generering af PNG:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let save600x400 f img = toPngFile f (toCanvas 4.0 img 600 400)
+do save600x400 "f.png" (boolToFColor << f)
+do save600x400 "finv.png" (invY(boolToFColor << f))
+\end{lstlisting}
+
+  \vspace{1ex}
+
+\fbox{\includegraphics[width=0.25\textwidth]{../images/funplot.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/f.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/finv.png}}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Tegning af Simple Relationer}
+
+  \vspace{1ex}
+
+  Vi kan også repræsentere en simpel relation som et funktionelt billede:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let circ : region =                        // $1 = x^2 + y^2$
+  fun (x,y) -> 1.0 <<>> (x*x + y*y)
+let coord : region =                       // +
+  fun (x,y) -> x <<>> 0.0 || y <<>> 0.0
+let (<||>) : region -> region -> region =  // combine regions
+  fun r1 r2 -> fun p -> r1 p || r2 p
+\end{lstlisting}
+
+\head{Generering af PNG:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+do save600x400 "ccirc.png" (boolToFColor << (coord <||> circ))
+\end{lstlisting}
+
+  \vspace{1ex}
+
+\fbox{\includegraphics[width=0.25\textwidth]{../images/coord.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/circ.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/ccirc.png}}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Skakbræt og Ringe}
+
+  \vspace{2ex}
+
+  Det er muligt at definere andre relationer såsom et skakbræt eller
+  alternerende ringe:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let even x = x % 2 = 0
+let floori x = int(floor x)
+let checker : region =
+  fun (x,y) -> even(floori x + floori y)
+
+let distO (x,y) = sqrt(x*x+y*y)
+let altRings : region =
+  even << floori << distO
+\end{lstlisting}
+
+\mbox{ }\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/checker.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/altRings.png}}
+\hfill \mbox{ }
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Polære Koordinater}
+
+  I det polære koordinatsystem bestemmes et punkt $p$ ved afstandet
+  til centrum samt vinklen, i forhold til x-retningen, for linien der
+  gennemgår centrum samt punktet.
+
+  \sp
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type polar_point = float * float
+let toPolar ((x,y):point) : polar_point =
+  (distO (x,y), atan2 y x)
+
+let polarChecker n : region =
+  let sc (r,t) = (r, t * float n / pi)
+  in checker << sc << toPolar
+\end{lstlisting}
+
+\mbox{ }\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/polarChecker3.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/polarChecker5.png}}
+\hfill \mbox{ }
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Gråskalabilleder}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let wavDist : frac image =
+  fun p -> (1.0 + cos (pi * distO p)) / 2.0
+
+let save600x400s sz f img =
+  toPngFile f (toCanvas sz img 600 400)
+
+do save600x400s 7.0 "wavDist7.png" (fracToFColor << wavDist)
+do save600x400s 9.0 "wavDist9.png" (fracToFColor << wavDist)
+\end{lstlisting}
+
+\mbox{ }\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/wavDist7.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/wavDist9.png}}
+\hfill \mbox{ }
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Billedinterpolation og Farver}
+  \sp
+
+  To farver kan ``interpoleres'' med vægt \lstinline{w} $\in [0;1]$ som følger:
+
+  \sp
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let interpolC w (r1,g1,b1,a1) (r2,g2,b2,a2) : fcolor =
+  let h x1 x2 = w * x1 + (1.0-w)*x2
+  in (h r1 r2, h g1 g2, h b1 b2, h a1 a2)
+let blueI : cimage = fun _ -> (1.0,0.0,0.0,1.0)
+let redI  : cimage = fun _ -> (1.0,1.0,0.0,0.0)
+\end{lstlisting}
+
+\sp
+Interpolation kan løftes til billeder:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let interpolI : frac image -> cimage -> cimage -> cimage =
+  fun w a b p -> interpolC (w p) (a p) (b p)
+let rbRings : cimage = interpolI wavDist redI blueI
+let mystique : cimage =
+  interpolI (fun _ -> 0.2) (boolToFColor<<checker) rbRings
+\end{lstlisting}
+
+\mbox{ }\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/rbRings.png}}\hfill
+\fbox{\includegraphics[width=0.25\textwidth]{../images/mystique.png}}
+\hfill \mbox{ }
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\shead{Flere Muligheder}
+
+Læs mere i
+\begin{quote}
+  Conal Elliott. Functional Images. Chapter in ``The Fun of
+  Programming''. Book 2003. See
+  \url{http://conal.net/papers/functional-images/}
+\end{quote}
+
+\sp \sp
+Brug \lstinline{ImgUtil.runApp} til at styre parametre på
+  køretid ved brug af tastaturinput.
+
+  \sp
+
+  \sp
+
+\includegraphics[width=0.30\textwidth]{../images/wav1.png}\hfill
+\includegraphics[width=0.30\textwidth]{../images/wav2.png}\hfill
+\includegraphics[width=0.30\textwidth]{../images/wav3.png}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

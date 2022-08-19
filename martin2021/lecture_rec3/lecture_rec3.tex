@@ -1,0 +1,464 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{blue}{Rekursion (Del 3)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Rekursion og sortering}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Rekursion}
+
+  \begin{quote}
+    En metode for hvilken en løsning til et problem findes ved at løse
+    \emph{mindre instanser} af det samme problem.
+  \end{quote}
+
+  \begin{itemize}
+  \item Rekursion kan anvendes til at løse en lang række forskellige problemstillinger.
+
+  \item I dag vil vi se på brug af rekursion i forbindelse med sortering.
+  \end{itemize}
+
+  \begin{minipage}[b]{0.6\textwidth}
+  \head{Sorteringsalgoritmer}
+  \begin{itemize}
+  \item Insertion sort
+  \item Bubble sort
+  \item Selection sort
+  \item Mergesort
+  \item Quicksort
+%  \item Quicksort (in-place array)
+  \end{itemize}
+\end{minipage}  \begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/sorting_algorithms.png}
+\end{minipage}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Insertion sort}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Insertion sort}
+
+  \begin{itemize}
+  \item Gennemløb en liste et element af gangen.
+  \item For hvert element, indsæt det på rette plads i resultatlisten.
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec insert xs y =
+  match xs with
+    | [] -> [y]
+    | x::xs' -> if y < x then y :: xs
+                else x :: insert xs' y
+
+let isort xs = List.fold (fun acc x -> insert acc x) [] xs
+
+let xs = [7;55;34;23;5;42;32;34;8]
+do printf "%A\n" (isort xs)
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Nøgleordet \lstinline{rec} er nødvendigt før en funktion kan henvise til sig selv...
+\item \lstinline{List.fold} benyttes til gennemløb og opbygning af ny sorteret liste.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Analyse af insertion sort}
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+  Funktionen \lstinline{insert} køres $N$ gange og for hver kørsel
+  gennemløbes (i gennemsnit) en fjerdedel af listen ($N/4$ elementer).
+
+\vspace{1ex}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{ll}
+    Best time: & $O(N)$ \\
+    Worst time: & $O(N^2)$ \\
+    Average time: & $O(N^2)$
+  \end{tabular}
+
+  \vspace{1ex}
+  I bedste tilfælde er listen omvendt sorteret hvorved \lstinline{insert} altid kører i konstant tid...
+
+  \vspace{1ex}
+  I animationen insættes elementerne bagfra...
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/isort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/a/ad/Insertion_Sort_Animation.gif}{animation})
+\end{minipage}
+
+\head{Kørsel:}
+
+\begin{verbatim}
+bash-3.2$ fsharpc --nologo isort.fs && mono isort.exe
+[5; 7; 8; 23; 32; 34; 34; 42; 55]
+\end{verbatim}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Bubble sort}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Bubble sort}
+
+  \begin{itemize}
+  \item Listen \lstinline{xs} gennemløbes $N =$ \lstinline{List.length xs} gange.
+  \item For hvert gennemløb, ombyt sidestillede elementer der er forkert ordnet (bubble).
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec bubble (xs:int list) =
+  match xs with
+    | x::y::ys -> if y<x then y::bubble (x::ys)
+                  else x::bubble (y::ys)
+    | _ -> xs
+
+let bsort xs =
+  List.fold (fun acc _ -> bubble acc) xs xs
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item \lstinline{List.fold} benyttes til at foretage $N$ kald af \lstinline{bubble}.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Analyse af bubble sort}
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+  Funktionen \lstinline{bubble} køres $N$ gange og for hver kørsel
+  gennemløbes hele listen ($N$ elementer).
+
+\vspace{1ex}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{ll}
+    Best time: & $O(N^2)$ \\
+    Worst time: & $O(N^2)$ \\
+    Average time: & $O(N^2)$
+  \end{tabular}
+
+  \vspace{1ex}
+  I værste tilfælde skal det sidste element flyttes helt i front...
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/bsort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/5/54/Sorting_bubblesort_anim.gif}{animation})
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Selection sort}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Selection sort}
+
+  \begin{itemize}
+  \item Udtræk det mindste element i listen.
+  \item Gentag processen rekursivt indtil der ikke længere er elementer i listen.
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec select (xs:int list) (m,ys) =
+  match xs with
+    | [] -> (m,ys)
+    | x::xs -> if x < m then select xs (x,m::ys)
+               else select xs (m,x::ys)
+
+let rec ssort xs =
+  match xs with
+    | [] -> []
+    | x::xs -> let (m,xs) = select xs (x,[])
+               in m::ssort xs
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Analyse af selection sort}
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+  Funktionen \lstinline{select} køres $N$ gange og for hver kørsel
+  gennemløbes listen (i gennemsnit $N/2$ elementer).
+
+\vspace{1ex}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{ll}
+    Best time: & $O(N^2)$ \\
+    Worst time: & $O(N^2)$ \\
+    Average time: & $O(N^2)$
+  \end{tabular}
+
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/ssort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/b/b0/Selection_sort_animation.gif}{animation})
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Mergesort}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Mergesort --- divide-and-conquer (del-og-hersk!)}
+
+  \emph{John von Neumann, 1945}
+
+  \begin{itemize}
+  \item Opdel listen i to lige store dele.
+  \item Sort\'er (rekursivt) hver liste.
+  \item Flet (merge) de to resultater.
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec msort xs =
+  let sz = List.length xs
+  if sz < 2 then xs
+  else let n = sz / 2
+       let ys = xs.[0..n-1]
+       let zs = xs.[n..sz-1]
+       in merge (msort ys) (msort zs)
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Mergesort benytter sig af slice-syntaksen (e.g., \lstinline{xs.[0..n-1]}) for at udtrække dele af en liste.
+\item Mergesort benytter sig af utility-funktionen \lstinline{merge} (next slide).
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Utility-funktionen \lstinline{merge}}
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec merge xs ys =
+  match xs, ys with
+    | [], _ -> ys
+    | _, [] -> xs
+    | x::xs, y::ys -> if x<y then x::merge xs (y::ys)
+                      else y::merge (x::xs) ys
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Funktionen \lstinline{merge} fletter to sorterede lister sammen således at resultatet er sorteret.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Analyse af Mergesort}
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+  Kald-træet for \lstinline{msort} er $\log(N)$ dybt og
+  \lstinline{merge} kaldes i hver knude. Det viser sig at Best time =
+  Worst time = Average time = $O(N\log(N))$.
+
+\vspace{1ex}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{ll}
+    Best time: & $O(N\log(N))$ \\
+    Worst time: & $O(N\log(N))$ \\
+    Average time: & $O(N\log(N))$
+  \end{tabular}
+
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/msort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/c/c5/Merge_sort_animation2.gif}{animation})
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Quicksort}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Quicksort --- divide-and-conquer (del-og-hersk!)}
+
+  \emph{Tony Hoare, 1959}
+
+  \begin{itemize}
+  \item Vælg et element $x$ i listen (pivot).
+  \item Del listen i tre dele, dem mindre en $x$, dem lig med $x$ og dem større end $x$.
+  \item Sort\'er de to lister indeholdende henholdsvis små og store elementer.
+  \item Sammensæt de tre lister.
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec qsort xs =
+  if List.isEmpty xs then xs
+  else let pivot = xs.[0]
+       let (xs, es, ys) = partition pivot xs
+       in qsort xs @ es @ qsort ys
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Vi vælger det første element i listen som pivot; en bedre løsning er at vælge et tilfældigt element.
+\item Quicksort benytter sig af utility-funktionen \lstinline{partition} (next slide).
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Utility-funktionen \lstinline{partition}}
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let partition y xs =
+  List.foldBack (fun x (xs,es,ys) ->
+                   if x < y then (x::xs,es,ys)
+                   else if x > y then (xs,es,x::ys)
+                   else (xs,x::es,ys)) xs ([],[],[])
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Funktionen \lstinline{partition} partitionerer listen (ved brug
+  af \lstinline{List.foldBack}) i de elementer der er henholdsvis mindre end
+  \lstinline{y}, lig med \lstinline{y} og større end \lstinline{y}.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Analyse af Quicksort}
+
+  Kald-træet for \lstinline{qsort} er $\log(N)$ dybt (average) og
+  \lstinline{partition} kaldes i hver knude. Det viser sig at Worst time = $O(N^2)$ $>$
+  Average time $O(N\log(N))$ $>$ Best time = $O(N)$.
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{lll}
+    Best time: & $O(N)$ & \emph{I hvilket tilfælde?} \\
+    Worst time: & $O(N^2)$ & \emph{I hvilket tilfælde?} \\
+    Average time: & $O(N\log(N))$
+  \end{tabular}
+
+  \vspace{1ex}
+  \begin{itemize}
+  \item Ved at vælge et ``random'' pivot kan risikoen for worst-time opførsel minimeres.
+  \item Quicksort kan (relativt) let implementeres for arrays med in-place opdateringer og meget lidt ekstra pladsforbrug.
+  \item Ved brug af forskellige ``tweaks'' kan quicksort optimeres til
+    at køre ca. tre gange hurtigere end konkurenterne mergesort og
+    heapsort (ikke vist her).
+  \end{itemize}
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/qsort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif}{animation})
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

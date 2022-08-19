@@ -1,0 +1,334 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{olive}{Programmering med Lister (Del 1)}
+
+\begin{document}
+
+\popmaketitleframe
+
+\subsection{F\# Collections}
+
+\begin{frame}
+\begin{footnotesize}
+
+  \head{F\# Collections}
+  \vspace{1ex}
+
+  Vi har ofte behov for at håndtere data vi ikke kender størrelsen af
+  på forhånd.
+  \vspace{2mm}
+
+  F\# tilbyder en række \emph{collection} moduler til håndtering af data:
+
+  \head{Eksempler:}
+  \begin{itemize}
+  \item Strenge af karakterer (\lstinline{String} modulet)
+  \item Lister af tal (\lstinline{List} modulet)
+  \item Mængder af navne (\lstinline{Set} modulet)
+  \item Afbildninger af navne til telefonnumre (\lstinline{Map} modulet)
+  \item Muterbare arrays (indeholdende f.eks. floats) (\lstinline{Array} modulet)
+  \item \ldots
+  \end{itemize}
+
+  \vspace{2mm}
+  \textbf{Bemærk:} Til forskel fra de strukturer vi har set ind til nu
+  (såsom tupler) kan F\# collections bestå af et ikke på forhånd defineret
+  antal elementer.
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Definition af lister og deres typer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Lister}
+
+  En liste er en sekvens af elementer af samme type, men hvor antallet
+  af elementer ikke er specificeret i typen.
+
+  \begin{itemize}
+  \item Tilsvarende som for antallet af tegn i en streng.
+  \item I modsætning til antallet af elementer i en tuple.
+  \end{itemize}
+
+\vspace{1ex}
+
+\headsp{Eksempler:}
+
+\texttt{
+\begin{tabular}{r@{\quad:\quad}l}
+\mbox{\bf Udtryk} & \mbox{\bf Type} \\ \hline
+[3; 4; 5] & int list\\
+{}['h'; 'e'; 'l'; 'l'; 'o'] & char list\\
+{}[true] & bool list \\
+{}[] & 'a list
+\end{tabular}
+}
+
+\headsp{Typekonstruktøren \texttt{list}:}
+
+Typekonstruktøren \texttt{list} tager som argument en
+``typeparameter'' som specificerer typen for elementerne i listen.
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Konstruktion og dekonstruktion af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\headsp{Listekonstruktørerne \underline{nil} (\texttt{[]}) og \underline{cons} (\texttt{::})}
+
+Grundlæggende er lister opbygget (induktivt) ved brug af \texttt{[]} og \texttt{::}
+
+\begin{lstlisting}[numbers=none,frame=none]
+val [] : 'a list                       // empty list
+val :: : 'a -> 'a list -> 'a list      // add element
+\end{lstlisting}
+
+\headsp{Eksempler:}
+
+\texttt{
+\begin{tabular}{r@{ $\leadsto$ }l}
+  1 :: [2; 3] & [1; 2; 3] \\
+  false :: [] & [false] \\
+  1.2 :: 2.3 :: [] & [1.2; 2.3] \\
+  {}[] :: [] & [[]]
+\end{tabular}}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\headsp{List append (\texttt{@})}
+
+Elementerne i en liste kan sættes foran en anden liste
+ved brug af append (\texttt{@}):
+
+\begin{lstlisting}[numbers=none,frame=none]
+val @ : 'a list -> 'a list -> 'a list    // append lists
+\end{lstlisting}
+
+Bemærk at elementerne i de to lister givet til \texttt{@} skal have samme type.
+
+\headsp{Eksempler:}
+
+\texttt{
+\begin{tabular}{r@{ $\leadsto$ }l}
+  ['a'; 'e'] @ ['i'; 'o']  &  ['a'; 'e'; 'i'; 'o'] \\
+  {}[] @ [] & []
+\end{tabular}}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\headsp{Dekonstruktion af lister}
+
+Det er let (dvs. effektivt) at tilgå hovedet og halen på en liste.
+
+\vspace{1ex}
+
+\head{Funktionen \lstinline{List.head}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let lst = [1; 2; 3; 4]
+  let elem = List.head lst   // $\leadsto$ 1
+\end{lstlisting}
+
+\head{Funktionen \lstinline{List.tail}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let lst = [1; 2; 3; 4]
+  let lst2 = List.tail lst   // $\leadsto$ [2; 3; 4]
+\end{lstlisting}
+
+\head{Indicering i lister samt ``list slices''}
+
+\vspace{1ex}
+
+Vi kan bruge dot-notation til at tilgå dele af lister (ligesom
+for strenge):
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let lst = ['a'; 'e'; 'i'; 'o']
+  let c = lst.[2]                // $\leadsto$ 'i'
+  let lst2 = lst.[1..3]          // $\leadsto$ ['e'; 'i'; 'o']
+\end{lstlisting}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\headsp{Spørgsmål}
+
+\begin{enumerate}
+\item Hvad sker der hvis \lstinline{List.head} eller \lstinline{List.tail}
+anvendes på en tom liste?
+
+  \vspace{1mm}
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+  \vspace{1mm}
+
+\textbf{Eksempel:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  List.tail(List.tail [1])  $\leadsto$  ?
+\end{lstlisting}
+
+\item Hvad sker der hvis listeindicering forsøger at tilgå et element der ikke eksisterer?
+
+  \vspace{1mm}
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+  \vspace{1mm}
+
+\textbf{Eksempel:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  ['a'; 'e'; 'i'; 'o'; 'u'; 'y'].[2..14]  $\leadsto$  ?
+\end{lstlisting}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\headsp{Eksempler på listekonstruktioner}
+
+\vspace{2mm}
+\textbf{Ex 1: Heltalslister (\texttt{int list})}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let numbers = [1; 2; 3; 4]            // 1 :: 2 :: 3 :: 4 :: []
+let numbers2 = numbers @ [100; 200]
+\end{lstlisting}
+
+\vspace{2mm}
+\textbf{Ex 2: Lister af par (\texttt{(string*float)list})}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let capitals = [("London", 8.8);     // pairs of city name and
+                ("Berlin", 3.5);     // population (mill)
+                ("Copenhagen", 0.7)]
+
+let allcaps = ("New York", 8.5) :: ("Rome", 2.9) :: capitals
+\end{lstlisting}
+
+\vspace{1ex}
+
+\headsp{Bemærk:}
+\begin{itemize}
+\item Der er ingen begrænsning på typen for elementerne i en liste.
+\item ... så længe alle elementer i en liste har samme type.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Repræsentation af lister og arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}[fragile]
+\begin{small}
+
+  \headsp{Grundlæggende lagerrepræsentation}
+
+  Alle værdier i F\# (dvs. heltal, floats, booleans, strenge, lister, arrays,
+  tupler, træer, etc) repræsenteres i \underline{et} ord (64 bits på en 64-bit maskine).
+
+  \vspace{1ex}
+
+  Såfremt data for en værdi af en given type ikke altid kan indeholdes i et ord repræsenteres værdien bokset.
+
+  \vspace{1ex}
+  \begin{itemize}
+  \item Eksempelvis fylder en streng ofte mere end 64 bits (strenge er derfor boksede).
+  \item Boksede værdier repræsenteres som en peger (64 bit adresse) til en plads i lageret.
+  \item Ikke-boksede værdier (såsom heltal) repræsenteres direkte ved brug af 64 bits
+  \end{itemize}
+
+  \headsp{Eksempel på værdi af type \texttt{int*string}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let p : int*string = (5, "hello")
+\end{lstlisting}
+
+\end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Repræsentationen af lister}
+
+  \begin{itemize}
+  \item Syntax:
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = [1; 2; 3; 4]
+let lst2 = 5 :: List.tail (List.tail lst)
+\end{lstlisting}
+
+  \item Lagerrepræsentation:
+    \includegraphics[width=0.9\textwidth]{list1234.png}
+
+  \item Det er nemt at hægte et ekstra element på starten af en liste (\texttt{::}).
+
+  \item Det er \textbf{IKKE} nemt (læs: hurtigt) at tilgå det sidste element i en liste.
+
+  \item Lister er \emph{immutable}, dvs elementer kan ikke opdateres.
+
+  \item Hvorfor kan immutabilitet være godt?
+  \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Repræsentationen af arrays}
+
+  \begin{itemize}
+  \item Syntax:
+\begin{lstlisting}[numbers=none,frame=none]
+let arr = [|1;2;3;4|]
+\end{lstlisting}
+
+  \item Lagerrepræsentation: \\
+    \includegraphics[width=0.9\textwidth]{array1234.png}
+  \item Det er \textbf{IKKE} nemt at tilføje ekstra elementer.
+  \item Det er nemt (hurtigt) at læse ethvert element i et array.
+
+  \item Arrays er \emph{mutable}, dvs det er muligt (hurtigt) at
+    opdatere ethvert element.
+  \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

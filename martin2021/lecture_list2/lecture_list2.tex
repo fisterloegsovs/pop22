@@ -1,0 +1,196 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{olive}{Programmering med Lister (Del 2)}
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Tidligere om lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\headsp{Tidligere om lister...}
+\begin{footnotesize}
+
+\textbf{Syntax for lister}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let nums = [1;2;3;4]                       // 1::2::3::4::[]
+\end{lstlisting}
+
+\textbf{Grundlæggende funktionalitet til konstruktion af lister}
+\begin{lstlisting}[numbers=none,frame=none]
+val []     : 'a list                       // empty list
+val ::     : 'a -> 'a list -> 'a list      // add element
+val @      : 'a list -> 'a list -> 'a list // append lists
+\end{lstlisting}
+
+\textbf{Lagerrepræsentation for lister}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = [1; 2; 3; 4]
+let lst2 = 5 :: List.tail (List.tail lst)
+\end{lstlisting}
+
+\includegraphics[width=.9\textwidth]{list1234.png}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modulet \lstinline{List}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Modulet \lstinline{List}}
+
+\vspace{1ex}
+
+Modulet \lstinline{List} indeholder en lang række operationer på
+lister.
+
+\begin{lstlisting}[numbers=none]
+// list creation
+val init     : int -> (int -> 'a) -> 'a list
+
+// list deconstruction
+val head     : 'a list -> 'a
+val tail     : 'a list -> 'a list
+
+// list transformers
+val map      : ('a -> 'b) -> 'a list -> 'b list
+val map2     : ('a->'b->'c) -> 'a list -> 'b list -> 'c list
+val filter   : ('a -> bool) -> 'a list -> 'a list
+\end{lstlisting}
+
+\begin{lstlisting}[numbers=none,frame=none]
+// list traversing
+val length   : 'a list -> int   // length l = l.Length
+val fold     : ('s -> 'a -> 's) -> 's -> 'a list -> 's
+val foldBack : ('a -> 's -> 's) -> 'a list -> 's -> 's
+val find     : ('a -> bool) -> 'a list -> 'a option
+...
+\end{lstlisting}
+\end{footnotesize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dynamisk konstruktion af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Dynamisk konstruktion af lister}
+
+  \vspace{1ex}
+
+  Funktionen \lstinline{List.init} gør det muligt at opbygge en liste
+  dynamisk fra bunden:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val init : int -> (int -> 'a) -> 'a list
+
+ init $n$ f
+   = [f $0$; f $1$; f $2$; ...; f $(n-1)$]
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Eksempel}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let sz = 2 + 3
+let lst = List.init sz (fun x -> x * 2 + 1)
+
+//  = [0*2+1; 1*2+1; 2*2+1; 3*2+1; 4*2+1]
+// $\evals$  [1; 3; 5; 7; 9]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Transformation af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Transformation af lister --- \lstinline{map} og \lstinline{map2}}
+\vspace{0.5ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val map : ('a -> 'b) -> 'a list -> 'b list
+
+ map f [v$_0$; v$_1$; v$_2$; ...; v$_n$]
+   = [f v$_0$; f v$_1$; f v$_2$; ...; f v$_n$]
+
+val map2 : ('a->'b->'c) -> 'a list -> 'b list -> 'c list
+
+ map2 f [a$_0$; a$_1$; a$_2$; ...; a$_n$] [b$_0$; b$_1$; b$_2$; ...; b$_m$]
+   = [f a$_0$ b$_0$; f a$_1$ b$_1$; f a$_2$ b$_2$; ...; f a$_n$ b$_n$]   // if n=m
+   = ${\it runtime error}$                                // if n<>m
+\end{lstlisting}
+
+\head{Eksempler}
+\vspace{0.5ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let vs = List.map (fun x -> x+1) [10; 20; 30]
+
+//  = [10+1; 20+1; 30+1]  $\evals$  [11; 21; 31]
+
+let us = List.map2 (+) [10; 20; 30] [1; 2; 3]
+
+//  = [10+1; 20+2; 30+3]  $\evals$  [11; 22; 33]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Transformation af lister --- \lstinline{List.filter}}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val filter : ('a -> bool) -> 'a list -> 'a list
+\end{lstlisting}
+
+\vspace{1ex}
+
+Udtrykket (\lstinline{List.filter p xs}) resulterer i en liste
+indeholdende de elementer i \lstinline{xs} der opfylder prædikatet
+\lstinline{p}.
+
+\vspace{1ex}
+\head{Eksempel}
+\vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let allcaps = [("London",8.8); ("Berlin",3.5);
+               ("Copenhagen",0.7); ("New York",8.5);
+               ("Rome",2.9)]
+let bigcaps = List.filter (fun (name,sz) -> sz > 5.0) allcaps
+
+// $\evals$ [("London",8.8);("New York",8.5)]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

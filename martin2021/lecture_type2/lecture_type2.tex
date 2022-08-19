@@ -1,0 +1,337 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{purple}{Typer og Mønstergenkendelse (Del 2)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Mønstergenkendelse}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Mønstergenkendelse (Pattern matching)}
+
+  Generelt set giver mønstergenkendelse mulighed for at \textbf{undersøge} og
+  \textbf{nedbryde} en værdi i dens bestanddele.
+
+  \vspace{1ex}
+
+  Vi vil se på mønstergenkendelse ud fra typen på de værdier vi
+  undersøger.
+
+  \vspace{1ex}
+
+  I F\# kan mønstergenkendelse optræde i flere forskellige programkonstruktioner:
+  \begin{itemize}
+  \item I simple \lstinline{let}-bindinger.
+  \item I \lstinline{match-with}-konstruktioner.
+  \item I funktionsparametre.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Mønstergenkendelse på tupler og records}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Mønstergenkendelse på Tupler}
+
+    \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let x = (34,"hej",2.3)    // construct triple
+  let (_,b,f) = x           // use of wildcard (_)
+  do printfn "%s:%f" b f    // b and f are available here
+\end{lstlisting}
+
+    \vspace{1ex}
+
+  \head{Mønstergenkendelse på Records}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type person = {first:string; last:string; age:int}
+  let name ({first=f;last=l}:person) = f + " " + l
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Bemærk:}
+  \begin{enumerate}
+  \item Matching på records kræver blot at et udvalg af felt-navne er nævnt.
+  \item Hvis flere record-typer benytter samme felt-navne kan det være nødvendigt med type-annoteringer.
+  \item Mønstergenkendelse for tupler og records er også meget anvendte i funktionsparametre:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let swap (x:'a,y:'b) : 'b * 'a = (y,x)
+\end{lstlisting}
+  \end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Mønstergenkendelse på grundtyper}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Mønstergenkendelse på heltal og andre grundtyper}
+
+  \vspace{1ex}
+
+  Implementation af Fibonacci med mønstergenkendelse:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let rec fib n =
+    match n with
+    | 1 -> 1
+    | 2 -> 1
+    | _ -> fib(n-1) + fib(n-2)
+  let v = fib 10
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Bemærk:}
+  \begin{enumerate}
+  \item Den første bar (\lstinline{|}) i en match-case er optional.
+  \item Den første match-case der ``matcher'' vinder.
+  \item Wildcards (\lstinline{_}) kan benyttes i en match-case.
+  \item Tilsvarende kan der matches på andre grundtyper, såsom karakterer, booleans og strenge.
+  \end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Mønstergenkendelse på option-typer}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Mønstergenkendelse på option-værdier}
+
+  \vspace{1ex}
+
+  Typen \lstinline{int option} er et eksempel på en simpel såkaldt
+  ``sum-type'', også kaldt ``discriminated union'', som repræsenterer
+  værdier der enten er værdien \lstinline{None} eller er en værdi
+  \lstinline[mathescape]{Some($v$)}, hvor $v$ er en værdi af typen
+  \lstinline{int}.
+
+    \vspace{1ex}
+
+  Her er en funktion der ``løfter'' addition til værdier af typen \lstinline{int option}:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let add_opt (a:int option) (b:int option) : int option  =
+    match a, b with
+    | Some a, Some b -> Some(a+b)
+    | _ -> None
+\end{lstlisting}
+
+  \head{Bemærk:}
+  \begin{enumerate}
+  \item Der benyttes her en form for ``nested pattern matching'' på
+    par af værdier af typen \lstinline{int option}.
+  \item Ved konstruktion og matching af tupler kan man ofte undvære brugen af parenteser.
+  \item Variabler kan \textbf{bindes} i en match-case og henvises til i højre-siden af en match, hvor de vil varetage de matchede værdier.
+  \end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+\subsection{Mønstergenkendelse på lister}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Mønstergenkendelse på lister}
+
+  \vspace{1ex}
+
+  Liste-værdier \textbf{konstrueres} grundlæggende set ved brug af to forskellige konstruktører:
+
+  \vspace{1ex}
+  \begin{tabular}{llp{7cm}}
+    \texttt{[]} & (Nil) & Konstruktion af den tomme liste.  \\
+    \texttt{x::xs} & (Cons) & Konstruktion af et listeelement med hovedet \texttt{x} og halen \texttt{xs} (en anden liste).
+  \end{tabular}
+
+  \vspace{1ex}
+
+  Samme to konstruktører benyttes ved mønstergenkendelse på en liste:
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let rec length (l: 'a list) : int =
+    match l with
+    | [] -> 0
+    | x::xs -> 1 + length xs
+\end{lstlisting}
+
+  \vspace{1ex}
+  \head{Mønstergenkendelse med \lstinline{function}-konstruktionen}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let rec length : 'a list -> int =
+    function [] -> 0
+           | x::xs -> 1 + length xs
+\end{lstlisting}
+
+\textbf{Bemærk:} Funktionsparameter og \lstinline{match-with}-konstruktionen sammentrækkes.
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Nestede mønstergenkendelser på lister}
+
+  \vspace{1ex}
+
+  Liste-værdier kan matches til dybere niveauer end første cons-celle:
+
+    \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let lengthy (l: 'a list) : bool =
+    match l with
+    | _::_::_ -> true  // at least two cells
+    | _ -> false
+\end{lstlisting}
+
+    \vspace{1ex}
+
+  Mønstre kan være mere komplekse:
+  \vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  let rec ones (l: int list) : int =
+    match l with
+    | [] -> 0
+    | 1::xs -> 1 + ones xs  // match-cases are tested in order
+    | _::xs -> ones xs
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}
+
+\subsection{Selection-sort---genbesøgt}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Selection-sort---uden mønstergenkendelse}
+
+  \begin{itemize}
+  \item Udtræk det mindste element i listen.
+  \item Gentag processen rekursivt indtil der ikke længere er elementer i listen.
+  \end{itemize}
+
+  \head{En implementation i F\#:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec select (xs:int list) (m,ys) =
+  if List.isEmpty xs then (m,ys)
+  else let x = List.head xs
+       let xs = List.tail xs
+       in if x < m then
+            if m <> System.Int32.MaxValue then
+              select xs (x,m::ys)
+            else select xs (x,ys)
+          else select xs (m,x::ys)
+let rec ssort xs =
+  if List.isEmpty xs then xs
+  else let (m,xs) = select xs (System.Int32.MaxValue,[])
+       in m :: ssort xs
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Selection-sort---med mønstergenkendelse}
+
+  \vspace{1ex}
+
+  Ny implementation i F\#:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let maxInt = System.Int32.MaxValue
+let rec select (xs:int list) (m,ys) =
+  match xs with
+    | [] -> (m,ys)
+    | x::xs -> if x < m then
+                 if m <> maxInt then
+                   select xs (x,m::ys)
+                 else select xs (x,ys)
+               else select xs (m,x::ys)
+let rec ssort =
+  function [] -> []
+         | xs -> let (m,xs) = select xs (maxInt,[])
+                 in m :: ssort xs
+\end{lstlisting}
+
+\head{Nogle fordele: $\underline{\hspace{8cm}}$}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Analyse af Selection Sort --- Set tidligere}
+
+\vspace{1ex}
+
+\begin{minipage}[b]{0.55\textwidth}
+
+  Funktionen \lstinline{select} køres $N$ gange og for hver kørsel
+  gennemløbes listen (i gennemsnit $N/2$ elementer).
+
+\vspace{1ex}
+
+\head{Summary:}
+
+\vspace{1ex}
+  \begin{tabular}{ll}
+    Best time: & $O(N^2)$ \\
+    Worst time: & $O(N^2)$ \\
+    Average time: & $O(N^2)$
+  \end{tabular}
+
+  \vfill
+\mbox{ }
+\end{minipage} \hspace{1cm}
+\begin{minipage}[b]{0.3\textwidth}
+
+  \includegraphics[width=\textwidth]{../images/ssort_gif.png}
+
+  (\href{https://upload.wikimedia.org/wikipedia/commons/b/b0/Selection_sort_animation.gif}{animation})
+\end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\end{document}

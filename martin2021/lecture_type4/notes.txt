@@ -1,0 +1,53 @@
+
+### Skildpaddegrafik
+
+type cmd =
+| SetColor of color
+| Turn of int
+| Move of int
+| PenUp
+| PenDown
+
+let triangle x =
+  [Turn 30; Move x; Turn 120; Move x;
+   Turn 120; Move x; Turn 90]
+
+let rec repeat n cmds =
+  if n <= 0 then []
+  else cmds @ repeat (n-1) cmds
+
+let star sz =
+  repeat 5 [Move sz; Turn 144]
+
+$ cd ~/gits/img-util-fs/examples
+$ make clean turtle.exe
+$ mono turtle.exe
+
+
+
+
+
+### Stack
+
+$ cd ~/gits/pop/2021/src
+
+$ fsharpc -a stack.fsi stack.fs
+$ fsharpi -r stack.dll --readline-
+
+
+
+
+
+### Queues
+
+$ cp queue_bad.fs queue.fs
+
+$ fsharpc --nologo -a queue.fsi queue.fs
+
+$ fsharpc --nologo -r queue.dll qtest.fs
+
+$ time mono qtest.exe
+
+
+
+$ cp queue_good.fs queue.fs

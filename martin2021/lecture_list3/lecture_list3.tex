@@ -1,0 +1,406 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{olive}{Programmering med Lister (Del 3)}
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Tidligere om lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\headsp{Tidligere om lister...}
+\begin{footnotesize}
+
+\textbf{Syntax for lister}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let nums = [1;2;3;4]                       // 1::2::3::4::[]
+\end{lstlisting}
+
+\textbf{Grundlæggende funktionalitet til konstruktion af lister}
+\begin{lstlisting}[numbers=none,frame=none]
+val []     : 'a list                       // empty list
+val ::     : 'a -> 'a list -> 'a list      // add element
+val @      : 'a list -> 'a list -> 'a list // append lists
+\end{lstlisting}
+
+\textbf{Lagerrepræsentation for lister}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = [1; 2; 3; 4]
+let lst2 = 5 :: List.tail (List.tail lst)
+\end{lstlisting}
+
+\includegraphics[width=.9\textwidth]{list1234.png}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modulet \lstinline{List}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Modulet \lstinline{List}}
+
+\vspace{1ex}
+
+Modulet \lstinline{List} indeholder en lang række operationer på
+lister.
+
+\begin{lstlisting}[numbers=none,frame=none]
+// list creation
+val init     : int -> (int -> 'a) -> 'a list
+
+// list deconstruction
+val head     : 'a list -> 'a
+val tail     : 'a list -> 'a list
+
+// list transformers
+val map      : ('a -> 'b) -> 'a list -> 'b list
+val map2     : ('a->'b->'c) -> 'a list -> 'b list -> 'c list
+val filter   : ('a -> bool) -> 'a list -> 'a list
+\end{lstlisting}
+
+\begin{lstlisting}[numbers=none]
+// list traversing
+val length   : 'a list -> int   // length l = l.Length
+val fold     : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a
+val foldBack : ('b -> 'a -> 'a) -> 'b list -> 'a -> 'a
+val find     : ('a -> bool) -> 'a list -> 'a option
+...
+\end{lstlisting}
+\end{footnotesize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Gennemløb af lister med \lstinline{fold} og \lstinline{foldBack}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Listefoldninger --- \lstinline{fold} og \lstinline{foldBack}}
+
+  \vspace{1ex}
+
+  Listefoldninger er generiske funktioner der gør det muligt at
+  gennemløbe en liste for samtidig at foretage beregninger på
+  elementerne, f.eks. for at opbygge en ny datastruktur.
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val fold     : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a
+
+ fold f a [x$_0$;x$_1$;x$_2$;...;x$_n$]
+   = f ... (f (f (f a x$_0$) x$_1$) x$_2$) ... x$_n$
+
+val foldBack : ('b -> 'a -> 'a) -> 'b list -> 'a -> 'a
+
+ foldBack f [x$_0$;x$_1$;x$_2$;...;x$_n$] a
+   = f x$_0$ (f x$_1$ (f x$_2$ ...(f x$_n$ a)...))
+\end{lstlisting}
+
+\head{Husk:}
+\begin{itemize}
+\item En funktion kaldes først når argumenterne er evalueret til værdier!
+\item Dette princip kaldes ``Call-by-value''.
+\end{itemize}
+
+\head{Spørgsmål:}
+\begin{enumerate}
+\item Hvorfor er typerne for \lstinline{List.fold} og \lstinline{List.foldBack} forskellige?
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Eksempel: Summation af elementerne i en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let sum = List.fold (+) 0 [3;6;2;5]
+
+//   = (((0 + 3) + 6) + 2) + 5
+// $\eval$ ((3 + 6) + 2) + 5
+// $\eval$ (9 + 2) + 5  $\eval$  11 + 5  $\eval$  16
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Eksempel: Find det mindste element i en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let min x y = if x < y then x else y
+let maxInt = System.Int32.MaxValue  // = 2147483647
+let min_elem = List.fold min maxInt [3;6;2;5]
+
+//   = min (min (min (min 2147483647 3) 6) 2) 5
+// $\eval$ min (min (min 3 6) 2) 5
+// $\eval$ min (min 3 2) 5  $\eval$  min 2 5  $\eval$  2
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Spørgsmål:}
+\begin{enumerate}
+\item Kunne man også have benyttet \lstinline{List.foldBack}?
+%\item Hvorfor tager \lstinline{List.fold} og \lstinline{List.foldBack} et initielt element?
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Eksempel: Reverser en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let f a x = x :: a
+let rev xs = List.fold f [] xs
+
+let ex = rev [1;2;3]
+
+// = f (f (f [] 1) 2) 3
+// $\eval$ f (f (1 :: []) 2) 3  $\eval$  f (2 :: 1 :: []) 3
+// $\eval$ 3 :: 2 :: 1 :: []
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Eksempel: dot-produktet og vectorlængde}
+\vspace{1ex}
+
+\includegraphics[width=0.9\textwidth]{vec345.png}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let vec_mul (xs:float list) ys = List.map2 (*) xs ys
+let dot xs ys = List.fold (+) 0.0 (vec_mul xs ys)
+let vec_len xs = sqrt (dot xs xs)
+let ex = vec_len [3.0; 4.0]
+
+// = sqrt (List.fold (+) 0.0 (vec_mul [3.0; 4.0] [3.0; 4.0]))
+// $\evals$ sqrt (List.fold (+) 0.0 [9.0; 16.0])
+// $\evals$ sqrt 25.0
+// $\evals$ 5.0
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Funktionen \lstinline{List.find}}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val find : ('a -> bool) -> 'a list -> 'a option
+\end{lstlisting}
+
+Udtrykket (\lstinline{find p xs}) returnerer (\lstinline{Some x}) hvis
+\lstinline{x} er det første element i \lstinline{xs} for hvilket
+(\lstinline{p x}) evaluerer til \lstinline{true}. Udtrykket returnerer
+\lstinline{None} hvis der ikke findes et sådan element.
+
+\vspace{1ex}
+\head{Implementation af \lstinline{List.find} ved brug af \lstinline{List.fold}}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let find p xs =
+  List.fold (fun a x -> if a = None && p x then Some x else a)
+            None xs
+
+// find (fun x -> x > 4) [3;2;5;6;45]
+// $\evals$ 5
+\end{lstlisting}
+
+\headsp{Bemærk:}
+
+Værdier af typen \lstinline{int option} er enten værdien
+\lstinline{None} eller en værdi \lstinline{Some n}, hvor \lstinline{n}
+er et heltal.
+%
+Vi ser nærmere på \lstinline{option}-typer senere i kurset.
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Imperativt gennemløb af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Imperativt gennemløb af lister}
+  \vspace{1ex}
+
+  Her er noget kode for en uheldig implementation af listesummation:
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = List.init 50000 (fun x -> x)         // BAD
+let mutable i = 0                             // BAD
+let mutable sum = 0                          // BAD
+while (i < List.length lst) do              // BAD
+  sum <- sum + lst.[i]                       // BAD
+  i <- i + 1                                  // BAD
+printf "%d\n" sum                              // BAD
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Tre problemer:}
+\vspace{1ex}
+
+  \begin{enumerate}
+  \item \underline{\hspace{10cm}}  % kvadratisk runtime
+  \item \underline{\hspace{10cm}}  % stor mulighed for fejl i indeksering <= ?
+  \item \underline{\hspace{10cm}}  % mønster er ikke genbrugeligt
+\end{enumerate}
+\end{footnotesize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Oversættelse og kørsel af \lstinline{bad_summation.fs}}
+
+\begin{lstlisting}[numbers=none,frame=none]
+// bad_summation.fs
+let lst = List.init 50000 (fun x -> x)         // BAD
+let mutable i = 0                             // BAD
+let mutable sum = 0                          // BAD
+while (i < List.length lst) do              // BAD
+  sum <- sum + lst.[i]                       // BAD
+  i <- i + 1                                  // BAD
+printf "%d\n" sum                              // BAD
+\end{lstlisting}
+
+\head{Oversættelse og kørsel}
+
+\begin{verbatim}
+bash-3.2$ fsharpc --nologo bad_summation.fs
+bash-3.2$ time mono bad_summation.exe
+1249975000
+
+real	0m8.112s
+\end{verbatim}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{En grim løsning på listesummation}
+
+\begin{lstlisting}[numbers=none,frame=none]
+// ugly_summation.fs
+let lst = List.init 50000 (fun x -> x)     // UGLY
+let mutable i = 0                         // UGLY
+let mutable sum = 0                      // UGLY
+let len = List.length lst               // UGLY
+let mutable lst2 = lst                 // UGLY
+while (i < len) do                      // UGLY
+  sum <- sum + List.head lst2            // UGLY
+  lst2 <- List.tail lst2                  // UGLY
+  i <- i + 1                               // UGLY
+printf "%d\n" sum                           // UGLY
+\end{lstlisting}
+
+\head{Oversættelse og kørsel}
+
+\begin{verbatim}
+bash-3.2$ fsharpc --nologo ugly_summation.fs
+bash-3.2$ time mono ugly_summation.exe
+1249975000
+
+real	0m0.078s
+\end{verbatim}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Gennemløb af lister med \lstinline{for}-\lstinline{in}-\lstinline{do} konstruktionen}
+
+\vspace{2ex}
+
+Et bedre alternativ er at benytte den specielle \lstinline{for-in-do}
+syntax til liste-gennemløb:
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+// better_summation.fs
+let lst = List.init 50000 (fun x -> x)
+let mutable sum = 0
+for x in lst do sum <- sum + x
+do printf "%d\n" sum
+\end{lstlisting}
+
+\vspace{1ex}
+
+\head{Fordele:}
+\begin{enumerate}
+\item Ingen overhead ved liste-indicering eller kald til \lstinline{List.length}.
+\item Simplere form for imperativ programmering; dog er \lstinline{sum} stadig mutable...
+\end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Eksempel: Det mindste element i en liste med \lstinline{List.foldBack}}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let min x y = if x < y then x else y
+let maxInt = System.Int32.MaxValue  // = 2147483647
+let min_elem = List.foldBack min maxInt [3;6;2;5]
+
+// = min 3 (min 6 (min 2 (min 5 2147483647)))
+// $\eval$ min 3 (min 6 (min 2 5))
+// $\eval$ min 3 (min 6 2)
+// $\eval$ min 3 2
+// $\eval$ 2
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Funktionen \lstinline{min} er associativ og \lstinline{maxInt} er det neutrale element:}
+\begin{enumerate}
+\item For alle \lstinline{x}, \lstinline{y}, \lstinline{z}: \\ \lstinline{min x (min y z) = min (min x y) z}
+\item For alle \lstinline{x}: \\ \lstinline{min 2147483647 x = min x 2147483647 = x}
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
