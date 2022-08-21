@@ -13,4 +13,4 @@ clean:
 	$(PDFLATEX) $<
 	$(PDFLATEX) $<
 	pdftoppm -png -f 1 -l 1 -rx 1024 -ry 1024 -singlefile $@ $*-1
-	cp $@ $*-1.png $(TARGETLIB)/
+#	cp $@ $*-1.png $(TARGETLIB)/
