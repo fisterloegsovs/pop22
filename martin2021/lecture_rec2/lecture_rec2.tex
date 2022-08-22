@@ -1,0 +1,167 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{blue}{Rekursion (Del 2)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Pattern-matching på lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \headsp{Konstruktion af lister}
+
+  Lister er opbygget af listekonstruktørerne:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  [] : 'a list                    // nil: (den tomme liste)
+  :: : 'a -> 'a list -> 'a list   // cons: hoved og hale
+\end{lstlisting}
+
+  Enhver liste er derfor repræsenteret enten ved en
+  \lstinline{[]}-værdi eller ved en \lstinline{::}-værdi.
+
+  \headsp{Dekonstruktion af lister med pattern-matching}
+
+  Ved brug af \emph{pattern-matching} kan vi spørge om en liste er på
+  den ene eller anden form:
+
+ % ../src/headOr0.fs
+ \begin{lstlisting}[numbers=none,frame=none,mathescape]
+   let headOr0 (lst: int list) : int =
+     match lst with
+       | [] -> 0       // her returnerer vi 0
+       | x :: _ -> x   // variablen x bindes til listehovedet
+                       // _ er et "wild-card"
+ \end{lstlisting}
+
+ \vspace{-7mm}
+ \headsp{Bemærk:}
+  \begin{enumerate}
+  \item Her dekonstrueres listen \lstinline{lst} ved brug af \lstinline{match}-\lstinline{with} konstruktionen.
+  \item Hovedet på listen er tilgængelig (via variablen \lstinline{x}) på højre side af \lstinline{->} i den anden \lstinline{match}-gren.
+  \item Vi undgår brug af \lstinline{List.head} og \lstinline{List.tail}, som begge kan fejle!
+  \end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Rekursion over lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Rekursion over Lister}
+
+  \vspace{1ex}
+  Vi kan finde længden på en liste ved hjælp af rekursion og pattern-matching:
+
+% ../src/length.fs
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec length xs =
+  match xs with [] -> 0
+              | _ :: ys -> 1 + length ys
+\end{lstlisting}
+
+\head{Bedre hale-rekursiv version (konstant stakplads)}
+  \vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let length xs =
+  let rec len acc xs =
+    match xs with [] -> acc
+                | _ :: ys -> len (acc+1) ys
+  in len 0 xs
+\end{lstlisting}
+
+\head{Liste-repræsentationen:}
+
+\includegraphics[width=0.5\textwidth]{../images/list34.png}
+
+\end{footnotesize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Implementation of \lstinline{List.exists} med rekursion}
+
+  \vspace{1ex}
+  Vi kan afgøre om et element er i en liste ved hjælp af rekursion og brug af en prædikat-funktion:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec exists (p: 'a -> bool) (xs: 'a list) : bool =
+  match xs with [] -> false
+              | y :: ys -> p y || exists p ys
+
+let b = exists (fun x -> x=23) [34;23;56]
+
+// exists p [34;23;56] $\evals$
+// p 34 || exists p [23;56] $\eval$ (34=23) || exists p [23;56] $\eval$
+// false || exists p [23;56]  $\eval$ exists p [23;56] $\evals$
+// p 23 || exists p [56] $\eval$ (23=23) || exists p [56] $\eval$
+// true || exists p [56] $\eval$ true
+\end{lstlisting}
+
+\headsp{Bemærk:}
+
+\begin{itemize}
+\item Udtrykket \lstinline[mathescape]{$e_1$ || $e_2$} håndteres specielt i
+  F\# (boolsk eller)!
+\item Udtrykket $e_2$ evalueres kun hvis $e_1$ evaluerer til
+\lstinline{false}.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Rekursion over arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Binær søgning i sorteret array}
+
+  Vi kan finde et heltal i et \textbf{sorteret} array hurtigere end ved at gennemløbe arrayet.
+
+  \head{Binær søgning i array:}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let inSorted (arr:int[]) (x:int) : bool =
+  let rec bs min max =
+       if min > max then false
+       else let mid = (max+min) / 2
+            in if x < arr.[mid] then bs min (mid-1)
+               else if x > arr.[mid] then bs (mid+1) max
+               else true
+  in bs 0 (Array.length arr - 1)
+
+let arr = [|23;34;41;56;76;123;323;500|]  // sorteret array
+do printf "%A\n" (inSorted arr 76)
+\end{lstlisting}
+
+\head{Kald af funktionen \lstinline{bs}:}
+  \vspace{.5ex}
+\begin{enumerate}
+\item \lstinline{bs 0 7} $\eval$ \lstinline{mid} = 3
+\item \lstinline{bs 4 7} $\eval$ \lstinline{mid} = 5  \hfill $\longleftarrow$ only $\id{log}(n)$ steps\ldots
+\item \lstinline{bs 4 4} $\eval$ \lstinline{mid} = 4 $\eval$ \lstinline{true}
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+
+\end{document}

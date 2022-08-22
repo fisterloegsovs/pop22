@@ -1,0 +1,243 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkgray}{Input og Output}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+\section{Konsol input og output}
+
+\subsection{Konsollen}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Konsollen}
+
+  Med begrebet konsol henvises der til at der, når en process startes,
+  etableres (åbnes) tre strømme som konteksten kan benytte til at kommunikere
+  med processen (programmet):
+
+  \vspace{1ex}
+  \begin{tabular}{lll}
+    \textbf{Standard output} & \texttt{stdout} & \texttt{System.Console} \\
+    \textbf{Standard input} & \texttt{stdin} & \texttt{System.Console} \\
+    \textbf{Standard error} & \texttt{stderr} & \texttt{System.Console.Error}
+  \end{tabular}
+  \vspace{1ex}
+
+  Vi har tidligere set hvordan \lstinline{printf} (og
+  venner) kan benyttes til at udskrive på \lstinline{stdout}.
+
+  \shead{Funktioner i \lstinline{System.Console}}
+
+  Udskrivning på \lstinline{stdout}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  val Write     : string -> unit   // Write to the console
+  val WriteLine : string -> unit   // Write a line
+\end{lstlisting}
+
+Indlæsning fra \lstinline{stdin}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  val Read     : unit -> int       // Read ascii character
+  val ReadLine : unit -> string    // Write a line
+\end{lstlisting}
+
+\textbf{Bemærk:} Funktionerne \lstinline{Read} og \lstinline{ReadLine}
+``blokerer'' indtil data er tilgængelig.
+\end{footnotesize}
+\end{frame}
+
+\subsection{Kommandolinieargumenter}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Kommandolinieargumenter}
+
+  Kommandolinieargumenter kan læses ved at etablere en hovedfunktion
+  af typen \lstinline{string array -> int} og tilføje en
+  \texttt{EntryPoint}-attribut til funktionen:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  [<EntryPoint>]
+  let main (args: string array) : int =
+    for a in args do printfn "%s" a
+    0                                // status code "ok"
+\end{lstlisting}
+
+\shead{Eksempel kørsel --- og generering af stand-alone eksekverbar:}
+
+\begin{lstlisting}[numbers=none,frame=none]
+bash-3.2$ fsharpc --nologo main.fs
+bash-3.2$ mkbundle --simple -o main main.exe
+bash-3.2$ ./main hi there
+hi
+there
+bash-3.2$
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Eksempler}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Eksempel: Temperatur omregner (\texttt{temp.fs})}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+open System
+let fahrenheit (c:float) : unit =
+  if c < -273.15 then failwith "input too small"
+  else printfn "Fahrenheit: %f" (9.0/5.0*c + 32.0)
+
+do Console.Write "Temperature in degrees Celcius: "
+let s = Console.ReadLine()
+do try fahrenheit(float(s)) with
+     | Failure s -> Console.Error.WriteLine s
+     | _ -> Console.Error.WriteLine "Expecting number"
+\end{lstlisting}
+
+\shead{Bemærk:}
+
+\begin{itemize}
+\item Vi benytter \lstinline{Console.Error.WriteLine} til udskrivning af fejlbeskeder.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Eksempel: Gentagne input (\texttt{numbers.fs})}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+open System
+let rec loop (a:float) : float =
+  match Console.ReadLine() with
+    | "" -> a
+    | s -> loop (a+float(s))
+do Console.WriteLine "Enter numbers (end with empty line):"
+do try printfn "Sum: %f" (loop 0.0) with
+     | _ -> Console.Error.WriteLine "Expecting numbers"
+\end{lstlisting}
+
+\shead{Bemærk:}
+
+\begin{itemize}
+\item Vi benytter en exception ``wild card handler'' til at fange fejl
+  i input.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\section{Læsning og skrivning af filer}
+
+\subsection{Læsning og skrivning}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Læsning af filer}
+
+  Operationer til læsning af UTF-8 filer er tilgængelige i modulet \texttt{System.IO.File}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type StreamReader = System.IO.StreamReader
+     EndOfStream : bool
+     Close       : unit -> unit
+     ReadToEnd   : unit -> string  // incl. newlines
+     ReadLine    : unit -> string  // excl. newlines
+     Read        : unit -> int
+  val OpenText : string -> StreamReader
+\end{lstlisting}
+
+\head{Eksempel: linier i en fil (\lstinline{lines.fs})}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+[<EntryPoint>]
+let main (args:string array) : int =
+  let rec loop n (r:System.IO.StreamReader) =
+    if r.EndOfStream then n
+    else (ignore(r.ReadLine()); loop (n+1) r)
+  in if Array.length args > 0 then
+       (printfn "%d" (
+          loop 0 (System.IO.File.OpenText args.[0])); 0)
+     else (printfn "Expects file name as argument"; 1)
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Skrivning af filer}
+
+  Operationer til skrivning af UTF-8 filer er tilgængelige i modulet \texttt{System.IO.File}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type StreamWriter = System.IO.StreamWriter
+     Close       : unit -> unit
+     WriteLine   : string -> unit  // add newline
+     Write       : string -> unit  // no newline
+
+  val CreateText : string -> StreamWriter
+  val AppendText : string -> StreamWriter
+\end{lstlisting}
+
+\shead{Eksempel: Fibonacci tal i en fil (\lstinline{fibfile.fs})}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec fib n = if n <= 2 then 1 else fib(n-1)+fib(n-2)
+let rec loop n i (w:System.IO.StreamWriter) =
+  if i > n then w.Close()
+  else (w.WriteLine(string(fib i)); loop n (i+1) w)
+let n = loop 10 1 (System.IO.File.CreateText "out.txt")
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Håndtering af bytes}
+
+\begin{frame}[fragile]
+
+  \shead{Læsning og skrivning af bytes}
+  \vspace{4mm}
+
+  UTF-8 karakterer har variabel vidde (en-fire bytes) hvilket gør
+  indexing i en UTF-8 streng lineær i størrelsen på strengen.
+
+  \vspace{4mm}
+
+  Almindelige karakterer i UTF-8 har størrelse 8-bit og i mange
+  tilfælde vil der derfor ikke være forskel på filer i UTF-8 format og
+  filer i simpelt ascii-format.
+
+  \vspace{4mm} F\# giver mulighed for at arbejde med filer på
+  byte-niveau (8-bits) ved brug af \lstinline{System.IO.FileStream}
+  klassen.
+
+\end{frame}
+
+\section*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

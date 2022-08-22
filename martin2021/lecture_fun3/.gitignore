@@ -1,0 +1,11 @@
+*.pdf
+*.log
+*.nav
+*.snm
+*.toc
+*.aux
+*.out
+*.vrb
+*.aux
+*~
+lecture_fun*.png

@@ -1,0 +1,190 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{purple}{Typer og Mønstergenkendelse (Del 1)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Typer}
+
+  \begin{quote}
+    Typer kan forstås som mængder af værdier.
+  \end{quote}
+
+  \begin{itemize}
+    \item Typebegrebet giver os således et sprog for at klassificere værdier.
+
+    \item Vi kan for eksempel tale om at en funktion returnerer et heltal (type \lstinline{int}).
+
+    \item F\# oversætteren kan ``type-tjekke'' vores programmer for at
+  sikre os mod en lang række fejl når programmet køres!
+  \end{itemize}
+
+  \headsp{Nogle emner vi vil dække:}
+  \begin{itemize}
+    \item Hvordan kan type-begrebet udvides til at klassificere flere
+      slags værdier, såsom funktioner (og funktioner der returnerer
+      funktioner).
+    \item Hvordan kan vi skrive genbrugelige \emph{type-generiske}
+      funktioner, der kan køre på data af forskellig type.
+    \item Vi vil senere se hvordan type-begrebet kan udvides til at
+      kunne beskrive træer, grafer og andre strukturelle
+      datastrukturer.
+  \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\subsection{Typer}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Typer kan forstås som mængder af værdier}
+
+  \vspace{1ex}
+
+  \textbf{Eksempler:}
+
+  \vspace{1ex}
+
+  \begin{tabular}{lcl}
+    \texttt{int} & $\approx$ & $\Z = \{\ldots,-2,-1,0,1,2,\ldots\}$ \\[1ex]
+    \texttt{float} & $\approx$ & $\R$ \\[1ex]
+    \texttt{int * float} & $\approx$ & $\Z \times \R = \{\ldots,(3,1.2),\ldots\}$ \\
+    & & (sæt af alle par med elementer fra $\Z$ og $\R$) \\[1ex]
+    \texttt{int list} & $\approx$ & $\{[],[1],[2],\ldots,[1;-2],\ldots\}$ \\[1ex]
+    \texttt{int -> float} & $\approx$ & $\Z \rightarrow \R$ \\ & & (sæt af alle afbildninger fra $\Z$ til $\R$) \\[1ex]
+    \texttt{bool} & = & \{\texttt{true},\texttt{false}\} \\[1ex]
+    \texttt{unit} & = & \{()\}
+  \end{tabular}
+\end{footnotesize}
+
+\head{Spørgsmål:}
+\begin{enumerate}
+\item Hvorfor $\approx$ for de første fire tilfælde?
+\item Hvorfor $\approx$ for funktioner?
+\end{enumerate}
+\end{frame}
+
+\subsection{Typeforkortelser}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Typeforkortelser}
+  \vspace{1ex}
+
+  Det er nemt i F\# at give et navn til en type for derved at gøre kode lettere læselig.
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type department = string
+  type costs = (department * float) list
+  let total (costs:costs) : float =
+    List.fold (fun acc (_,f) -> acc+f) 0.0 costs
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Typen \lstinline{department} er blot et synonym for typen \lstinline{string}.
+  \item Funktionen \lstinline{total} kan derfor benyttes på alle
+    værdier af typen \lstinline{(string*float) list}.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Type-generiske type-forkortelser}
+  \vspace{1ex}
+
+  Type-forkortelser kan være generiske således at det er muligt at
+  skrive generisk kode der henviser til en type-forkortelse:
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  // association lists mapping strings to values of type 'a
+  type 'a alist = (string * 'a) list
+  let add (m:'a alist) (s:string) (v:'a) : 'a alist =
+     (s,v)::m
+  let rec look (m:'a alist) (s:string) : 'a option =
+    match m with
+       [] -> None
+     | h::t -> if fst h = s then Some(snd h)
+               else look t s
+  let empty () : 'a alist = []
+\end{lstlisting}
+
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Vi kan benytte den tomme liste \lstinline{[]} til at repræsentere den tomme associationsliste.
+  \item Vi skal senere se hvorledes vi med moduler kan sikre at typen
+    \lstinline{'a alist} bliver ``fuldt abstrakt'' således at kun de
+    nævnte funktioner kan benyttes til at opererere på de konstruerede
+    associationslister.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Record typer (generaliserede produkter)}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Record-typer (generaliserede produkter)}
+
+  Records i F\# giver mulighed for at navngive elementer i et tuple.
+
+  \vspace{1ex}
+
+  Syntaksen for at definere en record-type er enkel:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  type person = {first:string; last:string; age:int}
+
+  let xs = [{first="Lene"; last="Andersen"; age=56};
+            {last="Hansen"; first="Jens"; age=39}]
+  let name (p:person) : string = p.first + " " + p.last
+  let incr_age (p:person) : person = {p with age=p.age+1}
+  let ys = List.map incr_age xs
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Bemærk:}
+  \begin{itemize}
+  \item Ved konstruktion af en record er felt-rækkefølgen ubetydelig.
+  \item Elementer i en record kan udtrækkes ved brug af \textbf{dot-notationen} (\lstinline{p.first}).
+  \item En \textbf{ny} record kan konstrueres (med et opdateret
+    element) ved brug af \lstinline{with}-konstruktionen.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+
+\end{document}

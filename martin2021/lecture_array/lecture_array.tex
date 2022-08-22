@@ -1,0 +1,250 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkblue}{Programmering med Arrays}
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{1D Arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+
+\headsp{Introduktion til 1D arrays}
+
+\textbf{Syntax}
+
+\begin{lstlisting}[numbers=none,frame=none]
+  let arr : int [] = [|1;2;3;4|]
+\end{lstlisting}
+
+\textbf{Lagerrepræsentation}
+
+\includegraphics[width=0.9\textwidth]{array1234.png}
+
+\textbf{Bemærk}
+
+\begin{itemize}
+  \item Det er \textbf{IKKE} nemt at tilføje ekstra elementer.
+  \item Det er nemt (hurtigt) at læse ethvert element i et array.
+
+  \item Arrays er \emph{mutable}, dvs det er muligt (hurtigt) at
+    opdatere ethvert element.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Gennemløb af 1D arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\headsp{Gennemløb af 1D arrays}
+
+Arrays kan gennemløbes tilsvarende som lister:
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let arr = Array.init 50000 (fun x -> x)
+let mutable sum = 0
+for x in arr do sum <- sum + x
+do printf "%d\n" sum
+\end{lstlisting}
+
+\vspace{1ex}
+\headsp{Arrays kan muteres}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let arr = [|1;2;3;4|]
+for i in [0..arr.Length-1] do arr.[i] <- arr.[i]*arr.[i]
+do printf "%A\n" arr
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Kørsel:}
+
+\begin{verbatim}
+bash-3.2$ fsharpc --nologo arr_square.fs && mono arr_square.exe
+[|1; 4; 9; 16|]
+\end{verbatim}
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Array aliasing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Array aliasing}
+
+\vspace{1ex}
+
+To forskellige variabler kan referere til det samme array:
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let arr = [|1;2;3;4|]
+let b = arr
+do b[1] <- 100
+do printf "%A\n" arr
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Lagerrepræsentation:}
+\vspace{1ex}
+
+\includegraphics[width=0.9\textwidth]{arr_b_1234.png}
+
+\vspace{1ex}
+\head{Bemærk:}
+\begin{enumerate}
+\item Aliasing kan observeres fordi arrays er mutable!
+\item Aliasing (og deling) kan ikke observeres (på samme måde) med lister, da disse er immutable.
+\end{enumerate}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modulet \lstinline{Array}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Modulet \lstinline{Array}}
+\vspace{1ex}
+\begin{lstlisting}[numbers=none,frame=none]
+// array creation
+val init     : int -> (int -> 'a) -> 'a []
+val length   : 'a [] -> int   // length a = a.Length
+val toList   : 'a [] -> 'a list
+val ofList   : 'a list -> 'a []
+
+// array transformers
+val map      : ('a -> 'b) -> 'a [] -> 'b []
+val map2     : ('a->'b->'c) -> 'a [] -> 'b [] -> 'c []
+val filter   : ('a -> bool) -> 'a [] -> 'a []
+
+// array traversing
+val fold     : ('a -> 'b -> 'a) -> 'a -> 'b [] -> 'a
+val foldBack : ('b -> 'a -> 'a) -> 'b [] -> 'a -> 'a
+val find     : ('a -> bool) -> 'a [] -> 'a
+...
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Array reverse}
+\vspace{1ex}
+
+Her følger et første forsøg på at vende et array om (ved brug af
+mutation):
+
+\begin{lstlisting}[numbers=none,frame=none]
+let badrev (arr: int[]) : unit =
+  for i in [0..arr.Length-1] do
+    arr.[i] <- arr.[arr.Length-i-1]
+
+let arr = [|1;2;3;4|]
+do badrev arr
+do printf "%A\n" arr
+\end{lstlisting}
+
+\head{Spørgsmål?}
+\begin{itemize}
+\item Hvad er der galt med \kw{badrev}?
+\item Hvad er indholdet af \kw{arr} efter kaldet til \kw{badrev}?
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Array reverse (fortsat)}
+\vspace{1ex}
+
+Here er et bedre forsøg:
+
+\begin{lstlisting}[numbers=none,frame=none]
+let rev (arr: int[]) : unit =
+  for i in [0..arr.Length/2-1] do
+    let tmp = arr.[i]
+    do arr.[i] <- arr.[arr.Length-i-1]
+    do arr.[arr.Length-i-1] <- tmp;;
+
+let arr = [|1;2;3;4|]
+do rev arr
+do printf "%A\n" arr
+
+let arr = [|1;2;8;3;4|]
+do rev arr
+do printf "%A\n" arr
+\end{lstlisting}
+
+\head{Bemærk:}
+\begin{itemize}
+\item Vi benytter os af en temporær variabel til at holde indholdet af
+  et array element før det overskrives.
+\item Funktionen gør brug af en swap-strategi.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{2D Arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{To-dimensionelle arrays}
+\vspace{1ex}
+
+To-dimensionelle \emph{regulære arrays} (dvs. 2d-arrays hvor alle
+rækker indeholder \hspace{2cm} det samme antal elementer) kan håndteres ved brug af
+modulet \lstinline{Array2D}.
+
+\vspace{1ex}
+
+Modulet \lstinline{Array2D} kan benyttes til f.eks. at konstruere
+en multiplikationstabel:
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let a = Array2D.init 5 5 (fun r c -> (r+1) * (c+1))
+let prA (a : int[,]) =
+  for r in [0..Array2D.length1 a - 1] do    // 1  2  3  4  5
+    for c in [0..Array2D.length2 a - 1] do  // 2  4  6  8 10
+      printf "%2d " (a.[r,c])               // 3  6  9 12 15
+    printf "\n"                             // 4  8 12 16 20
+do prA a                                    // 5 10 15 20 25
+\end{lstlisting}
+
+\head{Bemærk:}
+\vspace{1ex}
+
+\begin{enumerate}
+\item Typen på et to-dimensionelt int-array skrives: \lstinline{int[,]}.
+\item Vidden på de udskrevne heltal kontrolleres med format-specifieren \lstinline{"%2d "}.
+\end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

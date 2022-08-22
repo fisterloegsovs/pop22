@@ -1,0 +1,52 @@
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{adjustbox}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage[linewidth=1pt]{mdframed}
+
+% Graphics
+\usepackage{graphicx}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes.multipart,chains,arrows}
+
+% Font
+\usepackage{paratype}
+\setbeamerfont{frametitle}{family=\bf}
+
+% Beamer theme settings
+\usecolortheme{seagull}
+\setbeamertemplate{itemize item}{\raisebox{0.8mm}{\rule{1.8mm}{1.2mm}}}
+\usenavigationsymbolstemplate{} % no navigation buttons
+
+\input{../fsharp.tex}
+\input{../util.tex}
+
+\usecolortheme{whale}
+\useoutertheme{infolines}
+\useinnertheme{rectangles}
+
+\newcommand{\popsettitle}[2]{%
+\setallthemecolors{#1}%
+\newcommand{\popemne}{#2}%
+\title{Programmering og Problemløsning}%
+\subtitle{#2}%
+\author{Martin Elsman}%
+\date{}%
+\institute[DIKU]{Datalogisk Institut, Københavns Universitet (DIKU)}}
+
+\newcommand{\popmaketitleframe}{%
+  \frame{\titlepage%
+   \vspace{-15mm}%
+   \par\noindent\rule{\textwidth}{0.4pt}%
+
+   \vspace{4mm}%
+   \tableofcontents%
+   \vspace{-4mm}%
+   \par\noindent\rule{\textwidth}{0.4pt}%
+  }%
+  \section*{\popemne}%
+}

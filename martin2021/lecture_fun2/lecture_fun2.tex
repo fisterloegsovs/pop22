@@ -1,0 +1,149 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkred}{Højereordens funktioner (Del 2)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+\subsection{Funktioner der returnerer funktioner}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Funktioner der returnerer funktioner}
+
+  Det er ofte anvendeligt at kunne skrive funktioner der selv
+  returnerer funktioner.
+
+  \shead{Eksempel: Funktionssammensætning}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+// compose f g = f $\circ$ g
+let compose (f: 'a->'b) (g:'c->'a) : 'c->'b =
+  fun x -> f(g x)
+\end{lstlisting}
+
+Denne funktion er direkte tilgængelig i F\# som infix-funktionen \lstinline{<<}:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> ((fun x->x+1) << (fun x->x*2)) 5;;
+val it : int = 11
+\end{lstlisting}
+
+\shead{Bemærk:}
+\begin{itemize}
+\item Funktionssammensætning (\lstinline{f << g}) i F\# svarer til
+  matematisk funktionssammensætning, som i $f \circ g$, hvor $(f \circ g)(x) = f(g(x))$.
+\item Omvendt funktionssammensætning er i F\# defineret ved \lstinline{f >> g = g << f}.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Piping og funktionssammensætning}
+
+\begin{frame}[fragile]
+\begin{small}
+  \head{Piping versus Funktionssammensætning}
+
+  \shead{Pipe-operatorer}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val |> : 'a -> ('a->'b) -> 'b   // x |> g = g x
+val <| : ('a->'b) -> 'a -> 'b   // g <| x = g x
+\end{lstlisting}
+
+\shead{Funktionssammensætning}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val >> : ('a->'b) -> ('b->'c) -> ('a->'c)
+      // (g >> f)x = f(g x)
+
+val << : ('a->'b) -> ('c->'a) -> ('c->'b)
+      // (f << g)x = f(g x) = (f $\circ$ g)(x)
+\end{lstlisting}
+
+\textbf{Bemærk:} Piping virker på værdier, hvor funktionssammensætning
+benyttes til at definere nye funktioner på bagrund af andre funktioner.
+
+\end{small}
+\end{frame}
+
+\subsection{Currying}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Currying}
+
+  Currying henviser til følgende indsigt:
+  \begin{enumerate}
+  \item En funktion \lstinline{f:'a*'b->'c} der tager et par som argument kan omskrives til en funktion \lstinline{g:'a->'b->'c} der tager to argumenter.
+  \item En funktion \lstinline{g:'a->'b->'c} der tager to argumenter kan omskrives til en funktion \lstinline{f:'a*'b->'c} der tager et par som argument (purity antaget).
+  \end{enumerate}
+
+  Omskrivningerne kan realiseres med følgende to funktioner:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let curry (f:'a*'b->'c) : 'a->'b->'c =
+  fun a -> fun b -> f(a,b)
+
+let uncurry (f:'a->'b->'c) : 'a*'b->'c =
+  fun (a,b) -> f a b
+\end{lstlisting}
+
+\shead{Eksempel:}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> List.map (uncurry (+)) [(2,5);(8,1);(7,6)];;
+val it : int list = [7; 9; 13]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Delvist anvendte funktioner}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \shead{Delvist anvendte funktioner}
+
+  Det kan ofte være anvendeligt at anvende en funktion delvist for derved at skabe en ny funktion der passer i en sammenhæng.
+
+  \shead{Eksempel --- pretty printing med ``point-free'' notation:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec padl n s = if String.length s > n then s
+                   else padl (n-1) (" " + s)
+let pp n = String.concat "\n"
+           << List.map (String.concat " "
+                        << List.map (padl n << string))
+do printfn "%s" (pp 3 [[1;2;5];[12;3;25];[7;32;1]])
+\end{lstlisting}
+
+\head{Kørsel:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+  1   2   5    // (<<)   : ('a->'b) -> ('c->'a) -> ('c->'b)
+ 12   3  25    // padl   : int -> string -> string
+  7  32   1    // concat : string -> string list -> string
+               // map    : ('a -> 'b) -> 'a list -> 'b list
+               // string : int -> string
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

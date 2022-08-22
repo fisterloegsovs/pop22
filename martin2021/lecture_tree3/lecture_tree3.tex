@@ -1,0 +1,349 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{teal}{Træstrukturer (Del 3)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\newcommand{\mytree}[1]{
+    \begin{tikzpicture}[domain=0:80,scale=#1]
+    %\draw[very thin,color=gray] (0,0) grid (80,80);
+    \draw[->] (17.5,25) -- (12.5,15);
+    \draw[->] (22.5,25) -- (27.5,15);
+    \draw[->] (27.5,45) -- (22.5,35);
+    \draw[->] (32.5,45) -- (37.5,35);
+    \draw[->] (67.5,45) -- (62.5,35);
+    \draw[->] (72.5,45) -- (77.5,35);
+    \draw[->] (45,65) -- (35,55);
+    \draw[->] (55,65) -- (65,55);
+    \node at (50,70) {1};
+    \node at (30,50) {2};
+    \node at (70,50) {3};
+    \node at (20,30) {4};
+    \node at (40,30) {5};
+    \node at (60,30) {6};
+    \node at (80,30) {7};
+    \node at (10,10) {8};
+    \node at (30,10) {9};
+    \end{tikzpicture}
+}
+
+\newcommand{\myinordertree}[1]{
+    \begin{tikzpicture}[domain=0:80,scale=#1]
+    %\draw[very thin,color=gray] (0,0) grid (80,80);
+    \draw[->] (17.5,25) -- (12.5,15);
+    \draw[->] (22.5,25) -- (27.5,15);
+    \draw[->] (27.5,45) -- (22.5,35);
+    \draw[->] (32.5,45) -- (37.5,35);
+    \draw[->] (67.5,45) -- (62.5,35);
+    \draw[->] (72.5,45) -- (77.5,35);
+    \draw[->] (45,65) -- (35,55);
+    \draw[->] (55,65) -- (65,55);
+    \node at (50,70) {6};
+    \node at (30,50) {4};
+    \node at (70,50) {8};
+    \node at (20,30) {2};
+    \node at (40,30) {5};
+    \node at (60,30) {7};
+    \node at (80,30) {9};
+    \node at (10,10) {1};
+    \node at (30,10) {3};
+    \end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Introduktion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Træterminologi}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Træterminologi}
+  \vspace{1ex}
+
+  \begin{minipage}{0.6\textwidth}
+    \begin{itemize}
+    \item Et træ består af \textbf{knuder} forbundet med \textbf{ordnede kanter}.
+    \item En knude har højst en indgående kant (forælder).
+    \item En knude kan have 0 eller flere udgående kanter (børn).
+    \item En knude uden børn kaldes et \textbf{blad}, og en knude uden forældre kaldes en \textbf{rod}.
+    \item Normalt tegnes træer med forældre ovenover børn.
+    \item Et \textbf{binært træ} har præcis en rod og hver knude har højst to børn.
+      \end{itemize}
+  \end{minipage}
+  \begin{minipage}{0.35\textwidth}
+    \mytree{0.06}
+    \end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Trægennemløb}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Gennemløb af træer.}
+  \vspace{1ex}
+
+  Et \emph{gennemløb} (eng. \emph{traversal}) af et træ er et besøg af alle
+  knuderne i træet.
+
+  \vspace{1ex}
+
+\head{Forskellige slags gennemløb:}
+
+\begin{itemize}
+\item \textbf{Dybde-først gennemløb}: besøg alle knuderne i venstre
+  undertræ af en knude før knuderne i højre undertræ.  Der
+  er tre undertyper af dybde-først gennemløb:
+
+  \begin{enumerate}
+  \item \emph{Præordens gennemløb}: knude før børn
+  \item \emph{Postordens gennemløb}: knude efter børn
+  \item \emph{Inordens gennemløb}: knude mellem børn
+  \end{enumerate}
+\item \textbf{Bredde-først gennemløb}: besøg knuder i rækkefølge efter
+  afstand til roden, og knuder med samme afstand fra venstre mod højre.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Eksempler på trægennemløb}
+
+  \vspace{2ex}
+
+  \begin{minipage}{0.55\textwidth}
+\begin{tabular}{ll}
+  \textbf{Præordens gennemløb}: & 1 2 4 8 9 5 3 6 7\\
+  (knude før børn) \\[2ex]
+  \textbf{Postordens gennemløb}: & 8 9 4 5 2 6 7 3 1 \\
+  (knude efter børn) \\[2ex]
+  \textbf{Inordens gennemløb}: & 8 4 9 2 5 1 6 3 7 \\
+  (knude mellem børn) \\[2ex]
+  \textbf{Bredde-først gennemløb}: & 1 2 3 4 5 6 7 8 9
+\end{tabular}
+  \end{minipage}
+  \begin{minipage}{0.4\textwidth}
+    \mytree{0.07}
+    \end{minipage}
+
+\end{footnotesize}
+\end{frame}
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Implementation af præordens gennemløb}
+  \sp
+
+  Vi arbejder med følgende træstruktur:
+  \sp
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type 'a t = L | T of 'a t * 'a * 'a t
+let E e = T(L,e,L)
+\end{lstlisting}
+
+\shead{Den simple version --- bruger \texttt{@}}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec preorder (t: 'a t) : 'a list =
+  match t with     // visit node before children
+    | L -> []
+    | T(l,e,r) -> [e] @ preorder l @ preorder r
+\end{lstlisting}
+
+\shead{Effektiv version --- uden brug af \texttt{@}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec preorder_acc (acc:'a list) (t: 'a t) : 'a list =
+  match t with     // node before children
+    | L -> acc
+    | T(l,e,r) -> e :: preorder_acc (preorder_acc acc r) l
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Implementation af postordens gennemløb}
+  \sp
+
+  Vi arbejder med følgende træstruktur:
+  \sp
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type 'a t = L | T of 'a t * 'a * 'a t
+let E e = T(L,e,L)
+\end{lstlisting}
+
+\shead{Den simple version --- bruger \texttt{@}}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec postorder (t: 'a t) : 'a list =
+  match t with     // visit node after children
+    | L -> []
+    | T(l,e,r) -> postorder l @ postorder r @ [e]
+\end{lstlisting}
+
+\shead{Effektiv version --- uden brug af \texttt{@}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec postorder_acc (acc:'a list) (t: 'a t) : 'a list =
+  match t with     // node after children
+    | L -> acc
+    | T(l,e,r) -> postorder_acc (postorder_acc (e::acc) r) l
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Implementation af inordens gennemløb}
+  \sp
+
+  Vi arbejder med følgende træstruktur:
+  \sp
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type 'a t = L | T of 'a t * 'a * 'a t
+let E e = T(L,e,L)
+\end{lstlisting}
+
+\shead{Den simple version --- bruger \texttt{@}}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec inorder (t: 'a t) : 'a list =
+  match t with     // visit node between children
+    | L -> []
+    | T(l,e,r) -> inorder l @ [e] @ inorder r
+\end{lstlisting}
+
+\shead{Effektiv version --- uden brug af \texttt{@}}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec inorder_acc (acc:'a list) (t: 'a t) : 'a list =
+  match t with     // visit node between children
+    | L -> acc
+    | T(l,e,r) -> inorder_acc (e :: inorder_acc acc r) l
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\shead{Simpel bredde-først implementation --- bruger \texttt{@}}
+
+  \begin{minipage}{0.55\textwidth}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let breathfirst t =
+  let rec bF ts =
+    match ts with
+      | [] -> []
+      | L :: ts -> bF ts
+      | T (l,a,r) :: ts ->
+         a :: bF (ts @ [l; r])
+  bF [t]
+\end{lstlisting}
+  \end{minipage}
+  \begin{minipage}{0.4\textwidth}
+    \mytree{0.05}
+    \end{minipage}
+
+\shead{Bemærk}
+\begin{itemize}
+\item Hjælpefunktionen \lstinline{bF} laver et bredde-først gennemløb af en liste af træer.
+\item Listen fungerer som en kø: Vi tager ud fra fronten og sætter ind bagest.
+\end{itemize}
+
+\shead{Spørgsmål}
+\begin{itemize}
+\item Nogle gode ideer til hvordan vi kan undgå brug af \texttt{@}?
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Løsningen er naturligvis at benytte vores effektive kø-modul!}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+module Queue // content of queue.fsi
+
+type 'a queue                        // FIFO
+val empty : unit -> 'a queue
+val insert  : 'a queue -> 'a -> 'a queue
+val remove  : 'a queue -> ('a * 'a queue) option
+\end{lstlisting}
+
+\shead{Den nye effektive implementation:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let breathfirst_good (t:'a t) : 'a list =
+  let rec bF (q:'a t Queue.queue) : 'a list =
+    match Queue.remove q with
+      | None -> []
+      | Some(L,q) -> bF q
+      | Some(T (l,a,r), q) ->
+          a :: bF (Queue.insert (Queue.insert q l) r)
+  bF (Queue.insert (Queue.empty()) t)
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+%% \begin{frame}[fragile]
+%% \begin{footnotesize}
+
+%% \shead{Bredde-først gennemløb af generelle træer}
+
+%% Gennemløb kan generaliseres (pånær inorder-gennemløb) til ikke-binære træer.
+
+%% \shead{Eksempel på bredde-først gennemløb af et generelt træ}
+
+%% \begin{lstlisting}[numbers=none,frame=none,mathescape]
+%% type 'a tg = Lg | Tg of 'a * 'a tg list
+%% let breathfirst_gen (t:'a tg) : 'a list =
+%%   let rec bF (q:'a tg list Queue.queue) : 'a list =
+%%     match Queue.remove q with
+%%       | None -> []
+%%       | Some(gts,q) -> bFs q gts
+%%   and bFs (q:'a tg list Queue.queue) tgs : 'a list =
+%%     match tgs with
+%%       | [] -> bF q
+%%       | Lg::rest -> bFs q rest
+%%       | Tg (a,tgs)::rest -> a :: bFs (Queue.insert q tgs) rest
+%%   bF (Queue.insert (Queue.empty()) [t])
+%% \end{lstlisting}
+
+%% \head{Bemærk}
+%% \begin{itemize}
+%% \item Hjælpefunktionen \lstinline{ins} benyttes til at indsætte en liste af elementer i køen.
+%% \end{itemize}
+
+%% \end{footnotesize}
+%% \end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

@@ -1,0 +1,437 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{black}{Programmering med Lister og arrays (Recap)}
+
+\begin{document}
+
+\popmaketitleframe
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Repræsentation af lister og arrays}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Repræsentationen af lister}
+
+  \begin{itemize}
+  \item Syntax:
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = [1; 2; 3; 4]
+let lst2 = 5 :: List.tail (List.tail lst)
+\end{lstlisting}
+
+  \item Lagerrepræsentation:
+    \includegraphics[width=0.9\textwidth]{list1234.png}
+
+  \item Det er nemt at hægte et ekstra element på starten af en liste (\texttt{::}).
+
+  \item Det er \textbf{IKKE} nemt (læs: hurtigt) at tilgå det sidste element i en liste.
+
+  \item Lister er \emph{immutable}, dvs elementer kan ikke opdateres.
+
+  \item Hvorfor kan immutabilitet være godt?
+  \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Repræsentationen af arrays}
+
+  \begin{itemize}
+  \item Syntax:
+\begin{lstlisting}[numbers=none,frame=none]
+let arr = [|1;2;3;4|]
+\end{lstlisting}
+
+  \item Lagerrepræsentation: \\
+    \includegraphics[width=0.9\textwidth]{array1234.png}
+  \item Det er \textbf{IKKE} nemt at tilføje ekstra elementer.
+  \item Det er nemt (hurtigt) at læse ethvert element i et array.
+
+  \item Arrays er \emph{mutable}, dvs det er muligt (hurtigt) at
+    opdatere ethvert element.
+  \end{itemize}
+\end{footnotesize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Imperativt gennemløb af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Imperativt gennemløb af lister}
+  \vspace{1ex}
+
+  Her er noget kode for en uheldig implementation af listesummation:
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none]
+let lst = List.init 50000 (fun x -> x)         // BAD
+let mutable i = 0                             // BAD
+let mutable sum = 0                          // BAD
+while (i < List.length lst) do              // BAD
+  sum <- sum + lst.[i]                       // BAD
+  i <- i + 1                                  // BAD
+printf "%d\n" sum                              // BAD
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Tre problemer:}
+\vspace{1ex}
+
+  \begin{enumerate}
+  \item \underline{\hspace{10cm}}  % kvadratisk runtime
+  \item \underline{\hspace{10cm}}  % stor mulighed for fejl i indeksering <= ?
+  \item \underline{\hspace{10cm}}  % mønster er ikke genbrugeligt
+\end{enumerate}
+\end{footnotesize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Oversættelse og kørsel af \lstinline{bad_summation.fs}}
+
+\begin{lstlisting}[numbers=none,frame=none]
+// bad_summation.fs
+let lst = List.init 50000 (fun x -> x)         // BAD
+let mutable i = 0                             // BAD
+let mutable sum = 0                          // BAD
+while (i < List.length lst) do              // BAD
+  sum <- sum + lst.[i]                       // BAD
+  i <- i + 1                                  // BAD
+printf "%d\n" sum                              // BAD
+\end{lstlisting}
+
+\head{Oversættelse og kørsel}
+
+\begin{verbatim}
+bash-3.2$ fsharpc --nologo bad_summation.fs
+bash-3.2$ time mono bad_summation.exe
+1249975000
+
+real	0m8.112s
+\end{verbatim}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+\head{Gennemløb af lister med \lstinline{for}-\lstinline{in}-\lstinline{do} konstruktionen}
+
+\vspace{2ex}
+
+Et bedre alternativ er at benytte den specielle \lstinline{for-in-do}
+syntax til liste-gennemløb:
+
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+// better_summation.fs
+let lst = List.init 50000 (fun x -> x)
+let mutable sum = 0
+for x in lst do sum <- sum + x
+do printf "%d\n" sum
+\end{lstlisting}
+
+\vspace{1ex}
+
+\head{Fordele:}
+\begin{enumerate}
+\item Ingen overhead ved liste-indicering eller kald til \lstinline{List.length}.
+\item Simplere form for imperativ programmering; dog er \lstinline{sum} stadig mutable...
+\end{enumerate}
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Modulet \lstinline{List}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Modulet \lstinline{List}}
+
+\vspace{1ex}
+
+Modulet \lstinline{List} indeholder en lang række operationer på
+lister.
+
+\begin{lstlisting}[numbers=none]
+// list creation
+val init     : int -> (int -> 'a) -> 'a list
+
+// list deconstruction
+val head     : 'a list -> 'a
+val tail     : 'a list -> 'a list
+
+// list transformers
+val map      : ('a -> 'b) -> 'a list -> 'b list
+val map2     : ('a->'b->'c) -> 'a list -> 'b list -> 'c list
+val filter   : ('a -> bool) -> 'a list -> 'a list
+
+// list traversing
+val length   : 'a list -> int   // length l = l.Length
+val fold     : ('s -> 'a -> 's) -> 's -> 'a list -> 's
+val foldBack : ('a -> 's -> 's) -> 'a list -> 's -> 's
+val find     : ('a -> bool) -> 'a list -> 'a
+...
+\end{lstlisting}
+\end{footnotesize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Intermezzo om funktionstyper og typevariabler}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Funktionstyper}
+
+  \vspace{2mm}
+  \textbf{Q1:} Hvorfor beskæftiger vi os overhovedet med typer?
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{2mm}
+  \textbf{Q2:} Hvad beskriver funktionstypen \lstinline{int->int}
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{2mm}
+  \textbf{Q3:} I den kontekst, hvad er forskellen på værdiorienteret (funktionel) programmering og effektfuld (imperativ) programmering?
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{2mm}
+  \textbf{Q4:} Beskriv forskellen på typerne \lstinline{int->int->int} og \lstinline{(int->int)->int}
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{2mm}
+  \textbf{Q5:} Hvilken forskel kan der være på følgende to funktioner:
+  \vspace{1mm}
+\begin{lstlisting}[frame=none]
+  val toDKK : string * float -> float   // toDDK ("USD",5.0)
+  val toDKK : string -> float -> float  // toDKK "USD" 5.0
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \headsp{Typevariabler}
+  \vspace{2mm}
+
+  Typevariabler (f.eks. \lstinline{'a} og \lstinline{'S}) benyttes til at skrive
+  \emph{generiske} funktioner, som er funktioner der kan anvendes på
+  værdier af forskellig type.
+
+  \vspace{4mm}
+  \textbf{Q1:} Hvad er typen for funktionen \lstinline{List.length}?
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{4mm}
+  \textbf{Q2:} Hvad er typen for funktionen \lstinline{List.map}?
+  \vspace{1mm}
+
+  \begin{itemize}
+  \item \underline{\hspace{10cm}}
+  \end{itemize}
+
+  \vspace{4mm} \textbf{Bemærk:} Det vil være besværligt hvis
+  programmøren skal være eksplicit omkring typer alle steder i et
+  program. Derfor har F\#
+  \emph{typeinferens}, hvilket betyder at programmøren ofte kan
+  udelade typeannoteringer.
+\end{footnotesize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dynamisk konstruktion af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Dynamisk konstruktion af lister}
+
+  \vspace{1ex}
+
+  Funktionen \lstinline{List.init} gør det muligt at opbygge en liste
+  dynamisk fra bunden:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val init : int -> (int -> 'a) -> 'a list
+
+ init $n$ f
+   = [f $0$; f $1$; f $2$; ...; f $(n-1)$]
+\end{lstlisting}
+
+  \vspace{1ex}
+
+  \head{Eksempel}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let sz = 2 + 3
+let lst = List.init sz (fun x -> x * 2 + 1)
+
+//  = [0*2+1; 1*2+1; 2*2+1; 3*2+1; 4*2+1]
+// $\evals$  [1; 3; 5; 7; 9]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Transformation af lister}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Transformation af lister --- \lstinline{map}}
+\vspace{0.5ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val map : ('a -> 'b) -> 'a list -> 'b list
+
+ map f [v$_0$; v$_1$; v$_2$; ...; v$_n$]
+   = [f v$_0$; f v$_1$; f v$_2$; ...; f v$_n$]
+\end{lstlisting}
+
+\head{Eksempel}
+\vspace{0.5ex}
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let vs = List.map (fun x -> x+1) [10; 20; 30]
+
+//  = [10+1; 20+1; 30+1]  $\evals$  [11; 21; 31]
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Gennemløb af lister med \lstinline{fold}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \head{Listefoldninger --- \lstinline{fold}}
+
+  \vspace{1ex}
+
+  Listefoldninger er generiske funktioner der gør det muligt at
+  gennemløbe en liste for samtidig at foretage beregninger på
+  elementerne, f.eks. for at opbygge en ny datastruktur.
+
+  \vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+val fold     : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a
+
+ fold f a [x$_0$;x$_1$;x$_2$;...;x$_n$]
+   = f ... (f (f (f a x$_0$) x$_1$) x$_2$) ... x$_n$
+\end{lstlisting}
+
+\headsp{Husk:}
+\begin{itemize}
+\item En funktion kaldes først når argumenterne er evalueret til værdier!
+\item Dette princip kaldes ``Call-by-value''.
+\end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+\head{Eksempel: Summation af elementerne i en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let sum = List.fold (+) 0 [3;6;2;5]
+
+//   = (((0 + 3) + 6) + 2) + 5
+// $\eval$ ((3 + 6) + 2) + 5
+// $\eval$ (9 + 2) + 5  $\eval$  11 + 5  $\eval$  16
+\end{lstlisting}
+
+\vspace{1ex}
+\head{Eksempel: Find det mindste element i en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let min x y = if x < y then x else y
+let maxInt = System.Int32.MaxValue  // = 2147483647
+let min_elem = List.fold min maxInt [3;6;2;5]
+
+//   = min (min (min (min 2147483647 3) 6) 2) 5
+// $\eval$ min (min (min 3 6) 2) 5
+// $\eval$ min (min 3 2) 5  $\eval$  min 2 5  $\eval$  2
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+  \head{Eksempel: Reverser en liste}
+\vspace{1ex}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let f a x = x :: a
+let rev xs = List.fold f [] xs
+
+let ex = rev [1;2;3]
+
+// = f (f (f [] 1) 2) 3
+// $\eval$ f (f (1 :: []) 2) 3  $\eval$  f (2 :: 1 :: []) 3
+// $\eval$ 3 :: 2 :: 1 :: []
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+\end{document}

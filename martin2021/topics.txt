@@ -1,0 +1,92 @@
+
+# Typer
+
+type1:
+  - typebegrebet
+  - typeforkortelser
+  - records og recordtyper
+
+type2:
+  - mønstergenkendelse (tupler, records, grundtyper, option-typer, lister)
+
+type3:
+  - simple sum-typer
+  - sum-typer med argumentbærende konstruktører
+  - generiske sum-typer
+
+type4:
+  - abstrakte typer (stakke, køer)
+
+type5:
+  - opsamling
+  - Eks: skildpaddegrafik
+  - Eks: rekursion
+
+
+# Lists
+
+## F sharp Collections
+
+ - Vi har ofte brug for at håndtere store data-mængder:
+
+     o lister af tal (List)
+     o mængder af navne (Set)
+     o afbildninger af navne til telefonnumre (Map)
+     o ...
+
+ - Til forskel fra de strukturer vi har set ind til nu (såsom tupler) kan
+   lister bestå af et ikke på forhånd defineret antal elementer
+
+
+Representation of lists
+
+ - lister er repræsenteret som hægtede celler
+     drawing
+
+- arrays er implementeret som sammenhængende celler
+     drawing
+
+ - fordele og ulemper ved begge repræsentationer
+
+ - det er let at tilføje et element til en liste
+
+ - det er hurtigt at tilgå ethvert element i et array
+
+Basale liste-operationer
+
+   Eksplicit listesyntax:
+     - [3;334;23]
+     - [("London",8.8);("Paris",9.8)]
+
+   List.init : int -> (int -> 'a) -> 'a list
+
+   Length: property der ved henvisning vil gennemløbe listen
+
+   map
+     add 1,
+   map2
+     mul, add,
+   zip
+
+   iter
+
+   fold
+     min, max, sum
+   foldBack
+
+   ex: dot-product
+
+   find
+
+   filter
+
+Måder hvorpå man IKKE skal gennemløbe en løkke:
+
+  let mutable i = 0
+  let mutable sum = 0
+  while (i < lst.Length) do
+    sum <- sum + lst.[i]
+    i <- i + 1
+  printf "%d\n" sum
+
+ - Undgå liste-indicering og pas på Length!

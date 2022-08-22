@@ -1,0 +1,116 @@
+\documentclass[rgb]{beamer}
+
+\input{../pop.tex}
+
+\popsettitle{darkred}{Højereordens funktioner (Del 3)}  % see ../util.tex for colors
+
+\begin{document}
+
+\popmaketitleframe
+
+\renewcommand{\sp}{\vspace{1ex}}
+\newcommand{\shead}[1]{\vspace{1ex}\head{#1}\vspace{1ex}}
+
+\subsection{Funktioner som/i datastrukturer}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Funktioner som objekter i datastrukturer}
+
+  Funktioner (dvs. closures) kan gemmes i datastrukturer:
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+let rec loop i : (int->int) list =
+  if i < 0 then []
+  else (fun x -> i * x) :: loop (i-1)    // i is caught here!
+
+let fs = loop 200
+let xs = List.map (fun f -> f 3) fs
+\end{lstlisting}
+
+\shead{Resultatet af kaldet \lstinline{loop 200}:}
+
+$$\mathtt{[}(~\mathtt{x}~, ~\{\mathtt{i} \mapsto 200\}~, ~\mathtt{i*x}~);~ (~\mathtt{x}~, ~\{\mathtt{i} \mapsto 199\}~, ~\mathtt{i*x}~); ~...;~(~\mathtt{x}~, ~\{\mathtt{i} \mapsto 0\}~, ~\mathtt{i*x}~)\mathtt{]}$$
+
+\shead{Indholdet af \lstinline{xs}:}
+
+$$\mathtt{[}600;~ 597; ~...;~0\mathtt{]}$$
+\end{footnotesize}
+\end{frame}
+
+\subsection{Eksempler på funktioner som/i datastrukturer}
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Eksempler på funktioner brugt i datastrukturer}
+
+  Funktioner kan tit med fordel blive brugt som/i datastrukturer.
+
+  \shead{Eksempler:}
+
+  \begin{itemize}
+  \item Endelige afbildninger (lookup tables).
+\begin{lstlisting}[numbers=none,mathescape]
+type 'a m = string -> 'a option
+val lookup : 'a m -> string -> 'a option
+val empty  : unit -> 'a m
+val insert : string -> 'a -> 'a m -> 'a m
+\end{lstlisting}
+  \item Pull arrays (arrays der ikke nødvendigvis materialiseres i lageret)
+\begin{lstlisting}[numbers=none,mathescape]
+type 'a parray = int * (int -> 'a)
+val iota : int -> int parray       // [0; 1; ... ; n-1]
+val map  : ('a -> 'b) -> 'a parray -> 'b parray
+...
+\end{lstlisting}
+
+  \item Uendelige (dovne strømme af værdier).
+  \item Funktionelle billeder (som vi skal se senere).
+  \item Parsers og serializers.
+  \end{itemize}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection{Endelige afbildninger}
+
+\begin{frame}[fragile]
+\begin{footnotesize}
+
+  \shead{Endelige afbildninger}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+type 'a m = string -> 'a option
+let empty () : 'a m =
+  fun _ -> None
+let insert s v (m:'a m) : 'a m =
+  fun x -> if x = s then Some v else m x
+let lookup (m:'a m) s : 'a option =
+  m s
+\end{lstlisting}
+
+\shead{Brug af funktionerne:}
+
+\begin{lstlisting}[numbers=none,frame=none,mathescape]
+> let m = insert "b" 8 (insert "a" 5 (empty()));;
+val m : int m
+> lookup m "c";;
+val it : int option = None
+> lookup m "a";;
+val it : int option = Some 5
+\end{lstlisting}
+
+\end{footnotesize}
+\end{frame}
+
+\subsection*{Konklusion}
+\begin{frame}[fragile]
+  \headsp{Konklusion}
+
+  \vspace{3mm}
+  \tableofcontents
+\end{frame}
+
+
+\end{document}
