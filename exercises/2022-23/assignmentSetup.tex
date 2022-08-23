@@ -12,7 +12,7 @@
 }
 
 \newrobustcmd{\learningPurposeTxt}[1]{
-Emnerne for denne arbejdsseddel er:
+Denne arbejdsseddels læringsmål er:
 \listItemize{#1}
 }
 
@@ -93,6 +93,26 @@ arbejde %
 }
 %%%%%%%%%%%%%%%%%%%% 
 
+\newcommand{\handinTextPdfTexFsx}[3]{Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{#1.zip}
+  \item en rapport i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde en \texttt{src} mappe, en \texttt{tex} mappe
+og filen \texttt{README.txt}. \texttt{README.txt} filen skal indeholde
+jeres navn og dato for arbejdet. I \texttt{src} mappen skal der ligge
+følgende og kun følgende filer:
+\begin{quote}
+#2
+\end{quote}
+svarende til afleveringsopgaverne beskrevet ovenfor. I \texttt{tex}
+mappen skal der ligge følgende og kun følgende filer:
+\begin{quote}
+#3
+\end{quote}
+Rapporten skal dokumentere jeres proces og beskrive jeres
+programmer. Den skal skrives i \LaTeX, indeholde et passende antal
+figurer og henvise til jeres afleveringsprogrammer.}
 
 \newcommand{\handinTextOne}{Afleveringen skal bestå af
 \begin{itemize}\item upload af de udviklede programmer i øvelsesholdets studio
@@ -110,7 +130,7 @@ Zip-filen skal indeholde en \texttt{src} mappe, en \texttt{tex} mappe
 og filen \texttt{README.txt}. Mappen \texttt{src} skal indeholde
 fsharp koden, der skal være en fsharp tekstfil per fsharp-opgave, og
 de skal navngives \texttt{#1} osv. De skal kunne oversættes med
-fsharpc, og de oversatte filer skal kunne køres med mono. Mappen
+fsharpc, og de oversatte filer skal kunne køres med dotnet. Mappen
 \texttt{tex} skal indeholde \LaTeX\ koden. Filen \texttt{README.txt} skal ganske
 kort beskrive, hvordan rapporten oversættes til pdf og koden
 oversættes og køres.}
