@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{2}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{19.\ - 24.\ september}{lørdag d.\ 24.\ september kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+
+% TODO: Omskriv
+Med denne arbejdsseddel skifter vi langsomt fokus fra det imperative
+programmeringsparadigme til funktionsprogrammeringsparadigmet. Hvor
+imperativ programmering er som en kageopskrift og kendes på brug af
+variable, for- og while-løkker, så lægger funktionsprogrammering vægt
+på funktioner og kendes på værdier og rekursion.
+
+I denne periode kigger vi særligt på 2 ny datastrukturer arrays og
+lists. De er begge datastrukturer til at holde lister af elementer af
+samme type, men arrays er variable og lists er værdier. Derfor ser man
+også sjældent arrays i programmer, der følger
+funktionsprogrammeringsparadigmet. I denne periode vil vi lægge vægt
+på programmering af arrays og lists via de medfølgende
+\lstinline{List} og \lstinline{Array} moduler.
+% TODO END
+
+
+% strukturere kode vha. funktioner
+% Kens 8 trins model
+% Håndkøring
+\learningPurposeTxt{
+  {at kunne strukturere kode vha. funktioner,},
+  {problemløsning vha. design med 8-trinsmodellen},
+  {at kunne håndkøre simple programmer.}
+}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+% TODO: Find nye opgaver
+% Forslag:
+% factorial
+% sum n - rekursion, formel
+% collatz -> rekursion og pattern-matching (guards?)
+% fibonacci
+% f a x b = a * x + b
+% log2 (?) med rekursion
+% f x n = x ^ n med rekursion
+% Vektorer? 2-d, med tupler
+% Evt. Pythagoras
+
+\exercises{\exerciseNumber ø}{../assignments/recursion/}{}{facRec,pow2,powN}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+\continueExercises{\exerciseNumber ø}{../assignments/newVec/}{}{vec2dOps}
+
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/recursion/}{introduction}{sumRec}
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/newVec/}{}{vec2dOpsAss}
+% \exercises{\exerciseNumber\typeLetter}{../assignments/recursion/}{introduction}{gcdEn,collatz}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+\handinTextTwoTwo{\exerciseNumber\typeLetter}{\texttt{\exerciseNumber\typeLetter
+    0.fsx og \exerciseNumber\typeLetter 1.fsx}}
+
+\flushright God fornøjelse.
+
+\end{document}
+

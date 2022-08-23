@@ -1,0 +1,27 @@
+The Collatz conjecture is one of the most famous unsolved problems in mathematics\footnote{\url{https://en.wikipedia.org/wiki/Collatz_conjecture}}.
+
+\[
+  \mathrm{collatz(n)}
+  \begin{cases}
+    \frac{n}{2} \qquad \mathrm{if} ~ n \% 2 = 0 \\
+    3n+1 \quad \mathrm{if} ~ n \% 2 = 1
+  \end{cases}
+\]
+
+
+\begin{enumerate}
+  \item Implement a non-recursive function \lstinline{collatzStep : n:int -> int} that gives the next number in the collatz sequence. Examples:
+  \begin{quote}
+    \lstinline{collatzStep 1 = 1} \\
+    \lstinline{collatzStep 2 = 1} \\
+    \lstinline{collatzStep 3 = 10} \\
+    \lstinline{collatzStep 9 = 28} \\    
+  \end{quote}
+  The function should use pattern matching. 
+  \item Implement a recursive function that counts the number of steps in the collatz sequence starting at $n$:
+  \begin{quote}
+  \lstinline{collatzStepsHelper : count:int -> n:int -> int}:
+\end{quote}
+The function should use pattern matching, recursion and the previous function \lstinline{collatzStep} to compute each intermediate step of a sequence. 
+  \item Implement a non-recursive function \lstinline{collatzSteps : n:int -> int} that simply calls \lstinline{collatzStepsHelper} with an initial \lstinline{count} of 0. 
+\end{enumerate}

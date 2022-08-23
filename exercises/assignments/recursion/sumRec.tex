@@ -1,0 +1,40 @@
+Consider the following sum of integers,
+\begin{equation}
+  \sum_{i=1}^n i
+  \label{eq:sum.sum}
+\end{equation}
+This assignment has the following sub-assignments:
+\begin{enumerate}
+\item \label{sum} Write a function
+  \begin{quote}
+    \mbox{\lstinline!sum : n:int -> int!}
+  \end{quote}
+  which uses pattern-matching and recursion to compute the sum $1 + 2 + \dots + n$
+  also written in \eqref{eq:sum.sum}. If the function is called with any value smaller than 1, then it is to return the value 0.
+    % \item Lav en funktion
+    %   \begin{quote}
+    %     \mbox{\lstinline!recSum : n:int -> int!}
+    %   \end{quote}
+    %   som benytter rekursion og uden brug af variable til at udregne summen $1 + 2 + \dots + n$. Hint: $\sum_{i=1}^n i = n + \sum_{i=1}^{n-1} i$.
+\item By induction one can show that
+  \begin{equation}
+    \sum_{i=1}^n i = \frac{n(n+1)}{2},\, n\geq 0
+    \label{eq:sum.closedForm}
+  \end{equation}
+  Make a function
+  \begin{quote}
+    \mbox{\lstinline!simpleSum : n:int -> int!}
+  \end{quote}
+  which uses \eqref{eq:sum.closedForm} to calculate $1 + 2 + \dots + n$ and which includes a comment explaining how the expression implemented is related to the mentioned sum.
+  % \item Lav et program, som skriver en tabel ud på skærmen med 4 kolonner: \lstinline!n!, \lstinline!sum n!, \mbox{\lstinline!recSum n!} og \mbox{\lstinline!simpleSum n!}, og verificer at de 3 funktioner kommer til samme resultat.
+\item Write a program, which asks the user for the number $n$, reads the number from the keyboard, and write the result of \lstinline{sum n} and \lstinline!simpleSum n! to the screen.
+\item Make a program, which writes a table to the screen with 3
+  columns: \lstinline!n!, \lstinline!sum n! and
+  \mbox{\lstinline!simpleSum n!}. The table should have a row for each
+  of $n=1,2,3,..,10$, and each field must be 4 characters wide. Verify programmatically that the two functions calculate
+  identical results.
+\item What is the largest value $n$ that the two sum-functions can
+  correctly calculate the value of? Can the functions be modified,
+  such that they can correctly calculate the sum for larger values of
+  $n$?
+  \end{enumerate}
