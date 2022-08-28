@@ -16,20 +16,21 @@
 \begin{document}
 \title{En superkort introduktion til \LaTeX}
 
-\author{Torben Mogensen}
+\author{Torben Mogensen og Jon Sporring}
 \date{\today}
 
 \maketitle
 
 \begin{abstract}
 I kurset ``Programmering og problemløsning'' (PoP) bruger vi
-værktøjerne Emacs og \LaTeX.
+værktøjerne Overleaf og \LaTeX.
 
-Emacs er et tekstredigeringsværktøj, der er egnet til at redigere
-programmer og lignende.  Et andet dokument introducerer Emacs.  Ulig
-f.eks.\ Microsoft Word og Libre Office Writer redigerer man med Emacs
-``ren'' tekst: Der er ikke formatering såsom fed skrift, kursiv, osv.
-Til dette bruger vi \LaTeX.
+Overleaf er et online tekstredigeringsværktøj
+(\url{https://overleaf.com}), der specialdesignet til at køre \LaTeX
+og til at samarbejde om at skrive \LaTeX\ kode.  Ulig f.eks.\ Microsoft
+Word og Libre Office Writer redigerer man med Overleaf ``ren'' tekst:
+Der er ikke formatering såsom fed skrift, kursiv, osv.  Til dette
+bruger vi \LaTeX.
 
 \LaTeX\ (som udtales ``lahtek'') er et dokumentformateringsværktøj.
 Det fungerer ligesom HTML ved, at man skriver formateringskoder ind i
@@ -39,7 +40,6 @@ Hvor HTML konverteres i en browser til en webside, så konverteres
 \end{abstract}
 
 \tableofcontents
-
 
 \chapter{\LaTeX}
 
@@ -57,113 +57,68 @@ af Donald Knuths \TeX\ lavet af Leslie Lamport, som satte bogstaverne
 \textsf{La} foran navnet.  Det har altså intet med syntetisk gummi at
 gøre, og vi \emph{har} allerede hørt alle vittighederne.
 
-Den væsentligste forskel på \LaTeX\ og f.eks.~Microsoft Word er, at man
-forbereder sine \LaTeX-dokumenter i et tekstredigeringsværktøj som
-f.eks.~Emacs og derefter konverterer dem til PDF ved at køre et
-program.  Det er i princippet ikke anderledes end den måde, et
-HTML-dokument konverteres til tekst og billeder i et vindue i en
-browser.  Et \LaTeX-dokument indeholder ud over den tekst, der skal
-indgå i det færdige PDF-dokument, et antal koder og kommandoer, der
-specificerer formatering, krydsreferencer, billedindsættelse,
-formler, tabeller, figurer osv.  Det er \LaTeX-programmets opgave at
-fortolke disse koder og bruge dem til at formatere dokumentets tekst.
-Endvidere opdeler \LaTeX\ teksten i sider, som er egnede til
-udskrivning, visning på en projektor, eller lignende, og indsætter
-selv sidenumre osv.
-
-\section{Installering af \LaTeX}
-
-\LaTeX\ er gratis, open-source, og findes til en lang række platforme,
-og der findes også web-værktøjer, hvor man kan lave \LaTeX-dokumenter
-i sin browser.  Vi anbefaler, at man bruger Emacs på Linux, MacOS X
-eller Windows til at redigere sine \LaTeX-dokumenter og derefter
-konverterer dem til PDF med programmet \texttt{pdflatex}.  Her er en
-meget kort instruktion til installering af dette program på de tre
-hovedplatforme.
-
-\paragraph{Linux.}
-
-De fleste Linux-distributioner tillader installering af \LaTeX\ gennem
-pakkesystemet, på samme måde som tidligere beskrevet for Emacs.  Vi
-anbefaler, at du installerer \textsf{TeX Live}, der gør det nemt at
-hente udvidelser osv.  Hvis du bruger Ubuntu Softwarecenter, så vælg
-pakkerne \texttt{texlive-full} og \texttt{texlive-lang-all}.  Det
-fylder en del, og det tager en del tid at hente, så sørg for at have
-en god Internetforbindelse.
-
-En alternativ metode til Ubuntu er at følge instruktionerne på
-\url{https://github.com/scottkosty/install-tl-ubuntu} (Quick download
-efterfulgt af \verb|sudo ./install-tl-ubuntu|).  Denne metode skulle
-sikre, at den seneste version af \textsf{TeX Live} installeres.
-
-\paragraph{MacOs X.}
-
-Vi anbefaler \textsf{MacTeX}, der indeholder \textsf{TeX Live} og et
-par MacOS-specifikke udvidelser.  Den kan hentes på
-\url{http://www.tug.org/mactex/}.
-
-\paragraph{Windows.}
-
-Følg instruktionen på\newline
-\url{http://www.tug.org/texlive/acquire-netinstall.html}.
+Den væsentligste forskel på \LaTeX\ og f.eks.~Microsoft Word er, at
+man forbereder sine \LaTeX-dokumenter i Overleaf og derefter
+konverterer dem til PDF ved at trykke på Compile knappen.  Det er i
+princippet ikke anderledes end den måde, et HTML-dokument konverteres
+til tekst og billeder i et vindue i en browser.  Et \LaTeX-dokument
+indeholder ud over den tekst, der skal indgå i det færdige
+PDF-dokument, et antal koder og kommandoer, der specificerer
+formatering, krydsreferencer, billedindsættelse, formler, tabeller,
+figurer osv.  Det er \LaTeX-programmets opgave at fortolke disse koder
+og bruge dem til at formatere dokumentets tekst.  Endvidere opdeler
+\LaTeX\ teksten i sider, som er egnede til udskrivning, visning på en
+projektor, eller lignende, og indsætter selv sidenumre osv.
 
 \section{Brug af \LaTeX}
 
 For at afprøve installeringen af \LaTeX, anbefaler vi, at du starter
-med et meget simpelt dokument.  Brug Emacs til at oprette en fil
-\texttt{Hello.tex}, der indeholder følgende tekst:
+med et meget simpelt dokument. Log in på Overleaf, tryk på ``New Project'', vælg en skabelon som f.eks.\ ``Blank project'', giv dit projekt et navn, og tryk på ``Create''. Nu skal du se et næsten tomt dokument i midten af din skærm med rå \LaTeX\ kode med det vigtigest elementer forudindsat såsom:
 
 {\small
 \begin{verbatim}
-\documentclass{report}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{test}
+\author{sporring }
+\date{August 2022}
 
 \begin{document}
 
-Hello World
+\maketitle
+
+\section{Introduction}
 
 \end{document}
 \end{verbatim}
 }
 
-\noindent
-Vi kommer tilbage til, hvad de enkelte dele af filen betyder senere.
+Allerede nu burde dokumentet være oversat, og i højre side af din skærm skulle du se en Pdf af resultatet. I venstre vil du typisk se en liste af filer, samt et overblik over dit dokument. Vi kommer tilbage til, hvad de enkelte dele af filen betyder senere.
 
-Når du har gemt filen, så kør følgende kommando i et
-kommandolinjevindue: \texttt{pdflatex~Hello.tex}.  Du skulle gerne få
-noget output i stil med dette på din skærm (detaljerne kan variere fra
-system til system):
-
+Prøv at opdatere \LaTeX\ koden ved at erstatte \verb|\section{Introduction}| med \verb|Hello World!|, evt.\ rette dit navn og titel, og oversæt det.
 {\small
 \begin{verbatim}
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian)
- restricted \write18 enabled.
-entering extended mode
-(./Hello.tex
-LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo))
-No file Hello.aux.
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Hello.aux) )<
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on Hello.pdf (1 page, 11544 bytes).
-Transcript written on Hello.log.
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{My first \LaTeX\ document}
+\author{Jon Sporring}
+\date{August 2022}
+
+\begin{document}
+
+\maketitle
+
+Hello World!
+
+\end{document}
 \end{verbatim}
 }
 
-\noindent
-Hvis du ser i filkataloget, vil du se, at der er oprettet tre nye
-filer: \texttt{Hello.aux}, \texttt{Hello.log} og \texttt{Hello.pdf}.
-Sidstnævnte skulle gerne være et et-sides PDF-do\-ku\-ment med teksten
-``Hello World''.  \texttt{Hello.aux} indeholder information, som
-\LaTeX\ bruger til krydsreferencer og lignende, så det er ikke
-interessant at læse indholdet af dette.  \texttt{Hello.log} indeholder
-en masse information om kørslen af \LaTeX, som for det meste også er
-uinteressant, men som kan bruges til at finde oplysninger om fejl.
-Lad os tage et eksempel: Vi staver med vilje forkert i den sidste
-linje:
+\LaTeX\ kommandoer begynder med '\textbackslash' som vi på Dansk bare kalder for 'backslash', og nogle tager argumenter som enten er indrammet af '[]' eller '\{\}' parenteser. Hvis man kommer til at skrive en kommando, som \LaTeX\ ikke forstår, vil den give en fejlmeddelelse, og dem kan man se ved at trykke på det lille ikon til højre for ``Compile'' knappen. F.eks.\ hvis man kommer til at skrive \verb|\end{dokument}| med 'k' istedet for 'c'
 
+\noindent
 
 {\small
 \begin{verbatim}
@@ -178,82 +133,20 @@ Hello World
 }
 
 \noindent
-Nu får vi følgende uddata, når vi kører \texttt{pdflatex~Hello.tex}:
 
-{\small
-\begin{verbatim}
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian)
- restricted \write18 enabled.
-entering extended mode
-(./Hello.tex
-LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo)) (./Hello.aux)
-
-! LaTeX Error: \begin{document} ended by \end{dokument}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.6 \end{dokument}
-                  
-? 
-\end{verbatim}
-}
-
-\noindent
-Linjen, der starter med \texttt{LaTeX Error} forklarer, at der er en
-fejl, og hvad \LaTeX\ tror, fejlen er.  Lidt længere nede er der en
-indikation af linjenummeret (\texttt{l.6}) og en gengivelse af den
-fejlbehæftede linje.  Til sidst står et spørgsmålstegn.  Tryk
-\textsf{x} og \textsf{Enter} for at komme ud af \texttt{pdflatex}, der
-nu skriver
-
-{\small
-\begin{verbatim}
-No pages of output.
-Transcript written on Hello.log.
-\end{verbatim}
-}
-
-\noindent
-Bemærk, at forekomsten af en fejl medfører, at der ikke produceres
-nogen PDF fil.  Hvis der allerede findes en PDF fil, bliver denne
-dog liggende uændret.
-
-Hvis vi i stedet ændrer sidste linje til
-
-{\small
-\begin{verbatim}
-\edn{document}
-\end{verbatim}
-}
-
-\noindent
-får vi følgende fejlmeddelelse (efter samme indledende tekst):
-
-
-{\small
-\begin{verbatim}
-! Undefined control sequence.
-l.6 \edn
-        {document}
-? 
-\end{verbatim}
-}
-
-\noindent
-Meddelelsen \verb|Undefined control sequence| betyder, at \LaTeX\ ikke
-kender kommandoen \verb|\edn|.  Den viser dette ved at opdele den
-fejlbehæftede linje der, hvor den har fundet fejlen.  Igen kan man
-trykke \textsf{x} og \textsf{Enter} for at komme ud.
+får man mange fejl, og den først hedder noget i retningen af ``\LaTeX\
+Error: \verb|\begin{document} ended by \end{dokument}|. Dette betyder
+at \verb|\begin{document}| og \verb|\end{document}| hører sammen som
+et par, og \LaTeX\ kan kun finde den ene.  Bemærk, at forekomsten af
+en fejl medfører, at der ikke produceres nogen PDF fil. En anden
+typisk fejl kan være at skrive \verb|\edn{document}| i stedet for
+\verb|\end{document}| får vi en anden fejl som siger ``Undefined
+control sequence'', hvilket betyder, at \LaTeX\ ikke kender kommandoen
+\verb|\edn|.
 
 Der er flere mulige fejlmeddelelser, som nogen gange kan være
-kryptiske. En beskrivelse af de hyppigst forekommende fejlmeddelelser, og
-deres mest sandsynlige årsag, kan findes på
+kryptiske. En beskrivelse af de hyppigst forekommende fejlmeddelelser,
+og deres mest sandsynlige årsag, kan findes på
 \url{http://en.wikibooks.org/wiki/LaTeX/Errors_and_Warnings}.  En mere
 komplet liste kan findes på
 \url{http://www.eng.fsu.edu/~dommelen/l2h/errors.html}.
@@ -406,10 +299,6 @@ Hvis man ønsker flere blanktegn efter hinanden i en tekst, kan man
 bruge tegnet \verb|~| det nødvendige antal gange.  Man kan tvinge et
 linjeskift med kommandoen \verb|\newline|.
 
-Fordi linjeskift (enkeltvis) har samme betydning som blanktegn, anbefaler
-vi, at man i Emacs bruger auto-fill-mode, når man skriver
-\LaTeX\ dokumenter.
-
 \section{Et struktureret dokument}
 
 Som nævnt, fokuserer vi her på rapporter, indikeret af dokumentklassen
@@ -446,9 +335,7 @@ En rapport består af kapitler (indledt med
 nummereringen, man skal blot angive titlerne på kapitler og afsnit.  I
 rapporter starter kapitler på nye sider, så \LaTeX-dokumentet vist i
 figur~\ref{simple} vil generere to korte kapitler startende på hver
-sin side.  Prøv selv at kopiere teksten ind i Emacs, gem den under
-navnet \texttt{simple.tex}, og kør kommandoen
-\texttt{pdflatex~simple.tex}.
+sin side.  Prøv selv at kopiere teksten ind i Overleaf og oversæt den.
 
 
 \begin{figure}
@@ -522,7 +409,7 @@ Til kortere dokumenter kan man bruge dokumentklassen \texttt{article}.
 Her kan man ikke bruge kapitler (kommandoen \verb|\chapter|) er
 udefineret, så man bruger \verb|\section| som hovedstruktur.  Der laves
 ikke en separat titelside, så titel osv.\ placeres blot øverst på første
-side.  Emacs-introduktionen er lavet med dokumentklassen \texttt{article}.
+side.
 
 \section{Fed tekst, kursiv, m.m.}
 
@@ -726,32 +613,28 @@ afsnit~\ref{supplerendeLatex} for de mere avancerede dele.
 \section{Billeder}
 
 Man kan inkludere billeder i sin tekst med kommandoen
-\verb|\includegraphics|, For eksempel er billedet af Emacs-skærmen i
-Emacs-introduktionen lavet med kommandoen
-\verb|\includegraphics[width=\textwidth]{emacs-welcome.png}|, hvor\newline
-\texttt{emacs-welcome.png} er en fil, der indeholder billedet i
-billedformatet PNG.  Breddeangivelsen skalerer billedet til bredden af
-teksten, idet \verb|\textwidth| angiver denne bredde.  Man kan også
-angive bredde i f.eks.\ centimeter og millimeter, så kommandoen
-\verb|\includegraphics[width=5cm]{emacs-welcome.png}| vil skalere
-billedet til en bredde på 5 centimeter.  Udover PNG kan
-\texttt{includegraphics} også indlæse JPG og PDF.
+\verb|\includegraphics|, For eksempel hvis man har et billede i PNG
+format, som hedder \texttt{cat.png}, så skal man uploade det til
+Overleaf og skrive kommanden
+\begin{verbatim}
+\includegraphics[width=5cm]{cat.png}
+\end{verbatim}
+Breddeangivelsen skalerer billedet til bredden af teksten, idet
+\verb|\textwidth| angiver denne bredde.  Man kan også angive bredde i
+f.eks.\ centimeter og millimeter, så kommandoen
+\verb|\includegraphics[width=5cm]{cat.png}| vil skalere billedet til
+en bredde på 5 centimeter.  Udover PNG kan \texttt{includegraphics}
+også indlæse JPG og PDF.
 
 Man kan centrere billeder (og andet) med \texttt{center} omgivelserne,
 altså som f.eks.
 
 \begin{verbatim}
 \begin{center}
-\includegraphics[width=5cm]{emacs-welcome.png}
+\includegraphics[width=5cm]{cat.png}
 \end{center}
 \end{verbatim}
 
-\noindent
-som vil give dette resultat:
-
-\begin{center}
-\includegraphics[width=5cm]{emacs-welcome.png}
-\end{center}
 
 \section{Udvidelsespakker}
 
@@ -812,28 +695,6 @@ pakker på denne side.  Man kan søge efter navn eller emne.  Hvis man
 f.eks.\ går ind i emnelisten under ``music'', finder man 35 pakker til
 formatering af noder, guitarakkorder, sanghæfter, osv.
 
-\section{\LaTeX\ og Emacs}
-
-Emacs har en \LaTeX-mode, der blandt andet viser kommandonavne i
-farver og viser kursiv og fed tekst som sådan.  Hvis man har
-\LaTeX-mode installeret i sin Emacs, skifter Emacs automatisk til
-denne mode, når man redigerer i en fil med filendelsen \texttt{.tex}.
-
-\LaTeX-mode tilføjer et par \LaTeX-specifikke kommandoer til Emacs:
-\textsf{C-c C-e} tilføjer en \verb|\end{}|-kommando svarende til den
-nærmeste uparrede \verb|\begin{}|-kommando, og \textsf{C-c C-o}
-tilføjer et par af \verb|\begin{}| og \verb|\end{}|-kommandoer, hvor
-man kan vælge navnet ved at skrive det i minibufferen.
-
-I \LaTeX-mode har Emacs også en TeX-menu, der blandt andet kan køre
-kommandoen \texttt{latex} på den fil, man redigerer i, og vise
-resultatet i et andet vindue.  Denne kommando producerer dog ikke PDF,
-men et andet format, der hedder DVI, så selv om det er fint at bruge
-denne menufunktion til at finde fejl i sit dokument, så bør man bruge
-kommandoen \texttt{pdflatex} til sidst for at få output i PDF.
-Endvidere kan \texttt{latex}-kommandoen ikke håndtere billeder i de
-samme formater som \texttt{pdflatex}.
-
 \section{Finpudsning}
 
 Der er et par småting, men skal være opmærksom på, når man bruger
@@ -841,7 +702,7 @@ Der er et par småting, men skal være opmærksom på, når man bruger
 
 \begin{itemize}
 \item Blanktegn lige efter en kommando, der ikke har parametre i
-  krølleklammer, ignoreres.  For eksempel vil \verb|\LaTeX styrer!|
+  krølleklammer, ignoreres.  For eksempel vil \verb|\LaTeX\ styrer!|
   formatteres til {\LaTeX styrer!}  For at få et blanktegn ind
   alligevel, kan man give kommandoen en tom parameter, altså
   \verb|\LaTeX{} styrer!|, som giver resultatet {\LaTeX\ styrer!}.
