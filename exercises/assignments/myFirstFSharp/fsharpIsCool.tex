@@ -1,1 +1,26 @@
-Write a program, which repatedly asks the user for the name of a programming language. If the user enters \lstinline{"quit"}, then the program should stop. If the user enters \lstinline{"fsharp"}, then the program should write \lstinline{"fsharp is fun"}. In all other cases, program should write \lstinline{"I don't known <name>"}, where \lstinline{"<name>"} is the string, the user entered. 
+Modify the following program (\lstinline[language=console]{quickStartRecursiveInput.fsx}):
+\begin{lstlisting}
+let rec readNonZeroValue () =
+  let a = int (System.Console.ReadLine ())
+  match a with
+    0 ->
+      printfn "Error: zero value entered. Try again"
+      readNonZeroValue ()
+    | _ ->
+      a
+printfn "Please enter a non-zero value"
+let b = readNonZeroValue ()
+printfn "You typed: %A" b
+\end{lstlisting}
+such that instead of asking the user for a non-zero value, repatedly asks the user for the name of a programming language. If the user enters \lstinline{"quit"}, then the program should stop. If the user enters \lstinline{"fsharp"}, then the program should write \lstinline{"fsharp is cool"}. In all other cases, program should write \lstinline{"I don't known <name>"}, where \lstinline{"<name>"} is the string, the user entered. Example of a user dialogue is:
+\begin{lstlisting}[language=console]
+% dotnet fsi fsharpIsCool.fsx       
+Please enter the name of a programming language:
+c
+I don't know "c"
+Please enter the name of a programming language:
+fsharp
+Fsharp is cool
+Please enter the name of a programming language:
+quit
+\end{lstlisting}
