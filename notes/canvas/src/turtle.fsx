@@ -1,7 +1,7 @@
 //
 // Simple turtle graphics
 //
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 

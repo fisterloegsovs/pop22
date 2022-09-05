@@ -1,7 +1,7 @@
 //
 // Draw the Sierpinsky triangle fractal (https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle)
 //
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 

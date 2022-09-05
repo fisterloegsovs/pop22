@@ -15,7 +15,7 @@
   % sensitive=true,
   basicstyle=\ttfamily\lst@ifdisplaystyle\footnotesize\fi, % make font small for listings but not for lstinline
   breaklines=true,
-  breakatwhitespace=true
+  breakatwhitespace=true,
   showstringspaces=false,
   morecomment=[l][\color{commentsColor}]{///},
   morecomment=[l][\color{commentsColor}]{//},
@@ -51,7 +51,7 @@
 \section{Introduction}
 Canvas is a small F\# library by which you can open a window and manipulates its pixels. In the following, we will describe how to write a simple graphics application. Consider the following example:
 \begin{lstlisting}
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 
@@ -116,7 +116,7 @@ which takes a canvas and a title string, and opens a window that displays the ca
 \section{Turtle graphics}
 Turtle graphics is an alternative method of drawing line drawings in canvas. The turtle is a metaphor for a small animal, which can do simple actions, and in Canvas the turtle can turn and move with \lstinline{Turn}, \lstinline{Move}, and left the pen up and down with \lstinline{PenUp} and \lstinline{PenDown}. The turtle starts in the center of the screen pointing upwards. An example of a turtle program is as follows:
 \begin{lstlisting}
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 
@@ -157,7 +157,7 @@ runApp    : string -> int -> int
 \end{lstlisting}
 It takes a window title as a string, a width and a height, a function that can draw a create a canvas with content, and a function that can listen and react to keyboard input and a state. Consider the following example:
 \begin{lstlisting}
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 

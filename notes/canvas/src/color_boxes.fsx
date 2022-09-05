@@ -1,7 +1,7 @@
 //
 // Draw 4 colored boxes, which rotation clockwise and counter-clockwise when the user presses the arrow keys.
 //
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 

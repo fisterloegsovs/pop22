@@ -2,7 +2,7 @@
 // Interactively draw the Sierpinsky triangle fractal to a user specified depth
 // See https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle for more on Sierpinsky's triangle
 //
-#r "nuget:DIKU.Canvas, 1.0.0-alpha2"
+#r "nuget:DIKU.Canvas, 1.0"
 
 open Canvas
 
