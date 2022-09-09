@@ -1,57 +1,20 @@
-We can represent 2-dimensional vectors as tuples, as seen in the below code snippet:
-  \begin{quote}
-    \mbox{\lstinline!let myVector = (1,2)!} \\
-    \mbox{\lstinline!let zeroVector = (0,0)!}
-  \end{quote}
-
-
-
-
+Using Steps~1, 3, 5, 7, and 8 from the 8-step guide to write a small set of functions in F\#:
 \begin{enumerate}
-  \item Write a function:
+\item addition of vectors
   \begin{quote}
-    \mbox{\lstinline!createIntVec : x:int -> y:int -> int * int!}
+    \mbox{\lstinline! add: float * float -> float * float -> float * float!}
   \end{quote}
-  that given two integers $x$ and $y$ returns a vector represented as a tuple, \lstinline{(x, y)}.
-\item Write a function:
+\item multiplication of a vector and a constant
   \begin{quote}
-    \mbox{\lstinline!createFloatVec : x:float -> y:float -> float * float!}
+    \mbox{\lstinline! mul: float * float -> float -> float * float!}
   \end{quote}
-  that given two floats $x$ and $y$ returns a vector of floats.
-\item Write a function:
+\item dot-product of two vectors
   \begin{quote}
-    \mbox{\lstinline!createFloatVecFromInts : x:int -> y:int -> float * float!}
+    \mbox{\lstinline! dot: float * float -> float * float -> float!}
   \end{quote}
-  that given two integers $x$ and $y$ returns a vector of floats.
-\item Write a function:
+\item rotation of a vector
   \begin{quote}
-    \mbox{\lstinline!intToFloatVec : int * int -> float * float!}
+    \mbox{\lstinline! rot: float * float -> float -> float * float!}
   \end{quote}
-  that given a vector of two integers, returns a vector of floats.
-\item Write a function:
-  \begin{quote}
-    \mbox{\lstinline!floatToIntVec : float * float -> int * int!}
-  \end{quote}
-  that given a vector of two floats, returns a vector of ints.
-
-\item Write a function:
-  \begin{quote}
-    \mbox{\lstinline!addIntVecs : int * int -> int * int -> int * int!}
-  \end{quote}
-  that given two vectors of ints, adds them with vector addition and returns the resulting vector.
-
-\item Write a function:
-  \begin{quote}
-    \mbox{\lstinline!subIntVecs : int * int -> int * int -> int * int!}
-  \end{quote}
-  that given two vectors of ints, subtracts them with vector subtraction and returns the resulting vector.
-
-\item Write a function:
-  \begin{quote}
-    \mbox{\lstinline!scaleIntVec : int * int -> scalar:int -> int * int!}
-  \end{quote}
-  that given a vector of ints and a scalar, scales the vector and returns the resulting vector.
-  
-  
-  
 \end{enumerate}
+The functions are to be documented using the \verb|<summary>|, \verb|<param>|, and \verb|<returns>| XML tags.

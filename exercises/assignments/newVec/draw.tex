@@ -1,0 +1,27 @@
+Using Canvas, you are to draw vectors.
+\begin{enumerate}
+\item make a function
+  \begin{quote}
+    \mbox{\lstinline! toInt: float * float -> int * int!}
+  \end{quote}
+  which takes a vector of floats and returns a vector of ints.
+\item Using \lstinline{add} and \lstinline{toInt}, make a function
+  \begin{quote}
+    \mbox{\lstinline! setVector: canvas -> color -> int * int -> int * int -> unit!}
+  \end{quote}
+  which takes a canvas, a color, a vector, and a position for its tail and draws it as a line with \lstinline{setLine} on the canvas. Demonstrate that this works by drawing the canvas with \lstinline{show}.
+\item make a function using \lstinline{rot} and \lstinline{seVector}
+  \begin{quote}
+    \mbox{\lstinline! draw: int -> int -> canvas!}
+  \end{quote}
+  which creates a canvas with a given width and height, adds 36 spokes as illustrated in \Cref{fig:spokes}, and returns the canvas.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{spokes}
+    \caption{36 radial lines from the center of a canvas.}
+    \label{fig:spokes}
+  \end{figure}
+  Demonstrate that this works by drawing the canvas with \lstinline{show}.
+\item Optional: Use these in \lstinline{runApp} to make an interactively rotating set of spokes as follows: Extend \lstinline{draw} with a float state parameter \lstinline{s}, which draws the spokes with the angualar offset \lstinline{s}. Add a reaction function \lstinline{react} which changes the offset by $\pm0.01$ when the right and left arrow key are pressed respectively.
+\end{enumerate}
+The functions are to be documented using the \verb|<summary>|, \verb|<param>|, and \verb|<returns>| XML tags.

@@ -1,14 +1,9 @@
 The following program,
-\begin{codeNOutput}{: Strenge.}
-  \begin{lstlisting}
+\begin{lstlisting}
 let firstName = "Jon"
-let lastName = "Sporring" in let name = firstName + " " + lastName;;
-printfn "Hello %A!" name;;
-  \end{lstlisting}
-\end{codeNOutput}
+let lastName = "Sporring
+printfn "Hello %A!" firstName+lastName
+\end{lstlisting}
 is supposed to write ``Hello Jon Sporring!'' to the screen, but
 unfortunately, it contains at least one mistake. Correct the
-mistake(s). Rewrite the program into a one-line program without the
-use of semicolons. Consider how many ways this can be done, where you
-still use the bindings \lstinline!firstName!, \lstinline!lastName!,
-\lstinline!name!, and the \lstinline!printfn! function. 
+mistake(s) and rerun the program. 

@@ -1,3 +1,6 @@
-Write a function \lstinline{powN : x:int -> n:int -> int} that calculates the
-value $x^n$, assuming $n \geq 0$, using recursion. The function should
-return the value $1$ if it is passed a negative value as its second argument.
+Using Steps~1, 3, 5, 7, and 8 from the 8-step guide,
+\begin{enumerate}
+\item write a recursive function which takes two integer arguments $x$ and $n$ and returns the value $x^n$.
+\item write another function wich takes one argument $(x,n)$ and calls the former. 
+\end{enumerate}
+Document both functions using the \verb|<summary>|, \verb|<param>|, and \verb|<returns>| XML tags. Consider what should happen, if $n<0$, and whether there is any significant difference between the call of the two functions.

@@ -6,35 +6,17 @@
 \newcommand{\exerciseNumber}{2}
 \newrobustcmd{\typeLetter}{g}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{19.\ - 24.\ september}{lørdag d.\ 24.\ september kl. 22:00}{Jon Sporring}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{16.\ - 24.\ september}{lørdag d.\ 24.\ september kl. 22:00}{Jon Sporring}
 
 \begin{document}
 \maketitle
 
 % TODO: Omskriv
-Med denne arbejdsseddel skifter vi langsomt fokus fra det imperative
-programmeringsparadigme til funktionsprogrammeringsparadigmet. Hvor
-imperativ programmering er som en kageopskrift og kendes på brug af
-variable, for- og while-løkker, så lægger funktionsprogrammering vægt
-på funktioner og kendes på værdier og rekursion.
-
-I denne periode kigger vi særligt på 2 ny datastrukturer arrays og
-lists. De er begge datastrukturer til at holde lister af elementer af
-samme type, men arrays er variable og lists er værdier. Derfor ser man
-også sjældent arrays i programmer, der følger
-funktionsprogrammeringsparadigmet. I denne periode vil vi lægge vægt
-på programmering af arrays og lists via de medfølgende
-\lstinline{List} og \lstinline{Array} moduler.
-% TODO END
-
-
-% strukturere kode vha. funktioner
-% Kens 8 trins model
-% Håndkøring
+Med denne arbejdsseddel gælder for 1 uge, og med den skifter vi perspektiv til funktionsprogrammering. Derfor vil vi undgå mut{\'e}rbare værdier og bruge rekursion til løkker. Curriculum for opgaverne er [Sporring, kapitel 3-6]. Læringsmålene for denne uge er:
 \learningPurposeTxt{
-  {at kunne strukturere kode vha. funktioner,},
-  {problemløsning vha. design med 8-trinsmodellen},
-  {at kunne håndkøre simple programmer.}
+  {at kunne strukturere kode vha.\ funktioner og sum typer,},
+  {at kunne håndkøre simple programmer.},
+  {at kunne dokumentere kode vha.\ XML standarden.}
 }
 
 \learningConditionsTxt{\typeLetter}
@@ -53,21 +35,45 @@ på programmering af arrays og lists via de medfølgende
 % Vektorer? 2-d, med tupler
 % Evt. Pythagoras
 
-\exercises{\exerciseNumber ø}{../assignments/recursion/}{}{facRec,pow2,powN}
+\exercises{\exerciseNumber ø}{../assignments/bindings/}{}{error,handTracing}
+\continueExercises{\exerciseNumber ø}{../assignments/recursion/}{}{facRec,powN}
 
 \begin{center}
 \rule{0.7\textwidth}{1pt}
 \end{center}
-\continueExercises{\exerciseNumber ø}{../assignments/newVec/}{}{vec2dOps}
 
+\continueExercises{\exerciseNumber ø}{../assignments/weekday/}{introduction}{daytonumber,nextday,numberToDay}
 
 \section*{Afleveringsopgaver (in English)}
-\exercises{\exerciseNumber\typeLetter}{../assignments/recursion/}{introduction}{sumRec}
-\continueExercises{\exerciseNumber\typeLetter}{../assignments/newVec/}{}{vec2dOpsAss}
+\exercises{\exerciseNumber\typeLetter}{../assignments/newVec/}{introduction}{vec2dOps,draw}
 % \exercises{\exerciseNumber\typeLetter}{../assignments/recursion/}{introduction}{gcdEn,collatz}
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Krav til afleveringen}
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navne og dato arbejdet.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter0.fsx og \exerciseNumber\typeLetter1.fsx
+  \end{quote}
+  svarende til afleveringsopgaverne
+\item en \texttt{tex} mappe med følgende og kun følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter.tex og og to screenshots et fra hver af \exerciseNumber\typeLetter1b.fsx og \exerciseNumber\typeLetter1c.fsx i png-format.
+  \end{quote}
+\end{itemize}
+\LaTeX dokumentet \exerciseNumber\typeLetter.tex skal benytte \lstinline[language=console]{opgave.tex} skabelonen og ganske kort dokumentere jeres løsning. Et Screenshot af Canvas vinduet skal inkluderes i dokumentet.
+
+
+
+
 \handinTextTwoTwo{\exerciseNumber\typeLetter}{\texttt{\exerciseNumber\typeLetter
     0.fsx og \exerciseNumber\typeLetter 1.fsx}}
 
