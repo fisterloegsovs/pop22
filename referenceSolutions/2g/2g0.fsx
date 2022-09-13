@@ -1,3 +1,9 @@
+(*
+   Initial reference solution by Mads Obitsø,
+   made when the assignment was still in draft.
+   Your mileage may vary.
+*)
+
 #r "nuget:DIKU.Canvas, 1.0.1"
 open Canvas
 
