@@ -10,7 +10,7 @@ Using Canvas, you are to draw vectors.
     \mbox{\lstinline! setVector: canvas -> color -> int * int -> int * int -> unit!}
   \end{quote}
   which takes a canvas, a color, a vector, and a position for its tail and draws it as a line with \lstinline{setLine} on the canvas. Demonstrate that this works by drawing the canvas with \lstinline{show}.
-\item make a function using \lstinline{rot} and \lstinline{seVector}
+\item make a function using \lstinline{rot} and \lstinline{setVector}
   \begin{quote}
     \mbox{\lstinline! draw: int -> int -> canvas!}
   \end{quote}
@@ -22,6 +22,6 @@ Using Canvas, you are to draw vectors.
     \label{fig:spokes}
   \end{figure}
   Demonstrate that this works by drawing the canvas with \lstinline{show}.
-\item Optional: Use these in \lstinline{runApp} to make an interactively rotating set of spokes as follows: Extend \lstinline{draw} with a float state parameter \lstinline{s}, which draws the spokes with the angualar offset \lstinline{s}. Add a reaction function \lstinline{react} which changes the offset by $\pm0.01$ when the right and left arrow key are pressed respectively.
+\item Optional: Use these in \lstinline{runApp} to make an interactively rotating set of spokes as follows: Extend \lstinline{draw} with a float state parameter \lstinline{s}, which draws the spokes with the angular offset \lstinline{s}. Add a reaction function \lstinline{react} which changes the offset by $\pm0.01$ when the right and left arrow key are pressed respectively.
 \end{enumerate}
 The functions are to be documented using the \verb|<summary>|, \verb|<param>|, and \verb|<returns>| XML tags.
