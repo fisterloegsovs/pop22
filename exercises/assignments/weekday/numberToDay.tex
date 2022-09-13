@@ -1,1 +1,4 @@
-Make a function \lstinline{numberToDay : n : int -> weekday option} which given an integer 1\dots 7 returns the weekday Monday\dots Sunday.
+Make a function \lstinline{numberToDay : n : int -> weekday option} which given an integer in the range 1\dots 7 returns one of the weekdays Monday\dots Sunday as an option type. An integer not in the range, i.e. $< 1$ or $>7$ should return \texttt{None}.
+\\
+Examples: \\
+The call \lstinline{numberToDay 1} should return \lstinline{Some Monday} and The call \lstinline{numberToDay 42} should return \lstinline{None}.
