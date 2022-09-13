@@ -1,5 +1,4 @@
 #r "nuget:DIKU.Canvas, 1.0"
-open System
 open Canvas
 
 /// <summary>Add two 2-dimensional vectors</summary>
@@ -30,7 +29,7 @@ let dot (x1,y1) (x2,y2) = x1*x2+y1*y2
 /// <param y>y-coordinate of the vector</param>
 /// <param a>an angle in the range 0..2 pi</param>
 /// <returns>The rotated vector</returns>
-let rot (x,y) a = (x*Math.Cos a - y*Math.Sin a, x*Math.Sin a + y*Math.Cos a)
+let rot (x,y) a = (x*cos a - y*sin a, x*sin a + y*cos a)
 
 /// <summary>Conversion of a vector wit float components to int</summary>
 /// <param x>x-coordinate of the vector</param>
@@ -55,7 +54,7 @@ let setVector C col v p = setLine C col (toInt p) (toInt (add v p))
   printfn "v = %A, w = %A, a = %A" v w a
   printfn "v + w = %A" (add v w)
   printfn "av = %A" (mul v a)
-  printfn "R (1,0) = %A" (rot (1,0) (Math.PI/2.0))
+  printfn "R (1,0) = %A" (rot (1.0,0.0) (System.Math.PI/2.0))
 )
 
 type state = float // The spoke-angle offset will be communicated between draw and react
@@ -75,7 +74,7 @@ type state = float // The spoke-angle offset will be communicated between draw a
           setVector C col v (300.0,300.0)
           fan C col u a (n-1)
     let n = 36
-    let da = 2.0*Math.PI/float n
+    let da = 2.0*System.Math.PI/float n
     let C = create w h
     let u = (0.0,float (h/2))
     fan C black u da n
