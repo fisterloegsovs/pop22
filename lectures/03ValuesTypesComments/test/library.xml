@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>library</name></assembly>
+<members>
+<member name="M:Library.fib(System.Int32)">
+<summary>
+ Calculate the n&apos;th Fibonacci number
+</summary>
+</member>
+</members>
+</doc>

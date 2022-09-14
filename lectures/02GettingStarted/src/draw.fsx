@@ -2,7 +2,7 @@
 open Canvas
 
 let  circ (C: canvas) (col: color) (r: float) (x: float) (y: float) (n: int) : unit = 
-  let rec arc (da: float) (i: int) : unit=
+  let rec arc (da: float) (i: int) : unit =
     match i with
       0 -> ()
       | _ ->
@@ -22,4 +22,4 @@ let C = create w h
 let half = (float w)/2.0
 let quarter = (float w)*3.0/8.0
 circ C black quarter half half 36
-show C "hejsa"
+show C "Circle"

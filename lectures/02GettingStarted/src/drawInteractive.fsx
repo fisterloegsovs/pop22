@@ -2,7 +2,7 @@
 open Canvas
 
 let  circ (C: canvas) (col: color) (r: float) (x: float) (y: float) (n: int) : unit = 
-  let rec arc (da: float) (i: int) : unit=
+  let rec arc (da: float) (i: int) : unit =
     match i with
       0 -> ()
       | _ ->
@@ -32,4 +32,4 @@ let react (s:state) (k:Canvas.key) : state option =
     
 let w = 800
 let h = w
-do runApp "Circles" w h draw react 36
+do runApp "Polygon" w h draw react 36
