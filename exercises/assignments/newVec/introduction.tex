@@ -2,8 +2,8 @@ This assignment is about 2-dimensional vectors. A 2-dimensional vector or just a
 \begin{align}
   \vec v_1 &= (x_1, y_1)
   \\\vec v_2 &= (x_2, y_2)
-  \\a \vec v_1 &= (a x_1, a y_1)
-  \\\vec v_1 + \vec v_2 &= (x_1+x_2, y_1+y_2)
+  \\\vec v_1 + \vec v_2 &= (x_1+x_2, y_1+y_2) \label{eq:addition}
+  \\a \vec v_1 &= (a x_1, a y_1)  \label{eq:scalarMul}
 \end{align}
 Addition can be drawn as shown in \Cref{fig:vectorAddition}.
 \begin{figure}
@@ -14,6 +14,9 @@ Addition can be drawn as shown in \Cref{fig:vectorAddition}.
 \end{figure}
 Rotation of a vector counter-clockwise around its tail by $a$ can be done as,
 \begin{equation}
-  R_a \vec v_1 = (x\cos(a) - y\sin(a),x\sin(a)+y\cos(a))
+  R_a \vec v_1 = (x\cos(a) - y\sin(a),x\sin(a)+y\cos(a)) \label{eq:rotation}
 \end{equation}
-In F\#, the trigonometric functions are found in \lstinline{cos} and \lstinline{sin}, and they both take an angle in radians as the argument. The constant $\pi$ is found in \lstinline{System.Math.PI}.
+In F\#, the trigonometric functions are found in \lstinline{cos} and \lstinline{sin}, and they both take an angle in radians as the argument. The constant $\pi$ is found in \lstinline{System.Math.PI}. In the following, we will use the type abbreviation:
+\begin{quote}
+  \mbox{\lstinline!type vec = float * float!}
+\end{quote}

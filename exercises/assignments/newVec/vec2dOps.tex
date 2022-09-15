@@ -1,20 +1,16 @@
 Using Steps~1, 3, 5, 7, and 8 from the 8-step guide to write a small set of functions in F\#:
 \begin{enumerate}
-\item addition of vectors
+\item addition of vectors  \eqref{eq:addition}
   \begin{quote}
-    \mbox{\lstinline! add: float * float -> float * float -> float * float!}
+    \mbox{\lstinline! add: vec -> vec -> vec!}
   \end{quote}
-\item multiplication of a vector and a constant
+\item multiplication of a vector and a constant  \eqref{eq:scalarMul}
   \begin{quote}
-    \mbox{\lstinline! mul: float * float -> float -> float * float!}
+    \mbox{\lstinline! mul: vec -> float -> vec!}
   \end{quote}
-\item dot-product of two vectors
+\item rotation of a vector \eqref{eq:rotation}
   \begin{quote}
-    \mbox{\lstinline! dot: float * float -> float * float -> float!}
-  \end{quote}
-\item rotation of a vector
-  \begin{quote}
-    \mbox{\lstinline! rot: float * float -> float -> float * float!}
+    \mbox{\lstinline! rot: vec -> float -> vec!}
   \end{quote}
 \end{enumerate}
 The functions are to be documented using the \verb|<summary>|, \verb|<param>|, and \verb|<returns>| XML tags.
