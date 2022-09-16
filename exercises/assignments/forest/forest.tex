@@ -1,0 +1,17 @@
+\begin{enumerate}
+\item The following program
+\begin{lstlisting}
+let rnd = System.Random()
+let v = rnd.Next 10
+\end{lstlisting}
+makes a random integer between the integer $0\leq v < 10$. Use this to make a function
+\begin{quote}
+  \lstinline{randomTree: maxStep: int -> sz: int -> turtleCmd listt}
+\end{quote}
+which makes the list of turtle commands placing a tree randomly on a canvas, and the turtle to the center. Test your function by calling \lstinline{turtleDraw} with such a list.
+\item Write a recursive function
+\begin{quote}
+  \lstinline{forest:  maxStep: int -> sz: int -> n: int -> turtleCmd listt}
+\end{quote}
+which makes \lstinline{n} random trees on the canvas, and est your function by calling \lstinline{turtleDraw} with such a list.
+\end{enumerate}

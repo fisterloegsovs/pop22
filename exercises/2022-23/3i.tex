@@ -1,0 +1,53 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{3}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{23.\ september - 1.\ oktober}{lørdag d.\ 1.\ oktober kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+I denne periode skal vi arbejde med lister. Lister er den første af en række abstrakte datastrukturer, vi skal kigge på, og som er velunderstøttet i F\#. Det er så vigtig en datastruktur at F\# både har syntaks der direkte understøtter lister og et bibliotek (modul) med mange ekstra funktioner til listebearbejdning, \lstinline{List}.
+
+\learningPurposeTxt{
+  {at kunne arbejde med anonyme funktioner,},
+  {at kunne oprette, gennemløbe og lave beregninger med lists vha.\ \lstinline{List}-modulet,},
+  {at kunne skrive rekursive funktioner, som tager lister som argument og som giver lister som returværdi,},
+}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/lister/}{}{init,mapEn,reverse,filter,gennemsnit}
+
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/forest/}{introduction}{forest}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navn og dato arbejdet.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter0a.fsx og \exerciseNumber\typeLetter0b.fsx
+  \end{quote}
+  svarende til afleveringsopgaverne. Funktionerne skal være dokumenteret med ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+  \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{opgave.tex} skabelonen, ganske kort dokumentere din løsning og indeholde 2 figurer, der viser outputgrafik fra canvas for de 2 opgaver.
+\end{itemize}
+
+\flushright God fornøjelse.
+
+\end{document}
+
