@@ -34,6 +34,6 @@ let h = w
 let maxStep = w/4
 let sz = 100
 let nTrees = 20;
-let pic = randomTree maxStep sz nTrees
+let pic = Move -100 :: randomTree maxStep sz nTrees
 
 do turtleDraw (w,h) "Forest" pic 

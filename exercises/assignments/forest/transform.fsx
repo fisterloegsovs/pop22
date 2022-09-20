@@ -13,11 +13,28 @@ let rotate theta lst =
   Turn theta :: lst @ [Turn -theta]
 
 let rec scale s lst =
-  let scaleIt elm = 
+  let update elm = 
     match elm with
       Move delta -> Move (int (s*float delta))
       | _ -> elm
-  List.map scaleIt lst
+  List.map update lst
+
+type pos = float*float
+type posDir = pos*int
+let toXY (lst: turtleCmd list) : (posDir list) =
+  let update (acc: posDir list) (elm: turtleCmd) : posDir list =
+    let (p,d) = acc.Head 
+    match elm with
+      Move delta->
+        let r = float delta
+        let t = float d
+        let newX = (fst p) + r*cos (t*System.Math.PI/180.0)
+        let newY = (snd p) + r*sin (t*System.Math.PI/180.0)
+        ((newX,newY),d)::acc
+      | Turn theta -> (p,d+theta)::acc
+      | _ -> (p,d)::acc
+  List.fold update [((0.0,0.0),0)] lst
+  |> List.rev
 
 let rec tree sz =
    if sz < 5 then 
@@ -41,7 +58,7 @@ let rec randomTree maxStep sz n =
       let delta = rnd.Next maxStep
       let s = 0.1+2.9*rnd.NextDouble ()
       let phi = rnd.Next 40 - 20
-      let newTree = tree sz |> translate 0 -50 |> rotate phi |> scale s |> translate theta delta
+      let newTree = tree sz |> scale s |> translate 0 -150 |> rotate phi |> translate theta delta
       newTree @ randomTree maxStep sz (n-1)
 
 let w = 600
@@ -50,5 +67,7 @@ let maxStep = w/4
 let sz = 100
 let nTrees = 20;
 let pic = randomTree maxStep sz nTrees
+let xy = sz |> tree |> toXY
+printfn "%A %A" xy[0] xy[xy.Length-1]
 
 do turtleDraw (w,h) "Forest" pic 
