@@ -10,13 +10,14 @@ let translate theta delta lst =
   @ [PenUp; Turn theta; Move -delta; Turn -theta; PenDown] 
 
 let rotate theta lst =
-  Turn theta :: lst
+  Turn theta :: lst @ [Turn -theta]
 
 let rec scale s lst =
-  match lst with
-    [] -> []
-    | Move delta::rst -> Move (int (s*float delta))::scale s rst
-    | elm::rst -> elm::scale s rst
+  let scaleIt elm = 
+    match elm with
+      Move delta -> Move (int (s*float delta))
+      | _ -> elm
+  List.map scaleIt lst
 
 let rec tree sz =
    if sz < 5 then 
@@ -39,8 +40,8 @@ let rec randomTree maxStep sz n =
       let theta = rnd.Next 360
       let delta = rnd.Next maxStep
       let s = 0.1+2.9*rnd.NextDouble ()
-      let phi = rnd.Next 20 - 10
-      let newTree = tree sz |> translate 180 100 |> rotate phi |> scale s |> translate theta delta
+      let phi = rnd.Next 40 - 20
+      let newTree = tree sz |> translate 0 -50 |> rotate phi |> scale s |> translate theta delta
       newTree @ randomTree maxStep sz (n-1)
 
 let w = 600
