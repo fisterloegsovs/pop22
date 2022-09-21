@@ -5,4 +5,4 @@ let rec fold (f: 'S -> 'T -> 'S) (acc:'S) (lst:'T list) : 'S  =
     [] -> acc
     | elm::rst -> fold f (f acc elm) rst
 
-let lst = fold (fun acc i -> (i*i)::acc) [] [0..3]
+let lst = fold (fun acc i -> (i*i)::acc) [] [3..-1..0]
