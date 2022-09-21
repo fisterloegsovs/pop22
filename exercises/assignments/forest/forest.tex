@@ -6,12 +6,12 @@ let v = rnd.Next 10
 \end{lstlisting}
 makes a random integer between the integer $0\leq v < 10$. Use this to make a function
 \begin{quote}
-  \lstinline{randomTree: maxStep: int -> sz: int -> turtleCmd listt}
+  \lstinline{randomTree: sz: int -> Canvas.turtleCmd list}
 \end{quote}
-which makes the list of turtle commands placing a tree randomly on a canvas, and the turtle to the center. Test your function by calling \lstinline{turtleDraw} with such a list.
+which calls \lstinline{tree sz} and concatenates further turtle commands to place a tree randomly on a canvas, and return the turtle to the origin. Test your function by calling \lstinline{turtleDraw} with such a list.
 \item Write a recursive function
 \begin{quote}
-  \lstinline{forest:  maxStep: int -> sz: int -> n: int -> turtleCmd listt}
+  \lstinline{forest: sz: int -> n: int -> Canvas.turtleCmd}
 \end{quote}
-which makes \lstinline{n} random trees on the canvas, and est your function by calling \lstinline{turtleDraw} with such a list.
+which makes $n$ random trees on the canvas by calling \lstinline{randomTree} $n$ times. Test your function by calling \lstinline{turtleDraw} with such a list.
 \end{enumerate}

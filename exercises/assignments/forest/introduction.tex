@@ -1,9 +1,10 @@
-In the following we are going to work with lists and Canvas. The module Canvas has the ability to perform simple turtle graphics. To draw in turtle graphics, we command a little invisible turtle, which moves on the canvas with a pen. The function \lstinline{turtleDraw} is given a list of \lstinline{turtleCmd}s, such as \lstinline{PenUp} and  \lstinline{PenDown} to raise and lower the pen, \lstinline{Turn 250} and \lstinline{Move 100} to turn 250 degrees and move 100 pixels, and \lstinline{SetColor red} to pick a red pen. For example, the following example draws a fractal tree starting and ending in the center of the canvas:
+In the following we are going to work with lists and Canvas. The module Canvas has the ability to perform simple turtle graphics. To draw in turtle graphics, we command a little invisible turtle, which moves on the canvas with a pen. The function \lstinline{turtleDraw} is given a list of \lstinline{turtleCmd}s, such as \lstinline{PenUp} and  \lstinline{PenDown} to raise and lower the pen, \lstinline{Turn 250} and \lstinline{Move 100} to turn 250 degrees and move 100 pixels, and \lstinline{SetColor red} to pick a red pen. For example in \Cref{fig:tree},  the function \mbox{\lstinline{tree sz}} creates the set of turtle commands for drawing a fractal tree of size \lstinline{sz} and returns the turtle to the starting point. The command \lstinline{turtleDraw} executes the list of turtle commands, which in this case draws the tree on a canvas and displays it.
+\begin{figure}
 \begin{lstlisting}
 #r "nuget:diku.canvas, 1.0.1"
 open Canvas
 
-let rec tree sz =
+let rec tree (sz: int) : Canvas.turtleCmd list = 
    if sz < 5 then 
      [Move sz; PenUp; Move (-sz); PenDown]
    else 
@@ -13,12 +14,16 @@ let rec tree sz =
      @ tree (sz/2) 
      @ [Turn -25; Move (sz/3); Turn 25] 
      @ tree (sz/2) 
-     @ [Turn -25; Move (sz/6); PenUp; Move (-sz/3); Move (-sz/6); Move (-sz/3); Move (-sz/6); PenDown]
-
+     @ [Turn -25; Move (sz/6)]
+     @ [PenUp; Move (-sz/3); Move (-sz/6); Move (-sz/3)]
+     @ [Move (-sz/6); PenDown]
+     
 let w = 600
 let h = w
 let sz = 100
-
 turtleDraw (w,h) "Tree" (tree sz)
 \end{lstlisting}
-In this exercise, you are to extend the above program.
+\caption{A turtle graphics program for drawing a fractal tree in Canvas.}
+\label{fig:tree}
+\end{figure}
+In this exercise, you are to work with turtle commands.

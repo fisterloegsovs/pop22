@@ -1,0 +1,21 @@
+Consider a list of pairs of integers \lstinline{(dir,dist)} which are to be translated into a list of turtle commands, such that \lstinline{[(10, 30); (-5, 127); (20, 90)]} is translated into \lstinline{[Turn 10; Move 30; Turn -5; Move 127; Turn 20; Move 90]}. You are to
+\begin{enumerate}
+\item
+  Write the following functions:
+\begin{lstlisting}
+type move = int*int // a pair of turn and move
+fromMoveRec: lst: move list -> Canvas.turtleCmd list
+fromMoveMap: lst: move list -> Canvas.turtleCmd list
+fromMoveFold: lst: move list -> Canvas.turtleCmd list
+fromMoveFoldBack: lst: move list -> Canvas.turtleCmd list     
+\end{lstlisting}
+where
+\begin{enumerate}
+\item \lstinline{fromMoveRec} is a recursive function, that does not use the List module
+\item \lstinline{fromMoveMap} is non-recursive function, which uses \lstinline{List.map}
+\item \lstinline{fromMoveFold} is non-recursive function, which uses \lstinline{List.fold} 
+\item \lstinline{fromMoveFoldBack} is non-recursive function, which uses \lstinline{List.foldBack} 
+\end{enumerate}
+In some of the above functions, you may also find it useful to use \lstinline{List.concat} and \lstinline{List.rev}.
+\item Demonstrate that these 4 functions produce the same result given identical input.
+\end{enumerate}

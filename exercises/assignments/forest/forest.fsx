@@ -4,7 +4,12 @@
 #r "nuget:diku.canvas, 1.0.1"
 open Canvas
 
-let rec tree sz =
+/// <summary>
+/// Turtle commands for generating a fractal tree and return to the origin.
+/// </summary>
+/// <param sz>The size of the tree</param>
+/// <returns>A list of turtle commands</returns>
+let rec tree (sz: int) : Canvas.turtleCmd list = 
    if sz < 5 then 
      [Move sz; PenUp; Move (-sz); PenDown]
    else 
@@ -18,22 +23,35 @@ let rec tree sz =
 
 let rnd = System.Random()
 
-let rec randomTree maxStep sz n =
+/// <summary>
+/// Turtle commands for generating a fractal tree randomly placed on a canvas
+/// and return to the origin
+/// </summary>
+/// <param sz>The size of the tree</param>
+/// <returns>A list of turtle commands</returns>
+let rec randomTree (sz: int) : Canvas.turtleCmd list = 
+  let a = rnd.Next 360
+  let s = rnd.Next 100
+  [PenUp; Turn a; Move s; Turn -a; PenDown] 
+  @ tree sz 
+  @ [PenUp; Turn a; Move -s; Turn -a; PenDown] 
+
+/// <summary>
+/// Turtle commands for generating several fractal trees randomly placed on a canvas
+/// and return to the origin
+/// </summary>
+/// <param sz>The size of the tree</param>
+/// <param n>The number of the trees to produce commands for</param>
+/// <returns>A list of turtle commands</returns>
+let rec forest sz n =
   match n with
     0 -> []
-    | _ -> 
-      let a = rnd.Next 360
-      let s = rnd.Next maxStep
-      [PenUp; Turn a; Move s; Turn -a; PenDown] 
-      @ tree sz 
-      @ [PenUp; Turn a; Move -s; Turn -a; PenDown] 
-      @ randomTree maxStep sz (n-1)
+    | _ ->  randomTree sz @ forest sz (n-1)
 
 let w = 600
 let h = w
-let maxStep = w/4
 let sz = 100
 let nTrees = 20;
-let pic = Move -100 :: randomTree maxStep sz nTrees
+let pic = Move -100 :: forest sz nTrees
 
 do turtleDraw (w,h) "Forest" pic 
