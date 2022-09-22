@@ -39,10 +39,11 @@ let draw (w: int) (h: int) (s:state) =
   C
 
 let shiftLeft (s: state) : state =
-  let collapse (s: state) : state =
+  let rec collapse (s: state) : state =
     match s with
-      a::b::rst when fst a = fst b -> (nextColor (fst b), snd b)::rst
-      | _ -> s
+      a::b::rst when fst a = fst b -> (nextColor (fst b), snd b)::collapse rst
+      | a::rst -> a::collapse rst
+      | [] -> []
   let shift i =
     filter s i 
     |> List.sortBy (fun (c,(m,n))->m) 
