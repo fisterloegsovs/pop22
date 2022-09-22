@@ -1,11 +1,12 @@
-#r "nuget:DIKU.Canvas, 1.0"
+#r "nuget:DIKU.Canvas, 1.0.1"
 open Canvas
 
 type pos = int*int // A 2-dimensional vector
 type value = Red | Green | Blue | Black
 type piece = value*pos
 type state = piece list // the board is a set of randomly organized pieces
-let N = 4 // size of the board
+let N = 4 // NxN is the size of the board
+let w = 600 // The canvas will be wxw pixels
 
 /// <summary>Convert a value type to a color</summary>
 /// <param v>a (color-)value</param>
@@ -47,7 +48,7 @@ let shiftLeft (s: state) : state =
     |> List.sortBy (fun (c,(m,n))->m) 
     |> collapse
     |> List.mapi (fun j (c,(m,n))->(c,(j,n)))
-  List.map shift [0..3] |> List.concat
+  List.map shift [0..(N-1)] |> List.concat
 
 /// <summary>Flip the board left-rigth</summary>
 /// <param s>a list of pieces</param>
@@ -65,7 +66,7 @@ let transpose (s: state) : state =
 /// <param s>a list of pieces</param>
 /// <returns>a list of positions, with no pieces</returns>
 let empty (s: state) : pos list =
-  let all = List.allPairs [0..3] [0..3]
+  let all = List.allPairs [0..(N-1)] [0..(N-1)]
   let full = List.map (fun (c,p) -> p) s
   List.except full all
 
@@ -79,11 +80,11 @@ let addRandom (c: value) (s: state) : state =
   let pos = available[rnd.Next (available.Length - 1)]
   (c,pos)::s
   
-/// <summary>Create a canvas with 36 spokes, centered in the middle, and with an inital angular offset</summary>
+/// <summary>Create a canvas of the board</summary>
 /// <param w>the width of the resulting canvas</param>
 /// <param h>the height of the resulting canvas</param>
-/// <param s>the angular offset of all spokesr</param>
-/// <returns>a canvas with spokes</returns>
+/// <param s>the board</param>
+/// <returns>a canvas with pieces added</returns>
 let draw (w: int) (h: int) (s:state) =
   let rec helper (C: canvas) (lst: state) : unit =
     match lst with 
@@ -96,9 +97,9 @@ let draw (w: int) (h: int) (s:state) =
   C
 
 /// <summary>Convert a key-input to an offset</summary>
-/// <param s>the present angular offset of all spokesr</param>
+/// <param s>the list of pieces</param>
 /// <param k>the pressed key</param>
-/// <returns>an updated offset</returns>
+/// <returns>an updated set of pieces</returns>
 let react (s:state) (k:Canvas.key) : state option =
   match getKey k with
     | LeftArrow -> 
@@ -111,7 +112,8 @@ let react (s:state) (k:Canvas.key) : state option =
       s |> transpose |> fliplr |> shiftLeft |> fliplr |> transpose |> addRandom Red |> Some
     | _ -> None
 
+// Initial pieces on an NxN board. positions must be in the range ([0..(N-1)],[0..(N-1)])
 let board = [(Blue,(1,0));(Red,(0,0));(Green,(3,2))]
 
 // Enter the interactive canvas loop
-do runApp "ColorTest" 600 600 draw react board
+do runApp "2048" w w draw react board
