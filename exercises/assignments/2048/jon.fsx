@@ -69,8 +69,8 @@ let transpose (s: state) : state =
 /// <returns>a list of positions, with no pieces</returns>
 let empty (s: state) : pos list =
   let all = List.allPairs [0..(N-1)] [0..(N-1)]
-  let full = List.map (fun (c,p) -> p) s
-  List.except full all
+  let occupied = List.map (fun (c,p) -> p) s
+  List.except occupied all
 
 let rnd = System.Random()
 /// <summary>Add a piece to a randomly selected empty position</summary>
