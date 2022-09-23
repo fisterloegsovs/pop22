@@ -1,0 +1,37 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{4}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{30.\ september - 8.\ oktober}{lørdag d.\ 8.\ oktober kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+På denne uge skal vi tage et nøjere kig på rekursion. Rekursion er et kraftigt værktøj til løsning af en række problemer, blandt andet ved behandling af lister, og kan kædes direkte sammen med induktionsbeviser til at bevise korrekthed af kode, men det kan tager tid at tilegne sig, og derfor bruger vi denne periode på at nærstudere rekursive funktioner.
+
+
+\learningPurposeTxt{
+  {Forklare forskellen på almindelig rekursion og halerekursion},
+  {Løse et problem ved hjælp af rekursion},
+  {Håndkøre rekursive funktioner}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber  ø}{../assignments/recursion/}{}{length,gcd,lastFloat}
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/continuedFractions/}{introduction}{cfrac2float,float2cfrac,test}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+
+\handinTextOneThree{\exerciseNumber\typeLetter}{\texttt{continuedFraction.fsi, continuedFraction.fs} og \texttt{continuedFractionTest.fsx}}
+
+\flushright God fornøjelse.
+
+\end{document}
