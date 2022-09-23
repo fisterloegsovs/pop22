@@ -5,7 +5,7 @@ type pos = int*int // A 2-dimensional vector
 type value = Red | Green | Blue | Black
 type piece = value*pos
 type state = piece list // the board is a set of randomly organized pieces
-let N = 4 // NxN is the size of the board
+let N = 3 // NxN is the size of the board
 let w = 600 // The canvas will be wxw pixels
 
 /// <summary>Convert a value type to a color</summary>
@@ -75,10 +75,13 @@ let rnd = System.Random()
 /// <param c>a color-value</param>
 /// <param s>a list of pieces</param>
 /// <returns>a list of positions with one extra piece</returns>
-let addRandom (c: value) (s: state) : state =
+let addRandom (c: value) (s: state) : state option =
   let available = empty s
-  let pos = available[rnd.Next (available.Length - 1)]
-  (c,pos)::s
+  if available.Length = 0 then 
+    None
+  else
+    let pos = available[rnd.Next (available.Length - 1)]
+    Some ((c,pos)::s)
   
 /// <summary>Create a canvas of the board</summary>
 /// <param w>the width of the resulting canvas</param>
@@ -103,17 +106,17 @@ let draw (w: int) (h: int) (s:state) =
 let react (s:state) (k:Canvas.key) : state option =
   match getKey k with
     | LeftArrow -> 
-      s |> shiftLeft |> addRandom Red |> Some
+      s |> shiftLeft |> addRandom Red 
     | RightArrow ->
-      s |> fliplr |> shiftLeft |> fliplr |> addRandom Red |> Some
+      s |> fliplr |> shiftLeft |> fliplr |> addRandom Red 
     | UpArrow ->
-      s |> transpose |> shiftLeft |> transpose  |> addRandom Red|> Some
+      s |> transpose |> shiftLeft |> transpose  |> addRandom Red
     | DownArrow ->
-      s |> transpose |> fliplr |> shiftLeft |> fliplr |> transpose |> addRandom Red |> Some
+      s |> transpose |> fliplr |> shiftLeft |> fliplr |> transpose |> addRandom Red
     | _ -> None
 
 // Initial pieces on an NxN board. positions must be in the range ([0..(N-1)],[0..(N-1)])
-let board = [(Blue,(1,0));(Red,(0,0));(Green,(3,2))]
+let board = [(Blue,(1,0));(Red,(0,0))]
 
 // Enter the interactive canvas loop
 do runApp "2048" w w draw react board
