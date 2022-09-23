@@ -1,0 +1,34 @@
+\begin{enumerate}
+\item Given a source and target grid point, write the function
+\begin{quote}
+  \lstinline{dist: p1: pos -> p2: pos -> int}
+\end{quote}
+  which calculates the squared distance between positions $p_1$ and $p_2$. I.e., if $p_1 = (x_1,y_1)$ and $p_2 = (x_2,y_2)$ then $\text{dist}(p_1,p_2)=(x_2-x_1)^2+(y_2-y_1)^2$.
+\item Given a source and a target and \lstinline{dist}, write the function
+\begin{quote}
+  \lstinline{candidates: src: pos -> src: pos -> pos list}
+\end{quote}
+which returns the list of candidate next positions, which brings the robot closer to its target. I.e., if $\text{src}=(x,y)$, then the function must consider all the neighbouring positions, $\{(x+1,y),(x-1,y),(x,y+1),(x,y-1)\}$, and return those whose distance is equal to or smaller than $\text{dist}(\text{src},\text{tg})$. This can be done with \lstinline{List.filter}.
+\item Given a source and a target and by use of \lstinline{candidates} the above functions, write a recursive function
+\begin{quote}
+  \lstinline{routes: src: pos -> tg: pos -> pos list list}
+\end{quote}
+which calculates the list of all the shortest routes from \lstinline{src} to \lstinline{tg}. For example, the list of shortest routes from $(3, 3)$ to $(1, 1)$ are
+\begin{quote}
+  \lstinline{[[(3, 3); (2, 3); (1, 3); (1, 2); (1, 1)];}\\
+  \lstinline{ [(3, 3); (2, 3); (2, 2); (1, 2); (1, 1)];}\\
+  \lstinline{ [(3, 3); (2, 3); (2, 2); (2, 1); (1, 1)];}\\
+  \lstinline{ [(3, 3); (3, 2); (2, 2); (1, 2); (1, 1)];}\\
+  \lstinline{ [(3, 3); (3, 2); (2, 2); (2, 1); (1, 1)];}\\
+  \lstinline{ [(3, 3); (3, 2); (3, 1); (2, 1); (1, 1)]]}
+\end{quote}
+Beware, this list grows fast, the further the source and target is from each other, so you will be wise to only work with short distances. This can be done with a recursive function and a \lstinline{List.map} of a \lstinline{List.map}.
+\item Consider now a robot, which also can move diagonally. Extend \lstinline{candidate} to also consider the diagonal positions $\{(x+1,y+1),(x+1,y-1),(x-1,y+1),(x-1,y-1)\}$, and update \lstinline{routes} to return the list of shortest routes only. For example, the shortest routes from $(3, 4)$ to $(1, 1)$ should be
+\begin{quote}
+  \lstinline{[[(3, 4); (2, 3); (1, 2); (1, 1)];}\\
+  \lstinline{ [(3, 4); (2, 3); (2, 2); (1, 1)];}\\
+  \lstinline{ [(3, 4); (3, 3); (2, 2); (1, 1)]]}
+\end{quote}
+but not necessarily in that order.
+\item Optional: Make a Canvas program, which draws routes, and apply it to the routes found above.
+\end{enumerate}

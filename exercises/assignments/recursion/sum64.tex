@@ -1,0 +1,21 @@
+The following code calculates the sum $\sum_{i=0}^ni$ using recursion and 64-bit unsigned integeres.
+\begin{lstlisting}
+let rec sum (n: uint64) : uint64 =
+  match n with
+    0UL -> 0UL
+    | _ -> n+sum (n-1UL)
+
+let n = uint64 1e4
+printfn "%A" (sum n)
+\end{lstlisting}
+Depending on the computer, this program runs out of memory for large values of $n$, e.g., not many compupters can run this program when \lstinline{n = uint64 1e10}. The problem is, that the algorithm is not using tail recursion.
+\begin{enumerate}
+\item Explain why this is not tail recursion.
+\item Run the code on your computer and empirically find a small $n$ for which the program runs out of memory on your computer.
+\item Rewrite the algorithm to become tail recursive by including the accumulated sum as the argument:
+\begin{quote}
+\lstinline{sum (acc: uint64) -> (n: uint64) -> uint64}
+\end{quote}
+and check that this does not run out of memory for the above identified $n$. Try also bigger.
+\item For which values of $n$ would the tail recursive version break and why?
+\end{enumerate}
