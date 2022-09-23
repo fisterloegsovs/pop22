@@ -2,7 +2,7 @@
 open Canvas
 
 type pos = int*int // A 2-dimensional vector
-type value = Red | Green | Blue | Black
+type value = Red | Green | Blue | Yellow | Black
 type piece = value*pos
 type state = piece list // the board is a set of randomly organized pieces
 let N = 3 // NxN is the size of the board
@@ -16,6 +16,7 @@ let fromValue (v:value) : color =
     Red -> red
     | Green -> green
     | Blue -> blue
+    | Yellow -> yellow
     | Black -> black
 
 /// <summary>Cycle to the next color in the order red->green->blue->black->black->...</summary>
@@ -25,6 +26,7 @@ let nextColor (c: value) : value =
   match c with
     Red -> Green
     | Green -> Blue
+    | Blue -> Yellow
     | _ -> Black
 
 /// <summary>Find pieces on a particular row</summary>
