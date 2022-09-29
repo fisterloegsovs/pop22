@@ -3,11 +3,14 @@ open Canvas
 
 type vec = float*float // A 2-dimensional vector
 
+#r "nuget:DIKU.Canvas, 1.0"
+open Canvas
+
+type vec = float*float // A 2-dimensional vector
+
 /// <summary>Add two 2-dimensional vectors</summary>
-/// <param x1>x-coordinate of the first vector</param>
-/// <param y1>y-coordinate of the first vector</param>
-/// <param x2>x-coordinate of the second vector</param>
-/// <param y2>y-coordinate of the second vector</param>
+/// <param name="v1">the first vector</param>
+/// <param name="v2">the second vector</param>
 /// <returns>The vector sum</returns>
 let add (v1: vec) (v2: vec) : vec =
   let (x1,y1) = v1
@@ -15,8 +18,7 @@ let add (v1: vec) (v2: vec) : vec =
   (x1+x2,y1+y2)
 
 /// <summary>Multiplication of a vector with a scalar</summary>
-/// <param x>x-coordinate of the vector</param>
-/// <param y>y-coordinate of the vector</param>
+/// <param v>a vector</param>
 /// <param a>a multiplicative scalar</param>
 /// <returns>The scalar-vector product</returns>
 let mul (v: vec) (a: float) : vec =
@@ -24,10 +26,8 @@ let mul (v: vec) (a: float) : vec =
   (a*x,a*y)
 
 /// <summary>Dot two 2-dimensional vectors</summary>
-/// <param x1>x-coordinate of the first vector</param>
-/// <param y1>y-coordinate of the first vector</param>
-/// <param x2>x-coordinate of the second vector</param>
-/// <param y2>y-coordinate of the second vector</param>
+/// <param name="v1">the first vector</param>
+/// <param name="v2">the second vector</param>
 /// <returns>The vector dot-product</returns>
 let dot (v1: vec) (v2: vec) : float =
   let (x1,y1) = v1
@@ -35,8 +35,7 @@ let dot (v1: vec) (v2: vec) : float =
   x1*x2+y1*y2
 
 /// <summary>Rotation of a vector around its tail</summary>
-/// <param x>x-coordinate of the vector</param>
-/// <param y>y-coordinate of the vector</param>
+/// <param v>a vector</param>
 /// <param a>an angle in the range 0..2 pi</param>
 /// <returns>The rotated vector</returns>
 let rot (v: vec) (a: float) : vec =
@@ -44,8 +43,7 @@ let rot (v: vec) (a: float) : vec =
   (x*cos a - y*sin a, x*sin a + y*cos a)
 
 /// <summary>Conversion of a vector wit float components to int</summary>
-/// <param x>x-coordinate of the vector</param>
-/// <param y>y-coordinate of the vector</param>
+/// <param v>a vector</param>
 /// <returns>The vector casted to int</returns>
 let toInt (v: vec) : int*int =
   let (x,y) = v
@@ -57,9 +55,14 @@ let toInt (v: vec) : int*int =
 /// <param v>a vector</param>
 /// <param p>a vector giving the position of the tail to be drawn</param>
 /// <returns>The canvas is updated as a side-effect</returns>
+
 let setVector (C: canvas) (col: color) (v: vec) (p: vec) : unit = 
   setLine C col (toInt p) (toInt (add v p))
-
+/// <summary>Rotation of a vector around its tail</summary>
+/// <param x>x-coordinate of the vector</param>
+/// <param y>y-coordinate of the vector</param>
+/// <param a>an angle in the range 0..2 pi</param>
+/// <returns>The rotated vector</returns>
 
 ( // Testing the basic operations
   let v = (1.0,2.3)

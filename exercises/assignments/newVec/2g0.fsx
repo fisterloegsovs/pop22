@@ -4,10 +4,8 @@ open Canvas
 type vec = float*float // A 2-dimensional vector
 
 /// <summary>Add two 2-dimensional vectors</summary>
-/// <param x1>x-coordinate of the first vector</param>
-/// <param y1>y-coordinate of the first vector</param>
-/// <param x2>x-coordinate of the second vector</param>
-/// <param y2>y-coordinate of the second vector</param>
+/// <param name="v1">the first vector</param>
+/// <param name="v2">the second vector</param>
 /// <returns>The vector sum</returns>
 let add (v1: vec) (v2: vec) : vec =
   let (x1,y1) = v1
@@ -15,8 +13,7 @@ let add (v1: vec) (v2: vec) : vec =
   (x1+x2,y1+y2)
 
 /// <summary>Multiplication of a vector with a scalar</summary>
-/// <param x>x-coordinate of the vector</param>
-/// <param y>y-coordinate of the vector</param>
+/// <param v>a vector</param>
 /// <param a>a multiplicative scalar</param>
 /// <returns>The scalar-vector product</returns>
 let mul (v: vec) (a: float) : vec =
@@ -24,8 +21,7 @@ let mul (v: vec) (a: float) : vec =
   (a*x,a*y)
 
 /// <summary>Rotation of a vector around its tail</summary>
-/// <param x>x-coordinate of the vector</param>
-/// <param y>y-coordinate of the vector</param>
+/// <param v>a vector</param>
 /// <param a>an angle in the range 0..2 pi</param>
 /// <returns>The rotated vector</returns>
 let rot (v: vec) (a: float) : vec =
