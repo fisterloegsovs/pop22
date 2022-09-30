@@ -6,7 +6,7 @@
   which calculates the squared distance between positions $p_1$ and $p_2$. I.e., if $p_1 = (x_1,y_1)$ and $p_2 = (x_2,y_2)$ then $\text{dist}(p_1,p_2)=(x_2-x_1)^2+(y_2-y_1)^2$.
 \item Given a source and a target and \lstinline{dist}, write the function
 \begin{quote}
-  \lstinline{candidates: src: pos -> src: pos -> pos list}
+  \lstinline{candidates: src: pos -> tg: pos -> pos list}
 \end{quote}
 which returns the list of candidate next positions, which brings the robot closer to its target. I.e., if $\text{src}=(x,y)$, then the function must consider all the neighbouring positions, $\{(x+1,y),(x-1,y),(x,y+1),(x,y-1)\}$, and return those whose distance is equal to or smaller than $\text{dist}(\text{src},\text{tg})$. This can be done with \lstinline{List.filter}.
 \item Given a source and a target and by use of \lstinline{candidates} the above functions, write a recursive function
