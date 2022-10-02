@@ -1,0 +1,35 @@
+Make a library consisting of a signature and an implementation file. The library must contain the following functions
+\begin{lstlisting}
+// convert a 2048-value v to a canvas color
+fromValue: v: value -> Canvas.color
+// give the 2048-value which is the next in order from c
+nextColor: c: value -> value
+// return the list of pieces on a row r on board s
+filter: r: int -> s: state -> state
+// tilt all pieces on the board s to the left
+shiftLeft: s: state -> state
+// flip the board s such that all pieces position change as (i,j) -> (N-1-i,j)
+fliplr: s: state -> state
+// transpose the pieces on the board s such all piece positiosn change as (i,j) -> (j,i)
+transpose: s: state -> state
+// find the list of empty positions on the board s
+empty: s: state -> pos list
+// randomly place a new piece of color c on an empty position on the board s
+addRandom: c: value -> s: state -> state option
+\end{lstlisting}
+With these functions and Canvas it is possible to program the game in a few lines. Add the following to your library:
+\begin{enumerate}
+\item Write a canvas draw function
+  \begin{quote}
+    \lstinline{draw: w: int -> h: int -> s: state -> canvas}
+  \end{quote}
+  which makes a new canvas and draws the board in s.
+\item Write a canvas react function
+  \begin{quote}
+    \lstinline{react: s: state -> k: key -> state option}
+  \end{quote}
+  which titles the board base according to the arrow-key, the user presses. Note that tilt left is given by the \lstinline{shiftLeft} function. Tilt right can be accomplished by \lstinline{fliplr >> shiftLeft >> fliplr}, and tilt up and down can likewise be accomplished with the additional use of \lstinline{transpose}.
+\end{enumerate}
+Finally, make an application program, which calls \lstinline{runApp "2048" 600 600 draw react board}.
+
+All above mentioned functions are to be documented using the XML-standard, and simple test examples are to be made for each function showing that it likely works.

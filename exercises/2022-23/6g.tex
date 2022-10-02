@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{6}
+\newrobustcmd{\typeLetter}{g}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{21.\ oktober - 5.\ november}{lørdag d.\ 5.\ november kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+På denne periode skal vi arbejde med en lidt større programmeringsopgave og kigge på højereordens funktioner og abstrakte datatyper.
+
+\learningPurposeTxt{
+  {Kunne definere funktioner som tager andre funktioner som argument og/eller giver funktioner som returværdi},
+  {Kunne definere funktioner ved currying},
+  {Kunne arbejde med de abstrakte datatyper: træer, mængder, og maps.}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/integration/}{}{integrate}
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/2048/}{introduction}{2048}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navne og dato arbejdet.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter0.fsi, \exerciseNumber\typeLetter0.fs, \exerciseNumber\typeLetter0.fsx
+  \end{quote}
+  Funktionerne skal være dokumenteret med ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+  \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{rapport.tex} skabelonen, skal dokumentere jes løsning og indeholde figurer, der viser outputgrafik fra canvas for opgaverne.
+\end{itemize}
+
+\flushright God fornøjelse.
+
+\end{document}

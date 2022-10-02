@@ -1,0 +1,21 @@
+2048 is a popular solitaire board game available, e.g., online on \url{https://2048.io/}. In this exercise, you are to implement a version of this game in F\# and using \lstinline{Canvas}. The rules, you are to implement are as follows:
+\begin{enumerate}
+\item The board is a square board with $3\times 3$ field.
+\item The pieces are colored squares: red, green, blue, yellow, black corresponding to the values 2, 4, 8, 16, 32.
+\item there can at most be one piece per field on the board.
+\item The initial conditions is a red and a green piece placed on the board.
+\item The game can be tilted left, right, up, down by pressing the corresponding arrow keys.
+\item When the game is tilted, then all the pieces are to be moved to the corresponding side of the board.
+\item If two pieces of the same color touch after being tilted, then they are replaced by a single piece of double the value, and the board is tilted to the same side again.
+\item Identical pieces are combined in the order of the direction, they are tilted, e.g., if the board is tilted left, then identical pieces are identified from the left to right.
+\item Two black pieces are combined into one black piece.
+\item After each turn, a new red piece is to be placed randomly on an available field on the board.
+\item The game is over, when there is no empty location fo the new red piece.
+\end{enumerate}
+In your solution, you are to represented a board with its pieces as a list of pieces, where each piece has a color and a position. This is captured by the following type abbreviations:
+\begin{lstlisting}
+type pos = int*int // A 2-dimensional vector in board-coordinats (not pixels)
+type value = Red | Green | Blue | Yellow | Black // piece values
+type piece = value*pos //
+type state = piece list // the board is a set of randomly organized pieces
+\end{lstlisting}
