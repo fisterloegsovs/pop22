@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{5}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ oktober - 15.\ oktober}{lørdag d.\ 15.\ oktober kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+I denne periode skal vi arbejde med abstrakte datatype, biblioteker og applikationer. En abstrakt datatype er et koncept som f.eks.\ lister, som kan beskrives vha.\ dets interface med signaturfiler og implementeres som et bibliotek i implementationsfiler. Biblioteker i F\# kaldes også for moduler.
+\learningPurposeTxt{
+  {at lave et bibliotek og en tilhørende applikation,},
+  {at kunne oversætte biblioteksfiler og applikationsfiler både med \lstinline[language=console]{dotnet fsi} og \lstinline[language=console]{run},},
+  {at kunne arbejde med generiske moduler,},
+}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/newVec/}{}{vec2dLibrary}
+
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/queue/}{introduction}{queue,errorHandling,generic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navn og dato arbejdet.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter0.fsi, \exerciseNumber\typeLetter0.fs \exerciseNumber\typeLetter0.fsx,\\
+    \exerciseNumber\typeLetter1.fsi, \exerciseNumber\typeLetter1.fs \exerciseNumber\typeLetter1.fsx,\\
+    \exerciseNumber\typeLetter2.fsi, \exerciseNumber\typeLetter2.fs \exerciseNumber\typeLetter2.fsx,\\
+  \end{quote}
+  svarende til afleveringsopgaverne. Funktionerne skal være dokumenteret med ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+  \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{opgave.tex} skabelonen, ganske kort dokumentere din løsning og indeholde figurer, der viser outputgrafik fra canvas for opgaverne.
+\end{itemize}
+
+\flushright God fornøjelse.
+
+\end{document}
+

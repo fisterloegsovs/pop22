@@ -1,0 +1,14 @@
+In the following, you are to implement your own queue module using lists.
+\begin{enumerate}
+\item Given the description of the abstract datatype Queue above, write a signature file for the queue module implemented with lists. The module is to be called \lstinline{queue}.
+\item Write an implementation file, implementing the signature file above.
+\item Write an application file, which as minimum consists of the following series of tests of the stack module:
+\begin{lstlisting}
+let q0 = create ()
+printfn "%A, %A, %A" q0 (isEmpty q0) (dequeue q0)
+let q1 = create () |> enqueue 1 |> enqueue 2 |> enqueue 3
+printfn "%A, %A" q1 (isEmpty q1)
+let (e,q2) = dequeue q1
+printfn "%A, %A" e q2
+\end{lstlisting}
+\end{enumerate}

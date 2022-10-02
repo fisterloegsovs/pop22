@@ -1,0 +1,13 @@
+In the following, you are to work with the abstract datatype known as a queue. Queues appear often in real life: You stand in line at the counter in a shop, orders await in a queue for their turn to be shipped in an online shop, and students line up in a queue to be examined at oral examinations. Queues are defined by their element type and a set of operations typically,
+\begin{lstlisting}
+type element // an element on the queue such as a plate
+type queue // a queue of elements
+create: unit -> queue // create an empty queue
+// add an element to the end of a queue
+enqueue: element -> queue -> queue
+// remove the element in the front position of the queue
+dequeue: queue -> element*queue
+// check if the queue is empty
+isEmpty: queue -> bool
+\end{lstlisting}
+In this exercise, you are to work with queues in F\#.
