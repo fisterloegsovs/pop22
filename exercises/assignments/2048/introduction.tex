@@ -2,15 +2,25 @@
 \begin{enumerate}
 \item The board is a square board with $3\times 3$ field.
 \item The pieces are colored squares: red, green, blue, yellow, black corresponding to the values 2, 4, 8, 16, 32.
-\item there can at most be one piece per field on the board.
-\item The initial conditions is a red and a green piece placed on the board.
+\item There can at most be one piece per field on the board.
+\item The initial conditions is a red and a blue piece placed on the board.
 \item The game can be tilted left, right, up, down by pressing the corresponding arrow keys.
 \item When the game is tilted, then all the pieces are to be moved to the corresponding side of the board.
-\item If two pieces of the same color touch after being tilted, then they are replaced by a single piece of double the value, and the board is tilted to the same side again.
-\item Identical pieces are combined in the order of the direction, they are tilted, e.g., if the board is tilted left, then identical pieces are identified from the left to right.
+\item If two pieces of the same color touch after being tilted, then they are replaced by a single piece of double the value. For example, the board in \Cref{case1a} is tilted to the right, and the two red pieces are replaced with green piece.
+  \begin{figure}
+    \centering
+    \subfigure[\label{case1a}]{\includegraphics[width=0.22\textwidth]{case1a.png}}
+    \subfigure[\label{case1b}]{\includegraphics[width=0.22\textwidth]{case1b.png}}
+    \subfigure[\label{case2a}]{\includegraphics[width=0.22\textwidth]{case2a.png}}
+    \subfigure[\label{case2b}]{\includegraphics[width=0.22\textwidth]{case2b.png}}\\
+    \subfigure[\label{end}]{\includegraphics[width=0.22\textwidth]{end.png}}
+    \caption{Some examples}
+    \label{fig:2048Samples}
+  \end{figure}
+\item Identical pieces are combined in the order of the direction, they are tilted, e.g., if the board is tilted left, then identical pieces are identified from the left to right. Matching colors that touch in the direction of the tilt after a combination of pieces are not combined. E.g., the board in \Cref{case2a} is tilted to the right combining the two green to a blue, but the resulting two blues are not combined.
 \item Two black pieces are combined into one black piece.
 \item After each turn, a new red piece is to be placed randomly on an available field on the board.
-\item The game is over, when there is no empty location fo the new red piece.
+\item The game ends when there are no possible moves and no empty locations for a new piece to spawn.
 \end{enumerate}
 In your solution, you are to represented a board with its pieces as a list of pieces, where each piece has a color and a position. This is captured by the following type abbreviations:
 \begin{lstlisting}
