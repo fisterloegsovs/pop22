@@ -31,8 +31,9 @@ length l3 = 3 |> printfn "l3 has length 3: %A"
 
 \item
   In the previous sub-exercise the linked list is restricted to the type \texttt{int}.
-  In this sub-exercise you should construct a generic linked list module.
-  \item Copy and finish the following signature in \texttt{linkedList.fsi} and write a corresponding implementation in \texttt{linkedList.fs}. 
+  In this sub-exercise you should construct a generic linked list module.\newline
+  
+  Copy and finish the following signature in \texttt{linkedList.fsi} and write a corresponding implementation in \texttt{linkedList.fs}. 
     \begin{lstlisting}
 module LinkedList
 type LinkedList<'a> = Nil | Cons of 'a * intLinkedList<'a>
