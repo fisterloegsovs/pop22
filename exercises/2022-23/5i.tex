@@ -6,11 +6,15 @@
 \newcommand{\exerciseNumber}{5}
 \newrobustcmd{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ oktober - 15.\ oktober}{lørdag d.\ 15.\ oktober, 2022, kl. 22:00}{Jon Sporring, Fritz Henglein}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{7.\ oktober - 15.\ oktober 2022}{lørdag d.\ 15.\ oktober, 2022, kl. 22:00}{}
 
 \begin{document}
 \maketitle
-I denne periode skal vi arbejde med abstrakte datatype, biblioteker og applikationer. En abstrakt datatype er et koncept som f.eks.\ lister, som kan beskrives vha.\ dets interface med signaturfiler og implementeres som et bibliotek i implementationsfiler. Biblioteker i F\# kaldes også for moduler.
+I denne periode skal vi arbejde med abstrakte datatyper. En \emph{abstrakt datatype} er en type, der specificeres ved at angive operationer p\aa\ typen og de egenskaber disse operationer opfylder.  Med andre ord, en abstrakt datatype siger, hvordan kan kan bruges af en programm\o r, uden at vedkommende beh\o ver at kende, hvordan den er implementeret.  En implementering af en abstrakt datatype er en konkret type og konkrete funktioner (funktionsdefinitioner som kode), der skal opfylde de givne egenskaber. 
+
+I F\# implementeres abstrakte datatyper ved hj\ae lp af \emph{moduler}.  Et modul best\aa r af en signaturfil med definitionen af typen og navnene af operationerne og deres typer; en implementationsfil, der indeholder operationernes definition, dvs. deres kode; og en applikationsfil, som typisk indeholder anvendelser af operationerne for at afpr\o ve, hvorvidt implementeringen af operationerne overholder de kr\ae vede egenskaber.   Moduler kaldes ogs\aa\ \emph{biblioteker}, fordi de samler nogle operationer og stiller dem til r\aa dighed for brugere (programm\o rer), 
+lige som et bibliotek samler b\o ger og stiller dem til r\aa dighed for brugere (l\ae sere).
+
 \learningPurposeTxt{
   {at lave et bibliotek og en tilhørende applikation,},
   {at kunne oversætte biblioteksfiler og applikationsfiler både med \lstinline[language=console]{dotnet fsi} og \lstinline[language=console]{run},},
@@ -30,7 +34,7 @@ I denne periode skal vi arbejde med abstrakte datatype, biblioteker og applikati
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Krav til afleveringen}
-Afleveringen skal bestå af
+Afleveringen skal best\aa\ af
 \begin{itemize}
   \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
   \item en opgavebesvarelse i pdf-format.
