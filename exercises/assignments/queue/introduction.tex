@@ -1,22 +1,23 @@
 In the following, you are to work with the abstract datatype known as a \emph{queue}. A queue is a
 a sequence of elements that supports the following operations: checking whether the sequence is empty; removing an element from the front (``left''); adding an element at the end (``right'').  Queues appear often in real life: The line\footnote{In American English. Called indeed \emph{queue} in British English.} waiting for service at a shop counter, orders to be filled in a warehouse, students waiting to be examined at an oral examination. 
 
-\emph{Purely functional queues} are consist of the following set of operations, and the properties these must satisfy, such as queuing an element on an empty queue and then dequeuing from it yields the element added at first and leave an empty queue behind.
+The abstract datatype of \emph{purely functional queues} consists of:
+\begin{itemize}
+\item the types named \texttt{element} and \texttt{queue}, where \texttt{element} is the type of elements and \texttt{queue} the type of queues with such elements;
+\item the following value and two functions
 \begin{lstlisting}
-// types
-type element // type of elements in the queue
-type queue // type of queues with such elements
-// values and functions
 // the empty queue
-val emptyQueue: queue 
+emptyQueue: queue 
 // add an element at the end of a queue
 val enqueue: element -> queue -> queue
-// check if the queue is empty
-val isEmpty: queue -> bool
-// remove the element at the front of the queue
-// precondition: isEmpty(q) == false
+// remove and return the element at the front of a queue
+// precondition: input queue is not empty
 val dequeue: queue -> element * queue
+// check if a queue is empty
+val isEmpty: queue -> bool
 \end{lstlisting}
-These queues are called \emph{(purely) functional} because the enqueue and dequeue operations return a \emph{new} queue whenever they are called without destroying the old queue. For example, adding an element $e_1$ to a queue $q_0$ of length $15$ results in a queue $q_1$ of length $16$; then to add another element $e_2$ to $q_0$ resulting in a queue $q_2$ of length $16$, but different from $q_1$ in the last element, whereupon we have 3 separate queues, each of which we can use in future operations: $q_0$, $q_1$ and $q_2$.\footnote{There are also \emph{ephemeral} (also called \emph{imperative}) queues, where enqueue and replace the original queue with the new queue such that there is always just one ``current'' queue that changes over time.  Ephemeral queues have more limited functionality and are easier to implement efficiently using imperative data structures, which we will encounter later in the course.} 
+\item the properties these operations must satisfy and that another programmer can rely on, such as queuing an element on an empty queue and then dequeuing from it yields the element added at first and leaves an empty queue behind; or, more generally, first repeatedly queuing elements and then dequeuing until the queue is empty yields the same elements.\footnote{This can be expressed as a precise mathematical property, which in turn can be used to systematically test one's implementation to find errors.  We'll only do this informally here.}
 
-In this exercise, you are to work with functional queues in F\#.  We'll leave off the ``functional'' below.
+These queues are called \emph{(purely) functional} because the enqueue and dequeue operations return a \emph{new} queue whenever they are called, without destroying the old queue. For example, adding an element $e_1$ to a queue $q_0$ of length $15$ results in a queue $q_1$ of length $16$; then adding another element $e_2$ to $q_0$ also results in a queue $q_2$ of length $16$, but one that is different from $q_1$ in its last element.  At this point we  have 3 separate queues, each of which we can used in future operations: $q_0$, $q_1$ and $q_2$.\footnote{There are also \emph{ephemeral} (also called \emph{imperative}) queues, where enqueue and replace the original queue with the new queue such that there is always just one ``current'' queue that changes over time.  Ephemeral queues have more limited functionality and are easier to implement efficiently using imperative data structures, which we will encounter later in the course.}
+
+In this exercise, you will work with functional queues in F\#.  We'll omit writing ``functional'' below.
