@@ -4,6 +4,8 @@ In the following, you are to implement your own queue module using lists in F\# 
 \item Write an implementation file \texttt{intQueue.fs}, implementing the signature file above using lists in F\# where the elements are F\# integers.
 \item Add \texttt{intQueue.fsi} and \texttt{intQueue.fs} to \texttt{5i.fsproj},\\so they are compiled \textit{before} \texttt{testQueues.fs}.
 \item In \texttt{testQueues.fs}, show your implementation works by using your queue. As a minimum, you should add the following series of tests of your \texttt{IntQueue} module:
+\newline
+{\textcolor{red}{changed from v1: negate the result of \texttt{IntQueue.isEmpty q1} so \texttt{nonEmptyTestResult} is \texttt{true} when the implementation of \texttt{IntQueue.isEmpty} is correct.}}
 \begin{lstlisting}
 let intQueueTests () =
     let q0 = IntQueue.emptyQueue
@@ -15,7 +17,7 @@ let intQueueTests () =
     let q1 = q0 |> IntQueue.enqueue e1
                 |> IntQueue.enqueue e2
                 |> IntQueue.enqueue e3
-    let nonEmptyTestResult = IntQueue.isEmpty q1
+    let nonEmptyTestResult = not (IntQueue.isEmpty q1)
 
     nonEmptyTestResult
     |> printfn "A queue with elements is not empty: %A"
