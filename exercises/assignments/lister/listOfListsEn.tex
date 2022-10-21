@@ -1,6 +1,0 @@
-Sometimes tables have to be reshaped into single lists and back again.
-\begin{enumerate}
-\item Define a function \lstinline{flatten : 'a list list -> 'a list}, which concatenates a list of lists to a single list.  For example, \lstinline{flatten [[1; 2; 3]; [4; 5; 61]]} should return \lstinline{[1; 2; 3; 4; 5; 6]}.
-\item Define the inverse function \lstinline{reshape : m : int -> 'a list -> 'a list list}, which takes a number of rows and a list and returns the corresponding table. For example, \lstinline{reshape 2 [1; 2; 3; 4; 5; 6]} should return \lstinline{[[1; 2; 3]; [4; 5; 61]]}.
-\item Make a whitebox test of the above functions.
-\end{enumerate}

@@ -1,7 +1,0 @@
-Points on a circle of radius 1 can be calculated as $(\cos \theta, \sin \theta), \;\theta\in [0,2\pi)$. Consider the closed polygon consisting of $n>1$ points on a circle, where $\theta_i = \frac{2\pi i}{n},\; i = 0..(n-1)$, and where neighbouring points are conected with straight lines.
-
-Write a program with the function,
-\begin{quote}
-  \lstinline{polyLen : n:int -> float}
-\end{quote}
-which uses the above library to calculate the length of the polygon. The length is calculated as the sum of line pieces connecting neighbouring points. The program should further write a table of lengths for increasing number of points $n$, and the results should be compared with the circumference of a circle with radius 1. What appears to be the limit, when $n\rightarrow\infty$?

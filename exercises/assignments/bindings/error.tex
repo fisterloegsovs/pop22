@@ -1,9 +1,12 @@
-The following program,
+The following program:
+  \begin{codeNOutput}{: Strings.}
 \begin{lstlisting}
 let firstName = "Jon"
-let lastName = "Sporring
-printfn "Hello %A!" firstName+lastName
+let lastName = "Sporring" in let name = firstName + " " + lastName;;
+printfn "Hello %A!" name;;
 \end{lstlisting}
-is supposed to write ``Hello Jon Sporring!'' to the screen, but
-unfortunately, it contains at least one mistake. Correct the
-mistake(s) and rerun the program. 
+\end{codeNOutput}
+was supposed to write ``Hello Jon Sporring!'' to the
+screen. Unfortunately, it contains an error and will not compile. Find
+and correct the error(s). Rewrite the program into a single line without
+the use of semicolons.

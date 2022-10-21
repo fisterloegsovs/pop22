@@ -3,33 +3,29 @@
 \input{setup}
 \usepackage[final]{pdfpages}
 \usepackage{subfiles}
+\usepackage{environ}
 
-\renewcommand*{\labelenumi}{\bfseries \thesection.\arabic*:}
-\newenvironment{assignmentList}[1]{
+\renewcommand*{\labelenumi}{\bfseries \thesubsection.\arabic*:}
+\NewEnviron{assignmentList}[1]{%
   \section{#1}
-  \subsection{Opgave(r)}
+  \subsection{Exercise(s)}
   \begin{enumerate}
-}{\end{enumerate}}
-\newenvironment{assignmentListExtended}[1]{
-  \section{#1}
-  \subsection{Lærervejledningn}
-  \input{teacher}
-  \subsection{Introduktion}
-  \input{introduction}
-  \subsection{Opgave(r)}
-  \begin{enumerate}
-}{\end{enumerate}}
+    \BODY
+  \end{enumerate}
+}
 
-% \renewcommand*{\labelenumi}{\bfseries \thechapter.\arabic*:}
-% \newenvironment{assignmentList}[1]{
-%   \chapter{#1}
-%   \section{Lærervejledningn}
-%   \input{teacher}
-%   \section{Introduktion}
-%   \input{introduction}
-%   \section{Opgave(r)}
-%   \begin{enumerate}
-% }{\end{enumerate}}
+\NewEnviron{assignmentListExtended}[1]{%
+  \section{#1}
+  \subsection{Teacher's guide}
+  {\input{teacher}}
+  \subsection{Introduction}
+  {\input{introduction}}
+  \subsection{Exercise(s)}
+  \begin{enumerate}
+    \BODY
+  \end{enumerate}
+}
+
 
 
 \title{Learning to Program with F\#\\Exercises\\Department of Computer
@@ -41,16 +37,16 @@
 \maketitle
 \tableofcontents
 \newpage
+\chapter{\LaTeX}
+\subfile{latex/main}
+
 \chapter{Scratch}
 \subfile{gettingStarted/main}
 \subfile{scratch/main}
-\chapter{F\# Imperative Programming}
-\subfile{myFirstFSharp/main}
-\subfile{bindings/main}
-\subfile{rgb/main}
-\subfile{vec/main}
-\subfile{modules/main}
-\subfile{lister/main}
+
+\chapter{Canvas}
+\subfile{canvas/main}
+
 \chapter{F\# Functional Programming}
 \subfile{recursion/main}
 \subfile{continuedFractions/main}
@@ -69,6 +65,15 @@
 \subfile{exceptions/main}
 \subfile{treestructure/main}
 \subfile{cat/main}
+
+\chapter{F\# Imperative Programming}
+\subfile{myFirstFSharp/main}
+\subfile{bindings/main}
+\subfile{rgb/main}
+\subfile{vec/main}
+\subfile{modules/main}
+\subfile{lister/main}
+
 \chapter{F\# Object-oriented Programming}
 \subfile{classes/main}
 \subfile{blackJack/main}
@@ -79,10 +84,30 @@
 \subfile{owlsNMice/main}
 \subfile{chess/main}
 \subfile{uml/main}
+
 \chapter{F\# Event-driven Programming}
 \subfile{io/main}
 \subfile{web/main}
 \subfile{winforms/main}
 \subfile{clock/main}
+
+\chapter{Unclassified}
+\subfile{2048/main}
+\subfile{abstractLists/main}
+\subfile{cards/main}
+\subfile{exprtrees/main}
+\subfile{forest/main}
+\subfile{fun/main}
+\subfile{leaftrees/main}
+\subfile{newVec/main}
+\subfile{queue/main}
+\subfile{randomWords/main}
+\subfile{ricochet-robots/main}
+\subfile{roguelike/main}
+\subfile{rotate/main}
+\subfile{routeFinding/main}
+\subfile{sumtypes/main}
+\subfile{theBox/main}
+
 \end{document}
 
