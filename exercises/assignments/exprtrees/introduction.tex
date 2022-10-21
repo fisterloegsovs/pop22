@@ -1,5 +1,9 @@
 The following exercises are about expanding and using the following
-recursive sumtype, which can be used for modelling expression terms:
+recursive sumtype, which can be used for modelling arithmetic expressions:
 \begin{lstlisting}
-type expr = Const of int | Add of expr * expr | Mul of expr * expr
+type expr = Const of int | Add of expr * expr | Mul of expr * expr 
+\end{lstlisting}
+For eksempel, the expression $(5 + 8) * 9$ is represented by 
+\begin{lstlisting}
+Mul (Add (Const 5, Const 8), Const 9)
 \end{lstlisting}

@@ -1,6 +1,7 @@
-In the following exercises, we shall investigate the following recursive type definition for trees:
+In the following exercises, we shall investigate the following recursive type definition for binary trees:
 \begin{lstlisting}
 type 'a tree = Leaf of 'a | Tree of 'a tree * 'a tree
 \end{lstlisting}
-
-The tree type is generic in the type of information that can be installed in \lstinline{Leaf} nodes.
+A term of the form \lstinline{Leaf $x$} is called a \emph{leaf} (or \emph{leaf node});
+a term of the form \lstinline{Tree $(t1, t2)$} is called a \emph{tree node}.
+The tree type is generic in the type of data that in the leaf nodes.
