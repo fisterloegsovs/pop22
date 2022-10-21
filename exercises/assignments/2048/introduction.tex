@@ -6,7 +6,7 @@
 \item The initial conditions is a red and a blue piece placed on the board.
 \item The game can be tilted left, right, up, down by pressing the corresponding arrow keys.
 \item When the game is tilted, then all the pieces are to be moved to the corresponding side of the board.
-\item If two pieces of the same color touch after being tilted, then they are replaced by a single piece of double the value. For example, the board in \Cref{case1a} is tilted to the right, and the two red pieces are replaced with green piece.
+\item If two pieces of the same color are pushed into each other in the process of tilting, then they are replaced by a single piece of double the value. For example, the board in \Cref{case1a} is tilted to the right, and the two red pieces are replaced with green piece.
   \begin{figure}
     \centering
     \subfigure[\label{case1a}]{\includegraphics[width=0.22\textwidth]{case1a.png}}
@@ -17,7 +17,7 @@
     \caption{Some examples}
     \label{fig:2048Samples}
   \end{figure}
-\item Identical pieces are combined in the order of the direction, they are tilted, e.g., if the board is tilted left, then identical pieces are identified from the left to right. Matching colors that touch in the direction of the tilt after a combination of pieces are not combined. E.g., the board in \Cref{case2a} is tilted to the right combining the two green to a blue, but the resulting two blues are not combined.
+However, replacement is not performed in a cascading fashion, e.g., the board in \Cref{case2a} is tilted to the right combining the two green to a blue, but the resulting two blues are not combined.
 \item Two black pieces are combined into one black piece.
 \item After each turn, a new red piece is to be placed randomly on an available field on the board.
 \item The game ends when there are no possible moves and no empty locations for a new piece to spawn.
@@ -29,3 +29,4 @@ type value = Red | Green | Blue | Yellow | Black // piece values
 type piece = value*pos //
 type state = piece list // the board is a set of randomly organized pieces
 \end{lstlisting}
+In the following, the first coordinate in pos will thought of as a up-down axis also called the row, and the second as an left-right axis also called the column with $(0,0)$ being the top-left.

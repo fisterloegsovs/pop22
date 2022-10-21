@@ -29,16 +29,16 @@ let nextColor (c: value) : value =
     | Blue -> Yellow
     | _ -> Black
 
-/// <summary>Find pieces on a particular row</summary>
+/// <summary>Find pieces on a particular column</summary>
 /// <param i>a row number</param>
 /// <param s>a list of pieces</param>
 /// <returns>a sublist of pieces</returns>
-let filter (r: int) (s: state): state = List.filter (fun (c,(m,n)) -> n = r) s
+let filter (k: int) (s: state): state = List.filter (fun (c,(m,n)) -> n = k) s
 
-/// <summary>Shift all pieces to the left</summary>
+/// <summary>Shift all pieces up</summary>
 /// <param s>a list of pieces</param>
 /// <returns>same list of pieces but shifted</returns>
-let shiftLeft (s: state) : state =
+let shiftUp (s: state) : state =
   let rec collapse (s: state) : state =
     match s with
       a::b::rst when fst a = fst b -> (nextColor (fst b), snd b)::collapse rst
@@ -52,10 +52,10 @@ let shiftLeft (s: state) : state =
     |> List.mapi (fun j (c,(m,n))->(c,(j,n)))
   List.map shift [0..(N-1)] |> List.concat
 
-/// <summary>Flip the board left-rigth</summary>
+/// <summary>Flip the board up-down</summary>
 /// <param s>a list of pieces</param>
 /// <returns>same list of pieces but flipped</returns>
-let fliplr (s: state) : state =
+let flipUD (s: state) : state =
   List.map (fun (c,(m,n)) -> (c,(N-1-m,n))) s
 
 /// <summary>Transpose the board so rows becomes columns and vice versa</summary>
@@ -108,13 +108,13 @@ let draw (w: int) (h: int) (s:state) =
 let react (s:state) (k:Canvas.key) : state option =
   match getKey k with
     | LeftArrow -> 
-      s |> shiftLeft |> addRandom Red 
+      s |> shiftUp |> addRandom Red 
     | RightArrow ->
-      s |> fliplr |> shiftLeft |> fliplr |> addRandom Red 
+      s |> flipUD |> shiftUp |> flipUD |> addRandom Red 
     | UpArrow ->
-      s |> transpose |> shiftLeft |> transpose  |> addRandom Red
+      s |> transpose |> shiftUp |> transpose  |> addRandom Red
     | DownArrow ->
-      s |> transpose |> fliplr |> shiftLeft |> fliplr |> transpose |> addRandom Red
+      s |> transpose |> flipUD |> shiftUp |> flipUD |> transpose |> addRandom Red
     | _ -> None
 
 // Initial pieces on an NxN board. positions must be in the range ([0..(N-1)],[0..(N-1)])
