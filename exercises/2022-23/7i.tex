@@ -1,0 +1,70 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{7}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{18.\ november - 26.\ november}{lørdag d.\ 26.\ november kl. 22:00}{}
+
+\begin{document}
+\maketitle
+
+I denne periode skal vi arbejde med \dots
+
+% Input/Output og undtagelser (exceptions)
+% skal svare til Kapitel 12 i Sporring
+\learningPurposeTxt{
+  {Input/Output},
+  {Undtagelser}}
+
+% \learningPurposeTxt{
+%   {Kunne definere funktioner som tager andre funktioner som argument og/eller giver funktioner som returværdi},
+%   {Kunne definere funktioner ved currying},
+%   {Kunne arbejde med den abstrakte datatype træe.}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+% \exercises{\exerciseNumber ø}{../assignments/polynomials/}{introduction}{poly,line,theLine}
+% \begin{center}
+% \rule{0.7\textwidth}{1pt}
+% \end{center}
+% \continueExercises{\exerciseNumber ø}{../assignments/integration/}{introduction}{integrate,analysis}
+% \begin{center}
+% \rule{0.7\textwidth}{1pt}
+% \end{center}
+% \continueExercises{\exerciseNumber ø}{../assignments/exprtrees/}{introduction}{eval,subtract} %divide
+% \begin{center}
+% \rule{0.7\textwidth}{1pt}
+% \end{center}
+% \continueExercises{\exerciseNumber ø}{../assignments/leaftrees/}{introduction}{leafs,sum,preorder,find}
+
+\section*{Afleveringsopgaver (in English)}
+% \exercises{\exerciseNumber\typeLetter}{../assignments/2048/}{introduction}{2048}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navne og dato arbejdet, samt en beskrivelse af, hvordan man kører jeres kode.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  % \begin{quote}
+  %   \exerciseNumber\typeLetter0Lib.fsi, \exerciseNumber\typeLetter0Lib.fs, \exerciseNumber\typeLetter0App.fsx
+  % \end{quote}
+  Funktionerne skal være dokumenteret ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+  % \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{rapport.tex} skabelonen, skal dokumentere jes løsning og indeholde figurer, der viser outputgrafik fra canvas for opgaverne.
+\end{itemize}
+
+\flushright God fornøjelse.
+
+\end{document}
