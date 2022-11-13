@@ -16,7 +16,7 @@
 
 A strong point of \emph{purely} functional programming, that is programming with functions that have no side-effects, is that they satisfy algebraic equalities that can be applied to rewrite expressions and yet be guaranteed to be observationally equivalent even when the expression contains variables whose binding is unknown.\footnote{This is a hallmark of both mathematical notation and functional programming. No ``real'' programming language with (implicit) side effects, however, has this property; thus secure and correct \emph{automatic} program analysis, program synthesis and optimization is vastly more difficult with such programming languages.  Indeed, while the level of abstraction has been lifted substantially over the last fifty or so years, bringing more automation and security than previously to bear, programming is still largely a manual process of humans hand-typing code into an editor --- which is a somewhat paradoxical aspect:  Even with modern of even modern software development methods (which are technology supported, but still largely manual) the very discipline that automates engineering and processing in \emph{other} disciplines is itself still largely manual craftsmanship.}
 
-Rewriting can help correctly derive more efficient code or just code that is may be more easily understandable by using elementary operations.
+Rewriting can help correctly derive more efficient code or just code that may be more easily understandable in terms of more elementary operations.
 
 Consider the extremely compact linear-time implementation for computing the preorder of a binary tree:
 \begin{verbatim}
@@ -46,6 +46,7 @@ by first \emph{unfolding} the occurrences of \verb|treeFold|, that is replacing 
 
 Finally, do the same for \verb|preorder| by inlining \verb|fromDiffList|, thus eliminating all occurrences of difference list operations.
 (See DiffList.fs for the definitions of difference list operations.) 
+
 
 \section{File concatenation}
 
@@ -87,13 +88,13 @@ Implement a function \texttt{cat: string[] -> int} that outputs to stdout the co
 \begin{itemize}
 \item If all of the input files exist and are readable, the output written to stdout contains their concatenated contents in the order given in the input array; nothing is written to stderr; and the exit status (result of the function) is $0$.  
 \item If one or more of the files does not exist or is not readable, then
-nothing is written to stdout; the exit status is $k$ where $k$ is the minimum of 255 and the number of nonexistent/unreadable files; and for each file that is nonexistent/unreadable the string \\ \verb|cat: The file | filename \verb|does not exist or is not readable.\n| \\ is written to stderr.
+nothing is written to stdout; the exit status is $k$ where $k$ is the minimum of 255 and the number of nonexistent/unreadable files; and for each string $s$ that is a nonexistent/unreadable file, the string \\ \verb|cat: The file | $s$ \verb|does not exist or is not readable.\n| \\ is written to stderr.
 \end{itemize}
 \end{itemize} 
 
 \subsection{Specification-based testing of functions}
 
-Add test cases to the test cases given such that each part of the specifications is covered and such that  extremal values of inputs are considered, such as empty files (files that exist and are readable, but contain zero bytes).   In particular, test your implementation of \texttt{cat}.
+Add test cases to the test cases given \comment{(To be added)} such that each part of the specifications is covered and such that  extremal values of inputs are considered, such as empty files (files that exist and are readable, but contain zero bytes).   In particular, test your implementation of \texttt{cat}.
 
 \subsection{Streaming file concatenation (optional)} 
 
@@ -102,6 +103,44 @@ Reading the contents of all files into memory before writing to the output strea
 \comment{Add/change instructions on how exactly to compile/build the program, how to name it and how to submit it.  Add examples of correct behavior from test suite.}
 
 \comment{For internal use only: Design test suite and provide a corresponding script for loading and executing all the students' programs for automatic testing.}
+
+\section{Dedanglification}
+
+Write a module \verb|Dedanglish.fs| with an entry point
+\begin{verbatim}
+dedangle : dictionary -> string -> string -> int
+\end{verbatim}
+that reads the contents of the text file in the second argument and stores it in the text file in the third argument after translating words in the input string according to the dictionary given as the first argument.  
+
+For example, given the dictionary below, the text 
+\begin{quote}
+``Vores IT afdeling mener, computere med mindre end 32 GB memory burde udstyres med hashtag LOMEM, efterfulgt at string FARLIGT og at tupel (LOMEM, FARLIGT) efterfulgt af backslash burde gemmes i en record i databasen.'' 
+\end{quote}
+is translated to 
+\begin{quote}
+``Vores EDB afdeling mener, datamater med mindre end 32 GB lager burde udstyres med havel\aa gem\ae rke LOMEM, efterfulgt af tegnf\o lge FARLIGT og at s\ae t (LOMEM, FARLIGT) efterfulgt af omvendt skr\aa streg burde gemmes i en post i databasen.''
+\end{quote}
+
+Design \verb|dedangle| to use appropriate auxiliary functions. 
+
+You may define type \verb|dictionary| as a built-in type such as \verb|Map.Map<string, string>| or as search tree type \verb|(string * string) tree|, as in the lecture slides, or any other type with $O(\log n)$ complexity for looking up strings.  (Association lists are thus not good enough.)
+
+\begin{tabular}{|l|l|} \hline
+Danglish & Danish \\ \hline
+memory & lager \\
+IT & EDB \\
+computer & datamat \\
+computere & datamater \\
+string & tegnf\o lge \\
+stringe & tegnf\o lger \\
+backslash & omvendt skr\aa streg \\
+record & post \\
+records & poster \\
+hashtag & havel\aa gem\ae rke \\
+hashtags & havel\aa gem\ae rker \\
+tupel & s\ae t \\ 
+tupler & s\ae t \\ \hline
+\end{tabular}
 
 \section{Catenable lists}
 
@@ -182,7 +221,7 @@ for converting between built-in cons-lists and catenable lists in linear time, u
 
 \subsection{Looking up, inserting and deleting elements}
 
-Provide implementations using explicit recursion of functions
+Provide implementations, using explicit recursion, of functions
 \begin{verbatim}
 val item : int -> 'a catlist -> 'a
 val insert : int -> 'a -> 'a catlist -> 'a catlist
@@ -192,7 +231,7 @@ where \verb|item i xs| returns the \verb|i+1|-th element in \verb|xs| under the 
 \verb|insert i v xs| inserts \verb|v| after the \verb|i|-the element in \verb|xs|, under the assumption that \verb|0 <= i <= length xs|;
 and \verb|delete i xs| deletes the \verb|i+1|-th element in \verb|xs| under the assumption that \verb|0 <= i < length xs|.
 
-You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is a okay since it can be implemented in constant time by data augmentation. See following optional exercise.  Using such an inefficient implementation is a valuable intermediate step in the systematic design of efficient data structures.
+You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is okay since it can subsequently be implemented in constant time by data augmentation. (See following optional exercise.)  Using such an inefficient implementation is a valuable intermediate step in the systematic design of efficient data structures.
  
 \subsection{Augmented data structures (optional)}
 
@@ -207,7 +246,7 @@ and  'a ropeBody =
          | Single of 'a 
          | Append of 'a rope * 'a rope
 \end{verbatim}
-where \verb|'a ropeBody| has the same constructors as \verb|'a catlist|, but such that an element of \verb|'a rope| additionally has an associated integer-value, which will always be the length of the underlying catenable list.\footnote{Maintaining the invariant is not built into the data type. By limiting ourselves to operations that always preserve this invariant we can guarantee that every rope value comes with the correct length value in its second component.}
+where \verb|'a ropeBody| has the same constructors as \verb|'a catlist|, but such that an element of \verb|'a rope| additionally has an associated integer value, which will always be the length of the underlying catenable list.\footnote{Maintaining the invariant is not built into the data type. By limiting ourselves to operations that always preserve this invariant we can guarantee that every rope value comes with the correct length value in its second component.}
 
 Redo the exercises for \verb|'a catlist|, but using \verb|'a rope| instead.
 
@@ -215,13 +254,13 @@ If you have used \verb|fold| in the above exercises instead of explicit recursio
 \begin{verbatim}
 let length (r : 'a rope) = snd r // or just: let length = snd
 \end{verbatim} 
-The code using \verb|fold| instead of explicit structural recursion with \verb|match| will work immediately with \verb|'a rope| instead of \verb|'a catlist|.  The corresponding implementations of \verb|item|, \verb|insert| and \verb|delete| are almost unchanged, but its performance is vastly improved because \verb|length| now executes in time $O(1)$.  
+The code using \verb|fold| instead of explicit structural recursion with \verb|match| will work immediately with \verb|'a rope| instead of \verb|'a catlist|.  The corresponding implementations of \verb|item|, \verb|insert| and \verb|delete| are almost unchanged, but their performance is vastly improved because \verb|length| now executes in time $O(1)$.  
 
 \subsection{Balanced functional ropes (optional challenge problem)}
 
 Inserting and deleting may result in unbalanced ropes, that is in binary trees (without payload in internal nodes) whose height is not always bounded by a fixed  (and preferably small) constant factor of $\log_2 (n)$ where $n$ is the number of leaf nodes in the tree.  Because of this, operations \verb|item|, \verb|insert|, \verb|delete|, whose execution time is proportional to the height of the rope they are operating on, do not run in $O(\log n)$ time in the worst case.  
 
-Add efficient rebalancing steps during insertions and deletions such that the resulting ropes are always guaranteed to be balanced, such that each of \verb|item|, \verb|insert|, \verb|delete|  execute in $O(\log n)$ in the worst case.  Warning: This is very challenging problem since the data structure is also required to be purely functional. (This is usually not covered, even in more advanced algorithms and data structure courses.) 
+Add efficient rebalancing steps during insertions and deletions such that the resulting ropes are always guaranteed to be balanced, which in turn guarantees that \verb|item|, \verb|insert|, \verb|delete| execute in $O(\log n)$ in the worst case.  Warning: This is very challenging problem since the data structure is also required to be purely functional. (This is usually not covered, even in more advanced algorithms and data structure courses.) 
 
 
 \end{document}
