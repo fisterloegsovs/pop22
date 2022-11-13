@@ -1,0 +1,227 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{xcolor}
+
+\title{PoP exercises: 7i}
+\date\today
+\author{Fritz Henglein, \ldots}
+
+\newcommand{\comment}[1]{\textcolor{red}{#1}}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Difference lists and equational rewriting}
+
+A strong point of \emph{purely} functional programming, that is programming with functions that have no side-effects, is that they satisfy algebraic equalities that can be applied to rewrite expressions and yet be guaranteed to be observationally equivalent even when the expression contains variables whose binding is unknown.\footnote{This is a hallmark of both mathematical notation and functional programming. No ``real'' programming language with (implicit) side effects, however, has this property; thus secure and correct \emph{automatic} program analysis, program synthesis and optimization is vastly more difficult with such programming languages.  Indeed, while the level of abstraction has been lifted substantially over the last fifty or so years, bringing more automation and security than previously to bear, programming is still largely a manual process of humans hand-typing code into an editor --- which is a somewhat paradoxical aspect:  Even with modern of even modern software development methods (which are technology supported, but still largely manual) the very discipline that automates engineering and processing in \emph{other} disciplines is itself still largely manual craftsmanship.}
+
+Rewriting can help correctly derive more efficient code or just code that is may be more easily understandable by using elementary operations.
+
+Consider the extremely compact linear-time implementation for computing the preorder of a binary tree:
+\begin{verbatim}
+type 'a tree = Empty | Leaf of 'a | Branch of 'a tree * 'a * 'a tree
+open DiffList // nil, single, append, fromDiffList
+let combinePre (dl1, x, dl2) = 
+    append (single x) (append dl1 dl2)
+let preorder' (t : 'a tree) : 'a difflist =
+    treeFold (nil, single, combinePre) t
+let preorder (t : 'a tree) : 'a list = 
+    fromDiffList (preorder' t)
+\end{verbatim}
+using difference list.
+
+\newpage Rewrite \verb|preorder'| starting with the definition
+\begin{verbatim}
+let preorder' (t : 'a tree) (xs : 'a list) : 'a list =
+    match t with
+      Empty -> 
+         treeFold (nil, single, combinePre) Empty xs
+    | Leaf x -> 
+         treeFold (nil, single, combinePre) (Leaf x) xs 
+    | Branch (t1, x, t2) -> 
+         treeFold (nil, single, combinePre) (Branch (t1, x, t2)) xs 
+\end{verbatim}
+by first \emph{unfolding} the occurrences of \verb|treeFold|, that is replacing it with its definition; then inlining \verb|nil|, \verb|single|, \verb|combinePre|, \verb|append| until all these occurrences are eliminated; and finally \emph{folding} occurrences of \verb|treeFold (nil, single, combinePre)|, that is replacing them by \verb|preorder'|. 
+
+Finally, do the same for \verb|preorder| by inlining \verb|fromDiffList|, thus eliminating all occurrences of difference list operations.
+(See DiffList.fs for the definitions of difference list operations.) 
+
+\section{File concatenation}
+
+The \texttt{cat}-utility from 
+Unix\footnote{Unix is the predecessor operating system for MacOS, Linux and most server operating system in current practical use.} 
+is a program that concatenates files.  
+This exercise is about building a \texttt{cat}-like program in F\# in a file called \texttt{cat.fs} that contains the following functions, plus additional definitions as you see fit to solve this exercise.
+
+\subsection{Reading contents of file stream}
+
+Write function \texttt{readBytes: FileStream -> byte[]} with the following specification.  
+\begin{itemize}
+\item Precondition: \texttt{fs} is a readable file stream.
+\item Postcondition: For \texttt{bs = readBytes fs}, the byte array \texttt{bs} contains the entire contents of the file stream.   
+\end{itemize}
+
+\subsection{Reading contents of file}
+
+Implement a function \texttt{readFile: string -> byte[]} with the following specification. 
+\begin{itemize}
+\item Precondition: None (any string is acceptable and must be handled)
+\item Postcondition: If the input string is a readable file, return its contents.  Otherwise raise exception \texttt{FileNotFoundException} if the file does not exist or is not readable.
+\end{itemize}
+
+\subsection{Reading contents of multiple files}
+ 
+Implement a function \texttt{readFiles: string list -> byte[] option list} with the following specification:
+\begin{itemize}
+\item Precondition: None (any list of strings is acceptable and must be handled)
+\item Postcondition: For each string in the input, the output is either the contents of the file with that name, if it exists and is readable; otherwise it is \texttt{None}.  
+\end{itemize}
+
+\subsection{Concatenating file contents and writing to standard output}
+
+Implement a function \texttt{cat: string[] -> int} that outputs to stdout the concatenation of the contents of the files in the input array in the sequence they occur and make it the entry point of \texttt{cat.fs}. Its specification is as follows.
+\begin{itemize}
+\item Precondition: None (any array of strings is acceptable and must be handled).
+\item Postcondition: 
+\begin{itemize}
+\item If all of the input files exist and are readable, the output written to stdout contains their concatenated contents in the order given in the input array; nothing is written to stderr; and the exit status (result of the function) is $0$.  
+\item If one or more of the files does not exist or is not readable, then
+nothing is written to stdout; the exit status is $k$ where $k$ is the minimum of 255 and the number of nonexistent/unreadable files; and for each file that is nonexistent/unreadable the string \\ \verb|cat: The file | filename \verb|does not exist or is not readable.\n| \\ is written to stderr.
+\end{itemize}
+\end{itemize} 
+
+\subsection{Specification-based testing of functions}
+
+Add test cases to the test cases given such that each part of the specifications is covered and such that  extremal values of inputs are considered, such as empty files (files that exist and are readable, but contain zero bytes).   In particular, test your implementation of \texttt{cat}.
+
+\subsection{Streaming file concatenation (optional)} 
+
+Reading the contents of all files into memory before writing to the output stream requires memory proportional to the collective size of all files.  Provide another implementation of \texttt{cat: string[] -> int} that uses only a constant amount of memory, say 1024 bytes as a buffer for data read.  Note that you must satisfy the same specification for \texttt{cat}; in particular, nothing is to be written to stdout if there is a nonexistent/unreadable file in the input.
+
+\comment{Add/change instructions on how exactly to compile/build the program, how to name it and how to submit it.  Add examples of correct behavior from test suite.}
+
+\comment{For internal use only: Design test suite and provide a corresponding script for loading and executing all the students' programs for automatic testing.}
+
+\section{Catenable lists}
+
+Catenable lists are lists with efficient (constant-time) appending, like difference lists, and additional operations.  They are widely used to implement text processing systems such as text editors, where characters and text fragments need to be inserted and deleted efficiently, which is why arrays holding the text are not used.
+
+In this exercise you will implement a module \texttt{CatList} with functional catenable lists, using inductive data types in F\#.\footnote{We use the term ``list'' in a programming language independent sense of ``finite sequence of elements''.  If we want to refer to the built-in F\# data type \texttt{someType list} we say ``built-in cons-lists in F\#'', but may elide ``built-in'' and ``in F\#'' where this is clear from the context.}
+
+\subsection{Inductive data type and constructors}
+
+We represent catenable lists by the inductive data type 
+\begin{verbatim}
+type 'a catlist = 
+     Empty                              // empty node
+   | Single of 'a                       // leaf node
+   | Append of 'a catlist * 'a catlist  // internal node
+\end{verbatim}
+The constructor \texttt{Empty} represents the empty list; \texttt{Single} constructs a singleton list; \texttt{Append} constructs the concatenation of two lists.
+
+Provide definitions for the following values and functions. 
+\begin{verbatim}
+val nil : 'a catlist  // the empty list
+val single : 'a -> 'a catlist  // singleton list
+val append :  'a catlist -> 'a catlist -> 'a catlist // append
+val cons : 'a -> 'a catlist -> 'a catlist // cons/prepend
+val snoc : 'a catlist -> 'a -> 'a catlist // snoc/postpend
+\end{verbatim}
+Use these functions instead of \verb|Empty|, \verb|Single|, \verb|Append| in subsequent code, except in pattern matching.
+
+\subsection{Tree traversal by structural recursion}
+
+The length of a catenable list can be defined by structural recursion on \verb|'a catlist|:
+\begin{verbatim}
+let rec length' xs =
+    match xs with
+      Empty -> 0
+    | Single _ -> 1
+    | Append (ys, zs) -> length' ys + length' zs
+\end{verbatim}
+
+Define in an analogous fashion the function \verb|sum': int catlist -> int|, which computes the sum of the integer values in its
+input. Test that is computes the correct result on a carefully chosen inputs, including the ``extremal'' value \verb|Empty|.
+
+\subsection{Tree traversal by folding}
+
+Structural recursion on \verb|'a catlist| can be captured by a parameterized higher-order function
+\begin{verbatim}
+fold: (('a -> 'a -> 'a) * 'a) -> ('b -> 'a) -> 'b catlist -> 'a
+\end{verbatim}
+such that the length function can be defined by
+\begin{verbatim}
+let length xs = fold ((+), 0) (fun _ -> 1) xs
+\end{verbatim}
+without using ``rec'' in its definition.
+
+Define \verb|fold| by structural recursion analogous to \verb|treeFold| for binary trees (see lecture slides).
+
+\subsection{Tree folding examples}
+
+Analogous to the \verb|fold|-based definition of \verb|length| above, define, without explicit recursion, the functions on catenable lists that correspond to the functions of the same names on built-in cons-lists, using \verb|fold|.\footnote{Tip: Write the functions using structural recursion first; then identify the parts that become the arguments of \texttt{fold}. Finally write the functions using \texttt{fold} and test them against your first version to ensure they give the same result.}  
+\begin{verbatim}
+val map : ('a -> 'b) -> 'a catlist -> 'b catlist 
+val filter : ('a -> bool) -> 'a catlist -> 'a catlist 
+val rev : 'a catlist -> 'a catlist
+\end{verbatim}
+
+\subsection{Conversion to and from cons-lists}
+
+Write functions
+\begin{verbatim}
+val fromCatList : 'a catlist -> 'a list
+val toCatList : 'a list -> 'a catlist
+\end{verbatim}
+for converting between built-in cons-lists and catenable lists in linear time, using structural recursion on catenable lists and built-in lists, respectively.\footnote{Tip: Use difference lists as an intermediate data structure when converting from catenable lists.}
+
+(Optional: Express your definitions without explicit recursion, using the \texttt{List.foldBack} and \texttt{CatList.fold} higher-order functions instead.)
+
+(Optional challenge problem: The function \verb|toCatList| will construct skewed binary trees.  The function \verb|balTree| presented in the lecture constructs a balanced search tree that, by analogy, yields a way of constructing a balanced catenable list, but in time $\Theta(n \log n)$.  Come up with an implementation for \verb|toCatList| that yields a balanced catenable list in time $O(n)$.)
+
+\subsection{Looking up, inserting and deleting elements}
+
+Provide implementations using explicit recursion of functions
+\begin{verbatim}
+val item : int -> 'a catlist -> 'a
+val insert : int -> 'a -> 'a catlist -> 'a catlist
+val delete : int -> 'a catlist -> 'a catlist
+\end{verbatim}
+where \verb|item i xs| returns the \verb|i+1|-th element in \verb|xs| under the assumption (precondition) that \verb|0 <= i < length xs|;
+\verb|insert i v xs| inserts \verb|v| after the \verb|i|-the element in \verb|xs|, under the assumption that \verb|0 <= i <= length xs|;
+and \verb|delete i xs| deletes the \verb|i+1|-th element in \verb|xs| under the assumption that \verb|0 <= i < length xs|.
+
+You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is a okay since it can be implemented in constant time by data augmentation. See following optional exercise.  Using such an inefficient implementation is a valuable intermediate step in the systematic design of efficient data structures.
+ 
+\subsection{Augmented data structures (optional)}
+
+Recursive implementations of \verb|item|, \verb|insert|, \verb|delete| using \verb|length| are inefficient because every call of \verb|length| traverses its argument, taking time linear in the size (number of nodes) of its argument.  This can be eliminated by \emph{data augmentation}: Precomputing the value of a particular function applied to a node in a tree-based data structure and storing it with the node itself.  In our case we will precompute the length of each catenable list, a data structure often called \emph{rope}.
+Data augmentation is a key technique in advanced implementations of relational database systems and other systems.  
+
+Consider the mutually recursive data type definition
+\begin{verbatim}
+type 'a rope = 'a ropeBody * int  
+and  'a ropeBody = 
+           Empty 
+         | Single of 'a 
+         | Append of 'a rope * 'a rope
+\end{verbatim}
+where \verb|'a ropeBody| has the same constructors as \verb|'a catlist|, but such that an element of \verb|'a rope| additionally has an associated integer-value, which will always be the length of the underlying catenable list.\footnote{Maintaining the invariant is not built into the data type. By limiting ourselves to operations that always preserve this invariant we can guarantee that every rope value comes with the correct length value in its second component.}
+
+Redo the exercises for \verb|'a catlist|, but using \verb|'a rope| instead.
+
+If you have used \verb|fold| in the above exercises instead of explicit recursion you will notice that hardly any code needs to be changed apart from the basic value and function definitions and, most notably, \verb|length|, which is just
+\begin{verbatim}
+let length (r : 'a rope) = snd r // or just: let length = snd
+\end{verbatim} 
+The code using \verb|fold| instead of explicit structural recursion with \verb|match| will work immediately with \verb|'a rope| instead of \verb|'a catlist|.  The corresponding implementations of \verb|item|, \verb|insert| and \verb|delete| are almost unchanged, but its performance is vastly improved because \verb|length| now executes in time $O(1)$.  
+
+\subsection{Balanced functional ropes (optional challenge problem)}
+
+Inserting and deleting may result in unbalanced ropes, that is in binary trees (without payload in internal nodes) whose height is not always bounded by a fixed  (and preferably small) constant factor of $\log_2 (n)$ where $n$ is the number of leaf nodes in the tree.  Because of this, operations \verb|item|, \verb|insert|, \verb|delete|, whose execution time is proportional to the height of the rope they are operating on, do not run in $O(\log n)$ time in the worst case.  
+
+Add efficient rebalancing steps during insertions and deletions such that the resulting ropes are always guaranteed to be balanced, such that each of \verb|item|, \verb|insert|, \verb|delete|  execute in $O(\log n)$ in the worst case.  Warning: This is very challenging problem since the data structure is also required to be purely functional. (This is usually not covered, even in more advanced algorithms and data structure courses.) 
+
+
+\end{document}
