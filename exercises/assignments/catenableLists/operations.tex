@@ -1,0 +1,13 @@
+\subsection*{Looking up, inserting and deleting elements}
+
+Provide implementations, using explicit recursion, of functions
+\begin{verbatim}
+val item : int -> 'a catlist -> 'a
+val insert : int -> 'a -> 'a catlist -> 'a catlist
+val delete : int -> 'a catlist -> 'a catlist
+\end{verbatim}
+where \verb|item i xs| returns the \verb|i+1|-th element in \verb|xs| under the assumption (precondition) that \verb|0 <= i < length xs|;
+\verb|insert i v xs| inserts \verb|v| after the \verb|i|-the element in \verb|xs|, under the assumption that \verb|0 <= i <= length xs|;
+and \verb|delete i xs| deletes the \verb|i+1|-th element in \verb|xs| under the assumption that \verb|0 <= i < length xs|.
+
+You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is okay since it can subsequently be implemented in constant time by data augmentation. (See following optional exercise.)  Using such an inefficient implementation is a valuable intermediate step in the systematic design of efficient data structures.

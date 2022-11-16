@@ -1,0 +1,4 @@
+\section*{Streaming file concatenation}
+Reading the contents of all files into memory before writing to the output stream requires memory proportional to the collective size of all files.
+
+Provide another implementation of \texttt{cat: string[] -> int} that uses only a constant amount of memory, 64 bytes as a buffer for data read.  Note that you must satisfy the same specification for \texttt{cat}; in particular, nothing is to be written to stdout if there is a nonexistent/unreadable file in the input.

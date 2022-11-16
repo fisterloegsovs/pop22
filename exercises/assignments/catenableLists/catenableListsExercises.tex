@@ -1,0 +1,64 @@
+\section*{Catenable lists}
+
+Catenable lists are lists with efficient (constant-time) appending, like difference lists, and additional operations.  They are widely used to implement text processing systems such as text editors, where characters and text fragments need to be inserted and deleted efficiently, which is why arrays holding the text are not used.
+
+In this exercise you will implement a module \texttt{CatList} with functional catenable lists, using inductive data types in F\#.\footnote{We use the term ``list'' in a programming language independent sense of ``finite sequence of elements''.  If we want to refer to the built-in F\# data type \texttt{someType list} we say ``built-in cons-lists in F\#'', but may elide ``built-in'' and ``in F\#'' where this is clear from the context.}
+
+
+\subsection*{Inductive data type and constructors}
+
+We represent catenable lists by the inductive data type 
+\begin{verbatim}
+type 'a catlist = 
+     Empty                              // empty node
+   | Single of 'a                       // leaf node
+   | Append of 'a catlist * 'a catlist  // internal node
+\end{verbatim}
+The constructor \texttt{Empty} represents the empty list; \texttt{Single} constructs a singleton list; \texttt{Append} constructs the concatenation of two lists.
+
+Provide definitions for the following values and functions. 
+\begin{verbatim}
+val nil : 'a catlist  // the empty list
+val single : 'a -> 'a catlist  // singleton list
+val append :  'a catlist -> 'a catlist -> 'a catlist // append
+val cons : 'a -> 'a catlist -> 'a catlist // cons/prepend
+val snoc : 'a catlist -> 'a -> 'a catlist // snoc/postpend
+\end{verbatim}
+Use these functions instead of \verb|Empty|, \verb|Single|, \verb|Append| in subsequent code, except in pattern matching.
+
+\subsection*{Tree traversal by structural recursion}
+
+The length of a catenable list can be defined by structural recursion on \verb|'a catlist|:
+\begin{verbatim}
+let rec length' xs =
+    match xs with
+      Empty -> 0
+    | Single _ -> 1
+    | Append (ys, zs) -> length' ys + length' zs
+\end{verbatim}
+
+Define in an analogous fashion the function \verb|sum': int catlist -> int|, which computes the sum of the integer values in its
+input. Test that is computes the correct result on a carefully chosen inputs, including the ``extremal'' value \verb|Empty|.
+
+\subsection*{Tree traversal by folding}
+
+Structural recursion on \verb|'a catlist| can be captured by a parameterized higher-order function
+\begin{verbatim}
+fold: (('a -> 'a -> 'a) * 'a) -> ('b -> 'a) -> 'b catlist -> 'a
+\end{verbatim}
+such that the length function can be defined by
+\begin{verbatim}
+let length xs = fold ((+), 0) (fun _ -> 1) xs
+\end{verbatim}
+without using ``rec'' in its definition.
+
+Define \verb|fold| by structural recursion analogous to \verb|treeFold| for binary trees (see lecture slides).
+
+\subsection*{Tree folding examples}
+
+Analogous to the \verb|fold|-based definition of \verb|length| above, define, without explicit recursion, the functions on catenable lists that correspond to the functions of the same names on built-in cons-lists, using \verb|fold|.\footnote{Tip: Write the functions using structural recursion first; then identify the parts that become the arguments of \texttt{fold}. Finally write the functions using \texttt{fold} and test them against your first version to ensure they give the same result.}  
+\begin{verbatim}
+val map : ('a -> 'b) -> 'a catlist -> 'b catlist 
+val filter : ('a -> bool) -> 'a catlist -> 'a catlist 
+val rev : 'a catlist -> 'a catlist
+\end{verbatim}
