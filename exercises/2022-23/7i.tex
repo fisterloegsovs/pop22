@@ -70,11 +70,11 @@ I denne periode skal vi arbejde med \dots
 \section*{Afleveringsopgaver (in English)}
 \exercises{\exerciseNumber\typeLetter}{../assignments/cat2022/}{introductionAssignment}{streaming}
 
-\begin{center}
-\rule{0.7\textwidth}{1pt}
-\end{center}
+% \begin{center}
+% \rule{0.7\textwidth}{1pt}
+% \end{center}
 
-\continueExercises{\exerciseNumber\typeLetter}{../assignments/catenableLists/}{}{conversions,operations}
+% \continueExercises{\exerciseNumber\typeLetter}{../assignments/catenableLists/}{}{conversions,operations}
 
 % The "cat"-assignment is the IO-related assignment from last year
 % I think we could somewhat easily rewrite it to use exceptions instead of option types.
@@ -90,13 +90,14 @@ Afleveringen skal bestå af
 \end{itemize}
 Zip-filen skal indeholde:
 \begin{itemize}
-\item filen \texttt{README.txt} som er en textfil med jeres navne og dato arbejdet, samt en beskrivelse af, hvordan man kører jeres kode.
-\item en \texttt{src} mappe med følgende og kun
-  følgende filer:
-  % \begin{quote}
-  %   \exerciseNumber\typeLetter0Lib.fsi, \exerciseNumber\typeLetter0Lib.fs, \exerciseNumber\typeLetter0App.fsx
-  % \end{quote}
-  Funktionerne skal være dokumenteret ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+\item en mappe \texttt{CatStreaming} med følgende filer:
+  \begin{quote}
+    CatStreaming.fsproj, CatStreaming.fsi, CatStreaming.fs, Program.fs
+  \end{quote}
+  % Udover filerne skal mappen \texttt{CatStreaming} indeholde en mappe \texttt{testFiles}, der indeholder de input og output-filer du har benyttet til at teste din implementation.
+  Projektet skal kunne bygges med \texttt{dotnet build} og køres med \\ \texttt{dotnet run [fil1 fil2 ... filN]}.
+  
+  Funktionerne skal være dokumenteret ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne, i filen \texttt{CatStreaming.fsi}.
   % \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{rapport.tex} skabelonen, skal dokumentere jes løsning og indeholde figurer, der viser outputgrafik fra canvas for opgaverne.
 \end{itemize}
 

@@ -1,4 +1,4 @@
 \section*{Streaming file concatenation}
-Reading the contents of all files into memory before writing to the output stream requires memory proportional to the collective size of all files.
+Reading the contents of all files into memory before writing to the output stream requires memory proportional to the collective size of all files. Imagine we want to concatenate 10 files, each of size 4GB, using the \texttt{cat}-implementation from the exercises. We would need at least 40GB of memory to read in the files, before we could start concatenating the contents and writing the concatenation a file.
 
-Provide another implementation of \texttt{cat: string[] -> int} that uses only a constant amount of memory, 64 bytes as a buffer for data read.  Note that you must satisfy the same specification for \texttt{cat}; in particular, nothing is to be written to stdout if there is a nonexistent/unreadable file in the input.
+In this task you will write another implementation of the \texttt{cat}-program from the exercises, this time using \textit{streaming}\footnote{Somewhat similar to how a \textit{streaming service} such as Youtube or Netflix delivers small pieces of a video in a \textit{stream}, so the user does not have to wait for the entire video to be delivered, but can start watching (almost) instantly.}.
