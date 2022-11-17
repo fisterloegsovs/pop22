@@ -14,10 +14,37 @@ You can then use the following \textit{skeletons} for the three files:
 \item \textbf{Cat.fsi} \\
   \begin{lstlisting}{fsharp}
 module Cat
+open System.IO
+
+val readBytes: FileStream -> byte[]
+val readFile: string -> byte[]
+val readFiles: string list -> byte[] option list
+val writeBytes: byte[] -> FileStream -> unit
+val writeFile: byte[] -> string -> int
+val cat: string[] -> int
   \end{lstlisting}
 \item \textbf{Cat.fs} \\
   \begin{lstlisting}{fsharp}
 module Cat
+open System.IO
+
+let readBytes (fs:FileStream) : byte[] =
+    [||] // Replace this with a proper implementation
+
+let readFile (filename:string) : byte[] =
+    [||] // Replace this with a proper implementation
+
+let readFiles (filenames : string list) : byte[] option list =
+    [] // Replace this with a proper implementation
+
+let writeBytes (bytes : byte[]) (fs:FileStream) =
+    () // Replace this with a proper implementation
+
+let writeFile (bytes: byte[]) (filename:string) =
+    0 // Replace this with a proper implementation
+
+let cat (filenames : string[]) =
+    0 // Replace this with a proper implementation
   \end{lstlisting}
 \item \textbf{Program.fsx} \\
   \begin{lstlisting}{fsharp}
@@ -42,6 +69,8 @@ Write function \texttt{readBytes: fs:FileStream -> byte[]} with the following sp
 \item Postcondition: For \texttt{bs = readBytes fs}, the byte array \texttt{bs} contains the entire contents of the file stream.   
 \end{itemize}
 
+You should create a byte array of a suitable size and use \texttt{FileStream.Read((buffer:byte[]), (offset:int32), (count:int32))} to read the file contents into the array before returning it.
+
 \subsection*{Reading contents of file}
 
 Implement a function \texttt{readFile: filename:string -> byte[]} with the following specification. 
@@ -50,14 +79,16 @@ Implement a function \texttt{readFile: filename:string -> byte[]} with the follo
 \item Postcondition: If the input string is a readable file, return its contents.  Otherwise raise exception \texttt{FileNotFoundException} if the file does not exist or is not readable.
 \end{itemize}
 
-The function should obtain a \texttt{FileStream} and use \texttt{readBytes} to read the filestream. 
+The function should obtain a \texttt{FileStream}, e.g. through \texttt{File.OpenRead}, and use your \texttt{readBytes} to read the filestream.
+
+Note: While it is possible to implement this function using \texttt{File.ReadAllBytes}, the intended learning goal of this exercise is how to \textit{implement your own version}.
 
 \subsection*{Reading contents of multiple files}
  
 Implement a function \texttt{readFiles: (filenames:string list) -> byte[] option list} with the following specification:
 \begin{itemize}
 \item Precondition: None (any list of strings is acceptable and must be handled)
-\item Postcondition: For each string in the input, the output is either the contents of the file with that name, if it exists and is readable; otherwise it is \texttt{None}.  
+\item Postcondition: For each string in the input, the output is either the contents of the file with that name (wrapped in \texttt{Some}), if the file exists and is readable; otherwise it is \texttt{None}.  
 \end{itemize}
 
 \subsection*{Writing bytes to a file stream}
@@ -70,15 +101,16 @@ Write function \texttt{writeBytes: (bytes:byte[]) (fs:FileStream) -> unit} with 
 
 \subsection*{Writing bytes to file}
 
-Implement a function \texttt{writeFile: (bytes:byte[]) (filename:string) -> ()} with the following specification. 
+Implement a function \texttt{writeFile: (bytes:byte[]) (filename:string) -> int} with the following specification. 
 \begin{itemize}
 \item Precondition: \texttt{bytes} is a byte array.
-\item Postcondition: All bytes in \texttt{bytes} are written to the file \texttt{filename}. If \texttt{filename} does not exist, it is created. If it does exist, it is overwritten with the contents of \texttt{bytes}.
+\item Postcondition: All bytes in \texttt{bytes} are written to the file \texttt{filename}. If \texttt{filename} does not exist, it is created. If it does exist, it is overwritten with the contents of \texttt{bytes}. The exit status is 0.
+  If an error occurs, the string \verb|cat: Could not open or create file | \textit{filename} \verb|.\n| is written to stderr. The exit status is 1.
 \end{itemize}
 
 The function should obtain a \texttt{FileStream} and use \texttt{writeBytes} to write the bytes to the filestream. 
-
-
+You should use \texttt{File.Open} with an appropriate \texttt{FileMode}. 
+You might need to call the \texttt{Flush()} method on your \texttt{FileStream} after writing bytes to it. 
 
 \subsection*{Concatenating file contents and writing to files}
 
