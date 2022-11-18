@@ -1,0 +1,12 @@
+\subsection*{Writing bytes to file}
+
+Implement a function \texttt{writeFile: (bytes:byte[]) (filename:string) -> int} with the following specification. 
+\begin{itemize}
+\item Precondition: \texttt{bytes} is a byte array.
+\item Postcondition: All bytes in \texttt{bytes} are written to the file \texttt{filename}. If \texttt{filename} does not exist, it is created. If it does exist, it is overwritten with the contents of \texttt{bytes}. The exit status is 0.
+  If an error occurs, the string \verb|cat: Could not open or create file | \textit{filename} \verb|.\n| is written to stderr. The exit status is 1.
+\end{itemize}
+
+The function should obtain a \texttt{FileStream} and use \texttt{writeBytes} to write the bytes to the filestream. 
+You should use \texttt{File.Open} with an appropriate \texttt{FileMode}. 
+You might need to call the \texttt{Flush()} method on your \texttt{FileStream} after writing bytes to it. 

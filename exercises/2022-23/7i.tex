@@ -6,23 +6,20 @@
 \newcommand{\exerciseNumber}{7}
 \newrobustcmd{\typeLetter}{i}
 
-\exerciseTitle{\exerciseNumber}{\typeLetter}{18.\ november - 26.\ november}{lørdag d.\ 26.\ november kl. 22:00}{}
+\exerciseTitle{\exerciseNumber}{\typeLetter}{18.\ november - 26.\ november}{lørdag d.\ 26.\ november kl. 22:00}{Fritz Henglein, Mads Obitsø}
 
 \begin{document}
 \maketitle
 
-I denne periode skal vi arbejde med \dots
+I denne periode skal vi arbejde med funktionelle datastrukturer, input/output og undtagelser (exceptions).
 
 % Input/Output og undtagelser (exceptions)
 % skal svare til Kapitel 12 i Sporring
 \learningPurposeTxt{
-  {Input/Output},
-  {Undtagelser}}
+  {Funktionelle datastrukturer og inductive data types},
+  {Skrive programmer der kan håndtere input og genere output, ved at læse fra og skrive til filer.},
+  {Skrive programmer der kan håndtere undtagelser, f.eks. ifbm. med at læse og skrive til filer.}}
 
-% \learningPurposeTxt{
-%   {Kunne definere funktioner som tager andre funktioner som argument og/eller giver funktioner som returværdi},
-%   {Kunne definere funktioner ved currying},
-%   {Kunne arbejde med den abstrakte datatype træe.}}
 
 \learningConditionsTxt{\typeLetter}
 
@@ -35,50 +32,21 @@ I denne periode skal vi arbejde med \dots
 \rule{0.7\textwidth}{1pt}
 \end{center}
 
-\continueExercises{\exerciseNumber ø}{../assignments/cat2022/}{}{catExercises}
+\continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{introduction}{constructors,treeTraversalRec,treeTraversalFold,treeFoldingExamples}
+
+\continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{}{conversions,operations}
 
 \begin{center}
 \rule{0.7\textwidth}{1pt}
 \end{center}
-
-\continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{}{catenableListsExercises}
-
-
-% Below is all the old exercises I could find wrt. exceptions.
-% Not necessarily good choices this year
+\continueExercises{\exerciseNumber ø}{../assignments/cat2022/}{introduction}{readBytes,readFile,readFiles,writeBytes,writeFile,catProgram}
 
 
-
-% \exercises{\exerciseNumber ø}{../assignments/exceptions/}{introduction}{exception,fac2,fac,safeIndex}
-% \begin{center}
-% \rule{0.7\textwidth}{1pt}
-% \end{center}
-
-% % Below is all the old exercises I could find wrt. IO.
-% % Not necessarily good choices this year
-
-% \continueExercises{\exerciseNumber ø}{../assignments/io/}{introduction}{commandLineArgs,filenameDialogue,fileReplace,printFile,readFile,readKey,simpleCalc,writeFile}
-% \begin{center}
-% \rule{0.7\textwidth}{1pt}
-% \end{center}
-% \continueExercises{\exerciseNumber ø}{../assignments/exprtrees/}{introduction}{eval,subtract} %divide
-% \begin{center}
-% \rule{0.7\textwidth}{1pt}
-% \end{center}
-% \continueExercises{\exerciseNumber ø}{../assignments/leaftrees/}{introduction}{leafs,sum,preorder,find}
-
+\newpage
 \section*{Afleveringsopgaver (in English)}
 \exercises{\exerciseNumber\typeLetter}{../assignments/cat2022/}{introductionAssignment}{streaming}
 
-% \begin{center}
-% \rule{0.7\textwidth}{1pt}
-% \end{center}
 
-% \continueExercises{\exerciseNumber\typeLetter}{../assignments/catenableLists/}{}{conversions,operations}
-
-% The "cat"-assignment is the IO-related assignment from last year
-% I think we could somewhat easily rewrite it to use exceptions instead of option types.
-% \exercises{\exerciseNumber\typeLetter}{../assignments/cat/}{introduction}{readFile,printFile,cat,tac}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Krav til afleveringen}
@@ -92,9 +60,9 @@ Zip-filen skal indeholde:
 \begin{itemize}
 \item en mappe \texttt{CatStreaming} med følgende filer:
   \begin{quote}
-    CatStreaming.fsproj, CatStreaming.fsi, CatStreaming.fs, Program.fs
+    CatStreaming.fsproj, CatStreaming.fsi, CatStreaming.fs, Program.fs, testing.txt
   \end{quote}
-  % Udover filerne skal mappen \texttt{CatStreaming} indeholde en mappe \texttt{testFiles}, der indeholder de input og output-filer du har benyttet til at teste din implementation.
+  Udover filerne skal mappen \texttt{CatStreaming} indeholde en mappe \texttt{testFiles}, der indeholder de input og output-filer du har benyttet til at teste din implementation. Filen \texttt{testing.txt} skal beskrive hvordan du afprøvet din løsning, herunder hvilke bufferstørrelser du benyttet, og beskrivelser af dine testfiler. 
   Projektet skal kunne bygges med \texttt{dotnet build} og køres med \\ \texttt{dotnet run [fil1 fil2 ... filN]}.
   
   Funktionerne skal være dokumenteret ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne, i filen \texttt{CatStreaming.fsi}.

@@ -1,0 +1,13 @@
+\subsection*{Tree traversal by folding}
+
+Structural recursion on \verb|'a catlist| can be captured by a parameterized higher-order function
+\begin{lstlisting}{fsharp}
+fold: (('a -> 'a -> 'a) * 'a) -> ('b -> 'a) -> 'b catlist -> 'a
+\end{lstlisting}
+such that the length function can be defined by
+\begin{lstlisting}{fsharp}
+let length xs = fold ((+), 0) (fun _ -> 1) xs
+\end{lstlisting}
+without using ``rec'' in its definition.
+
+Define \verb|fold| by structural recursion analogous to \verb|treeFold| for binary trees (see lecture slides).

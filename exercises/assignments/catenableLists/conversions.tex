@@ -1,11 +1,12 @@
 \subsection*{Conversion to and from cons-lists}
 
 Write functions
-\begin{verbatim}
+\begin{lstlisting}{fsharp}
 val fromCatList : 'a catlist -> 'a list
 val toCatList : 'a list -> 'a catlist
-\end{verbatim}
-for converting between built-in cons-lists and catenable lists in linear time, using structural recursion on catenable lists and built-in lists, respectively.\footnote{Tip: Use difference lists as an intermediate data structure when converting from catenable lists.}
+\end{lstlisting}
+for converting between built-in cons-lists and catenable lists in linear time, using structural recursion on catenable lists and built-in lists, respectively.
+\footnote{Tip: Use difference lists as an intermediate data structure when converting from catenable lists.}
 
 (Optional: Express your definitions without explicit recursion, using the \texttt{List.foldBack} and \texttt{CatList.fold} higher-order functions instead.)
 

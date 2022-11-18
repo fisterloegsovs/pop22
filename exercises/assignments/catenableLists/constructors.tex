@@ -1,0 +1,20 @@
+\subsection*{Inductive data type and constructors}
+
+We represent catenable lists by the inductive data type 
+\begin{lstlisting}{fsharp}
+type 'a catlist = 
+     Empty                              // empty node
+   | Single of 'a                       // leaf node
+   | Append of 'a catlist * 'a catlist  // internal node
+\end{lstlisting}
+The constructor \texttt{Empty} represents the empty list; \texttt{Single} constructs a singleton list; \texttt{Append} constructs the concatenation of two lists.
+
+Provide definitions for the following values and functions. 
+\begin{lstlisting}{fsharp}
+val nil : 'a catlist  // the empty list
+val single : 'a -> 'a catlist  // singleton list
+val append :  'a catlist -> 'a catlist -> 'a catlist // append
+val cons : 'a -> 'a catlist -> 'a catlist // cons/prepend
+val snoc : 'a catlist -> 'a -> 'a catlist // snoc/postpend
+\end{lstlisting}
+Use these functions instead of \verb|Empty|, \verb|Single|, \verb|Append| in subsequent code, except in pattern matching.

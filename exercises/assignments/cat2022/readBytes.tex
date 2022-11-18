@@ -1,0 +1,9 @@
+\subsection*{Reading contents of file stream}
+
+Write function \texttt{readBytes: fs:FileStream -> byte[]} with the following specification.  
+\begin{itemize}
+\item Precondition: \texttt{fs} is a readable file stream.
+\item Postcondition: For \texttt{bs = readBytes fs}, the byte array \texttt{bs} contains the entire contents of the file stream.   
+\end{itemize}
+
+You should create a byte array of a suitable size and use \texttt{FileStream.Read((buffer:byte[]), (offset:int32), (count:int32))} to read the file contents into the array before returning it.

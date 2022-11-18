@@ -1,0 +1,11 @@
+\subsection*{Reading contents of file}
+
+Implement a function \texttt{readFile: filename:string -> byte[]} with the following specification. 
+\begin{itemize}
+\item Precondition: None (any string is acceptable and must be handled)
+\item Postcondition: If the input string is a readable file, return its contents.  Otherwise raise exception \texttt{FileNotFoundException} if the file does not exist or is not readable.
+\end{itemize}
+
+The function should obtain a \texttt{FileStream}, e.g. through \texttt{File.OpenRead}, and use your \texttt{readBytes} to read the filestream.
+
+Note: While it is possible to implement this function using \texttt{File.ReadAllBytes}, the intended learning goal of this exercise is how to \textit{implement your own version}.

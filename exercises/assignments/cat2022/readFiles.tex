@@ -1,0 +1,7 @@
+\subsection*{Reading contents of multiple files}
+ 
+Implement a function \texttt{readFiles: (filenames:string list) -> byte[] option list} with the following specification:
+\begin{itemize}
+\item Precondition: None (any list of strings is acceptable and must be handled)
+\item Postcondition: For each string in the input, the output is either the contents of the file with that name (wrapped in \texttt{Some}), if the file exists and is readable; otherwise it is \texttt{None}.  
+\end{itemize}

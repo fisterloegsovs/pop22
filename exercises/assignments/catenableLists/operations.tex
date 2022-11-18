@@ -1,11 +1,11 @@
 \subsection*{Looking up, inserting and deleting elements}
 
 Provide implementations, using explicit recursion, of functions
-\begin{verbatim}
+\begin{lstlisting}{fsharp}
 val item : int -> 'a catlist -> 'a
 val insert : int -> 'a -> 'a catlist -> 'a catlist
 val delete : int -> 'a catlist -> 'a catlist
-\end{verbatim}
+\end{lstlisting}
 where \verb|item i xs| returns the \verb|i+1|-th element in \verb|xs| under the assumption (precondition) that \verb|0 <= i < length xs|;
 \verb|insert i v xs| inserts \verb|v| after the \verb|i|-the element in \verb|xs|, under the assumption that \verb|0 <= i <= length xs|;
 and \verb|delete i xs| deletes the \verb|i+1|-th element in \verb|xs| under the assumption that \verb|0 <= i < length xs|.

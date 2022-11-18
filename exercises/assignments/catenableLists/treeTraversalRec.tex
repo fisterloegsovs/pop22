@@ -1,0 +1,13 @@
+\subsection*{Tree traversal by structural recursion}
+
+The length of a catenable list can be defined by structural recursion on \verb|'a catlist|:
+\begin{lstlisting}{fsharp}
+let rec length' xs =
+    match xs with
+      Empty -> 0
+    | Single _ -> 1
+    | Append (ys, zs) -> length' ys + length' zs
+\end{lstlisting}
+
+Define in an analogous fashion the function \verb|sum': int catlist -> int|, which computes the sum of the integer values in its
+input. Test that is computes the correct result on a carefully chosen inputs, including the ``extremal'' value \verb|Empty|.
