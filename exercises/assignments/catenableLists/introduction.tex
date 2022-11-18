@@ -2,8 +2,13 @@
 
 Catenable lists are lists with efficient (constant-time) appending, like difference lists, and additional operations.  They are widely used to implement text processing systems such as text editors, where characters and text fragments need to be inserted and deleted efficiently, which is why arrays holding the text are not used.
 
-In this exercise you will implement a module \texttt{CatList} with functional catenable lists, using inductive data types in F\#.\footnote{We use the term ``list'' in a programming language independent sense of ``finite sequence of elements''.  If we want to refer to the built-in F\# data type \texttt{someType list} we say ``built-in cons-lists in F\#'', but may elide ``built-in'' and ``in F\#'' where this is clear from the context.}
+In this exercise you will implement a module \texttt{CatList} with functional catenable lists, using inductive data types in F\#.\footnote{We use the term ``list'' in the programming language independent sense of ``finite sequence of elements''.  If we want to refer to the built-in F\# data type \texttt{someType list} we say ``built-in cons-lists in F\#'', but may elide ``built-in'' and ``in F\#'' where this is clear from the context.}
 
 
-We recommend that you create a new dotnet project using \texttt{dotnet new console -lang "F\#" -o CatenableLists}, then create the files \texttt{CatList.fsi} and \texttt{CatList.fs} and add them to \texttt{CatenableLists.fsproj}.
+Start by creating a new dotnet project using 
+\begin{center}
+\texttt{dotnet new console -lang "F\#" -o CatenableLists},
+\end{center} 
+then create the files \texttt{CatList.fsi} and \texttt{CatList.fs}
+and add them to \texttt{CatenableLists.fsproj}.
 

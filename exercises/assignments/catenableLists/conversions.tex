@@ -5,9 +5,11 @@ Write functions
 val fromCatList : 'a catlist -> 'a list
 val toCatList : 'a list -> 'a catlist
 \end{lstlisting}
-for converting between built-in cons-lists and catenable lists in linear time, using structural recursion on catenable lists and built-in lists, respectively.
+for converting between built-in cons-lists and catenable lists in linear time, first using structural recursion on catenable lists and built-in lists, respectively.
 \footnote{Tip: Use difference lists as an intermediate data structure when converting from catenable lists.}
 
-(Optional: Express your definitions without explicit recursion, using the \texttt{List.foldBack} and \texttt{CatList.fold} higher-order functions instead.)
+Then express your definitions without explicit recursion, using the higher-order functions \\ \texttt{List.foldBack} and \texttt{CatList.fold} instead.
 
-(Optional challenge problem: The function \verb|toCatList| will construct skewed binary trees.  The function \verb|balTree| presented in the lecture constructs a balanced search tree that, by analogy, yields a way of constructing a balanced catenable list, but in time $\Theta(n \log n)$.  Come up with an implementation for \verb|toCatList| that yields a balanced catenable list in time $O(n)$.)
+(Optional: Your function \verb|toCatList| will probably construct skewed binary trees.  The function \verb|balTree| presented in the lecture constructs a balanced search tree that.  By analogy construct a balanced catenable list in time $\Theta(n \log n)$.  
+
+(Optional challenge: Come up with an implementation for \verb|toCatList| that yields a balanced catenable list in linear time, that is in time $O(n)$.)

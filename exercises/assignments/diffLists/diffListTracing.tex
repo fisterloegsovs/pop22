@@ -19,15 +19,16 @@ let treeFold (e, lf, bf) =
         | Branch (t1, x, t2) -> bf (f t1, x, f t2)
     f
 \end{lstlisting}
-See DiffList.fs for the definitions of difference list operations \verb|nil|, \verb|single|, \verb|append| and \verb|fromDiffList|.
+See DiffList.fs in the F\# code distributed in lecture week 8 
+for the definitions of difference list operations \verb|nil|, \verb|single|, \verb|append| and \verb|fromDiffList|.
 
 Rewrite \verb|preorder'| starting with the expression
 \begin{lstlisting}{fsharp}
 preorder' t xs
 \end{lstlisting}
-by \emph{unfolding} and \emph{folding} definitions of functions to arrive at definition of \verb|preorder'| of the form
+by \emph{unfolding} and \emph{folding} definitions of functions to arrive at a definition of \verb|preorder'| of the form
 \begin{lstlisting}{fsharp}
-let preorder t xs =
+let preorder' t xs =
     match t with 
       ... -> ... 
     | ... -> ...

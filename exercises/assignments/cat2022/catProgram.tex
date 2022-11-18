@@ -1,15 +1,15 @@
 \subsection*{Concatenating file contents and writing to files}
 
-Implement a function \texttt{cat: (filenames:string[]) -> int} that outputs to the last \texttt{filename} in \texttt{filenames} the concatenation of the contents of all files in the input array except for the last, in the sequence they occur. Its specification is as follows.
+Implement a function \texttt{cat: string[] -> int} that outputs to the last file name in the argument array the concatenation of the contents of all files in the argument array except for the last one, in the sequence they occur. Its specification is as follows.
 \begin{itemize}
-\item Precondition: None (any array of strings is acceptable and must be handled).
+\item Precondition: None (any array of strings is acceptable and must be handled).  Note that the same string (file name) can occur multiple times in input string array.
 \item Postcondition: 
 \begin{itemize}
-\item If all of the input files exist and are readable, the output written to the last \texttt{filename} contains their concatenated contents in the order given in the input array. Nothing is written to stderr and the exit status (result of the function) is $0$.
-\item If one or more of the files does not exist or is not readable, then
-  nothing is written to the last \texttt{filename}. The exit status is $k$ where $k$ is the minimum of 255 and the number of nonexistent/unreadable files. For each string $s$ that is a nonexistent/unreadable file, the string \\ \verb|cat: The file | $s$ \verb|does not exist or is not readable.\n| \\ is written to stderr.
-\item If \texttt{filenames} contain a single element, that file is either created or overwritten with nothing. The concatenation of ``nothing'' is the empty string.
-  \item If \texttt{filenames} is empty, the string \verb|cat: no input files\n| is written to stderr. The exit status is 0. 
+\item If all of the input files exist and are readable, the output written to the last file name contains their concatenated contents in the order given in the input array. Nothing is written to stderr and the exit status (result of the function) is $0$.
+\item If one or more of the input files does not exist or is not readable, then
+  nothing is written to the last \texttt{filename}. The exit status is $k$ where $k$ is the minimum of 254 and the number of nonexistent, unreadable or unwritable files. For each string $s$ that is a nonexistent, unreadable or unwritable file, the string \\ \verb|cat: The file | $s$ \verb|does not exist, is not readable or is not writeable.\n| \\ is written to stderr.
+\item If the string array contains only an output file name, that is has length 1, the output file must contain the empty string if it is writable, and the exit status is 0. (The empty string is the neutral element for strings under concatenation.)
+  \item If the string array is empty, the string \verb|cat: no output file\n| is written to stderr, and the exit status is 255. 
 \end{itemize}
 \end{itemize} 
 
@@ -19,3 +19,5 @@ In \texttt{Program.fs} call \texttt{cat} with the command line arguments.
 
 \texttt{dotnet run file1.txt file2.txt file3.txt} should result in \texttt{file3.txt} being either created or overwritten, and should contain the concatenated contents of \texttt{file1.txt} and \texttt{file2.txt}.
 
+Test your implementation using specification-based testing, such that each postcondition is covered by at least one test case, including relevant extremal values; f.eks.~ensuring that your implementation
+returns exit code 254 when concatenating 255 or more input files.  

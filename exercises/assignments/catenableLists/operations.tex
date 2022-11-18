@@ -10,4 +10,6 @@ where \verb|item i xs| returns the \verb|i+1|-th element in \verb|xs| under the 
 \verb|insert i v xs| inserts \verb|v| after the \verb|i|-the element in \verb|xs|, under the assumption that \verb|0 <= i <= length xs|;
 and \verb|delete i xs| deletes the \verb|i+1|-th element in \verb|xs| under the assumption that \verb|0 <= i < length xs|.
 
-You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is okay since it can subsequently be implemented in constant time by data augmentation. (See following optional exercise.)  Using such an inefficient implementation is a valuable intermediate step in the systematic design of efficient data structures.
+You may use the function \verb|length : 'a catlist -> int| in your definitions. This makes your implementation slow, but is okay since it can subsequently be implemented in constant time by data augmentation. Length-augmented catenable lists or sometimes called \emph{ropes}.
+
+Using an inefficient, but correct implementation, as in this exercise, is a valuable intermediate step in the systematic design of efficient data structures.  

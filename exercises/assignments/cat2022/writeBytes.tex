@@ -1,7 +1,7 @@
 \subsection*{Writing bytes to a file stream}
 
-Write function \texttt{writeBytes: (bytes:byte[]) (fs:FileStream) -> unit} with the following specification.  
+Write function \texttt{writeBytes: byte[] FileStream -> unit} with the following specification.  
 \begin{itemize}
-\item Precondition: \texttt{bytes} is a byte array and \texttt{fs} is a readable file stream.
+\item Precondition: The file stream is readable.
 \item Postcondition: all bytes in \texttt{bytes} are written to \texttt{fs}.
 \end{itemize}

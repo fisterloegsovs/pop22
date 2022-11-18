@@ -1,6 +1,6 @@
 \subsection*{Tree folding examples}
 
-Analogous to the \verb|fold|-based definition of \verb|length| above, define, without explicit recursion, the functions on catenable lists that correspond to the functions of the same names on built-in cons-lists, using \verb|fold|.\footnote{Tip: Write the functions using structural recursion first; then identify the parts that become the arguments of \texttt{fold}. Finally write the functions using \texttt{fold} and test them against your first version to ensure they give the same result.}  
+Analogous to the \verb|fold|-based definition of \verb|length| above, define using \verb|fold|, without explicit recursion, the functions on catenable lists that correspond to the functions of the same names on built-in cons-lists.\footnote{Tip: Write the functions using structural recursion first; then identify the parts that become the arguments of \texttt{fold}. Finally write the functions using \texttt{fold} and test them against your first version to ensure they give the same result.}  
 
 \begin{lstlisting}{fsharp}
 val map : ('a -> 'b) -> 'a catlist -> 'b catlist 

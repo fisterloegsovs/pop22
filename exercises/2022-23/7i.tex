@@ -2,7 +2,7 @@
 
 \input{setup}
 \input{assignmentSetup}
-
+x
 \newcommand{\exerciseNumber}{7}
 \newrobustcmd{\typeLetter}{i}
 
@@ -11,7 +11,7 @@
 \begin{document}
 \maketitle
 
-I denne periode skal vi arbejde med funktionelle datastrukturer (eng.~\emph{purely functional data structures}), inddata/uddata (eng.\emph{input/output, IO}) og undtagelser (eng.~\emph{exceptions}).
+I denne periode skal vi arbejde med funktionelle datastrukturer (eng.~\emph{purely functional data structures}), inddata/uddata (eng.~\emph{input/output, IO}) og undtagelser (eng.~\emph{exceptions}).
 
 % Input/Output og undtagelser (exceptions)
 % skal svare til Kapitel 12 i Sporring
@@ -34,7 +34,7 @@ I denne periode skal vi arbejde med funktionelle datastrukturer (eng.~\emph{pure
 
 \continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{introduction}{constructors,treeTraversalRec,treeTraversalFold,treeFoldingExamples}
 
-\continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{}{conversions,operations}
+%\continueExercises{\exerciseNumber ø}{../assignments/catenableLists/}{}{conversions,operations}
 
 \begin{center}
 \rule{0.7\textwidth}{1pt}
@@ -44,8 +44,10 @@ I denne periode skal vi arbejde med funktionelle datastrukturer (eng.~\emph{pure
 
 \newpage
 \section*{Afleveringsopgaver (in English)}
-\exercises{\exerciseNumber\typeLetter}{../assignments/cat2022/}{introductionAssignment}{streaming}
 
+\exercises{\exerciseNumber\typeLetter}{../assignments/catenableLists/}{introductionAssignment}{conversions,operations}
+
+\continueExercises{\exerciseNumber\typeLetter}{../assignments/cat2022/}{introductionAssignment}{streaming}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,6 +60,23 @@ Afleveringen skal bestå af
 \end{itemize}
 Zip-filen skal indeholde:
 \begin{itemize}
+\item en mappe \texttt{CatList} med følgende filer:
+  \begin{quote}
+    CatList.fsproj, CatList.fs
+  \end{quote}
+  Filen \verb|CatList.fs| skal indeholde type definitionen
+  \begin{lstlisting}{fsharp}
+  type 'a catlist = Empty | Single of 'a | Append of 'a catlist * 'a catlist
+  \end{lstlisting}
+  samt funktionsdefinitionerne for de 5 p\aa kr\ae vede funktioner 
+  \begin{lstlisting}{fsharp}
+val fromCatList : 'a catlist -> 'a list
+val toCatList : 'a list -> 'a catlist
+val item : int -> 'a catlist -> 'a
+val insert : int -> 'a -> 'a catlist -> 'a catlist
+val delete : int -> 'a catlist -> 'a catlist
+\end{lstlisting}
+og andre funktioner brugt for at implementere dem;
 \item en mappe \texttt{CatStreaming} med følgende filer:
   \begin{quote}
     CatStreaming.fsproj, CatStreaming.fsi, CatStreaming.fs, Program.fs, testing.txt
