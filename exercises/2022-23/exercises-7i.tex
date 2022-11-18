@@ -7,10 +7,17 @@
 
 \newcommand{\comment}[1]{\textcolor{red}{#1}}
 
+\input{setup}
+
 \begin{document}
 
 \maketitle
 
+\section{Exceptions}
+
+\subsection{Factorial function}
+
+\label{fac1} Implement the factorial function $n! = \prod_{i=1}^ni,\; n >0$ as \lstinline{fac : int -> int}. The function must cast a \lstinline{System.ArgumentException} exception, if the function is called with $n < 0$.  Think about what the result of $0!$ should be.  (Hint: The result is the product of $0$ numbers; so it must be the neutral element for multiplication.  Which is...?) Call \lstinline{fac} with the values $n=-4,0,1,4$, and catch possible exceptions.
 
 \section{Difference lists and equational rewriting}
 

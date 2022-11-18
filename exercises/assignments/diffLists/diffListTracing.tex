@@ -1,31 +1,45 @@
 Rewriting can help correctly derive more efficient code or just code that may be more easily understandable in terms of more elementary operations.
 
-Consider the extremely compact linear-time implementation for computing the preorder of a binary tree:
+Consider the compact linear-time implementation for computing the preorder of a binary tree
 \begin{lstlisting}{fsharp}
-type 'a tree = Empty | Leaf of 'a | Branch of 'a tree * 'a * 'a tree
+type 'a tree = 
+     Empty | Leaf of 'a | Branch of 'a tree * 'a * 'a tree
 open DiffList // nil, single, append, fromDiffList
-let combinePre (dl1, x, dl2) = 
-    append (single x) (append dl1 dl2)
-let preorder' (t : 'a tree) : 'a difflist =
-    treeFold (nil, single, combinePre) t
-let preorder (t : 'a tree) : 'a list = 
-    fromDiffList (preorder' t)
+let combinePre (dl1, x, dl2) = append (single x) (append dl1 dl2)
+let preorder' t = treeFold (nil, single, combinePre) t
+let preorder t = fromDiffList (preorder' t)
 \end{lstlisting}
-using difference list.
-
-% \newpage 
-Rewrite \verb|preorder'| starting with the definition
+where \verb|treeFold| from the lecture slides of lecture week 8 is defined as
 \begin{lstlisting}{fsharp}
-let preorder' (t : 'a tree) (xs : 'a list) : 'a list =
-    match t with
-      Empty -> 
-         treeFold (nil, single, combinePre) Empty xs
-    | Leaf x -> 
-         treeFold (nil, single, combinePre) (Leaf x) xs 
-    | Branch (t1, x, t2) -> 
-         treeFold (nil, single, combinePre) (Branch (t1, x, t2)) xs 
+let treeFold (e, lf, bf) =
+    let rec f t = 
+        match t with
+          Empty -> e
+        | Leaf x -> lf x
+        | Branch (t1, x, t2) -> bf (f t1, x, f t2)
+    f
 \end{lstlisting}
-by first \emph{unfolding} the occurrences of \verb|treeFold|, that is replacing it with its definition; then inlining \verb|nil|, \verb|single|, \verb|combinePre|, \verb|append| until all these occurrences are eliminated; and finally \emph{folding} occurrences of \verb|treeFold (nil, single, combinePre)|, that is replacing them by \verb|preorder'|. 
+See DiffList.fs for the definitions of difference list operations \verb|nil|, \verb|single|, \verb|append| and \verb|fromDiffList|.
 
-Finally, do the same for \verb|preorder| by inlining \verb|fromDiffList|, thus eliminating all occurrences of difference list operations.
-(See DiffList.fs for the definitions of difference list operations.) 
+Rewrite \verb|preorder'| starting with the expression
+\begin{lstlisting}{fsharp}
+preorder' t xs
+\end{lstlisting}
+by \emph{unfolding} and \emph{folding} definitions of functions to arrive at definition of \verb|preorder'| of the form
+\begin{lstlisting}{fsharp}
+let preorder t xs =
+    match t with 
+      ... -> ... 
+    | ... -> ...
+    | ... -> ... preorder' ... preorder'
+\end{lstlisting}
+In particular, unfold all definitions of functions on difference lists.
+
+Unfolding is the process of replacing a term of the form \verb|f ...| with the corresponding right-hand side of the definition of function \verb|f|.
+Folding is the converse.
+
+Finally, do the same for \verb|preorder| by rewriting
+\begin{lstlisting}{fsharp}
+preorder t xs
+\end{lstlisting}
+
