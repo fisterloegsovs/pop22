@@ -2,7 +2,7 @@
 
 \input{setup}
 \input{assignmentSetup}
-x
+
 \newcommand{\exerciseNumber}{7}
 \newrobustcmd{\typeLetter}{i}
 
@@ -62,21 +62,21 @@ Zip-filen skal indeholde:
 \begin{itemize}
 \item en mappe \texttt{CatList} med følgende filer:
   \begin{quote}
-    CatList.fsproj, CatList.fs
+    CatList.fsproj, CatList.fsi, CatList.fs, DiffList.fs
   \end{quote}
-  Filen \verb|CatList.fs| skal indeholde type definitionen
-  \begin{lstlisting}{fsharp}
-  type 'a catlist = Empty | Single of 'a | Append of 'a catlist * 'a catlist
-  \end{lstlisting}
-  samt funktionsdefinitionerne for de 5 p\aa kr\ae vede funktioner 
-  \begin{lstlisting}{fsharp}
-val fromCatList : 'a catlist -> 'a list
-val toCatList : 'a list -> 'a catlist
-val item : int -> 'a catlist -> 'a
-val insert : int -> 'a -> 'a catlist -> 'a catlist
-val delete : int -> 'a catlist -> 'a catlist
-\end{lstlisting}
-og andre funktioner brugt for at implementere dem;
+%   Filen \verb|CatList.fs| skal indeholde type definitionen
+%   \begin{lstlisting}{fsharp}
+%   type 'a catlist = Empty | Single of 'a | Append of 'a catlist * 'a catlist
+%   \end{lstlisting}
+%   samt funktionsdefinitionerne for de 5 p\aa kr\ae vede funktioner 
+%   \begin{lstlisting}{fsharp}
+% val fromCatList : 'a catlist -> 'a list
+% val toCatList : 'a list -> 'a catlist
+% val item : int -> 'a catlist -> 'a
+% val insert : int -> 'a -> 'a catlist -> 'a catlist
+% val delete : int -> 'a catlist -> 'a catlist
+% \end{lstlisting}
+% og andre funktioner brugt for at implementere dem;
 \item en mappe \texttt{CatStreaming} med følgende filer:
   \begin{quote}
     CatStreaming.fsproj, CatStreaming.fsi, CatStreaming.fs, Program.fs, testing.txt
