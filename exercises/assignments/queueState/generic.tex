@@ -1,0 +1,6 @@
+A queue is an abstract datatype, and as such the operations of a queue should not depend on the type of elements.
+In the following you are to implement a \textit{generic queue}, so it is possible to create queues of any type, e.g. queues of \texttt{int}, queues of \texttt{float}, queues of \texttt{string} or even queues of \texttt{queue}.
+
+The module is to be called \lstinline{Queue}, the signature file \texttt{queue.fsi} and the implementation file \texttt{queue.fs}.
+Add the new module to \texttt{5i.fsproj} and in \texttt{testQueues.fs}, add a corresponding test suite that shows your implementation works; that is, its operations perform queuing and dequeuing, and additionally that you can build queues of different types with the same generic library.
+As a minimum, demonstrate queues of \texttt{int}, \texttt{float} and \texttt{string}.

@@ -1,0 +1,8 @@
+A problem with the queue specification above is that there is a precondition on the dequeue operation: A programmer must always ensure that the argument to dequeue is nonempty before calling dequeue. In other words, even though the F\# type system does not flag it as an error, it \emph{is} an error (by the programmer) to call dequeue with the empty queue.
+
+
+In the following, you are to implement another version of your queue module using lists in F\# to represent the (sequence of elements in) a queue, with error handling. The module is to be called \lstinline{SafeIntQueue}, the signature file \texttt{safeIntQueue.fsi} and the implementation file \texttt{safeIntQueue.fs}.
+
+Change the queue specification such that \lstinline{SafeIntQueue.dequeue} returns an \lstinline{(element option) * queue} value and remove the precondition.
+Add the new module to \texttt{5i.fsproj} and in \texttt{testQueues.fs}, add a corresponding test suite that shows your implementation works; that is, its operations perform queuing and dequeuing, and, additionally \newline \lstinline{SafeIntQueue.dequeue(emptyQueue)} returns \lstinline{None}.
+
