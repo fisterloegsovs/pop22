@@ -1,0 +1,58 @@
+\documentclass[a4paper,12pt]{article}
+
+\input{setup}
+\input{assignmentSetup}
+
+\newcommand{\exerciseNumber}{8}
+\newrobustcmd{\typeLetter}{i}
+
+\exerciseTitle{\exerciseNumber}{\typeLetter}{25.\ november - 3.\ december}{lørdag d.\ 3.\ december kl. 22:00}{Jon Sporring}
+
+\begin{document}
+\maketitle
+På denne uge skal vi tage et nøjere kig på imperativ programmering. Den væsentlige forskel på imperativ og funktionel programmering er, at imperativ programmering arbejder med tilstande, dvs.\ variable, som kan ændre sig over tid. Som konsekvens heraf kobler man ofte \keyword{while} og \keyword{for} løkker til imperativ programmering i modsætning til rekurssion. Yderligere bliver håndkøring kompliceret af, at man er nødt til at tilføje en bunke (heap), for at holde øje med tilstandene af variablene over tid.
+
+
+\learningPurposeTxt{
+  {Forklare forskellen på og løse problemer med rekursion, \keyword{while} og \keyword{for} løkker,},
+  {Skrive programmer med variable, arrays i 1 og 2 dimensioner,},
+  {Håndkøre funktioner med tilstande og \keyword{while} og \keyword{for} løkker.}}
+
+\learningConditionsTxt{\typeLetter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Øveopgaver (in English)}
+\exercises{\exerciseNumber ø}{../assignments/bindings/}{}{mulTable,sum,handTracing}
+
+\begin{center}
+\rule{0.7\textwidth}{1pt}
+\end{center}
+
+\continueExercises{\exerciseNumber ø}{../assignments/lister/}{}{array,reverseArray, array2d,}
+
+\section*{Afleveringsopgaver (in English)}
+\exercises{\exerciseNumber\typeLetter}{../assignments/routeFinding/}{introduction}{routes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Krav til afleveringen}
+
+Afleveringen skal bestå af
+\begin{itemize}
+  \item en zip-fil, der hedder \texttt{\exerciseNumber\typeLetter.zip}
+  \item en opgavebesvarelse i pdf-format.
+\end{itemize}
+Zip-filen skal indeholde:
+\begin{itemize}
+\item filen \texttt{README.txt} som er en textfil med jeres navne og dato arbejdet.
+\item en \texttt{src} mappe med følgende og kun
+  følgende filer:
+  \begin{quote}
+    \exerciseNumber\typeLetter0abc.fsx, \exerciseNumber\typeLetter0d.fsx, og evt.\ \exerciseNumber\typeLetter0e
+  \end{quote}
+  svarende til afleveringsopgaverne a-b-c, d og e. Funktionerne skal være dokumenteret med ifølge dokumentationsstandarden ved brug af \verb|<summary>|, \verb|<param>| og \verb|<returns>| XML tagsne.
+  \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{opgave.tex} skabelonen, ganske kort dokumentere din løsning og indeholde figurer, der viser outputgrafik fra canvas for opgaverne.
+\end{itemize}
+
+\flushright God fornøjelse.
+
+\end{document}
