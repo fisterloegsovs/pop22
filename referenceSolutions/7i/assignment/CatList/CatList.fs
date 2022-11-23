@@ -47,31 +47,29 @@ let item (i:int) (xs : 'a catlist) : 'a =
             let ylen = length ys
             if ylen > i' then f i' ys
             else f (i' - ylen) zs
-
-    if length xs < i then failwith <| sprintf "Precondition violated: catlist has less than %d elements" i
-    else
-        f i xs
+        | _ -> failwith <| sprintf "Precondition violated: catlist has lees than %d elements" i
+    f i xs
 
 let insert (i:int) (elm:'a) (xs:'a catlist) : 'a catlist =
     let rec f i' xs =
-        match xs with
-            | Empty when i' = 0 -> single elm
-            | Single x when i' = 0 -> append xs (single elm)
+        if i' = 0 then cons elm xs
+        else
+            match xs with
             | Append (ys,zs) ->
                 let ylen = length ys
                 if ylen > i' then append (f i' ys) zs
                 else append ys (f (i' - ylen) zs)
-            
+            | _ -> failwith "Precondition violated, i > length xs"
     f i xs
 
 let delete (i:int) (xs:'a catlist) : 'a catlist =
     let rec f i' xs =
         match xs with
-            | Empty -> failwith "Precondition violated"
             | Single _ when i' = 0 -> nil
             | Append (ys,zs) ->
                 let ylen = length ys
                 if ylen > i' then append (f i' ys) zs
                 else append ys (f (i' - ylen) zs)
+            | _ -> failwith <| sprintf "Precondition violated: item %d does not exist in catlist" i
     f i xs
 
