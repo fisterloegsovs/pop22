@@ -8,7 +8,7 @@ val create: n: int -> unit
 
 /// <summary>Add an element to the end of a queue</summary>
 /// <param name="e">an element</param>
-/// <returns>True if queue had space for the element</returns>
+/// <returns>True if the queue had space for the element</returns>
 val enqueue: e: Value -> bool
 
 /// <summary>Remove the element in the front position of the queue</summary>
@@ -16,7 +16,7 @@ val enqueue: e: Value -> bool
 val dequeue: unit -> Value option
 
 /// <summary>Check if the queue is empty</summary>
-/// <returns>True if the que is empty</returns>
+/// <returns>True if the queue is empty</returns>
 val isEmpty: unit -> bool
 
 /// <summary>Get the length of the queue</summary>

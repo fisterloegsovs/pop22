@@ -4,7 +4,7 @@
 \input{assignmentSetup}
 
 \newcommand{\exerciseNumber}{8}
-\newrobustcmd{\typeLetter}{i}
+\newrobustcmd{\typeLetter}{g}
 
 \exerciseTitle{\exerciseNumber}{\typeLetter}{25.\ november - 3.\ december}{lørdag d.\ 3.\ december kl. 22:00}{Jon Sporring}
 
@@ -22,17 +22,16 @@ På denne uge skal vi tage et nøjere kig på imperativ programmering. Den væse
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Øveopgaver (in English)}
-\exercises{\exerciseNumber ø}{../assignments/bindings/}{}{mulTable,sum,handTracing}
+\exercises{\exerciseNumber ø}{../assignments/loops/}{}{fac,handTracing,mulTable}
 
 \begin{center}
 \rule{0.7\textwidth}{1pt}
 \end{center}
 
-\continueExercises{\exerciseNumber ø}{../assignments/lister/}{}{array,reverseArray, array2d,}
+\continueExercises{\exerciseNumber ø}{../assignments/lister/}{}{array,reverseArray, array2d}
 
 \section*{Afleveringsopgaver (in English)}
-\exercises{\exerciseNumber\typeLetter}{../assignments/bindings/}{}{mulTable}
-\continueExercises{\exerciseNumber ø}{../assignments/queueState/}{introduction}{queue}
+\continueExercises{\exerciseNumber ø}{../assignments/cyclicQueue/}{introduction}{cyclicQueue}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Krav til afleveringen}
@@ -48,7 +47,7 @@ Zip-filen skal indeholde:
 \item en \texttt{src} mappe med følgende og kun
   følgende filer:
   \begin{quote}
-    queue.fsi, queue.fs, og app.fsx
+    cyclicQueue.fsi, cyclicQueue.fs, og cyclicQueueApp.fsx
   \end{quote}
   \item pdf-dokumentet skal være lavet med \LaTeX, benytte \lstinline[language=console]{opgave.tex} skabelonen, ganske kort dokumentere din løsning og besvare evt.\ ikke-programmeringsopgaver.
 \end{itemize}
